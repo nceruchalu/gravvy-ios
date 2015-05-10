@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14D136" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="GRVClip" representedClassName="GRVClip" syncable="YES">
+        <attribute name="duration" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="mp4URL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="order" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="owner" maxCount="1" deletionRule="Nullify" destinationEntity="GRVUser" inverseName="uploadedClips" inverseEntity="GRVUser" syncable="YES"/>
+        <relationship name="video" maxCount="1" deletionRule="Nullify" destinationEntity="GRVVideo" inverseName="clips" inverseEntity="GRVVideo" syncable="YES"/>
+    </entity>
+    <entity name="GRVContact" representedClassName="GRVContact" syncable="YES">
+        <attribute name="avatarThumbnail" optional="YES" attributeType="Transformable" valueTransformerName="ImageToDataTransformer" syncable="YES"/>
+        <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="recordId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="sectionIdentifier" optional="YES" transient="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="phoneNumbers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="GRVUser" inverseName="contact" inverseEntity="GRVUser" syncable="YES"/>
+    </entity>
+    <entity name="GRVMember" representedClassName="GRVMember" syncable="YES">
+        <attribute name="status" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="user" maxCount="1" deletionRule="Nullify" destinationEntity="GRVUser" inverseName="videoMemberships" inverseEntity="GRVUser" syncable="YES"/>
+        <relationship name="video" maxCount="1" deletionRule="Nullify" destinationEntity="GRVVideo" inverseName="members" inverseEntity="GRVVideo" syncable="YES"/>
+    </entity>
+    <entity name="GRVUser" representedClassName="GRVUser" syncable="YES">
+        <attribute name="avatarThumbnailURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fullName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phoneNumber" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="relationshipType" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="avatarThumbnail" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="GRVUserThumbnail" inverseName="user" inverseEntity="GRVUserThumbnail" syncable="YES"/>
+        <relationship name="contact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GRVContact" inverseName="phoneNumbers" inverseEntity="GRVContact" syncable="YES"/>
+        <relationship name="ownedVideos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="GRVVideo" inverseName="owner" inverseEntity="GRVVideo" syncable="YES"/>
+        <relationship name="uploadedClips" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="GRVClip" inverseName="owner" inverseEntity="GRVClip" syncable="YES"/>
+        <relationship name="videoMemberships" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="GRVMember" inverseName="user" inverseEntity="GRVMember" syncable="YES"/>
+    </entity>
+    <entity name="GRVUserThumbnail" representedClassName="GRVUserThumbnail" syncable="YES">
+        <attribute name="image" optional="YES" attributeType="Transformable" valueTransformerName="ImageToDataTransformer" syncable="YES"/>
+        <attribute name="loadingInProgress" optional="YES" transient="YES" attributeType="Boolean" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="GRVUser" inverseName="avatarThumbnail" inverseEntity="GRVUser" syncable="YES"/>
+    </entity>
+    <entity name="GRVVideo" representedClassName="GRVVideo" syncable="YES">
+        <attribute name="createdAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="details" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hashKey" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="likesCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="photoThumbnailURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="playsCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="clips" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="GRVClip" inverseName="video" inverseEntity="GRVClip" syncable="YES"/>
+        <relationship name="members" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="GRVMember" inverseName="video" inverseEntity="GRVMember" syncable="YES"/>
+        <relationship name="owner" maxCount="1" deletionRule="Nullify" destinationEntity="GRVUser" inverseName="ownedVideos" inverseEntity="GRVUser" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="GRVContact" positionX="-180" positionY="-72" width="128" height="148"/>
+        <element name="GRVMember" positionX="180" positionY="-36" width="128" height="103"/>
+        <element name="GRVUser" positionX="-9" positionY="-27" width="128" height="193"/>
+        <element name="GRVUserThumbnail" positionX="162" positionY="-144" width="128" height="88"/>
+        <element name="GRVVideo" positionX="360" positionY="-72" width="128" height="208"/>
+        <element name="GRVClip" positionX="529" positionY="36" width="128" height="133"/>
+    </elements>
+</model>

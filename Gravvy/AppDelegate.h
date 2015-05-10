@@ -10,8 +10,22 @@
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
+#pragma mark - Properties
 @property (strong, nonatomic) UIWindow *window;
 
+#pragma mark Remote Notifications
+/**
+ * Indicator of availabily of remote notifications that are pending processing
+ */
+@property (strong, nonatomic, readonly) NSString *remoteNotificationVideoIdentifier;
+
+#pragma mark - Instance Methods
+/**
+ * Finish processing remote notification received on application startup.
+ * This is to be called by the Launch View Controller immediately after
+ * successful authentication and setup of the Managed Object Context.
+ */
+- (void)processPendingLaunchRemoteNotification;
 
 @end
 

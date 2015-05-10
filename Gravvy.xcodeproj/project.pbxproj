@@ -7,6 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		403BC9371AFF3DFA009BBD2B /* GRVContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 403BC9361AFF3DFA009BBD2B /* GRVContact.m */; };
+		403BC93A1AFF3DFA009BBD2B /* GRVVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 403BC9391AFF3DFA009BBD2B /* GRVVideo.m */; };
+		403BC93D1AFF3DFA009BBD2B /* GRVClip.m in Sources */ = {isa = PBXBuildFile; fileRef = 403BC93C1AFF3DFA009BBD2B /* GRVClip.m */; };
+		403BC9401AFF3DFA009BBD2B /* GRVMember.m in Sources */ = {isa = PBXBuildFile; fileRef = 403BC93F1AFF3DFA009BBD2B /* GRVMember.m */; };
+		403BC9431AFF3DFB009BBD2B /* GRVUserThumbnail.m in Sources */ = {isa = PBXBuildFile; fileRef = 403BC9421AFF3DFB009BBD2B /* GRVUserThumbnail.m */; };
+		403BC9461AFF3DFB009BBD2B /* GRVUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 403BC9451AFF3DFB009BBD2B /* GRVUser.m */; };
+		403BC9491AFF3F1D009BBD2B /* GRVUser+HTTP.m in Sources */ = {isa = PBXBuildFile; fileRef = 403BC9481AFF3F1D009BBD2B /* GRVUser+HTTP.m */; };
+		403BC94C1AFF40A9009BBD2B /* GRVUserThumbnail+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = 403BC94B1AFF40A9009BBD2B /* GRVUserThumbnail+Create.m */; };
+		403BC94F1AFF42D0009BBD2B /* GRVContact+Section.m in Sources */ = {isa = PBXBuildFile; fileRef = 403BC94E1AFF42D0009BBD2B /* GRVContact+Section.m */; };
+		403BC9521AFF4366009BBD2B /* GRVUser+AddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 403BC9511AFF4366009BBD2B /* GRVUser+AddressBook.m */; };
+		403BC9551AFF4381009BBD2B /* GRVContact+AddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 403BC9541AFF4381009BBD2B /* GRVContact+AddressBook.m */; };
+		403BC9571AFF4514009BBD2B /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 403BC9561AFF4514009BBD2B /* AddressBook.framework */; };
+		403BC95A1AFF468C009BBD2B /* GRVAddressBookManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 403BC9591AFF468C009BBD2B /* GRVAddressBookManager.m */; };
 		407620791AFEC41200100550 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 407620781AFEC41200100550 /* main.m */; };
 		4076207C1AFEC41200100550 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4076207B1AFEC41200100550 /* AppDelegate.m */; };
 		407620821AFEC41200100550 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 407620801AFEC41200100550 /* Main.storyboard */; };
@@ -75,6 +88,24 @@
 		407623A91AFEF63A00100550 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 407623A81AFEF63A00100550 /* SystemConfiguration.framework */; };
 		407623AB1AFEF66000100550 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 407623AA1AFEF66000100550 /* Security.framework */; };
 		407623AD1AFEF6A000100550 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 407623AC1AFEF6A000100550 /* QuartzCore.framework */; };
+		407623B01AFF164500100550 /* GRVScrollViewContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 407623AF1AFF164500100550 /* GRVScrollViewContainer.m */; };
+		407623B31AFF16D800100550 /* GRVLaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 407623B21AFF16D800100550 /* GRVLaunchViewController.m */; };
+		407623B61AFF17C100100550 /* GRVManagedDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 407623B51AFF17C100100550 /* GRVManagedDocument.m */; };
+		407623B91AFF186100100550 /* GRVModelManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 407623B81AFF186100100550 /* GRVModelManager.m */; };
+		407623BC1AFF18FF00100550 /* GRVConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 407623BB1AFF18FF00100550 /* GRVConstants.m */; };
+		407623BF1AFF1FDE00100550 /* GRVCoreDataImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 407623BE1AFF1FDE00100550 /* GRVCoreDataImport.m */; };
+		407623C21AFF209C00100550 /* GRVAccountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 407623C11AFF209C00100550 /* GRVAccountManager.m */; };
+		407623C51AFF212E00100550 /* GRVHTTPManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 407623C41AFF212E00100550 /* GRVHTTPManager.m */; };
+		407623C81AFF21C000100550 /* GRVJSONResponseSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 407623C71AFF21C000100550 /* GRVJSONResponseSerializer.m */; };
+		407623CB1AFF223D00100550 /* GRVHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 407623CA1AFF223D00100550 /* GRVHTTPSessionManager.m */; };
+		407623CE1AFF231600100550 /* GRVFormatterUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 407623CD1AFF231600100550 /* GRVFormatterUtils.m */; };
+		407623D01AFF270200100550 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 407623CF1AFF270200100550 /* AudioToolbox.framework */; };
+		407623D31AFF275000100550 /* GRVRegion.m in Sources */ = {isa = PBXBuildFile; fileRef = 407623D21AFF275000100550 /* GRVRegion.m */; };
+		407623D61AFF280500100550 /* GRVRegionStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 407623D51AFF280500100550 /* GRVRegionStore.m */; };
+		407623D91AFF28B600100550 /* GRVUserAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 407623D81AFF28B600100550 /* GRVUserAvatarView.m */; };
+		407623DC1AFF2B1400100550 /* GRVAlertBannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 407623DB1AFF2B1400100550 /* GRVAlertBannerView.m */; };
+		407623E21AFF2CD700100550 /* GRVAlertBannerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 407623E11AFF2CD700100550 /* GRVAlertBannerManager.m */; };
+		407623E51AFF31D400100550 /* Gravvy.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 407623E31AFF31D400100550 /* Gravvy.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +119,31 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		403BC9351AFF3DFA009BBD2B /* GRVContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVContact.h; sourceTree = "<group>"; };
+		403BC9361AFF3DFA009BBD2B /* GRVContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVContact.m; sourceTree = "<group>"; };
+		403BC9381AFF3DFA009BBD2B /* GRVVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVVideo.h; sourceTree = "<group>"; };
+		403BC9391AFF3DFA009BBD2B /* GRVVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVVideo.m; sourceTree = "<group>"; };
+		403BC93B1AFF3DFA009BBD2B /* GRVClip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVClip.h; sourceTree = "<group>"; };
+		403BC93C1AFF3DFA009BBD2B /* GRVClip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVClip.m; sourceTree = "<group>"; };
+		403BC93E1AFF3DFA009BBD2B /* GRVMember.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVMember.h; sourceTree = "<group>"; };
+		403BC93F1AFF3DFA009BBD2B /* GRVMember.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVMember.m; sourceTree = "<group>"; };
+		403BC9411AFF3DFB009BBD2B /* GRVUserThumbnail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVUserThumbnail.h; sourceTree = "<group>"; };
+		403BC9421AFF3DFB009BBD2B /* GRVUserThumbnail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVUserThumbnail.m; sourceTree = "<group>"; };
+		403BC9441AFF3DFB009BBD2B /* GRVUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVUser.h; sourceTree = "<group>"; };
+		403BC9451AFF3DFB009BBD2B /* GRVUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVUser.m; sourceTree = "<group>"; };
+		403BC9471AFF3F1D009BBD2B /* GRVUser+HTTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GRVUser+HTTP.h"; sourceTree = "<group>"; };
+		403BC9481AFF3F1D009BBD2B /* GRVUser+HTTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GRVUser+HTTP.m"; sourceTree = "<group>"; };
+		403BC94A1AFF40A9009BBD2B /* GRVUserThumbnail+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GRVUserThumbnail+Create.h"; sourceTree = "<group>"; };
+		403BC94B1AFF40A9009BBD2B /* GRVUserThumbnail+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GRVUserThumbnail+Create.m"; sourceTree = "<group>"; };
+		403BC94D1AFF42D0009BBD2B /* GRVContact+Section.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GRVContact+Section.h"; sourceTree = "<group>"; };
+		403BC94E1AFF42D0009BBD2B /* GRVContact+Section.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GRVContact+Section.m"; sourceTree = "<group>"; };
+		403BC9501AFF4366009BBD2B /* GRVUser+AddressBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GRVUser+AddressBook.h"; sourceTree = "<group>"; };
+		403BC9511AFF4366009BBD2B /* GRVUser+AddressBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GRVUser+AddressBook.m"; sourceTree = "<group>"; };
+		403BC9531AFF4381009BBD2B /* GRVContact+AddressBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GRVContact+AddressBook.h"; sourceTree = "<group>"; };
+		403BC9541AFF4381009BBD2B /* GRVContact+AddressBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GRVContact+AddressBook.m"; sourceTree = "<group>"; };
+		403BC9561AFF4514009BBD2B /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		403BC9581AFF468C009BBD2B /* GRVAddressBookManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVAddressBookManager.h; sourceTree = "<group>"; };
+		403BC9591AFF468C009BBD2B /* GRVAddressBookManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVAddressBookManager.m; sourceTree = "<group>"; };
 		407620731AFEC41200100550 /* Gravvy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gravvy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		407620771AFEC41200100550 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		407620781AFEC41200100550 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -216,6 +272,41 @@
 		407623A81AFEF63A00100550 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		407623AA1AFEF66000100550 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		407623AC1AFEF6A000100550 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		407623AE1AFF164500100550 /* GRVScrollViewContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVScrollViewContainer.h; sourceTree = "<group>"; };
+		407623AF1AFF164500100550 /* GRVScrollViewContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVScrollViewContainer.m; sourceTree = "<group>"; };
+		407623B11AFF16D800100550 /* GRVLaunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVLaunchViewController.h; sourceTree = "<group>"; };
+		407623B21AFF16D800100550 /* GRVLaunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVLaunchViewController.m; sourceTree = "<group>"; };
+		407623B41AFF17C100100550 /* GRVManagedDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVManagedDocument.h; sourceTree = "<group>"; };
+		407623B51AFF17C100100550 /* GRVManagedDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVManagedDocument.m; sourceTree = "<group>"; };
+		407623B71AFF186100100550 /* GRVModelManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVModelManager.h; sourceTree = "<group>"; };
+		407623B81AFF186100100550 /* GRVModelManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVModelManager.m; sourceTree = "<group>"; };
+		407623BA1AFF18FF00100550 /* GRVConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVConstants.h; sourceTree = "<group>"; };
+		407623BB1AFF18FF00100550 /* GRVConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVConstants.m; sourceTree = "<group>"; };
+		407623BD1AFF1FDE00100550 /* GRVCoreDataImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVCoreDataImport.h; sourceTree = "<group>"; };
+		407623BE1AFF1FDE00100550 /* GRVCoreDataImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVCoreDataImport.m; sourceTree = "<group>"; };
+		407623C01AFF209C00100550 /* GRVAccountManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVAccountManager.h; sourceTree = "<group>"; };
+		407623C11AFF209C00100550 /* GRVAccountManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVAccountManager.m; sourceTree = "<group>"; };
+		407623C31AFF212E00100550 /* GRVHTTPManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVHTTPManager.h; sourceTree = "<group>"; };
+		407623C41AFF212E00100550 /* GRVHTTPManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVHTTPManager.m; sourceTree = "<group>"; };
+		407623C61AFF21C000100550 /* GRVJSONResponseSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVJSONResponseSerializer.h; sourceTree = "<group>"; };
+		407623C71AFF21C000100550 /* GRVJSONResponseSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVJSONResponseSerializer.m; sourceTree = "<group>"; };
+		407623C91AFF223D00100550 /* GRVHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVHTTPSessionManager.h; sourceTree = "<group>"; };
+		407623CA1AFF223D00100550 /* GRVHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVHTTPSessionManager.m; sourceTree = "<group>"; };
+		407623CC1AFF231600100550 /* GRVFormatterUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVFormatterUtils.h; sourceTree = "<group>"; };
+		407623CD1AFF231600100550 /* GRVFormatterUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVFormatterUtils.m; sourceTree = "<group>"; };
+		407623CF1AFF270200100550 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		407623D11AFF275000100550 /* GRVRegion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVRegion.h; sourceTree = "<group>"; };
+		407623D21AFF275000100550 /* GRVRegion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVRegion.m; sourceTree = "<group>"; };
+		407623D41AFF280500100550 /* GRVRegionStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVRegionStore.h; sourceTree = "<group>"; };
+		407623D51AFF280500100550 /* GRVRegionStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVRegionStore.m; sourceTree = "<group>"; };
+		407623D71AFF28B600100550 /* GRVUserAvatarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVUserAvatarView.h; sourceTree = "<group>"; };
+		407623D81AFF28B600100550 /* GRVUserAvatarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVUserAvatarView.m; sourceTree = "<group>"; };
+		407623DA1AFF2B1400100550 /* GRVAlertBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVAlertBannerView.h; sourceTree = "<group>"; };
+		407623DB1AFF2B1400100550 /* GRVAlertBannerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVAlertBannerView.m; sourceTree = "<group>"; };
+		407623DD1AFF2C2B00100550 /* GRVAlertBannerView+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GRVAlertBannerView+Private.h"; sourceTree = "<group>"; };
+		407623E01AFF2CD700100550 /* GRVAlertBannerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVAlertBannerManager.h; sourceTree = "<group>"; };
+		407623E11AFF2CD700100550 /* GRVAlertBannerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVAlertBannerManager.m; sourceTree = "<group>"; };
+		407623E41AFF31D400100550 /* Gravvy.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Gravvy.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,6 +314,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				403BC9571AFF4514009BBD2B /* AddressBook.framework in Frameworks */,
+				407623D01AFF270200100550 /* AudioToolbox.framework in Frameworks */,
 				407623AD1AFEF6A000100550 /* QuartzCore.framework in Frameworks */,
 				407623AB1AFEF66000100550 /* Security.framework in Frameworks */,
 				407623A91AFEF63A00100550 /* SystemConfiguration.framework in Frameworks */,
@@ -269,6 +362,7 @@
 			children = (
 				4076207A1AFEC41200100550 /* AppDelegate.h */,
 				4076207B1AFEC41200100550 /* AppDelegate.m */,
+				407620801AFEC41200100550 /* Main.storyboard */,
 				407620C81AFEEE8A00100550 /* Vendor */,
 				407620BF1AFEEE8A00100550 /* Networking */,
 				407620C01AFEEE8A00100550 /* PhoneNumber */,
@@ -279,7 +373,6 @@
 				407620C91AFEEE8A00100550 /* View */,
 				407620B51AFEEE8A00100550 /* Controller */,
 				407620C31AFEEE8A00100550 /* Resources */,
-				407620801AFEC41200100550 /* Main.storyboard */,
 				407620831AFEC41200100550 /* Images.xcassets */,
 				407620851AFEC41200100550 /* LaunchScreen.xib */,
 				407620761AFEC41200100550 /* Supporting Files */,
@@ -316,6 +409,8 @@
 		4076209C1AFED85400100550 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				403BC9561AFF4514009BBD2B /* AddressBook.framework */,
+				407623CF1AFF270200100550 /* AudioToolbox.framework */,
 				407623A41AFEF2AD00100550 /* Crashlytics.framework */,
 				407623A51AFEF2AD00100550 /* Fabric.framework */,
 				407623AC1AFEF6A000100550 /* QuartzCore.framework */,
@@ -332,6 +427,16 @@
 		407620B51AFEEE8A00100550 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				407623C31AFF212E00100550 /* GRVHTTPManager.h */,
+				407623C41AFF212E00100550 /* GRVHTTPManager.m */,
+				407623C01AFF209C00100550 /* GRVAccountManager.h */,
+				407623C11AFF209C00100550 /* GRVAccountManager.m */,
+				407623E01AFF2CD700100550 /* GRVAlertBannerManager.h */,
+				407623E11AFF2CD700100550 /* GRVAlertBannerManager.m */,
+				407623AE1AFF164500100550 /* GRVScrollViewContainer.h */,
+				407623AF1AFF164500100550 /* GRVScrollViewContainer.m */,
+				407623B11AFF16D800100550 /* GRVLaunchViewController.h */,
+				407623B21AFF16D800100550 /* GRVLaunchViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -339,6 +444,37 @@
 		407620B61AFEEE8A00100550 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				407623E31AFF31D400100550 /* Gravvy.xcdatamodeld */,
+				403BC9441AFF3DFB009BBD2B /* GRVUser.h */,
+				403BC9451AFF3DFB009BBD2B /* GRVUser.m */,
+				403BC9411AFF3DFB009BBD2B /* GRVUserThumbnail.h */,
+				403BC9421AFF3DFB009BBD2B /* GRVUserThumbnail.m */,
+				403BC93E1AFF3DFA009BBD2B /* GRVMember.h */,
+				403BC93F1AFF3DFA009BBD2B /* GRVMember.m */,
+				403BC93B1AFF3DFA009BBD2B /* GRVClip.h */,
+				403BC93C1AFF3DFA009BBD2B /* GRVClip.m */,
+				403BC9381AFF3DFA009BBD2B /* GRVVideo.h */,
+				403BC9391AFF3DFA009BBD2B /* GRVVideo.m */,
+				403BC9351AFF3DFA009BBD2B /* GRVContact.h */,
+				403BC9361AFF3DFA009BBD2B /* GRVContact.m */,
+				407623B41AFF17C100100550 /* GRVManagedDocument.h */,
+				407623B51AFF17C100100550 /* GRVManagedDocument.m */,
+				407623B71AFF186100100550 /* GRVModelManager.h */,
+				407623B81AFF186100100550 /* GRVModelManager.m */,
+				407623BD1AFF1FDE00100550 /* GRVCoreDataImport.h */,
+				407623BE1AFF1FDE00100550 /* GRVCoreDataImport.m */,
+				403BC9471AFF3F1D009BBD2B /* GRVUser+HTTP.h */,
+				403BC9481AFF3F1D009BBD2B /* GRVUser+HTTP.m */,
+				403BC94A1AFF40A9009BBD2B /* GRVUserThumbnail+Create.h */,
+				403BC94B1AFF40A9009BBD2B /* GRVUserThumbnail+Create.m */,
+				403BC9581AFF468C009BBD2B /* GRVAddressBookManager.h */,
+				403BC9591AFF468C009BBD2B /* GRVAddressBookManager.m */,
+				403BC9501AFF4366009BBD2B /* GRVUser+AddressBook.h */,
+				403BC9511AFF4366009BBD2B /* GRVUser+AddressBook.m */,
+				403BC9531AFF4381009BBD2B /* GRVContact+AddressBook.h */,
+				403BC9541AFF4381009BBD2B /* GRVContact+AddressBook.m */,
+				403BC94D1AFF42D0009BBD2B /* GRVContact+Section.h */,
+				403BC94E1AFF42D0009BBD2B /* GRVContact+Section.m */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -359,6 +495,10 @@
 		407620BE1AFEEE8A00100550 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				407623D11AFF275000100550 /* GRVRegion.h */,
+				407623D21AFF275000100550 /* GRVRegion.m */,
+				407623D41AFF280500100550 /* GRVRegionStore.h */,
+				407623D51AFF280500100550 /* GRVRegionStore.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -366,6 +506,10 @@
 		407620BF1AFEEE8A00100550 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				407623C61AFF21C000100550 /* GRVJSONResponseSerializer.h */,
+				407623C71AFF21C000100550 /* GRVJSONResponseSerializer.m */,
+				407623C91AFF223D00100550 /* GRVHTTPSessionManager.h */,
+				407623CA1AFF223D00100550 /* GRVHTTPSessionManager.m */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -410,6 +554,11 @@
 		407620C91AFEEE8A00100550 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				407623D71AFF28B600100550 /* GRVUserAvatarView.h */,
+				407623D81AFF28B600100550 /* GRVUserAvatarView.m */,
+				407623DA1AFF2B1400100550 /* GRVAlertBannerView.h */,
+				407623DB1AFF2B1400100550 /* GRVAlertBannerView.m */,
+				407623DD1AFF2C2B00100550 /* GRVAlertBannerView+Private.h */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -417,6 +566,10 @@
 		407620D11AFEEEEA00100550 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				407623BA1AFF18FF00100550 /* GRVConstants.h */,
+				407623BB1AFF18FF00100550 /* GRVConstants.m */,
+				407623CC1AFF231600100550 /* GRVFormatterUtils.h */,
+				407623CD1AFF231600100550 /* GRVFormatterUtils.m */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -605,6 +758,7 @@
 		4076206B1AFEC41200100550 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = GRV;
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = "Nnoduka Eruchalu";
 				TargetAttributes = {
@@ -680,58 +834,87 @@
 			buildActionMask = 2147483647;
 			files = (
 				407623111AFEF08E00100550 /* AFURLSessionManager.m in Sources */,
+				407623D61AFF280500100550 /* GRVRegionStore.m in Sources */,
+				403BC9371AFF3DFA009BBD2B /* GRVContact.m in Sources */,
 				4076230E1AFEF08E00100550 /* AFURLConnectionOperation.m in Sources */,
 				407623651AFEF0E300100550 /* NBNumberFormat.m in Sources */,
+				407623BF1AFF1FDE00100550 /* GRVCoreDataImport.m in Sources */,
+				403BC9461AFF3DFB009BBD2B /* GRVUser.m in Sources */,
 				407623671AFEF0E300100550 /* NBPhoneMetaDataGenerator.m in Sources */,
 				407623601AFEF0E300100550 /* NBMetadataCore.m in Sources */,
 				407623991AFEF13400100550 /* UIImage+GIF.m in Sources */,
 				407623181AFEF08E00100550 /* UIRefreshControl+AFNetworking.m in Sources */,
 				407623951AFEF13400100550 /* SDWebImageDownloaderOperation.m in Sources */,
 				407623151AFEF08E00100550 /* UIButton+AFNetworking.m in Sources */,
+				407623D31AFF275000100550 /* GRVRegion.m in Sources */,
 				407623171AFEF08E00100550 /* UIProgressView+AFNetworking.m in Sources */,
 				4076232A1AFEF0B900100550 /* AWPercentDrivenInteractiveTransition.m in Sources */,
 				407623091AFEF08E00100550 /* AFHTTPRequestOperation.m in Sources */,
+				407623C21AFF209C00100550 /* GRVAccountManager.m in Sources */,
 				407623901AFEF13400100550 /* NSData+ImageContentType.m in Sources */,
 				407623621AFEF0E300100550 /* NBMetadataCoreTest.m in Sources */,
 				407623611AFEF0E300100550 /* NBMetadataCoreMapper.m in Sources */,
 				407620CB1AFEEE8A00100550 /* KeychainItemWrapper.m in Sources */,
+				407623D91AFF28B600100550 /* GRVUserAvatarView.m in Sources */,
 				4076239E1AFEF13400100550 /* UIView+WebCacheOperation.m in Sources */,
+				407623C51AFF212E00100550 /* GRVHTTPManager.m in Sources */,
 				407623141AFEF08E00100550 /* UIAlertView+AFNetworking.m in Sources */,
+				407623E51AFF31D400100550 /* Gravvy.xcdatamodeld in Sources */,
+				403BC94C1AFF40A9009BBD2B /* GRVUserThumbnail+Create.m in Sources */,
+				403BC9551AFF4381009BBD2B /* GRVContact+AddressBook.m in Sources */,
 				4076230A1AFEF08E00100550 /* AFHTTPRequestOperationManager.m in Sources */,
+				403BC93A1AFF3DFA009BBD2B /* GRVVideo.m in Sources */,
 				407623661AFEF0E300100550 /* NBPhoneMetaData.m in Sources */,
 				4076207C1AFEC41200100550 /* AppDelegate.m in Sources */,
+				403BC95A1AFF468C009BBD2B /* GRVAddressBookManager.m in Sources */,
+				407623B01AFF164500100550 /* GRVScrollViewContainer.m in Sources */,
+				407623B31AFF16D800100550 /* GRVLaunchViewController.m in Sources */,
 				407623631AFEF0E300100550 /* NBMetadataCoreTestMapper.m in Sources */,
 				407623921AFEF13400100550 /* SDWebImageCompat.m in Sources */,
 				4076239A1AFEF13400100550 /* UIImage+MultiFormat.m in Sources */,
+				403BC9491AFF3F1D009BBD2B /* GRVUser+HTTP.m in Sources */,
+				407623B61AFF17C100100550 /* GRVManagedDocument.m in Sources */,
 				407620CD1AFEEE8A00100550 /* NBPhoneNumberUtil+Shared.m in Sources */,
 				407623161AFEF08E00100550 /* UIImageView+AFNetworking.m in Sources */,
 				4076239B1AFEF13400100550 /* UIImage+WebP.m in Sources */,
 				407623961AFEF13400100550 /* SDWebImageManager.m in Sources */,
+				407623CE1AFF231600100550 /* GRVFormatterUtils.m in Sources */,
 				407623911AFEF13400100550 /* SDImageCache.m in Sources */,
 				4076235F1AFEF0E300100550 /* NBAsYouTypeFormatter.m in Sources */,
+				407623E21AFF2CD700100550 /* GRVAlertBannerManager.m in Sources */,
+				403BC94F1AFF42D0009BBD2B /* GRVContact+Section.m in Sources */,
 				407623971AFEF13400100550 /* SDWebImagePrefetcher.m in Sources */,
 				4076236C1AFEF0E300100550 /* NSArray+NBAdditions.m in Sources */,
+				407623CB1AFF223D00100550 /* GRVHTTPSessionManager.m in Sources */,
 				4076230B1AFEF08E00100550 /* AFHTTPSessionManager.m in Sources */,
 				4076238F1AFEF13400100550 /* MKAnnotationView+WebCache.m in Sources */,
+				403BC9431AFF3DFB009BBD2B /* GRVUserThumbnail.m in Sources */,
 				407623641AFEF0E300100550 /* NBMetadataHelper.m in Sources */,
 				407623691AFEF0E300100550 /* NBPhoneNumberDesc.m in Sources */,
 				407623131AFEF08E00100550 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				407623931AFEF13400100550 /* SDWebImageDecoder.m in Sources */,
+				403BC9521AFF4366009BBD2B /* GRVUser+AddressBook.m in Sources */,
 				407623121AFEF08E00100550 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				4076239C1AFEF13400100550 /* UIImageView+HighlightedWebCache.m in Sources */,
 				407620CA1AFEEE8A00100550 /* ImageToDataTransformer.m in Sources */,
+				407623B91AFF186100100550 /* GRVModelManager.m in Sources */,
+				407623C81AFF21C000100550 /* GRVJSONResponseSerializer.m in Sources */,
 				407620791AFEC41200100550 /* main.m in Sources */,
+				407623DC1AFF2B1400100550 /* GRVAlertBannerView.m in Sources */,
 				407623981AFEF13400100550 /* UIButton+WebCache.m in Sources */,
+				407623BC1AFF18FF00100550 /* GRVConstants.m in Sources */,
 				4076230D1AFEF08E00100550 /* AFSecurityPolicy.m in Sources */,
 				4076239D1AFEF13400100550 /* UIImageView+WebCache.m in Sources */,
 				407623941AFEF13400100550 /* SDWebImageDownloader.m in Sources */,
 				4076230F1AFEF08E00100550 /* AFURLRequestSerialization.m in Sources */,
 				4076230C1AFEF08E00100550 /* AFNetworkReachabilityManager.m in Sources */,
+				403BC9401AFF3DFA009BBD2B /* GRVMember.m in Sources */,
 				407623681AFEF0E300100550 /* NBPhoneNumber.m in Sources */,
 				407623191AFEF08E00100550 /* UIWebView+AFNetworking.m in Sources */,
 				407623101AFEF08E00100550 /* AFURLResponseSerialization.m in Sources */,
 				407620CC1AFEEE8A00100550 /* Reachability.m in Sources */,
 				4076236B1AFEF0E300100550 /* NBPhoneNumberUtil.m in Sources */,
+				403BC93D1AFF3DFA009BBD2B /* GRVClip.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -956,6 +1139,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		407623E31AFF31D400100550 /* Gravvy.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				407623E41AFF31D400100550 /* Gravvy.xcdatamodel */,
+			);
+			currentVersion = 407623E41AFF31D400100550 /* Gravvy.xcdatamodel */;
+			path = Gravvy.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 4076206B1AFEC41200100550 /* Project object */;
 }
