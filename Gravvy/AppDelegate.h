@@ -17,7 +17,7 @@
 /**
  * Indicator of availabily of remote notifications that are pending processing
  */
-@property (strong, nonatomic, readonly) NSString *remoteNotificationVideoIdentifier;
+@property (strong, nonatomic, readonly) NSString *remoteNotificationVideoHashKey;
 
 #pragma mark - Instance Methods
 /**

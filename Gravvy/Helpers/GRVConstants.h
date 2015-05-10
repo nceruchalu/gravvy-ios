@@ -112,6 +112,9 @@ extern NSString *const kGRVRESTUserUpdatedAtKey;
 extern NSString *const kGRVRESTUserPasswordKey;
 extern NSString *const kGRVRESTUserPhoneNumberKey;
 
+// Push registration object
+extern NSString *const kGRVRESTPushRegistrationIdKey;
+
 
 // -----------------------------------------------------------------------------
 // User Credentials

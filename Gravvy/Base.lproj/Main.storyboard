@@ -25,7 +25,7 @@
         <!--Launch View Controller-->
         <scene sceneID="0gI-BA-vwg">
             <objects>
-                <viewController id="x58-tO-voh" customClass="EVTLaunchViewController" sceneMemberID="viewController">
+                <viewController id="x58-tO-voh" customClass="GRVLaunchViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="b3e-UQ-0JY"/>
                         <viewControllerLayoutGuide type="bottom" id="HYP-pW-K3j"/>
@@ -35,10 +35,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vpt-x7-ZIv" userLabel="Logo Container">
-                                <rect key="frame" x="0.0" y="64" width="600" height="186.5"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="187"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchIcon" translatesAutoresizingMaskIntoConstraints="NO" id="hce-ni-PKa" userLabel="Logo Image">
-                                        <rect key="frame" x="250" y="43.5" width="100" height="100"/>
+                                        <rect key="frame" x="250" y="44" width="100" height="100"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="hce-ni-PKa" secondAttribute="height" multiplier="1:1" id="Rli-zm-FZr"/>
                                             <constraint firstAttribute="height" constant="100" id="won-rn-ycQ"/>
@@ -62,15 +62,15 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Evently" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xfd-uj-7oF" userLabel="App Name Label">
-                                <rect key="frame" x="256.5" y="250.5" width="88" height="31"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gravvy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xfd-uj-7oF" userLabel="App Name Label">
+                                <rect key="frame" x="259" y="251" width="84" height="31"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="26"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="0.29803921570000003" green="0.85098039219999999" blue="0.3921568627" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hea-ct-QfZ" userLabel="Title Border">
-                                <rect key="frame" x="230" y="299.5" width="140" height="1"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="230" y="300" width="140" height="1"/>
+                                <color key="backgroundColor" red="0.29803921570000003" green="0.85098039219999999" blue="0.3921568627" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="140" id="Gbv-cr-WTj"/>
                                     <constraint firstAttribute="height" constant="1" id="H9H-Rc-H0c"/>
@@ -85,16 +85,16 @@
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="G6m-w7-Cvl">
                                 <rect key="frame" x="20" y="312" width="37" height="37"/>
                                 <color key="tintColor" red="0.2156862745" green="0.58431372550000005" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="color" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="color" red="0.29803921570000003" green="0.85098039219999999" blue="0.3921568627" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </activityIndicatorView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connecting ..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="22E-FU-lC1">
-                                <rect key="frame" x="65" y="318.5" width="485" height="24"/>
+                                <rect key="frame" x="65" y="319" width="485" height="24"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="0.29803921570000003" green="0.85098039219999999" blue="0.3921568627" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.2156862745" green="0.58431372550000005" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="G6m-w7-Cvl" firstAttribute="leading" secondItem="4bK-eh-Yeg" secondAttribute="leading" constant="20" symbolic="YES" id="0fw-z7-MtY"/>
                             <constraint firstAttribute="trailing" secondItem="22E-FU-lC1" secondAttribute="trailing" constant="50" id="5GN-qe-W8a"/>
@@ -123,32 +123,64 @@
                                 <include reference="EcV-2c-yZk"/>
                                 <include reference="iEg-FI-rQ6"/>
                                 <include reference="0fw-z7-MtY"/>
-                                <include reference="GOr-Wh-pqR"/>
-                                <include reference="MYu-DM-sLY"/>
                                 <include reference="5GN-qe-W8a"/>
                                 <include reference="CQw-Ix-G9J"/>
-                                <include reference="ekp-le-BlN"/>
+                                <include reference="GOr-Wh-pqR"/>
+                                <include reference="MYu-DM-sLY"/>
                                 <include reference="dJ5-WE-yPL"/>
+                                <include reference="ekp-le-BlN"/>
                                 <include reference="Ygj-GV-zz9"/>
-                                <include reference="dYt-hj-Y5B"/>
                                 <include reference="aG0-Vu-QR8"/>
+                                <include reference="dYt-hj-Y5B"/>
                             </mask>
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" id="dXp-rI-qjO"/>
                     <connections>
+                        <outlet property="connectionStatusLabel" destination="22E-FU-lC1" id="vpJ-io-a6P"/>
                         <segue destination="LRj-Dt-qKi" kind="show" identifier="showRegistrationVC" id="irO-fz-7LF"/>
                         <segue destination="ors-wy-YW9" kind="show" identifier="showProfileSettingsPostActivationVC" id="Zm6-vw-LFG"/>
+                        <segue destination="FEH-fj-5s4" kind="show" identifier="showVideosVC" id="fro-ZD-Pot"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WnM-iW-aUX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3592.5" y="329"/>
         </scene>
+        <!--Container View Controller-->
+        <scene sceneID="LNb-j2-kfj">
+            <objects>
+                <viewController id="FEH-fj-5s4" userLabel="Container View Controller" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="eiz-7z-HV5"/>
+                        <viewControllerLayoutGuide type="bottom" id="KUA-dZ-rzT"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="13Z-dE-Tnh">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Here we go" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3W5-FA-Q0c">
+                                <rect key="frame" x="235" y="240" width="88" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="3W5-FA-Q0c" secondAttribute="centerX" constant="21" id="VHS-pB-0Fd"/>
+                            <constraint firstAttribute="centerY" secondItem="3W5-FA-Q0c" secondAttribute="centerY" constant="49.5" id="wnk-iZ-HcZ"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VXp-0E-UBu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3616" y="1183"/>
+        </scene>
         <!--Registration View Controller-->
         <scene sceneID="unp-W2-RNc">
             <objects>
-                <viewController id="LRj-Dt-qKi" userLabel="Registration View Controller" customClass="EVTRegistrationViewController" sceneMemberID="viewController">
+                <viewController id="LRj-Dt-qKi" userLabel="Registration View Controller" customClass="GRVRegistrationViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="6R0-U2-SOm"/>
                         <viewControllerLayoutGuide type="bottom" id="Hs8-JR-NP0"/>
@@ -181,7 +213,7 @@
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please confirm your country code and enter your phone number" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pw9-9F-Ryl">
                                                         <rect key="frame" x="0.0" y="48.5" width="360" height="38.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
@@ -198,10 +230,10 @@
                                                     </mask>
                                                     <mask key="constraints">
                                                         <include reference="YSF-pS-vU7"/>
-                                                        <include reference="qvy-ie-vJD"/>
                                                         <include reference="L6L-dW-j1A"/>
-                                                        <include reference="kq5-x6-BwU"/>
                                                         <include reference="hI9-zG-iSi"/>
+                                                        <include reference="kq5-x6-BwU"/>
+                                                        <include reference="qvy-ie-vJD"/>
                                                     </mask>
                                                 </variation>
                                             </view>
@@ -254,7 +286,7 @@
                                                     <constraint firstAttribute="width" constant="25" id="CaY-ob-7Su"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                                 <variation key="widthClass=compact">
                                                     <mask key="constraints">
@@ -360,39 +392,39 @@
                                             </mask>
                                             <mask key="constraints">
                                                 <include reference="Hti-Ei-FYM"/>
-                                                <include reference="JMy-E7-mi7"/>
                                                 <include reference="0WJ-ag-hxa"/>
+                                                <include reference="JMy-E7-mi7"/>
                                                 <include reference="lME-j6-s7C"/>
-                                                <include reference="xIz-3O-H4P"/>
-                                                <include reference="pac-S8-BTx"/>
                                                 <include reference="ED0-9P-4dU"/>
-                                                <include reference="KUe-hX-YDt"/>
+                                                <include reference="pac-S8-BTx"/>
+                                                <include reference="xIz-3O-H4P"/>
                                                 <include reference="8SZ-56-6X2"/>
                                                 <include reference="JLQ-f5-OYr"/>
+                                                <include reference="KUe-hX-YDt"/>
                                                 <include reference="xzW-O1-SCs"/>
                                                 <include reference="1m2-zQ-Owi"/>
+                                                <include reference="5Tx-ld-mEp"/>
+                                                <include reference="Hbi-DX-g0d"/>
+                                                <include reference="KyU-DH-3r6"/>
                                                 <include reference="aoD-jq-M01"/>
                                                 <include reference="dEL-W5-8e1"/>
                                                 <include reference="vuo-aE-JIz"/>
-                                                <include reference="5Tx-ld-mEp"/>
                                                 <include reference="wcc-fl-X1l"/>
-                                                <include reference="Hbi-DX-g0d"/>
-                                                <include reference="KyU-DH-3r6"/>
-                                                <include reference="lIC-0Y-el4"/>
                                                 <include reference="Qcc-TK-zwb"/>
+                                                <include reference="lIC-0Y-el4"/>
                                                 <include reference="IHW-XE-PhQ"/>
                                                 <include reference="MTC-0h-0XO"/>
-                                                <include reference="dLm-Th-t9N"/>
                                                 <include reference="FTe-Su-8Mj"/>
-                                                <include reference="uWu-AV-SjP"/>
-                                                <include reference="f7F-ph-jfB"/>
-                                                <include reference="zTm-3g-LOV"/>
+                                                <include reference="dLm-Th-t9N"/>
                                                 <include reference="0eM-om-4vR"/>
-                                                <include reference="mGv-Ik-4GP"/>
+                                                <include reference="f7F-ph-jfB"/>
+                                                <include reference="uWu-AV-SjP"/>
+                                                <include reference="zTm-3g-LOV"/>
+                                                <include reference="aPq-k3-Rtm"/>
+                                                <include reference="b2i-Gx-MjS"/>
                                                 <include reference="lSK-6V-NSF"/>
                                                 <include reference="lzg-HN-cXp"/>
-                                                <include reference="b2i-Gx-MjS"/>
-                                                <include reference="aPq-k3-Rtm"/>
+                                                <include reference="mGv-Ik-4GP"/>
                                                 <include reference="om1-EZ-HQh"/>
                                                 <include reference="zpY-B1-SCz"/>
                                                 <include reference="cwG-4f-VuN"/>
@@ -415,10 +447,10 @@
                                         <include reference="swd-go-g1Q"/>
                                     </mask>
                                     <mask key="constraints">
-                                        <include reference="b3c-Dx-eNH"/>
                                         <include reference="MIe-ZM-lwT"/>
-                                        <include reference="YdI-A0-IRj"/>
                                         <include reference="Mc2-mv-sJp"/>
+                                        <include reference="YdI-A0-IRj"/>
+                                        <include reference="b3c-Dx-eNH"/>
                                     </mask>
                                 </variation>
                             </scrollView>
@@ -442,9 +474,9 @@
                                 <include reference="PVc-Bs-4Ij"/>
                                 <include reference="gQ9-Ls-AHb"/>
                                 <include reference="pgC-fO-B5g"/>
-                                <include reference="vh5-jH-IDV"/>
-                                <include reference="f5m-di-mAN"/>
                                 <include reference="LWH-YO-ljV"/>
+                                <include reference="f5m-di-mAN"/>
+                                <include reference="vh5-jH-IDV"/>
                                 <include reference="1tm-nz-HZ5"/>
                             </mask>
                         </variation>
@@ -479,7 +511,7 @@
         <!--Verification View Controller-->
         <scene sceneID="ezI-38-KB4">
             <objects>
-                <viewController id="NJ8-K8-Sah" userLabel="Verification View Controller" customClass="EVTVerificationViewController" sceneMemberID="viewController">
+                <viewController id="NJ8-K8-Sah" userLabel="Verification View Controller" customClass="GRVVerificationViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="J69-1b-IWl"/>
                         <viewControllerLayoutGuide type="bottom" id="2E1-ch-cWl"/>
@@ -512,13 +544,13 @@
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We have sent you an SMS with a code to the number above." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iUR-pe-VFY">
                                                         <rect key="frame" x="0.0" y="28" width="360" height="38.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To complete your phone number verification, please enter the 4-digit activation code." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="skC-kL-mvU">
                                                         <rect key="frame" x="0.0" y="83.5" width="360" height="38.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P1y-SW-zbs" userLabel="Center divider">
@@ -556,14 +588,14 @@
                                                     </mask>
                                                     <mask key="constraints">
                                                         <include reference="9IJ-Qc-RED"/>
-                                                        <include reference="9MH-by-fd3"/>
                                                         <include reference="1LG-TA-Ziy"/>
                                                         <include reference="7cH-VY-RV5"/>
+                                                        <include reference="9MH-by-fd3"/>
                                                         <include reference="afM-I0-FIZ"/>
-                                                        <include reference="cCB-ga-yF8"/>
                                                         <include reference="ECf-BH-aCW"/>
-                                                        <include reference="Ncb-4F-Uax"/>
                                                         <include reference="JLu-G6-4I4"/>
+                                                        <include reference="Ncb-4F-Uax"/>
+                                                        <include reference="cCB-ga-yF8"/>
                                                         <include reference="psP-qw-Ihh"/>
                                                         <include reference="j1U-cA-o5Y"/>
                                                     </mask>
@@ -628,16 +660,16 @@
                                             </mask>
                                             <mask key="constraints">
                                                 <include reference="nhi-Ys-7vK"/>
-                                                <include reference="X5W-au-hyX"/>
                                                 <include reference="8MX-6A-14s"/>
+                                                <include reference="X5W-au-hyX"/>
                                                 <include reference="vIW-Xo-bMf"/>
                                                 <include reference="2tF-jq-fst"/>
-                                                <include reference="kJk-jT-dbb"/>
-                                                <include reference="jVP-Q6-lvv"/>
                                                 <include reference="6xd-B8-bYG"/>
-                                                <include reference="zaP-i0-DVQ"/>
-                                                <include reference="h7h-fM-WrA"/>
+                                                <include reference="jVP-Q6-lvv"/>
+                                                <include reference="kJk-jT-dbb"/>
                                                 <include reference="VAK-i1-T8l"/>
+                                                <include reference="h7h-fM-WrA"/>
+                                                <include reference="zaP-i0-DVQ"/>
                                                 <include reference="8AS-hD-9DP"/>
                                             </mask>
                                         </variation>
@@ -657,10 +689,10 @@
                                         <include reference="dvQ-ra-Lqe"/>
                                     </mask>
                                     <mask key="constraints">
-                                        <include reference="lGA-Vu-2Qu"/>
+                                        <include reference="1AK-Ci-91P"/>
                                         <include reference="55Q-Xy-Mug"/>
                                         <include reference="WaR-ef-hIM"/>
-                                        <include reference="1AK-Ci-91P"/>
+                                        <include reference="lGA-Vu-2Qu"/>
                                     </mask>
                                 </variation>
                             </scrollView>
@@ -681,12 +713,12 @@
                                 <include reference="iGn-Wp-eG8"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="aRy-Hh-s5E"/>
-                                <include reference="KwB-AW-n0g"/>
                                 <include reference="EyB-Ut-qmJ"/>
-                                <include reference="Ua4-BE-v3G"/>
+                                <include reference="KwB-AW-n0g"/>
+                                <include reference="aRy-Hh-s5E"/>
                                 <include reference="0vZ-il-ccm"/>
                                 <include reference="4ZE-p4-4Kj"/>
+                                <include reference="Ua4-BE-v3G"/>
                                 <include reference="cgv-rD-iLu"/>
                             </mask>
                         </variation>
@@ -718,7 +750,7 @@
         <!--Choose a Country-->
         <scene sceneID="hWm-DH-iTl">
             <objects>
-                <tableViewController id="Dry-P8-inX" customClass="EVTCountrySelectTVC" sceneMemberID="viewController">
+                <tableViewController id="Dry-P8-inX" customClass="GRVCountrySelectTVC" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="QO1-si-yMp">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -732,7 +764,7 @@
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="United States" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ijE-JG-rSK">
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                             <variation key="widthClass=compact">
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -769,11 +801,11 @@
         <!--Profile Settings: Post Verification-->
         <scene sceneID="pfc-bm-2E0">
             <objects>
-                <tableViewController id="ors-wy-YW9" userLabel="Profile Settings: Post Verification" customClass="EVTRegistrationProfileSettingsTVC" sceneMemberID="viewController">
+                <tableViewController id="ors-wy-YW9" userLabel="Profile Settings: Post Verification" customClass="GRVRegistrationProfileSettingsTVC" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="fEv-Ez-tiB">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
                             <tableViewSection id="qPB-MU-FAa">
                                 <cells>
@@ -783,7 +815,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="XV7-jB-PfG" userLabel="Avatar Button">
-                                                    <rect key="frame" x="20" y="31.5" width="59" height="59"/>
+                                                    <rect key="frame" x="20" y="31" width="59" height="59"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="XV7-jB-PfG" secondAttribute="height" multiplier="1:1" id="VKV-Ik-MlI"/>
                                                         <constraint firstAttribute="width" constant="59" id="eGa-MN-epc"/>
@@ -795,8 +827,8 @@
                                                     </state>
                                                     <variation key="widthClass=compact">
                                                         <mask key="constraints">
-                                                            <include reference="eGa-MN-epc"/>
                                                             <include reference="VKV-Ik-MlI"/>
+                                                            <include reference="eGa-MN-epc"/>
                                                         </mask>
                                                     </variation>
                                                     <connections>
@@ -806,12 +838,12 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Enter your name and add an optional profile picture" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KD7-TM-TpT">
                                                     <rect key="frame" x="99" y="52" width="436" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                                    <color key="textColor" red="0.43529411764705883" green="0.44313725490196076" blue="0.47450980392156861" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="YNt-E6-Lgy">
-                                                    <rect key="frame" x="543" y="42.5" width="37" height="37"/>
-                                                    <color key="color" red="0.2156862745" green="0.58431372550000005" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <rect key="frame" x="543" y="42" width="37" height="37"/>
+                                                    <color key="color" red="0.29803921570000003" green="0.85098039219999999" blue="0.3921568627" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </activityIndicatorView>
                                             </subviews>
                                             <constraints>
@@ -830,13 +862,13 @@
                                                     <include reference="YNt-E6-Lgy"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <include reference="Pqi-hN-69p"/>
                                                     <include reference="NhC-jq-OWg"/>
-                                                    <include reference="Oas-qB-7vL"/>
+                                                    <include reference="Pqi-hN-69p"/>
                                                     <include reference="IQ4-2o-8bK"/>
+                                                    <include reference="Oas-qB-7vL"/>
+                                                    <include reference="M92-W6-6Nf"/>
                                                     <include reference="OMV-U2-xK3"/>
                                                     <include reference="vuS-U0-Omr"/>
-                                                    <include reference="M92-W6-6Nf"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -882,13 +914,13 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Phone Number" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xfs-FQ-gSj">
                                                     <rect key="frame" x="20" y="11.5" width="115.5" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(555) 123 4567" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xpL-My-WcH" userLabel="Phone Number Label">
                                                     <rect key="frame" x="466" y="11.5" width="114" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                                    <color key="textColor" red="0.43529411764705883" green="0.44313725490196076" blue="0.47450980392156861" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -904,10 +936,10 @@
                                                     <include reference="xpL-My-WcH"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <include reference="76g-cQ-SNm"/>
                                                     <include reference="6Qn-gs-R9J"/>
-                                                    <include reference="nRI-6w-hDo"/>
+                                                    <include reference="76g-cQ-SNm"/>
                                                     <include reference="HT8-CS-mGw"/>
+                                                    <include reference="nRI-6w-hDo"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -933,6 +965,7 @@
                         <outlet property="doneButton" destination="poL-Rh-kzo" id="YA9-EA-hmc"/>
                         <outlet property="phoneNumberLabel" destination="xpL-My-WcH" id="Oh3-9E-Qir"/>
                         <outlet property="spinner" destination="YNt-E6-Lgy" id="DDY-dE-Eqv"/>
+                        <segue destination="FEH-fj-5s4" kind="show" identifier="postActivationShowVideos" id="FIh-LZ-TjA"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x3e-ql-lVR" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -941,10 +974,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="chevron" width="100" height="100"/>
+        <image name="chevron" width="8" height="13"/>
         <image name="launchIcon" width="103" height="100"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="fro-ZD-Pot"/>
         <segue reference="Zm6-vw-LFG"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.29803921570000003" green="0.85098039219999999" blue="0.3921568627" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

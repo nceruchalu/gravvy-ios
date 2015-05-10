@@ -56,6 +56,9 @@ NSString *const kGRVRESTUserUpdatedAtKey            = @"updated_at";
 NSString *const kGRVRESTUserPasswordKey             = @"password";
 NSString *const kGRVRESTUserPhoneNumberKey          = @"phone_number";
 
+// Push registration object
+NSString *const kGRVRESTPushRegistrationIdKey       = @"registration_id";
+
 
 // -----------------------------------------------------------------------------
 // User Credentials
