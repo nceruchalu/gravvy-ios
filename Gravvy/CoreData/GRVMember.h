@@ -13,6 +13,7 @@
 
 @interface GRVMember : NSManagedObject
 
+@property (nonatomic, retain) NSDate * createdAt;
 @property (nonatomic, retain) NSNumber * status;
 @property (nonatomic, retain) NSDate * updatedAt;
 @property (nonatomic, retain) GRVUser *user;

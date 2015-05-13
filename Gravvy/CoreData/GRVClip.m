@@ -13,11 +13,11 @@
 
 @implementation GRVClip
 
-@dynamic order;
-@dynamic mp4URL;
 @dynamic duration;
+@dynamic mp4URL;
+@dynamic order;
 @dynamic updatedAt;
-@dynamic video;
 @dynamic owner;
+@dynamic video;
 
 @end

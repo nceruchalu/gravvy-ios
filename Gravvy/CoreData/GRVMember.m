@@ -13,6 +13,7 @@
 
 @implementation GRVMember
 
+@dynamic createdAt;
 @dynamic status;
 @dynamic updatedAt;
 @dynamic user;

@@ -14,16 +14,17 @@
 
 @implementation GRVVideo
 
+@dynamic createdAt;
 @dynamic details;
 @dynamic hashKey;
+@dynamic likesCount;
+@dynamic membership;
+@dynamic photoThumbnailURL;
+@dynamic playsCount;
 @dynamic title;
 @dynamic updatedAt;
-@dynamic likesCount;
-@dynamic playsCount;
-@dynamic photoThumbnailURL;
-@dynamic createdAt;
+@dynamic clips;
 @dynamic members;
 @dynamic owner;
-@dynamic clips;
 
 @end

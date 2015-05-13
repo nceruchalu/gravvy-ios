@@ -13,11 +13,11 @@
 
 @interface GRVClip : NSManagedObject
 
-@property (nonatomic, retain) NSNumber * order;
-@property (nonatomic, retain) NSString * mp4URL;
 @property (nonatomic, retain) NSNumber * duration;
+@property (nonatomic, retain) NSString * mp4URL;
+@property (nonatomic, retain) NSNumber * order;
 @property (nonatomic, retain) NSDate * updatedAt;
-@property (nonatomic, retain) GRVVideo *video;
 @property (nonatomic, retain) GRVUser *owner;
+@property (nonatomic, retain) GRVVideo *video;
 
 @end
