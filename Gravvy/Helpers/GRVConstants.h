@@ -52,6 +52,11 @@
  */
 extern const BOOL kGRVReachabilityRequired;
 
+/**
+ * kGRVClipMaximumDuration is the maximum duration, in seconds, of a video clip
+ */
+extern const NSTimeInterval kGRVClipMaximumDuration;
+
 
 // -----------------------------------------------------------------------------
 // HTTP Connection info.

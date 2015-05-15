@@ -147,10 +147,10 @@
             </objects>
             <point key="canvasLocation" x="3592.5" y="329"/>
         </scene>
-        <!--Container View Controller-->
+        <!--Landing View Controller-->
         <scene sceneID="LNb-j2-kfj">
             <objects>
-                <viewController id="FEH-fj-5s4" userLabel="Container View Controller" sceneMemberID="viewController">
+                <viewController id="FEH-fj-5s4" userLabel="Landing View Controller" customClass="GRVLandingViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="eiz-7z-HV5"/>
                         <viewControllerLayoutGuide type="bottom" id="KUA-dZ-rzT"/>
@@ -159,17 +159,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Here we go" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3W5-FA-Q0c">
-                                <rect key="frame" x="235" y="240" width="88" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v5n-VR-w5o" userLabel="Record Video Button">
+                                <rect key="frame" x="270" y="520" width="60" height="60"/>
+                                <state key="normal" image="startRecording">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="recordVideo:" destination="FEH-fj-5s4" eventType="touchUpInside" id="y5T-RX-EAK"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="3W5-FA-Q0c" secondAttribute="centerX" constant="21" id="VHS-pB-0Fd"/>
-                            <constraint firstAttribute="centerY" secondItem="3W5-FA-Q0c" secondAttribute="centerY" constant="49.5" id="wnk-iZ-HcZ"/>
+                            <constraint firstItem="KUA-dZ-rzT" firstAttribute="top" secondItem="v5n-VR-w5o" secondAttribute="bottom" constant="20" id="5rA-gh-Xi3"/>
+                            <constraint firstAttribute="centerX" secondItem="v5n-VR-w5o" secondAttribute="centerX" id="lWI-zf-P46"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -976,6 +979,7 @@
     <resources>
         <image name="chevron" width="8" height="13"/>
         <image name="launchIcon" width="103" height="100"/>
+        <image name="startRecording" width="60" height="60"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="fro-ZD-Pot"/>

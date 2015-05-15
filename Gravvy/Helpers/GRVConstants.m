@@ -17,13 +17,19 @@ const BOOL kGRVReachabilityRequired = NO;
 const BOOL kGRVReachabilityRequired = YES;
 #endif
 
+const NSTimeInterval kGRVClipMaximumDuration = 5.0f;
 
 // -----------------------------------------------------------------------------
 // HTTP Connection info.
 // -----------------------------------------------------------------------------
 #if DEBUG
-// An IP address won't work on the simulator.
-NSString *const kGRVHTTPBaseURL         = @"http://localhost:8000/api/v1/";
+    // An IP address won't work on the simulator.
+    #if TARGET_IPHONE_SIMULATOR
+    NSString *const kGRVHTTPBaseURL     = @"http://localhost:8000/api/v1/";
+    #else
+    NSString *const kGRVHTTPBaseURL     = @"http://10.0.0.4:8000/api/v1/";
+    #endif
+
 #else
 NSString *const kGRVHTTPBaseURL         = @"http://gravvy.nnoduka.com/api/v1/";
 #endif

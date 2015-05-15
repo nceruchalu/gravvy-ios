@@ -36,12 +36,19 @@
 	</dict>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>We need to access your camera to capture and upload clips.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>We use your contacts to help you invite friends to videos. Your contacts will never leave your device.</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2015 Nnoduka Eruchalu. All rights reserved.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
+		<string>telephony</string>
 		<string>armv7</string>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
