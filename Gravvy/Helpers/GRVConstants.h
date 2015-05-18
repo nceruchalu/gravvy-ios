@@ -27,9 +27,9 @@
 // Colors
 // -----------------------------------------------------------------------------
 /**
- * Theme Color is RGB #4CD964
+ * Theme Color is RGB #00BF8F
  */
-#define kGRVThemeColor [UIColor colorWithRed:76.0/255.0 green:217.0/255.0 blue:100.0/255.0 alpha:1.0]
+#define kGRVThemeColor [UIColor colorWithRed:0.0/255.0 green:191.0/255.0 blue:143.0/255.0 alpha:1.0]
 
 /**
  * Avatar view background color

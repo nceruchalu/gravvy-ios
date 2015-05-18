@@ -65,12 +65,12 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gravvy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xfd-uj-7oF" userLabel="App Name Label">
                                 <rect key="frame" x="259" y="251" width="84" height="31"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="26"/>
-                                <color key="textColor" red="0.29803921570000003" green="0.85098039219999999" blue="0.3921568627" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="0.0" green="0.74901960779999999" blue="0.56078431370000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hea-ct-QfZ" userLabel="Title Border">
                                 <rect key="frame" x="230" y="300" width="140" height="1"/>
-                                <color key="backgroundColor" red="0.29803921570000003" green="0.85098039219999999" blue="0.3921568627" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.0" green="0.74901960779999999" blue="0.56078431370000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="140" id="Gbv-cr-WTj"/>
                                     <constraint firstAttribute="height" constant="1" id="H9H-Rc-H0c"/>
@@ -85,12 +85,12 @@
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="G6m-w7-Cvl">
                                 <rect key="frame" x="20" y="312" width="37" height="37"/>
                                 <color key="tintColor" red="0.2156862745" green="0.58431372550000005" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="color" red="0.29803921570000003" green="0.85098039219999999" blue="0.3921568627" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="color" red="0.0" green="0.74901960784313726" blue="0.5607843137254902" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </activityIndicatorView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connecting ..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="22E-FU-lC1">
                                 <rect key="frame" x="65" y="319" width="485" height="24"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
-                                <color key="textColor" red="0.29803921570000003" green="0.85098039219999999" blue="0.3921568627" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="0.0" green="0.74901960779999999" blue="0.56078431370000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -159,20 +159,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v5n-VR-w5o" userLabel="Record Video Button">
-                                <rect key="frame" x="270" y="520" width="60" height="60"/>
-                                <state key="normal" image="startRecording">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="recordVideo:" destination="FEH-fj-5s4" eventType="touchUpInside" id="y5T-RX-EAK"/>
-                                </connections>
-                            </button>
+                            <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KTZ-Ce-HMD" userLabel="Tab Bar">
+                                <rect key="frame" x="0.0" y="560" width="600" height="40"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="PVR-mM-Rgi"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="KUA-dZ-rzT" firstAttribute="top" secondItem="v5n-VR-w5o" secondAttribute="bottom" constant="20" id="5rA-gh-Xi3"/>
-                            <constraint firstAttribute="centerX" secondItem="v5n-VR-w5o" secondAttribute="centerX" id="lWI-zf-P46"/>
+                            <constraint firstAttribute="trailing" secondItem="KTZ-Ce-HMD" secondAttribute="trailing" id="IOz-x1-Vas"/>
+                            <constraint firstItem="KUA-dZ-rzT" firstAttribute="top" secondItem="KTZ-Ce-HMD" secondAttribute="bottom" id="PcU-Z7-nf5"/>
+                            <constraint firstItem="KTZ-Ce-HMD" firstAttribute="leading" secondItem="13Z-dE-Tnh" secondAttribute="leading" id="T2O-h6-JD8"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -978,12 +977,11 @@
     </scenes>
     <resources>
         <image name="chevron" width="8" height="13"/>
-        <image name="launchIcon" width="103" height="100"/>
-        <image name="startRecording" width="60" height="60"/>
+        <image name="launchIcon" width="102" height="100"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="fro-ZD-Pot"/>
         <segue reference="Zm6-vw-LFG"/>
     </inferredMetricsTieBreakers>
-    <color key="tintColor" red="0.29803921570000003" green="0.85098039219999999" blue="0.3921568627" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+    <color key="tintColor" red="0.0" green="0.74901960784313726" blue="0.5607843137254902" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
