@@ -121,6 +121,12 @@
 		4089BFEC1B03BC17003DF4AA /* CoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4089BFEB1B03BC17003DF4AA /* CoreDataTableViewController.m */; };
 		4089BFF11B03BC36003DF4AA /* ExtendedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4089BFEE1B03BC36003DF4AA /* ExtendedTableViewController.m */; };
 		4089BFF21B03BC36003DF4AA /* ExtendedCoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4089BFF01B03BC36003DF4AA /* ExtendedCoreDataTableViewController.m */; };
+		40F937BC1B0C46B0000F7BCB /* GRVSettingsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 40F937BB1B0C46B0000F7BCB /* GRVSettingsTVC.m */; };
+		40F937BE1B0C46F2000F7BCB /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40F937BD1B0C46F2000F7BCB /* MessageUI.framework */; };
+		40F937C11B0C4849000F7BCB /* GRVSettingsProfileSettingsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 40F937C01B0C4849000F7BCB /* GRVSettingsProfileSettingsTVC.m */; };
+		40F937C41B0C48CE000F7BCB /* GRVTextViewContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 40F937C31B0C48CE000F7BCB /* GRVTextViewContainer.m */; };
+		40F937C71B0C491F000F7BCB /* GRVFeedbackFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40F937C61B0C491F000F7BCB /* GRVFeedbackFormViewController.m */; };
+		40F937CA1B0C4A81000F7BCB /* GRVAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40F937C91B0C4A81000F7BCB /* GRVAboutViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -353,6 +359,17 @@
 		4089BFEE1B03BC36003DF4AA /* ExtendedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtendedTableViewController.m; sourceTree = "<group>"; };
 		4089BFEF1B03BC36003DF4AA /* ExtendedCoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtendedCoreDataTableViewController.h; sourceTree = "<group>"; };
 		4089BFF01B03BC36003DF4AA /* ExtendedCoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtendedCoreDataTableViewController.m; sourceTree = "<group>"; };
+		40F937BA1B0C46B0000F7BCB /* GRVSettingsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVSettingsTVC.h; sourceTree = "<group>"; };
+		40F937BB1B0C46B0000F7BCB /* GRVSettingsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVSettingsTVC.m; sourceTree = "<group>"; };
+		40F937BD1B0C46F2000F7BCB /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		40F937BF1B0C4849000F7BCB /* GRVSettingsProfileSettingsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVSettingsProfileSettingsTVC.h; sourceTree = "<group>"; };
+		40F937C01B0C4849000F7BCB /* GRVSettingsProfileSettingsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVSettingsProfileSettingsTVC.m; sourceTree = "<group>"; };
+		40F937C21B0C48CE000F7BCB /* GRVTextViewContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVTextViewContainer.h; sourceTree = "<group>"; };
+		40F937C31B0C48CE000F7BCB /* GRVTextViewContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVTextViewContainer.m; sourceTree = "<group>"; };
+		40F937C51B0C491F000F7BCB /* GRVFeedbackFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVFeedbackFormViewController.h; sourceTree = "<group>"; };
+		40F937C61B0C491F000F7BCB /* GRVFeedbackFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVFeedbackFormViewController.m; sourceTree = "<group>"; };
+		40F937C81B0C4A81000F7BCB /* GRVAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVAboutViewController.h; sourceTree = "<group>"; };
+		40F937C91B0C4A81000F7BCB /* GRVAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVAboutViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -360,6 +377,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40F937BE1B0C46F2000F7BCB /* MessageUI.framework in Frameworks */,
 				403BC9571AFF4514009BBD2B /* AddressBook.framework in Frameworks */,
 				407623D01AFF270200100550 /* AudioToolbox.framework in Frameworks */,
 				407623AD1AFEF6A000100550 /* QuartzCore.framework in Frameworks */,
@@ -471,6 +489,7 @@
 		4076209C1AFED85400100550 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				40F937BD1B0C46F2000F7BCB /* MessageUI.framework */,
 				403BC9561AFF4514009BBD2B /* AddressBook.framework */,
 				407623CF1AFF270200100550 /* AudioToolbox.framework */,
 				407623A41AFEF2AD00100550 /* Crashlytics.framework */,
@@ -521,6 +540,16 @@
 				402875AF1B047FFC00699F60 /* GRVVideosCDTVC.m */,
 				402875B11B0483F200699F60 /* GRVLandingViewController.h */,
 				402875B21B0483F300699F60 /* GRVLandingViewController.m */,
+				40F937BA1B0C46B0000F7BCB /* GRVSettingsTVC.h */,
+				40F937BB1B0C46B0000F7BCB /* GRVSettingsTVC.m */,
+				40F937BF1B0C4849000F7BCB /* GRVSettingsProfileSettingsTVC.h */,
+				40F937C01B0C4849000F7BCB /* GRVSettingsProfileSettingsTVC.m */,
+				40F937C21B0C48CE000F7BCB /* GRVTextViewContainer.h */,
+				40F937C31B0C48CE000F7BCB /* GRVTextViewContainer.m */,
+				40F937C51B0C491F000F7BCB /* GRVFeedbackFormViewController.h */,
+				40F937C61B0C491F000F7BCB /* GRVFeedbackFormViewController.m */,
+				40F937C81B0C4A81000F7BCB /* GRVAboutViewController.h */,
+				40F937C91B0C4A81000F7BCB /* GRVAboutViewController.m */,
 				402329911B09AA0200BFD2D5 /* ContainerTransitions */,
 			);
 			path = Controller;
@@ -930,10 +959,12 @@
 				403BC9461AFF3DFB009BBD2B /* GRVUser.m in Sources */,
 				407623671AFEF0E300100550 /* NBPhoneMetaDataGenerator.m in Sources */,
 				407623601AFEF0E300100550 /* NBMetadataCore.m in Sources */,
+				40F937C11B0C4849000F7BCB /* GRVSettingsProfileSettingsTVC.m in Sources */,
 				402875B31B0483F300699F60 /* GRVLandingViewController.m in Sources */,
 				407623991AFEF13400100550 /* UIImage+GIF.m in Sources */,
 				407623181AFEF08E00100550 /* UIRefreshControl+AFNetworking.m in Sources */,
 				407623951AFEF13400100550 /* SDWebImageDownloaderOperation.m in Sources */,
+				40F937C71B0C491F000F7BCB /* GRVFeedbackFormViewController.m in Sources */,
 				4034AD8E1B001DBA00162F2C /* GRVClip.m in Sources */,
 				407623151AFEF08E00100550 /* UIButton+AFNetworking.m in Sources */,
 				407623D31AFF275000100550 /* GRVRegion.m in Sources */,
@@ -941,11 +972,13 @@
 				4076232A1AFEF0B900100550 /* AWPercentDrivenInteractiveTransition.m in Sources */,
 				407623091AFEF08E00100550 /* AFHTTPRequestOperation.m in Sources */,
 				402875B01B047FFC00699F60 /* GRVVideosCDTVC.m in Sources */,
+				40F937BC1B0C46B0000F7BCB /* GRVSettingsTVC.m in Sources */,
 				407623C21AFF209C00100550 /* GRVAccountManager.m in Sources */,
 				407623901AFEF13400100550 /* NSData+ImageContentType.m in Sources */,
 				407623621AFEF0E300100550 /* NBMetadataCoreTest.m in Sources */,
 				407623611AFEF0E300100550 /* NBMetadataCoreMapper.m in Sources */,
 				407620CB1AFEEE8A00100550 /* KeychainItemWrapper.m in Sources */,
+				40F937CA1B0C4A81000F7BCB /* GRVAboutViewController.m in Sources */,
 				407623D91AFF28B600100550 /* GRVUserAvatarView.m in Sources */,
 				4034AD821B000CA600162F2C /* GRVCountrySelectTVC.m in Sources */,
 				4076239E1AFEF13400100550 /* UIView+WebCacheOperation.m in Sources */,
@@ -1000,6 +1033,7 @@
 				407620791AFEC41200100550 /* main.m in Sources */,
 				407623DC1AFF2B1400100550 /* GRVAlertBannerView.m in Sources */,
 				407623981AFEF13400100550 /* UIButton+WebCache.m in Sources */,
+				40F937C41B0C48CE000F7BCB /* GRVTextViewContainer.m in Sources */,
 				407623BC1AFF18FF00100550 /* GRVConstants.m in Sources */,
 				4034AD911B001DBB00162F2C /* GRVVideo.m in Sources */,
 				4076230D1AFEF08E00100550 /* AFSecurityPolicy.m in Sources */,

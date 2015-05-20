@@ -26,8 +26,11 @@
 #pragma mark - Properties
 /**
  * An array of the child view controllers managed by the container view controller
+ *
+ * @warning Don't update this after initial setup in the `setupViewControllers`
+ *      instance method
  */
-@property (copy, nonatomic, readonly) NSArray *viewControllers;
+@property (copy, nonatomic) NSArray *viewControllers;
 
 /**
  * The container view controller delegate receiving the protocol callbacks.
@@ -77,5 +80,47 @@
  *      This approach is similar to what's done in UINavigationController
  */
 @property (strong, nonatomic, readonly) UIGestureRecognizer *interactiveTransitionGestureRecognizer;
+
+
+#pragma mark - Initialization
+#pragma mark Abstract Helpers
+/**
+ * Set up the `GRVContainerViewController` object with child controllers by
+ * instantiating the viewControllers @property
+ *
+ * @note This method is called in the initialization method so it's required.
+ */
+- (void)setupViewControllers;
+
+/**
+ * Setup a collection of navigation buttons to:
+ *   - Use same ordering as viewControllers
+ *   - Track button index in the button's tag property
+ *   - Set up button target/action method to call the navigationButtonTapped:
+ *     method
+ *
+ * @note This method is called in viewDidLoad and is required for a consistent 
+ *      user interface.
+ */
+- (void)setupNavigationButtons;
+
+
+#pragma mark - Instance Methods
+#pragma mark Abstract
+/**
+ * Update the selected navigation button, based on the selectedIndex @property,
+ * and deselect all other navigation buttons.
+ */
+- (void)updateNavigationButtonSelection;
+
+
+#pragma mark - Target/Action Methods
+/**
+ * Naviation button tapped so change selected view controller
+ * 
+ * @param button    navigation button that has been tapped and has
+ */
+- (void)navigationButtonTapped:(UIButton *)button;
+
 
 @end

@@ -9,6 +9,13 @@
 #import "GRVConstants.h"
 
 // -----------------------------------------------------------------------------
+// Fonts
+// -----------------------------------------------------------------------------
+NSString *const kGRVThemeFontRegular    = @"HelveticaNeue-Light";
+NSString *const kGRVThemeFontBold       = @"HelveticaNeue-Bold";
+
+
+// -----------------------------------------------------------------------------
 // App Configuration info.
 // -----------------------------------------------------------------------------
 #if DEBUG
@@ -45,6 +52,7 @@ NSString *const kGRVRESTAccountActivateAccount  = @"account/activate/";
 NSString *const kGRVRESTAccountObtainAuthToken  = @"account/auth/";
 NSString *const kGRVRESTUser                    = @"user/";
 NSString *const kGRVRESTPushRegister            = @"push/apns/";
+NSString *const kGRVRESTFeedbacks               = @"feedbacks/";
 
 
 // -----------------------------------------------------------------------------
@@ -64,6 +72,9 @@ NSString *const kGRVRESTUserPhoneNumberKey          = @"phone_number";
 
 // Push registration object
 NSString *const kGRVRESTPushRegistrationIdKey       = @"registration_id";
+
+// Feedback object
+NSString *const kGRVRESTFeedbackBodyKey             = @"body";
 
 
 // -----------------------------------------------------------------------------

@@ -255,7 +255,7 @@ static const NSInteger kAddPhotoChooseButtonIndex   = 1; // Choose Existing
         // delete image on server
         [self.spinner startAnimating];
         NSDictionary *parameters = @{kGRVRESTUserAvatarKey: @""};
-        [[GRVHTTPManager sharedManager] request:GRVHTTPMethodPUT
+        [[GRVHTTPManager sharedManager] request:GRVHTTPMethodPATCH
                                          forURL:kGRVRESTUser
                                      parameters:parameters
                                         success:^(NSURLSessionDataTask *task, id responseObject) {
@@ -344,7 +344,7 @@ static const NSInteger kAddPhotoChooseButtonIndex   = 1; // Choose Existing
     cameraUI.sourceType = sourceType;
     
     // Show the controls for moving & scaling pictures
-    cameraUI.allowsEditing = NO;
+    cameraUI.allowsEditing = YES;
     
     cameraUI.delegate = self;
     

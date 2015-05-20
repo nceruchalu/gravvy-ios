@@ -97,6 +97,15 @@ static NSString *const kRemoteNotificationSoundFileExtension = @"caf";
     // Initialize Fabric with Crashlytics Kit
     [Fabric with:@[CrashlyticsKit]];
     
+    // Setup custom appearances
+    [[UINavigationBar appearance] setBarTintColor:kGRVThemeColor];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    
+    UIFont *titleFont = [UIFont fontWithName:kGRVThemeFontBold size:20.0f];
+    NSDictionary *titleAttributes = @{NSFontAttributeName : titleFont,
+                                      NSForegroundColorAttributeName: [UIColor whiteColor]};
+    [[UINavigationBar appearance] setTitleTextAttributes:titleAttributes];
+    
     // Starting app from "Not running" state.
     self.activatedFromBackground = NO;
     

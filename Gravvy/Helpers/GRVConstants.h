@@ -41,6 +41,17 @@
  */
 #define kGRVUserAvatarTextColor [UIColor whiteColor]
 
+
+// -----------------------------------------------------------------------------
+// Fonts
+// -----------------------------------------------------------------------------
+/**
+ * Theme Font
+ */
+extern NSString *const kGRVThemeFontRegular;
+extern NSString *const kGRVThemeFontBold;
+
+
 // -----------------------------------------------------------------------------
 // App Configuration info.
 // -----------------------------------------------------------------------------
@@ -101,6 +112,11 @@ extern NSString *const kGRVRESTUser;
  */
 extern NSString *const kGRVRESTPushRegister;
 
+/**
+ * kGRVRESTFeedbacks: URL for submitting feedback
+ */
+extern NSString *const kGRVRESTFeedbacks;
+
 
 // -----------------------------------------------------------------------------
 // REST API Object Keys
@@ -119,6 +135,9 @@ extern NSString *const kGRVRESTUserPhoneNumberKey;
 
 // Push registration object
 extern NSString *const kGRVRESTPushRegistrationIdKey;
+
+// Feedback object
+extern NSString *const kGRVRESTFeedbackBodyKey;
 
 
 // -----------------------------------------------------------------------------

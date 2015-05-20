@@ -7,54 +7,31 @@
 //
 
 #import "GRVContainerViewController.h"
-#import "GRVConstants.h"
 #import "GRVContainerViewControllerDelegate.h"
 #import "GRVPrivateTransitionContext.h"
 #import "GRVPrivateAnimatedTransition.h"
 #import "GRVPanGestureInteractiveTransition.h"
 
 
-#pragma mark - Constants
-/**
- * Spacing between navigation button text and image
- */
-static CGFloat const kNavigationButtonSpacing = 4.0f;
-
-/**
- * Inactive button tint color: #757A82
- */
-#define kInactiveTintColor [UIColor colorWithRed:117.0/255.0 green:122.0/255.0 blue:130.0/255.0 alpha:1.0]
-
-static NSString *const kStoryboardName                      = @"Main";
-/**
- * Child view controllers' storyboard identifiers
- */
-static NSString *const kStoryboardIdentifierEventOptions    = @"EventOptions";
-static NSString *const kStoryboardIdentifierEventChat       = @"EventChat";
-static NSString *const kStoryboardIdentifierEventPhotos     = @"EventPhotos";
-static NSString *const kStoryboardIdentifierEventInfo       = @"EventInfo";
-
-
 @interface GRVContainerViewController ()
 
 #pragma mark - Properties
 #pragma mark Private
-// Make readonly properties readwrite internally
-@property (copy, nonatomic, readwrite) NSArray *viewControllers;
-
-// ordering of navigation buttons matches that of view controllers
-@property (copy, nonatomic) NSArray *navigationButtons;
-
-// The default, pan gesture enabled interactive transition controller
+/**
+ * The default, pan gesture enabled interactive transition controller
+ */
 @property (strong, nonatomic) GRVPanGestureInteractiveTransition *defaultInteractionController;
 
 #pragma mark Outlets
-@property (weak, nonatomic) IBOutlet UIButton *optionsButton;
-@property (weak, nonatomic) IBOutlet UIButton *chatButton;
-@property (weak, nonatomic) IBOutlet UIButton *photosButton;
-@property (weak, nonatomic) IBOutlet UIButton *infoButton;
-
+/**
+ * Container view of navigation buttons
+ */
 @property (weak, nonatomic) IBOutlet UIView *navigationButtonsContainerView;
+
+/**
+ * Container view that serves as the superview of the root view of the currently
+ * displayed View Controller
+ */
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 
 @end
@@ -105,70 +82,21 @@ static NSString *const kStoryboardIdentifierEventInfo       = @"EventInfo";
  */
 - (void)setup
 {
-    // First grab storyboard to grab view controllers
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:kStoryboardName bundle:nil];
-    
-    // Instantiate and initialize view controllers
-    UIViewController *eventOptionsVC = (UIViewController *)[storyboard instantiateViewControllerWithIdentifier:kStoryboardIdentifierEventOptions];
-    UIViewController *eventChatVC = (UIViewController *)[storyboard instantiateViewControllerWithIdentifier:kStoryboardIdentifierEventChat];
-    UIViewController *eventPhotosVC = (UIViewController *)[storyboard instantiateViewControllerWithIdentifier:kStoryboardIdentifierEventPhotos];
-    UIViewController *eventInfoVC = (UIViewController *)[storyboard instantiateViewControllerWithIdentifier:kStoryboardIdentifierEventInfo];
-    
-    // ordering of the view controllers must match ordering of self.navigationButtons
-    self.viewControllers = @[eventOptionsVC, eventChatVC, eventPhotosVC, eventInfoVC];
-    
-    // Don't want to trigger any side effects
+    // Don't want to trigger any side effects when setting the intial child VC
     _selectedIndex = 0;
+    
+    [self setupViewControllers];
 }
 
-/**
- * Setup the navigation buttons to:
- * - Use same ordering as viewControllers
- * - Use content from the viewControllers tabBarItems
- * - Have image tint color be same as button tint color
- * - Center navigation button images above the text without any magic numbers
- * - Show inactive tint colors
- * - Set selected index to active
- */
+#pragma mark Abstract
+- (void)setupViewControllers
+{
+    // abstract
+}
+
 - (void)setupNavigationButtons
 {
-    // Ordering of the navigation buttons must match ordering of self.viewControllers
-    self.navigationButtons = @[self.optionsButton, self.chatButton, self.photosButton, self.infoButton];
-    
-    NSUInteger idx = 0;
-    for (idx=0; idx < [self.navigationButtons count]; idx++) {
-        UIButton *navigationButton = self.navigationButtons[idx];
-        
-        // Track button index in the tag attribute
-        navigationButton.tag = idx;
-        
-        // Set up button target/action method
-        [navigationButton addTarget:self action:@selector(navigationButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-        
-        // Configure image tint color
-        UITabBarItem *tabBarItem = ((UIViewController *)self.viewControllers[idx]).tabBarItem;
-        UIImage *image = [tabBarItem.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-        NSString *title = tabBarItem.title;
-        
-        [navigationButton setImage:image forState:UIControlStateNormal];
-        [navigationButton setTitle:title forState:UIControlStateNormal];
-        
-        // Center image above text
-        // lower the text and push it left so it appears centered below the image
-        CGSize imageSize = image.size;
-        navigationButton.titleEdgeInsets = UIEdgeInsetsMake(0.0f, -imageSize.width, -(imageSize.height+kNavigationButtonSpacing), 0.0f);
-        
-        // raise the image and push it right so it appears centered above the text
-        UILabel *titleLabel = navigationButton.titleLabel;
-        CGSize titleSize = [titleLabel.text sizeWithAttributes:@{NSFontAttributeName : titleLabel.font}];
-        navigationButton.imageEdgeInsets = UIEdgeInsetsMake(-(titleSize.height + kNavigationButtonSpacing), 0.0f, 0.0f, -titleSize.width);
-        
-        // Set to inactive tint color
-        navigationButton.tintColor = kInactiveTintColor;
-    }
-    
-    // Make the options tab active
-    self.optionsButton.tintColor = kGRVThemeColor;
+    // abstract
 }
 
 #pragma mark - View Lifecycle
@@ -184,21 +112,14 @@ static NSString *const kStoryboardIdentifierEventInfo       = @"EventInfo";
 
 
 #pragma mark - Instance Methods
-#pragma mark Private
-/**
- * Update the selected navigation button, and deselect all other navigation buttons.
- */
+#pragma mark Abstract
+
 - (void)updateNavigationButtonSelection
 {
-    [self.navigationButtons enumerateObjectsUsingBlock:^(UIButton *navigationButton, NSUInteger idx, BOOL *stop) {
-        navigationButton.selected = self.viewControllers[idx] == self.selectedViewController;
-        
-        UIColor *buttonColor = navigationButton.selected ? kGRVThemeColor : kInactiveTintColor;
-        navigationButton.tintColor = buttonColor;
-        [navigationButton setTitleColor:buttonColor forState:UIControlStateNormal];
-    }];
+    // Abstract
 }
 
+#pragma mark Private
 /**
  * Add pan gesture recognizer and setup for interactive transition on the child
  * view controllers.
@@ -390,16 +311,6 @@ toViewController:(UIViewController *)toViewController
         [self.delegate containerViewController:self didSelectViewController:self.selectedViewController];
     }
 }
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 
 @end
