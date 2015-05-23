@@ -14,17 +14,22 @@
 NSString *const kGRVThemeFontRegular    = @"HelveticaNeue-Light";
 NSString *const kGRVThemeFontBold       = @"HelveticaNeue-Bold";
 
+// -----------------------------------------------------------------------------
+// Styling
+// -----------------------------------------------------------------------------
+const float kGRVButtonCornerRadius      = 5.0f;
 
 // -----------------------------------------------------------------------------
 // App Configuration info.
 // -----------------------------------------------------------------------------
 #if DEBUG
-const BOOL kGRVReachabilityRequired = NO;
+const BOOL kGRVReachabilityRequired     = NO;
 #else
-const BOOL kGRVReachabilityRequired = YES;
+const BOOL kGRVReachabilityRequired     = YES;
 #endif
 
 const NSTimeInterval kGRVClipMaximumDuration = 5.0f;
+const NSTimeInterval kGRVClipMinimumDuration = 1.0f;
 
 // -----------------------------------------------------------------------------
 // HTTP Connection info.

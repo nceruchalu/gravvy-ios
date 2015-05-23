@@ -53,6 +53,15 @@ extern NSString *const kGRVThemeFontBold;
 
 
 // -----------------------------------------------------------------------------
+// Styling
+// -----------------------------------------------------------------------------
+/**
+ * kGRVButtonCornerRadius is the default corner radius of rounded custom buttons
+ */
+extern const float kGRVButtonCornerRadius;
+
+
+// -----------------------------------------------------------------------------
 // App Configuration info.
 // -----------------------------------------------------------------------------
 /**
@@ -67,6 +76,11 @@ extern const BOOL kGRVReachabilityRequired;
  * kGRVClipMaximumDuration is the maximum duration, in seconds, of a video clip
  */
 extern const NSTimeInterval kGRVClipMaximumDuration;
+
+/**
+ * kGRVClipMinimumDuration is the minimum duration, in seconds, of a video clip
+ */
+extern const NSTimeInterval kGRVClipMinimumDuration;
 
 
 // -----------------------------------------------------------------------------

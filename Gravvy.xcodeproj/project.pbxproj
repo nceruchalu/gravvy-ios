@@ -32,6 +32,11 @@
 		403BC9551AFF4381009BBD2B /* GRVContact+AddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 403BC9541AFF4381009BBD2B /* GRVContact+AddressBook.m */; };
 		403BC9571AFF4514009BBD2B /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 403BC9561AFF4514009BBD2B /* AddressBook.framework */; };
 		403BC95A1AFF468C009BBD2B /* GRVAddressBookManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 403BC9591AFF468C009BBD2B /* GRVAddressBookManager.m */; };
+		403D344A1B100E8F004FF19E /* GRVCameraSlideView.m in Sources */ = {isa = PBXBuildFile; fileRef = 403D34491B100E8F004FF19E /* GRVCameraSlideView.m */; };
+		403D344D1B101406004FF19E /* GRVCameraSlideUpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 403D344C1B101406004FF19E /* GRVCameraSlideUpView.m */; };
+		403D34531B101528004FF19E /* GRVCameraSlideDownView.m in Sources */ = {isa = PBXBuildFile; fileRef = 403D34521B101528004FF19E /* GRVCameraSlideDownView.m */; };
+		403D34551B1015FF004FF19E /* GRVCameraSlideUpView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 403D34541B1015FF004FF19E /* GRVCameraSlideUpView.xib */; };
+		403D34571B101630004FF19E /* GRVCameraSlideDownView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 403D34561B101630004FF19E /* GRVCameraSlideDownView.xib */; };
 		407620791AFEC41200100550 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 407620781AFEC41200100550 /* main.m */; };
 		4076207C1AFEC41200100550 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4076207B1AFEC41200100550 /* AppDelegate.m */; };
 		407620821AFEC41200100550 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 407620801AFEC41200100550 /* Main.storyboard */; };
@@ -121,6 +126,8 @@
 		4089BFEC1B03BC17003DF4AA /* CoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4089BFEB1B03BC17003DF4AA /* CoreDataTableViewController.m */; };
 		4089BFF11B03BC36003DF4AA /* ExtendedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4089BFEE1B03BC36003DF4AA /* ExtendedTableViewController.m */; };
 		4089BFF21B03BC36003DF4AA /* ExtendedCoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4089BFF01B03BC36003DF4AA /* ExtendedCoreDataTableViewController.m */; };
+		40D853BC1B0C69D1001A206A /* GRVCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D853B91B0C69D1001A206A /* GRVCameraViewController.m */; };
+		40D853BD1B0C69D1001A206A /* GRVCameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40D853BA1B0C69D1001A206A /* GRVCameraViewController.xib */; };
 		40F937BC1B0C46B0000F7BCB /* GRVSettingsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 40F937BB1B0C46B0000F7BCB /* GRVSettingsTVC.m */; };
 		40F937BE1B0C46F2000F7BCB /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40F937BD1B0C46F2000F7BCB /* MessageUI.framework */; };
 		40F937C11B0C4849000F7BCB /* GRVSettingsProfileSettingsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 40F937C01B0C4849000F7BCB /* GRVSettingsProfileSettingsTVC.m */; };
@@ -190,6 +197,14 @@
 		403BC9561AFF4514009BBD2B /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		403BC9581AFF468C009BBD2B /* GRVAddressBookManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVAddressBookManager.h; sourceTree = "<group>"; };
 		403BC9591AFF468C009BBD2B /* GRVAddressBookManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVAddressBookManager.m; sourceTree = "<group>"; };
+		403D34481B100E8F004FF19E /* GRVCameraSlideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVCameraSlideView.h; sourceTree = "<group>"; };
+		403D34491B100E8F004FF19E /* GRVCameraSlideView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVCameraSlideView.m; sourceTree = "<group>"; };
+		403D344B1B101406004FF19E /* GRVCameraSlideUpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVCameraSlideUpView.h; sourceTree = "<group>"; };
+		403D344C1B101406004FF19E /* GRVCameraSlideUpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVCameraSlideUpView.m; sourceTree = "<group>"; };
+		403D34511B101528004FF19E /* GRVCameraSlideDownView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVCameraSlideDownView.h; sourceTree = "<group>"; };
+		403D34521B101528004FF19E /* GRVCameraSlideDownView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVCameraSlideDownView.m; sourceTree = "<group>"; };
+		403D34541B1015FF004FF19E /* GRVCameraSlideUpView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GRVCameraSlideUpView.xib; sourceTree = "<group>"; };
+		403D34561B101630004FF19E /* GRVCameraSlideDownView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GRVCameraSlideDownView.xib; sourceTree = "<group>"; };
 		407620731AFEC41200100550 /* Gravvy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Gravvy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		407620771AFEC41200100550 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		407620781AFEC41200100550 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -359,6 +374,9 @@
 		4089BFEE1B03BC36003DF4AA /* ExtendedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtendedTableViewController.m; sourceTree = "<group>"; };
 		4089BFEF1B03BC36003DF4AA /* ExtendedCoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtendedCoreDataTableViewController.h; sourceTree = "<group>"; };
 		4089BFF01B03BC36003DF4AA /* ExtendedCoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtendedCoreDataTableViewController.m; sourceTree = "<group>"; };
+		40D853B81B0C69D1001A206A /* GRVCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVCameraViewController.h; sourceTree = "<group>"; };
+		40D853B91B0C69D1001A206A /* GRVCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVCameraViewController.m; sourceTree = "<group>"; };
+		40D853BA1B0C69D1001A206A /* GRVCameraViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GRVCameraViewController.xib; sourceTree = "<group>"; };
 		40F937BA1B0C46B0000F7BCB /* GRVSettingsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVSettingsTVC.h; sourceTree = "<group>"; };
 		40F937BB1B0C46B0000F7BCB /* GRVSettingsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVSettingsTVC.m; sourceTree = "<group>"; };
 		40F937BD1B0C46F2000F7BCB /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -550,6 +568,7 @@
 				40F937C61B0C491F000F7BCB /* GRVFeedbackFormViewController.m */,
 				40F937C81B0C4A81000F7BCB /* GRVAboutViewController.h */,
 				40F937C91B0C4A81000F7BCB /* GRVAboutViewController.m */,
+				40D853AF1B0C5FAA001A206A /* Camera */,
 				402329911B09AA0200BFD2D5 /* ContainerTransitions */,
 			);
 			path = Controller;
@@ -827,6 +846,40 @@
 			path = ThirdParty/SDWebImage/SDWebImage;
 			sourceTree = SOURCE_ROOT;
 		};
+		40D853AF1B0C5FAA001A206A /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				40D853B71B0C69D1001A206A /* Controller */,
+				40D853BB1B0C69D1001A206A /* View */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
+		40D853B71B0C69D1001A206A /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				40D853B81B0C69D1001A206A /* GRVCameraViewController.h */,
+				40D853B91B0C69D1001A206A /* GRVCameraViewController.m */,
+				40D853BA1B0C69D1001A206A /* GRVCameraViewController.xib */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		40D853BB1B0C69D1001A206A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				403D34481B100E8F004FF19E /* GRVCameraSlideView.h */,
+				403D34491B100E8F004FF19E /* GRVCameraSlideView.m */,
+				403D344B1B101406004FF19E /* GRVCameraSlideUpView.h */,
+				403D344C1B101406004FF19E /* GRVCameraSlideUpView.m */,
+				403D34541B1015FF004FF19E /* GRVCameraSlideUpView.xib */,
+				403D34511B101528004FF19E /* GRVCameraSlideDownView.h */,
+				403D34521B101528004FF19E /* GRVCameraSlideDownView.m */,
+				403D34561B101630004FF19E /* GRVCameraSlideDownView.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -914,7 +967,10 @@
 				4076236A1AFEF0E300100550 /* NBPhoneNumberMetadata.plist in Resources */,
 				407620871AFEC41200100550 /* LaunchScreen.xib in Resources */,
 				407620841AFEC41200100550 /* Images.xcassets in Resources */,
+				403D34551B1015FF004FF19E /* GRVCameraSlideUpView.xib in Resources */,
 				407620CF1AFEEE8A00100550 /* notification.caf in Resources */,
+				40D853BD1B0C69D1001A206A /* GRVCameraViewController.xib in Resources */,
+				403D34571B101630004FF19E /* GRVCameraSlideDownView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -963,6 +1019,7 @@
 				402875B31B0483F300699F60 /* GRVLandingViewController.m in Sources */,
 				407623991AFEF13400100550 /* UIImage+GIF.m in Sources */,
 				407623181AFEF08E00100550 /* UIRefreshControl+AFNetworking.m in Sources */,
+				403D34531B101528004FF19E /* GRVCameraSlideDownView.m in Sources */,
 				407623951AFEF13400100550 /* SDWebImageDownloaderOperation.m in Sources */,
 				40F937C71B0C491F000F7BCB /* GRVFeedbackFormViewController.m in Sources */,
 				4034AD8E1B001DBA00162F2C /* GRVClip.m in Sources */,
@@ -997,6 +1054,7 @@
 				4034AD881B00103D00162F2C /* GRVProfileSettingsTVC.m in Sources */,
 				407623B31AFF16D800100550 /* GRVLaunchViewController.m in Sources */,
 				407623631AFEF0E300100550 /* NBMetadataCoreTestMapper.m in Sources */,
+				40D853BC1B0C69D1001A206A /* GRVCameraViewController.m in Sources */,
 				407623921AFEF13400100550 /* SDWebImageCompat.m in Sources */,
 				4076239A1AFEF13400100550 /* UIImage+MultiFormat.m in Sources */,
 				403BC9491AFF3F1D009BBD2B /* GRVUser+HTTP.m in Sources */,
@@ -1006,6 +1064,7 @@
 				407623161AFEF08E00100550 /* UIImageView+AFNetworking.m in Sources */,
 				4076239B1AFEF13400100550 /* UIImage+WebP.m in Sources */,
 				407623961AFEF13400100550 /* SDWebImageManager.m in Sources */,
+				403D344A1B100E8F004FF19E /* GRVCameraSlideView.m in Sources */,
 				407623CE1AFF231600100550 /* GRVFormatterUtils.m in Sources */,
 				407623911AFEF13400100550 /* SDImageCache.m in Sources */,
 				4089BFF21B03BC36003DF4AA /* ExtendedCoreDataTableViewController.m in Sources */,
@@ -1036,6 +1095,7 @@
 				40F937C41B0C48CE000F7BCB /* GRVTextViewContainer.m in Sources */,
 				407623BC1AFF18FF00100550 /* GRVConstants.m in Sources */,
 				4034AD911B001DBB00162F2C /* GRVVideo.m in Sources */,
+				403D344D1B101406004FF19E /* GRVCameraSlideUpView.m in Sources */,
 				4076230D1AFEF08E00100550 /* AFSecurityPolicy.m in Sources */,
 				4076239D1AFEF13400100550 /* UIImageView+WebCache.m in Sources */,
 				407623941AFEF13400100550 /* SDWebImageDownloader.m in Sources */,
