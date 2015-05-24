@@ -28,8 +28,14 @@ const BOOL kGRVReachabilityRequired     = NO;
 const BOOL kGRVReachabilityRequired     = YES;
 #endif
 
+
+// -----------------------------------------------------------------------------
+// Video Configuration info.
+// -----------------------------------------------------------------------------
 const NSTimeInterval kGRVClipMaximumDuration = 5.0f;
 const NSTimeInterval kGRVClipMinimumDuration = 1.0f;
+const float kGRVVideoSizeWidth = 480.0f;
+const float kGRVVideoSizeHeight = 480.0f;
 
 // -----------------------------------------------------------------------------
 // HTTP Connection info.
@@ -39,7 +45,7 @@ const NSTimeInterval kGRVClipMinimumDuration = 1.0f;
     #if TARGET_IPHONE_SIMULATOR
     NSString *const kGRVHTTPBaseURL     = @"http://localhost:8000/api/v1/";
     #else
-    NSString *const kGRVHTTPBaseURL     = @"http://10.0.0.4:8000/api/v1/";
+    NSString *const kGRVHTTPBaseURL     = @"http://gravvy.nnoduka.com/api/v1/";
     #endif
 
 #else

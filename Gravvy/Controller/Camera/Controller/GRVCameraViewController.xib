@@ -9,11 +9,13 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GRVCameraViewController">
             <connections>
                 <outlet property="actionsView" destination="NPS-lq-WsZ" id="H70-Be-gsX"/>
-                <outlet property="captureView" destination="yYJ-3o-t2S" id="KoU-47-zJp"/>
                 <outlet property="countdownBackgroundView" destination="EDr-FX-KVK" id="KWN-0K-Wk0"/>
                 <outlet property="countdownLabel" destination="q54-hL-Xma" id="795-f0-14Q"/>
                 <outlet property="flashButton" destination="ObZ-Aj-ThM" id="QLU-pY-pve"/>
+                <outlet property="minimumProgressIndicatorWidthLayoutConstraint" destination="uSb-uE-0Mf" id="jnw-qc-aqf"/>
+                <outlet property="previewView" destination="yYJ-3o-t2S" id="eX7-F5-4H1"/>
                 <outlet property="progressIndicatorWidthLayoutConstraint" destination="OPr-6m-HyA" id="k8i-pj-JNR"/>
+                <outlet property="retakeButton" destination="LPL-Gr-a1K" id="Gbh-Vr-jTa"/>
                 <outlet property="separatorView" destination="4TW-tJ-heu" id="DGs-Us-Jmd"/>
                 <outlet property="shootButton" destination="odN-6b-yFY" id="dd4-Nz-7d1"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -31,7 +33,7 @@
                         <constraint firstAttribute="height" constant="64" id="KBo-cJ-nkf"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yYJ-3o-t2S" userLabel="Capture View">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yYJ-3o-t2S" userLabel="Preview View">
                     <rect key="frame" x="0.0" y="64" width="320" height="320"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4TW-tJ-heu" userLabel="Separator View">
@@ -76,7 +78,7 @@
                     <subviews>
                         <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ytL-BW-lXS" userLabel="Background Color View">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="45"/>
-                            <color key="backgroundColor" red="0.15686274510000001" green="0.15686274510000001" blue="0.15686274510000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="backgroundColor" red="0.23529411764705882" green="0.23529411764705882" blue="0.23529411764705882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eSh-in-Klm" userLabel="Left Half Container">
                             <rect key="frame" x="0.0" y="0.0" width="137.5" height="45"/>
@@ -106,7 +108,7 @@
                             </constraints>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iUx-Z6-7Tm" userLabel="Flip Button">
-                            <rect key="frame" x="137.5" y="0.0" width="45" height="45"/>
+                            <rect key="frame" x="137" y="0.0" width="45" height="45"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="45" id="UpT-qv-pBw"/>
                                 <constraint firstAttribute="width" secondItem="iUx-Z6-7Tm" secondAttribute="height" multiplier="1:1" id="y3W-iQ-fMa"/>
@@ -114,9 +116,12 @@
                             <state key="normal" image="cameraFlip">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="flipCamera:" destination="-1" eventType="touchUpInside" id="d1O-uk-W4O"/>
+                            </connections>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W5t-5d-WYK" userLabel="Right Half Container">
-                            <rect key="frame" x="182.5" y="0.0" width="137.5" height="45"/>
+                            <rect key="frame" x="182" y="0.0" width="137.5" height="45"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ObZ-Aj-ThM" userLabel="Flash Button">
                                     <rect key="frame" x="46" y="0.0" width="45" height="45"/>
@@ -127,6 +132,9 @@
                                     <state key="normal" image="flashOff">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
+                                    <connections>
+                                        <action selector="toggleFlash:" destination="-1" eventType="touchUpInside" id="Zuy-w8-TXE"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <constraints>
@@ -156,6 +164,24 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fIs-ph-RuD" userLabel="Progress View">
                     <rect key="frame" x="0.0" y="429" width="320" height="8"/>
                     <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oWH-ZN-SK9" userLabel="Minimum progress marker left padding">
+                            <rect key="frame" x="0.0" y="0.0" width="150" height="8"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mxg-d5-FW1" userLabel="Right Border">
+                                    <rect key="frame" x="149" y="1" width="1" height="6"/>
+                                    <color key="backgroundColor" red="0.23529411764705882" green="0.23529411764705882" blue="0.23529411764705882" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="1" id="yO5-lE-2Xo"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="Mxg-d5-FW1" secondAttribute="trailing" id="AzD-jU-q5V"/>
+                                <constraint firstItem="Mxg-d5-FW1" firstAttribute="top" secondItem="oWH-ZN-SK9" secondAttribute="top" constant="1" id="FUU-9Z-Ufo"/>
+                                <constraint firstAttribute="bottom" secondItem="Mxg-d5-FW1" secondAttribute="bottom" constant="1" id="dc4-v9-D6N"/>
+                                <constraint firstAttribute="width" constant="150" id="uSb-uE-0Mf"/>
+                            </constraints>
+                        </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ffo-Aq-VUj" userLabel="Progress Indicator View">
                             <rect key="frame" x="0.0" y="1" width="64" height="6"/>
                             <color key="backgroundColor" red="0.0" green="0.74901960779999999" blue="0.56078431370000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -168,24 +194,59 @@
                     <constraints>
                         <constraint firstItem="ffo-Aq-VUj" firstAttribute="leading" secondItem="fIs-ph-RuD" secondAttribute="leading" id="L8A-BZ-GVB"/>
                         <constraint firstItem="ffo-Aq-VUj" firstAttribute="top" secondItem="fIs-ph-RuD" secondAttribute="top" constant="1" id="Nac-hN-dtT"/>
+                        <constraint firstAttribute="bottom" secondItem="oWH-ZN-SK9" secondAttribute="bottom" id="P4C-In-aiz"/>
                         <constraint firstAttribute="bottom" secondItem="ffo-Aq-VUj" secondAttribute="bottom" constant="1" id="YXq-0E-odu"/>
                         <constraint firstAttribute="height" constant="8" id="deY-Gc-CDz"/>
+                        <constraint firstItem="oWH-ZN-SK9" firstAttribute="top" secondItem="fIs-ph-RuD" secondAttribute="top" id="fh5-IK-ghC"/>
+                        <constraint firstItem="oWH-ZN-SK9" firstAttribute="leading" secondItem="fIs-ph-RuD" secondAttribute="leading" id="ruq-Kc-2YU"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R45-Eo-hcS" userLabel="Bottom View">
                     <rect key="frame" x="0.0" y="437" width="320" height="131"/>
                     <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KJG-cZ-Sig" userLabel="Left Half Container">
+                            <rect key="frame" x="0.0" y="0.0" width="125" height="131"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LPL-Gr-a1K" userLabel="Retake Button">
+                                    <rect key="frame" x="35" y="49" width="54" height="33"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" secondItem="LPL-Gr-a1K" secondAttribute="height" multiplier="18:11" id="09n-Zv-fzl"/>
+                                        <constraint firstAttribute="height" constant="33" id="GiE-I3-P9j"/>
+                                    </constraints>
+                                    <state key="normal" image="cameraRetake">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="retakeRecording:" destination="-1" eventType="touchUpInside" id="kjn-Nl-ocT"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="centerX" secondItem="LPL-Gr-a1K" secondAttribute="centerX" constant="0.5" id="HK5-Bb-oh0"/>
+                                <constraint firstAttribute="centerY" secondItem="LPL-Gr-a1K" secondAttribute="centerY" id="r7l-wu-zqn"/>
+                            </constraints>
+                        </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="odN-6b-yFY" userLabel="Shoot Button">
                             <rect key="frame" x="125" y="31" width="69" height="69"/>
                             <state key="normal" image="startRecording">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <connections>
+                                <action selector="pauseRecording:" destination="-1" eventType="touchDragExit" id="aq8-Is-n0U"/>
+                                <action selector="pauseRecording:" destination="-1" eventType="touchUpInside" id="jUZ-AW-r8B"/>
+                                <action selector="startRecording:" destination="-1" eventType="touchDown" id="fEW-0H-Abe"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" red="0.078431372549019607" green="0.078431372549019607" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
+                        <constraint firstItem="KJG-cZ-Sig" firstAttribute="leading" secondItem="R45-Eo-hcS" secondAttribute="leading" id="5nE-Wc-uVk"/>
                         <constraint firstAttribute="centerX" secondItem="odN-6b-yFY" secondAttribute="centerX" id="HNC-Y5-TUi"/>
+                        <constraint firstItem="KJG-cZ-Sig" firstAttribute="top" secondItem="R45-Eo-hcS" secondAttribute="top" id="RYc-Qz-rbV"/>
+                        <constraint firstAttribute="bottom" secondItem="KJG-cZ-Sig" secondAttribute="bottom" id="VqL-JG-fK6"/>
                         <constraint firstAttribute="centerY" secondItem="odN-6b-yFY" secondAttribute="centerY" id="yvn-tD-TxY"/>
+                        <constraint firstItem="odN-6b-yFY" firstAttribute="leading" secondItem="KJG-cZ-Sig" secondAttribute="trailing" id="zwv-or-0zw"/>
                     </constraints>
                 </view>
             </subviews>
@@ -214,6 +275,7 @@
     </objects>
     <resources>
         <image name="cameraFlip" width="27" height="27"/>
+        <image name="cameraRetake" width="54" height="33"/>
         <image name="flashOff" width="27" height="27"/>
         <image name="startRecording" width="69" height="69"/>
     </resources>

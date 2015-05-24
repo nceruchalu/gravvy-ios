@@ -72,6 +72,10 @@ extern const float kGRVButtonCornerRadius;
  */
 extern const BOOL kGRVReachabilityRequired;
 
+
+// -----------------------------------------------------------------------------
+// Video Configuration info.
+// -----------------------------------------------------------------------------
 /**
  * kGRVClipMaximumDuration is the maximum duration, in seconds, of a video clip
  */
@@ -81,6 +85,12 @@ extern const NSTimeInterval kGRVClipMaximumDuration;
  * kGRVClipMinimumDuration is the minimum duration, in seconds, of a video clip
  */
 extern const NSTimeInterval kGRVClipMinimumDuration;
+
+/**
+ * Video Size
+ */
+extern const float kGRVVideoSizeWidth;
+extern const float kGRVVideoSizeHeight;
 
 
 // -----------------------------------------------------------------------------

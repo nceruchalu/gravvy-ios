@@ -8,9 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+@class SCRecordSession;
+
 /**
  * GRVCameraViewController provides an Instagram-style Camera UI.
  */
 @interface GRVCameraViewController : UIViewController
+
+#pragma mark - Instance Methods
+#pragma mark Abstract
+/**
+ * Recording is done, process and possibly upload this session
+ */
+- (void)processCompletedSession:(SCRecordSession *)recordSession;
 
 @end

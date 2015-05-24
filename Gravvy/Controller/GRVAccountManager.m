@@ -13,6 +13,7 @@
 #import "gRVConstants.h"
 #import "NBPhoneNumberUtil+Shared.h"
 #import "NBPhoneNumber.h"
+#import <Crashlytics/Crashlytics.h>
 
 @interface GRVAccountManager ()
 
@@ -266,6 +267,9 @@
                      [[NSNotificationCenter defaultCenter] postNotificationName:kGRVHTTPAuthenticationNotification
                                                                          object:self
                                                                        userInfo:nil];
+                     
+                     // Set Crashlytics user information which is now available
+                     [[Crashlytics sharedInstance] setUserName:phoneNumber];
                      
                      // extract token and save it
                      self.authenticationToken = [responseObject objectForKey:@"token"];;

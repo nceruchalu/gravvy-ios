@@ -13,14 +13,14 @@
 
 #### [Git Submodules](http://git-scm.com/book/en/v2/Git-Tools-Submodules)
 * [AFNetworking](https://github.com/AFNetworking/AFNetworking)
-* [SDWebImage](https://github.com/rs/SDWebImage)
-* [libPhoneNumber-iOS](http://github.com/iziz/libPhoneNumber-iOS)
 * [AWPercentDrivenInteractiveTransition](https://github.com/MrAlek/AWPercentDrivenInteractiveTransition)
+* [libPhoneNumber-iOS](http://github.com/iziz/libPhoneNumber-iOS)
+* [SCRecorder](https://github.com/rFlex/SCRecorder)
+* [SDWebImage](https://github.com/rs/SDWebImage)
 
 #### Other Libraries
 * [ALAlertBanner](https://github.com/alobi/ALAlertBanner): Using modified version of this.
 * [TGCameraViewController](https://github.com/tdginternet/TGCameraViewController): Camera View Controller is based on this.
-* [SCRecorder](https://github.com/rFlex/SCRecorder)
 
 ### Working with Git Submodules
 * All submodules can be found in the `ThirdParty/` directory

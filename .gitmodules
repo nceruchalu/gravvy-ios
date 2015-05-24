@@ -10,3 +10,6 @@
 [submodule "ThirdParty/SDWebImage"]
 	path = ThirdParty/SDWebImage
 	url = https://github.com/rs/SDWebImage.git
+[submodule "ThirdParty/SCRecorder"]
+	path = ThirdParty/SCRecorder
+	url = https://github.com/rFlex/SCRecorder

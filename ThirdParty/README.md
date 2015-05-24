@@ -35,6 +35,9 @@ container view controllers
 #### [libPhoneNumber-iOS](http://github.com/iziz/libPhoneNumber-iOS)
 iOS port from libphonenumber (Google's phone number handling library)
 
+#### [SCRecorder](https://github.com/rFlex/SCRecorder)
+iOS camera engine with tap to record functionality
+
 #### [SDWebImage](https://github.com/rs/SDWebImage)
 Asynchronous image downloader with cache support with an UIImageView category
 
