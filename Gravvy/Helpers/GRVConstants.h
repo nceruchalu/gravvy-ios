@@ -41,6 +41,9 @@
  */
 #define kGRVUserAvatarTextColor [UIColor whiteColor]
 
+// Camera View Navigation Bar background color is RGB #282828
+#define kGRVCameraViewNavigationBarColor [UIColor colorWithRed:40.0/255.0 green:40.0/255.0 blue:40.0/255.0 alpha:1.0]
+
 
 // -----------------------------------------------------------------------------
 // Fonts
@@ -94,6 +97,20 @@ extern const float kGRVVideoSizeHeight;
 
 
 // -----------------------------------------------------------------------------
+// Model Field Settings (Max Lengths)
+// -----------------------------------------------------------------------------
+/**
+ * User full name max length
+ */
+extern const NSUInteger kGRVUserFullNameMaxLength;
+
+/**
+ * Video title max length
+ */
+extern const NSUInteger kGRVVideoTitleMaxLength;
+
+
+// -----------------------------------------------------------------------------
 // HTTP Connection info.
 // -----------------------------------------------------------------------------
 /**
@@ -141,6 +158,11 @@ extern NSString *const kGRVRESTPushRegister;
  */
 extern NSString *const kGRVRESTFeedbacks;
 
+/**
+ * kGRVRESTVideos: URL for creating a new video.
+ */
+extern NSString *const kGRVRESTVideos;
+
 
 // -----------------------------------------------------------------------------
 // REST API Object Keys
@@ -162,6 +184,25 @@ extern NSString *const kGRVRESTPushRegistrationIdKey;
 
 // Feedback object
 extern NSString *const kGRVRESTFeedbackBodyKey;
+
+// Video object
+extern NSString *const kGRVRESTVideoHashKeyKey;
+extern NSString *const kGRVRESTVideoLeadClipKey;
+extern NSString *const kGRVRESTVideoLikesCountKey;
+extern NSString *const kGRVRESTVideoOwnerKey;
+extern NSString *const kGRVRESTVideoPhotoThumbnailKey;
+extern NSString *const kGRVRESTVideoPlaysCountKey;
+extern NSString *const kGRVRESTVideoTitleKey;
+extern NSString *const kGRVRESTVideoUpdatedAtKey;
+
+// Clip object
+extern NSString *const kGRVRESTClipDurationKey;
+extern NSString *const kGRVRESTClipIdentifierKey;
+extern NSString *const kGRVRESTClipMp4Key;
+extern NSString *const kGRVRESTClipOrderKey;
+extern NSString *const kGRVRESTClipOwnerKey;
+extern NSString *const kGRVRESTClipPhotoKey;
+extern NSString *const kGRVRESTClipUpdatedAtKey;
 
 
 // -----------------------------------------------------------------------------

@@ -37,6 +37,13 @@ const NSTimeInterval kGRVClipMinimumDuration = 1.0f;
 const float kGRVVideoSizeWidth = 480.0f;
 const float kGRVVideoSizeHeight = 480.0f;
 
+
+// -----------------------------------------------------------------------------
+// Model Field Settings (Max Lengths)
+// -----------------------------------------------------------------------------
+const NSUInteger kGRVUserFullNameMaxLength  = 25;
+const NSUInteger kGRVVideoTitleMaxLength    = 100;
+
 // -----------------------------------------------------------------------------
 // HTTP Connection info.
 // -----------------------------------------------------------------------------
@@ -64,6 +71,7 @@ NSString *const kGRVRESTAccountObtainAuthToken  = @"account/auth/";
 NSString *const kGRVRESTUser                    = @"user/";
 NSString *const kGRVRESTPushRegister            = @"push/apns/";
 NSString *const kGRVRESTFeedbacks               = @"feedbacks/";
+NSString *const kGRVRESTVideos                  = @"videos/";
 
 
 // -----------------------------------------------------------------------------
@@ -87,6 +95,24 @@ NSString *const kGRVRESTPushRegistrationIdKey       = @"registration_id";
 // Feedback object
 NSString *const kGRVRESTFeedbackBodyKey             = @"body";
 
+// Video object
+NSString *const kGRVRESTVideoHashKeyKey             = @"hash_key";
+NSString *const kGRVRESTVideoLeadClipKey            = @"lead_clip";
+NSString *const kGRVRESTVideoLikesCountKey          = @"likes_count";
+NSString *const kGRVRESTVideoOwnerKey               = @"owner";
+NSString *const kGRVRESTVideoPhotoThumbnailKey      = @"photo_thumbnail";
+NSString *const kGRVRESTVideoPlaysCountKey          = @"plays_count";
+NSString *const kGRVRESTVideoTitleKey               = @"title";
+NSString *const kGRVRESTVideoUpdatedAtKey           = @"updated_at";
+
+// Clip object
+NSString *const kGRVRESTClipDurationKey             = @"duration";
+NSString *const kGRVRESTClipIdentifierKey           = @"id";
+NSString *const kGRVRESTClipMp4Key                  = @"mp4";
+NSString *const kGRVRESTClipOrderKey                = @"order";
+NSString *const kGRVRESTClipOwnerKey                = @"owner";
+NSString *const kGRVRESTClipPhotoKey                = @"photo";
+NSString *const kGRVRESTClipUpdatedAtKey            = @"updated_at";
 
 // -----------------------------------------------------------------------------
 // User Credentials

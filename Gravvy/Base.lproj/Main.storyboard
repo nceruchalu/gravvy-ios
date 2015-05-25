@@ -159,13 +159,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a1m-7F-DL1">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a1m-7F-DL1" userLabel="Create Video Button">
                                 <rect key="frame" x="266" y="511" width="69" height="69"/>
                                 <state key="normal" image="recordCircle">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="Q3S-KQ-9M0" kind="presentation" id="eXR-ep-o7b"/>
+                                    <action selector="recordVideo:" destination="FEH-fj-5s4" eventType="touchUpInside" id="El8-2m-pVO"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -183,15 +183,18 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="Q3S-KQ-9M0" kind="presentation" identifier="showCreateVideoCameraController" id="gQM-eP-nL3"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VXp-0E-UBu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3616" y="1183"/>
         </scene>
-        <!--Camera View Controller-->
+        <!--Create Video CameraVC-->
         <scene sceneID="Qwa-cv-ObZ">
             <objects>
-                <viewController id="Sgo-pA-KxK" customClass="GRVCameraViewController" sceneMemberID="viewController">
+                <viewController id="Sgo-pA-KxK" customClass="GRVCreateVideoCameraVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="kN4-DO-w9c"/>
                         <viewControllerLayoutGuide type="bottom" id="7qP-fU-k5P"/>
@@ -202,10 +205,85 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="vfm-Fg-GAk"/>
+                    <connections>
+                        <segue destination="6oi-7L-nTJ" kind="show" identifier="showCreateVideoCameraReviewVC" id="aOk-DU-m61"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tkN-jZ-uL9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="5147" y="1183"/>
+        </scene>
+        <!--Create Video Camera ReviewVC-->
+        <scene sceneID="d3b-r8-vBu">
+            <objects>
+                <viewController id="6oi-7L-nTJ" customClass="GRVCreateVideoCameraReviewVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="RhO-iv-mPp"/>
+                        <viewControllerLayoutGuide type="bottom" id="eej-PA-fns"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="K3d-ri-tud">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MNB-Qq-ZqF" userLabel="Player View">
+                                <rect key="frame" x="0.0" y="64" width="320" height="320"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="MNB-Qq-ZqF" secondAttribute="height" multiplier="1:1" priority="999" id="4hm-TA-MGR"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WPg-N8-Ivk" userLabel="Actions View">
+                                <rect key="frame" x="0.0" y="384" width="320" height="45"/>
+                                <subviews>
+                                    <view alpha="0.69999998807907104" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zzi-Uc-FTU" userLabel="Background Color View">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="45"/>
+                                        <subviews>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Add a video title..." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1ua-oB-cjB" userLabel="Title Text Field">
+                                                <rect key="frame" x="20" y="0.0" width="280" height="45"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <action selector="textFieldDidChange:" destination="6oi-7L-nTJ" eventType="editingChanged" id="AEy-UE-uLn"/>
+                                                </connections>
+                                            </textField>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.23529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="1ua-oB-cjB" firstAttribute="leading" secondItem="zzi-Uc-FTU" secondAttribute="leading" constant="20" symbolic="YES" id="Qj3-sd-Sjq"/>
+                                            <constraint firstAttribute="trailing" secondItem="1ua-oB-cjB" secondAttribute="trailing" constant="20" symbolic="YES" id="bpp-lo-MfB"/>
+                                            <constraint firstAttribute="bottom" secondItem="1ua-oB-cjB" secondAttribute="bottom" id="eQl-DK-PUS"/>
+                                            <constraint firstItem="1ua-oB-cjB" firstAttribute="top" secondItem="zzi-Uc-FTU" secondAttribute="top" id="lrn-EA-qiq"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="zzi-Uc-FTU" secondAttribute="bottom" id="Err-zR-Yno"/>
+                                    <constraint firstAttribute="trailing" secondItem="zzi-Uc-FTU" secondAttribute="trailing" id="LsC-YQ-Ytd"/>
+                                    <constraint firstItem="zzi-Uc-FTU" firstAttribute="top" secondItem="WPg-N8-Ivk" secondAttribute="top" id="NYY-Ds-T45"/>
+                                    <constraint firstItem="zzi-Uc-FTU" firstAttribute="leading" secondItem="WPg-N8-Ivk" secondAttribute="leading" id="VEV-2n-z6t"/>
+                                    <constraint firstAttribute="height" constant="45" id="w0H-Ut-PrR"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.078431372549019607" green="0.078431372549019607" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="MNB-Qq-ZqF" firstAttribute="leading" secondItem="K3d-ri-tud" secondAttribute="leading" id="0az-rc-SYd"/>
+                            <constraint firstItem="WPg-N8-Ivk" firstAttribute="leading" secondItem="K3d-ri-tud" secondAttribute="leading" id="5Qj-YO-a9O"/>
+                            <constraint firstItem="MNB-Qq-ZqF" firstAttribute="top" secondItem="RhO-iv-mPp" secondAttribute="bottom" id="LqK-CJ-hcl"/>
+                            <constraint firstAttribute="trailing" secondItem="MNB-Qq-ZqF" secondAttribute="trailing" id="Nra-68-RFy"/>
+                            <constraint firstAttribute="trailing" secondItem="WPg-N8-Ivk" secondAttribute="trailing" id="mJ7-AG-y8X"/>
+                            <constraint firstItem="WPg-N8-Ivk" firstAttribute="top" secondItem="MNB-Qq-ZqF" secondAttribute="bottom" id="qnG-SY-TSa"/>
+                        </constraints>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="titleTextField" destination="1ua-oB-cjB" id="7er-YR-lW0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gef-f1-zAX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5838" y="1183"/>
         </scene>
         <!--Registration View Controller-->
         <scene sceneID="unp-W2-RNc">

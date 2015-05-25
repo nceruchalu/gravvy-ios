@@ -11,10 +11,7 @@
 #import "GRVCameraSlideDownView.h"
 #import "GRVConstants.h"
 #import "SCRecorder.h"
-
-#pragma mark - Constants
-// RGB #282828
-#define kGRVCameraViewNavigationBarColor [UIColor colorWithRed:40.0/255.0 green:40.0/255.0 blue:40.0/255.0 alpha:1.0]
+#import "SCRecordSessionSegment.h"
 
 /**
  * Countdown container view border radius
@@ -43,6 +40,11 @@ static const CGFloat kCountdownContainerCornerRadius = 5.0f;
 @property (strong, nonatomic) UIBarButtonItem *closeButton;
 @property (strong, nonatomic) UIBarButtonItem *doneButton;
 
+#pragma mark Public
+// Readonly properties should be readwrite internally
+@property (strong, nonatomic, readwrite) UIImage *previewImage;
+@property (strong, nonatomic, readwrite) SCRecordSession *recordSession;
+
 #pragma mark Private
 /**
  * The duration of the recording, in seconds.
@@ -50,10 +52,9 @@ static const CGFloat kCountdownContainerCornerRadius = 5.0f;
 @property (nonatomic) NSTimeInterval recordingDuration;
 
 /**
- * Recorder and associated session
+ * Recorder
  */
 @property (strong, nonatomic) SCRecorder *recorder;
-@property (strong, nonatomic) SCRecordSession *recordSession;
 
 @end
 
@@ -140,7 +141,7 @@ static const CGFloat kCountdownContainerCornerRadius = 5.0f;
     // Whether the video should be enabled or not
     video.enabled = YES;
     // The bitrate of the video video
-    video.bitrate = 2000000; // 2Mbit/s
+    video.bitrate = 1000000; // 1Mbit/s
     // Size of the video output
     video.size = CGSizeMake(kGRVVideoSizeWidth, kGRVVideoSizeHeight);
     // Scaling if the output aspect ratio is different than the output one
@@ -158,8 +159,8 @@ static const CGFloat kCountdownContainerCornerRadius = 5.0f;
     audio.enabled = YES;
     // the bitrate of the audio output is 128kbit/s
     audio.bitrate = 128000;
-    // Number of audio output channels
-    audio.channelsCount = 2;
+    // Number of audio output channels set to mono
+    audio.channelsCount = 1;
     // The sample rate of the audio output should be the same as the input
     audio.sampleRate = 0;
     // The format of the audio output is AAC
@@ -227,6 +228,7 @@ static const CGFloat kCountdownContainerCornerRadius = 5.0f;
 #pragma mark - Instance Methods
 #pragma mark Abstract
 - (void)processCompletedSession:(SCRecordSession *)recordSession
+               withPreviewImage:(UIImage *)previewImage
 {
     // Abstract
 }
@@ -242,6 +244,10 @@ static const CGFloat kCountdownContainerCornerRadius = 5.0f;
         self.recordSession.fileType = AVFileTypeMPEG4;
         
         self.recorder.session = self.recordSession;
+        
+        // Clear preview image now as it will be setup with the first buffer in
+        // the newrecord session
+        self.previewImage = nil;
     }
     
     [self updateRecordingDuration];
@@ -253,7 +259,14 @@ static const CGFloat kCountdownContainerCornerRadius = 5.0f;
 - (void)processSession:(SCRecordSession *)recordSession
 {
     self.recordSession = recordSession;
-    [self processCompletedSession:recordSession];
+    // Ensure there's a preview image
+    if (!self.previewImage) {
+        SCRecordSessionSegment *firstSegment = [recordSession.segments firstObject];
+        self.previewImage = firstSegment.thumbnail;
+    }
+    
+    [self processCompletedSession:recordSession
+                 withPreviewImage:self.previewImage];
 }
 
 
@@ -376,6 +389,9 @@ static const CGFloat kCountdownContainerCornerRadius = 5.0f;
 - (void)recorder:(SCRecorder *)recorder didAppendVideoSampleBufferInSession:(SCRecordSession *)session
 {
     [self updateRecordingDuration];
+    if (!self.previewImage) {
+        self.previewImage = [recorder snapshotOfLastVideoBuffer];
+    }
 }
 
 - (void)recorder:(SCRecorder *)recorder didCompleteSession:(SCRecordSession *)recordSession

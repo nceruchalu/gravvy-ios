@@ -108,7 +108,7 @@
                             </constraints>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iUx-Z6-7Tm" userLabel="Flip Button">
-                            <rect key="frame" x="137" y="0.0" width="45" height="45"/>
+                            <rect key="frame" x="137.5" y="0.0" width="45" height="45"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="45" id="UpT-qv-pBw"/>
                                 <constraint firstAttribute="width" secondItem="iUx-Z6-7Tm" secondAttribute="height" multiplier="1:1" id="y3W-iQ-fMa"/>
@@ -121,7 +121,7 @@
                             </connections>
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W5t-5d-WYK" userLabel="Right Half Container">
-                            <rect key="frame" x="182" y="0.0" width="137.5" height="45"/>
+                            <rect key="frame" x="182.5" y="0.0" width="137.5" height="45"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ObZ-Aj-ThM" userLabel="Flash Button">
                                     <rect key="frame" x="46" y="0.0" width="45" height="45"/>
@@ -205,10 +205,10 @@
                     <rect key="frame" x="0.0" y="437" width="320" height="131"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KJG-cZ-Sig" userLabel="Left Half Container">
-                            <rect key="frame" x="0.0" y="0.0" width="125" height="131"/>
+                            <rect key="frame" x="0.0" y="0.0" width="126" height="131"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LPL-Gr-a1K" userLabel="Retake Button">
-                                    <rect key="frame" x="35" y="49" width="54" height="33"/>
+                                    <rect key="frame" x="35.5" y="49" width="54" height="33"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="LPL-Gr-a1K" secondAttribute="height" multiplier="18:11" id="09n-Zv-fzl"/>
                                         <constraint firstAttribute="height" constant="33" id="GiE-I3-P9j"/>
@@ -228,7 +228,7 @@
                             </constraints>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="odN-6b-yFY" userLabel="Shoot Button">
-                            <rect key="frame" x="125" y="31" width="69" height="69"/>
+                            <rect key="frame" x="125.5" y="31" width="69" height="69"/>
                             <state key="normal" image="startRecording">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -269,7 +269,7 @@
                 <constraint firstItem="yYJ-3o-t2S" firstAttribute="top" secondItem="C9Y-yU-Imq" secondAttribute="bottom" id="rYT-1e-H3X"/>
                 <constraint firstItem="C9Y-yU-Imq" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="wMr-G2-HJx"/>
             </constraints>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
             <point key="canvasLocation" x="-105" y="334"/>
         </view>
     </objects>

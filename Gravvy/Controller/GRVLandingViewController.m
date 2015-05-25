@@ -9,8 +9,13 @@
 #import "GRVLandingViewController.h"
 #import "GRVConstants.h"
 
-@interface GRVLandingViewController () <UIImagePickerControllerDelegate,
-                                        UINavigationControllerDelegate>
+#pragma mark - Constants
+/**
+ * Segue identifier for starting video creation workflow
+ */
+static NSString *const kSegueIdentifierCreateVideo = @"showCreateVideoCameraController";
+
+@interface GRVLandingViewController ()
 
 @end
 
@@ -39,51 +44,13 @@
  */
 - (void)startCameraController
 {
-    // We will only be recording videos
-    UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
-    
-    // quit if camera is not available
-    if (![UIImagePickerController isSourceTypeAvailable:sourceType]) {
+    // quit if camera is not available for recording videos
+    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         return;
     }
     
-    // camera available so set it up to capture only movies
-    UIImagePickerController *cameraUI = [[UIImagePickerController alloc] init];
-    cameraUI.sourceType = sourceType;
-    
-    //cameraUI.mediaTypes = @[(NSString *)kUTTypeMovie];
-    cameraUI.cameraCaptureMode = UIImagePickerControllerCameraCaptureModeVideo;
-    
-    // Don't show the controls for trimming videos and use custom controls
-    cameraUI.allowsEditing = NO;
-    //cameraUI.showsCameraControls = NO;
-    
-    cameraUI.videoMaximumDuration = kGRVClipMaximumDuration;
-    cameraUI.videoQuality = UIImagePickerControllerQualityTypeMedium;
-    cameraUI.delegate = self;
-    [self presentViewController:cameraUI animated:YES completion:nil];
+    [self performSegueWithIdentifier:kSegueIdentifierCreateVideo sender:self];
 }
 
-
-#pragma mark - UIImagePickerControllerDelegate
-// For responding to the user tapping Cancel
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-// For responding to the user accepting a newly captured picture.
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    NSString *moviePath = info[UIImagePickerControllerMediaURL];
-    
-    // Save newly taken video to camera roll
-    if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(moviePath)) {
-        UISaveVideoAtPathToSavedPhotosAlbum(moviePath, nil, nil, nil);
-    }
-
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
 
 @end
