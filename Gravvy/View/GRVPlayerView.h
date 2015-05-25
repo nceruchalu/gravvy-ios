@@ -18,6 +18,15 @@
  */
 @interface GRVPlayerView : UIView
 
+#pragma mark - Properties
 @property (strong, nonatomic) AVPlayer *player;
+
+#pragma mark - Instance Methods
+/* Specifies how the video is displayed within a player layer’s bounds.
+ * (AVLayerVideoGravityResizeAspect is default)
+ *
+ * @param fillMode  video gravity configuration
+ */
+- (void)setVideoFillMode:(NSString *)fillMode;
 
 @end

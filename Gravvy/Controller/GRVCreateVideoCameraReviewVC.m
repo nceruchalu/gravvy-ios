@@ -8,12 +8,22 @@
 
 #import "GRVCreateVideoCameraReviewVC.h"
 #import "GRVHTTPManager.h"
+#import "SCRecordSession.h"
 
 @interface GRVCreateVideoCameraReviewVC () <UITextFieldDelegate>
 
 #pragma mark - Properties
 #pragma mark Outlets
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *shareButton;
+@property (strong, nonatomic) IBOutlet UIToolbar *accessoryView;
 @property (weak, nonatomic) IBOutlet UITextField *titleTextField;
+
+/**
+ * This text field is used to trigger the the display of the accessory
+ * view that contains the title text field
+ */
+@property (weak, nonatomic) IBOutlet UITextField *hiddenTitleTextField;
+
 
 @end
 
@@ -37,35 +47,56 @@
 #pragma mark - View Lifecycle
 - (void)viewDidLoad
 {
+    // Disable share button till recording is validated
+    self.shareButton.enabled = NO;
+    
     [super viewDidLoad];
+    
+    // Setup title text field accessory view
+    self.hiddenTitleTextField.inputAccessoryView = self.accessoryView;
     
     // set self as title text field delegate so we can enforce a max length on it
     self.titleTextField.delegate = self;
+    self.titleTextField.tintColor = [UIColor whiteColor];
     
     // Set placeholder color of title text field
-    [GRVCreateVideoCameraReviewVC setPlaceholder:self.titleTextField
-                                       usingText:self.titleTextField.placeholder
-                                        andColor:[UIColor whiteColor]];
+    if ([self.titleTextField.placeholder length]) {
+        [GRVCreateVideoCameraReviewVC setPlaceholder:self.titleTextField
+                                           usingText:self.titleTextField.placeholder
+                                            andColor:[UIColor whiteColor]];
+    }
 }
 
-
 #pragma mark - Instance Methods
-#pragma mark Constant
-- (void)completedReviewingRecording:(NSData *)mp4
-                       previewImage:(UIImage *)previewImage
-                           duration:(NSTimeInterval)duration
+#pragma mark Concrete
+- (void)recordingValidated
+{
+    self.shareButton.enabled = YES;
+}
+
+#pragma mark Private
+/**
+ * Recording has been reviewed and user would like to upload the generated
+ * mp4 file, with its associated photo, and duration.
+ */
+- (void)completedReviewingRecording
 {
     // Upload video to server
     
+    // Extract record session duration
+    NSTimeInterval duration = CMTimeGetSeconds(self.recordSession.duration);
     // Key for the duration object in the lead clip
     NSString *durationKey = [NSString stringWithFormat:@"%@.%@", kGRVRESTVideoLeadClipKey, kGRVRESTClipDurationKey];
     // Parameters required for video upload
-    NSDictionary *parameters = @{kGRVRESTVideoTitleKey: @"test video from app",
-                                 durationKey: @(duration)};
+    
+    NSMutableDictionary *parameters = [@{durationKey: @(duration)} mutableCopy];
+    if ([self.titleTextField.text length]) {
+        parameters[kGRVRESTVideoTitleKey] = self.titleTextField.text;
+    }
     
     [[GRVHTTPManager sharedManager] operationRequest:GRVHTTPMethodPOST
                                               forURL:kGRVRESTVideos
-                                          parameters:parameters
+                                          parameters:[parameters copy]
                            constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                                
                                // Keys for mp4 and photo object in request
@@ -78,11 +109,11 @@
                                NSString *mp4FileName = [NSString stringWithFormat:@"%@.mp4", baseFileName];
                                NSString *photoFileName = [NSString stringWithFormat:@"%@.jpg", baseFileName];
                                
-                               [formData appendPartWithFileData:mp4
+                               [formData appendPartWithFileData:self.mp4
                                                            name:mp4Key
                                                        fileName:mp4FileName
                                                        mimeType:@"video/mp4"];
-                               [formData appendPartWithFileData:UIImageJPEGRepresentation(previewImage, 0.4f)
+                               [formData appendPartWithFileData:UIImageJPEGRepresentation(self.previewImage, 0.4f)
                                                            name:photoKey
                                                        fileName:photoFileName
                                                        mimeType:@"image/jpeg"];
@@ -98,11 +129,30 @@
                                  operationDependency:nil];
 }
 
+
 #pragma mark - Target/Action Methods
-- (IBAction)textFieldDidChange:(UITextField *)sender
+/**
+ * display title text field by first bringing up the keyboard that has the title
+ * text field as an accessory view, then making the title text field the first
+ * responder.
+ */
+- (IBAction)beginTitleEntry:(UIButton *)sender
 {
-    
+    [self.hiddenTitleTextField becomeFirstResponder];
+    [self.titleTextField becomeFirstResponder];
 }
+
+/**
+ * Hide title text field by dismissing the keyboards for both the title text 
+ * field and the hidden text field.
+ */
+- (IBAction)endTitleEntry:(UIControl *)sender
+{
+    // force view to resignFirstResponder status for both text fields
+    [self.view endEditing:YES];
+    [self.view endEditing:YES];
+}
+
 
 #pragma mark - UITextFieldDelegate
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string

@@ -225,63 +225,107 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MNB-Qq-ZqF" userLabel="Player View">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MNB-Qq-ZqF" userLabel="Player View" customClass="GRVPlayerView">
                                 <rect key="frame" x="0.0" y="64" width="320" height="320"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="MNB-Qq-ZqF" secondAttribute="height" multiplier="1:1" priority="999" id="4hm-TA-MGR"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cYg-Hh-MW9" userLabel="Player View Overlay Control" customClass="UIControl">
+                                <rect key="frame" x="0.0" y="64" width="320" height="320"/>
+                                <connections>
+                                    <action selector="endTitleEntry:" destination="6oi-7L-nTJ" eventType="touchUpInside" id="j2Z-vj-OhT"/>
+                                </connections>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WPg-N8-Ivk" userLabel="Actions View">
                                 <rect key="frame" x="0.0" y="384" width="320" height="45"/>
                                 <subviews>
-                                    <view alpha="0.69999998807907104" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zzi-Uc-FTU" userLabel="Background Color View">
+                                    <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zzi-Uc-FTU" userLabel="Background Color View">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="45"/>
-                                        <subviews>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Add a video title..." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1ua-oB-cjB" userLabel="Title Text Field">
-                                                <rect key="frame" x="20" y="0.0" width="280" height="45"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                                <connections>
-                                                    <action selector="textFieldDidChange:" destination="6oi-7L-nTJ" eventType="editingChanged" id="AEy-UE-uLn"/>
-                                                </connections>
-                                            </textField>
-                                        </subviews>
                                         <color key="backgroundColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.23529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstItem="1ua-oB-cjB" firstAttribute="leading" secondItem="zzi-Uc-FTU" secondAttribute="leading" constant="20" symbolic="YES" id="Qj3-sd-Sjq"/>
-                                            <constraint firstAttribute="trailing" secondItem="1ua-oB-cjB" secondAttribute="trailing" constant="20" symbolic="YES" id="bpp-lo-MfB"/>
-                                            <constraint firstAttribute="bottom" secondItem="1ua-oB-cjB" secondAttribute="bottom" id="eQl-DK-PUS"/>
-                                            <constraint firstItem="1ua-oB-cjB" firstAttribute="top" secondItem="zzi-Uc-FTU" secondAttribute="top" id="lrn-EA-qiq"/>
-                                        </constraints>
                                     </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ljD-Ib-UBF" userLabel="Type Button">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="45"/>
+                                        <state key="normal" image="cameraType">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="beginTitleEntry:" destination="6oi-7L-nTJ" eventType="touchUpInside" id="fGF-xc-EFH"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="ljD-Ib-UBF" secondAttribute="bottom" id="7gl-e5-YD9"/>
+                                    <constraint firstAttribute="trailing" secondItem="ljD-Ib-UBF" secondAttribute="trailing" id="8Ee-nO-038"/>
                                     <constraint firstAttribute="bottom" secondItem="zzi-Uc-FTU" secondAttribute="bottom" id="Err-zR-Yno"/>
                                     <constraint firstAttribute="trailing" secondItem="zzi-Uc-FTU" secondAttribute="trailing" id="LsC-YQ-Ytd"/>
                                     <constraint firstItem="zzi-Uc-FTU" firstAttribute="top" secondItem="WPg-N8-Ivk" secondAttribute="top" id="NYY-Ds-T45"/>
+                                    <constraint firstItem="ljD-Ib-UBF" firstAttribute="leading" secondItem="WPg-N8-Ivk" secondAttribute="leading" id="RyZ-12-8Rp"/>
                                     <constraint firstItem="zzi-Uc-FTU" firstAttribute="leading" secondItem="WPg-N8-Ivk" secondAttribute="leading" id="VEV-2n-z6t"/>
+                                    <constraint firstAttribute="centerY" secondItem="ljD-Ib-UBF" secondAttribute="centerY" id="boW-DM-png"/>
+                                    <constraint firstAttribute="centerX" secondItem="ljD-Ib-UBF" secondAttribute="centerX" id="qIA-CU-hEF"/>
+                                    <constraint firstItem="ljD-Ib-UBF" firstAttribute="top" secondItem="WPg-N8-Ivk" secondAttribute="top" id="sWA-sd-qeU"/>
                                     <constraint firstAttribute="height" constant="45" id="w0H-Ut-PrR"/>
                                 </constraints>
                             </view>
+                            <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XOd-KX-hhR" userLabel="Hidden Title Text Field">
+                                <rect key="frame" x="160" y="568" width="0.0" height="0.0"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" id="0eH-gf-RLj"/>
+                                    <constraint firstAttribute="height" id="DvR-Ie-XgW"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="0.078431372549019607" green="0.078431372549019607" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="MNB-Qq-ZqF" firstAttribute="leading" secondItem="K3d-ri-tud" secondAttribute="leading" id="0az-rc-SYd"/>
                             <constraint firstItem="WPg-N8-Ivk" firstAttribute="leading" secondItem="K3d-ri-tud" secondAttribute="leading" id="5Qj-YO-a9O"/>
+                            <constraint firstItem="MNB-Qq-ZqF" firstAttribute="leading" secondItem="cYg-Hh-MW9" secondAttribute="leading" id="DbU-Ll-6zq"/>
                             <constraint firstItem="MNB-Qq-ZqF" firstAttribute="top" secondItem="RhO-iv-mPp" secondAttribute="bottom" id="LqK-CJ-hcl"/>
                             <constraint firstAttribute="trailing" secondItem="MNB-Qq-ZqF" secondAttribute="trailing" id="Nra-68-RFy"/>
+                            <constraint firstItem="eej-PA-fns" firstAttribute="top" secondItem="XOd-KX-hhR" secondAttribute="bottom" id="bzb-Bp-eqz"/>
+                            <constraint firstItem="MNB-Qq-ZqF" firstAttribute="top" secondItem="cYg-Hh-MW9" secondAttribute="top" id="e9b-mb-Etz"/>
+                            <constraint firstItem="MNB-Qq-ZqF" firstAttribute="trailing" secondItem="cYg-Hh-MW9" secondAttribute="trailing" id="kCw-ZT-aDH"/>
                             <constraint firstAttribute="trailing" secondItem="WPg-N8-Ivk" secondAttribute="trailing" id="mJ7-AG-y8X"/>
+                            <constraint firstItem="MNB-Qq-ZqF" firstAttribute="bottom" secondItem="cYg-Hh-MW9" secondAttribute="bottom" id="mdK-2g-0n3"/>
                             <constraint firstItem="WPg-N8-Ivk" firstAttribute="top" secondItem="MNB-Qq-ZqF" secondAttribute="bottom" id="qnG-SY-TSa"/>
+                            <constraint firstItem="XOd-KX-hhR" firstAttribute="centerX" secondItem="MNB-Qq-ZqF" secondAttribute="centerX" id="yzK-5I-MYK"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="fRu-H8-axA">
+                        <barButtonItem key="rightBarButtonItem" title="SHARE" id="Kqr-eK-LYe" userLabel="Share Button"/>
+                    </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="titleTextField" destination="1ua-oB-cjB" id="7er-YR-lW0"/>
+                        <outlet property="accessoryView" destination="99s-Iv-biH" id="wZ1-Qc-a5G"/>
+                        <outlet property="hiddenTitleTextField" destination="XOd-KX-hhR" id="g42-bk-hPS"/>
+                        <outlet property="playerView" destination="MNB-Qq-ZqF" id="L8m-A5-NI7"/>
+                        <outlet property="shareButton" destination="Kqr-eK-LYe" id="NN1-UD-ncT"/>
+                        <outlet property="titleTextField" destination="y2L-cm-hgb" id="DVR-Qp-B5o"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gef-f1-zAX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="99s-Iv-biH" userLabel="Accessory View">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <items>
+                        <barButtonItem style="plain" id="22c-XF-2da">
+                            <textField key="customView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Tap to add a caption!" minimumFontSize="17" id="y2L-cm-hgb" userLabel="Title Text Field">
+                                <rect key="frame" x="20" y="0.0" width="280" height="45"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </barButtonItem>
+                    </items>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="barTintColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.23529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </toolbar>
             </objects>
             <point key="canvasLocation" x="5838" y="1183"/>
         </scene>
@@ -1748,6 +1792,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="cameraType" width="25" height="25"/>
         <image name="chevron" width="8" height="13"/>
         <image name="launchIcon" width="102" height="100"/>
         <image name="recordCircle" width="69" height="69"/>

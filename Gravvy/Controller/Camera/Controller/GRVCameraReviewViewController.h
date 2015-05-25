@@ -25,23 +25,25 @@
 @property (strong, nonatomic) SCRecordSession *recordSession;
 
 /**
- * Preview image associated with record session.
+ * Preview image snapshot represetnation of the record session.
+ * This serves as the cover image of the mp4.
  */
 @property (strong, nonatomic) UIImage *previewImage;
+
+#pragma mark Outputs
+/**
+ * MP4 data generated from the recording session
+ */
+@property (strong, nonatomic) NSData *mp4;
 
 
 #pragma mark - Instance Methods
 #pragma mark Abstract
 /**
- * Recording has been reviewed and user would like to upload the generated
- * mp4 file, with its associated photo, and duration.
- *
- * @param mp4           MP4 data generated from the recording session
- * @param previewImage  Image snapshot representation of the mp4 video
- * @param duration      Length, in seconds, of mp4 video
+ * Recording generated a valid mp4 and this has been extracted and displayed
+ * to the user in a preview view.
+ * This will be a good place to enable the done/next button
  */
-- (void)completedReviewingRecording:(NSData *)mp4
-                       previewImage:(UIImage *)previewImage
-                           duration:(NSTimeInterval)duration;
+- (void)recordingValidated;
 
 @end

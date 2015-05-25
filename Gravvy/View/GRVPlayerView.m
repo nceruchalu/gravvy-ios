@@ -28,4 +28,12 @@
     return [AVPlayerLayer class];
 }
 
+#pragma mark - Instance Methods
+- (void)setVideoFillMode:(NSString *)fillMode
+{
+    AVPlayerLayer *playerLayer = (AVPlayerLayer*)[self layer];
+    playerLayer.videoGravity = fillMode;
+}
+
+
 @end
