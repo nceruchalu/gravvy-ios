@@ -11,7 +11,7 @@
 
 /**
  * GRVPanGestureInteractiveTransition is a gesture recognizer to be used by the
- * GRVEventContainerViewController for swiping through the child view controllers.
+ * GRVContainerViewController for swiping through the child view controllers.
  *
  * Instances of this class perform the interactive transition by using a
  * UIPanGestureRecognizer to control the animation.

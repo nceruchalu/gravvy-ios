@@ -213,7 +213,7 @@
             </objects>
             <point key="canvasLocation" x="5147" y="1183"/>
         </scene>
-        <!--Create Video Camera ReviewVC-->
+        <!--Review-->
         <scene sceneID="d3b-r8-vBu">
             <objects>
                 <viewController id="6oi-7L-nTJ" customClass="GRVCreateVideoCameraReviewVC" sceneMemberID="viewController">
@@ -295,8 +295,12 @@
                             <constraint firstItem="XOd-KX-hhR" firstAttribute="centerX" secondItem="MNB-Qq-ZqF" secondAttribute="centerX" id="yzK-5I-MYK"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="fRu-H8-axA">
-                        <barButtonItem key="rightBarButtonItem" title="SHARE" id="Kqr-eK-LYe" userLabel="Share Button"/>
+                    <navigationItem key="navigationItem" title="Review" id="fRu-H8-axA">
+                        <barButtonItem key="rightBarButtonItem" title="SHARE" id="Kqr-eK-LYe" userLabel="Share Button">
+                            <connections>
+                                <segue destination="Xik-oT-W0N" kind="show" identifier="showInvitePeopleVC" id="CmN-el-RoI"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
@@ -313,7 +317,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <items>
                         <barButtonItem style="plain" id="22c-XF-2da">
-                            <textField key="customView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Tap to add a caption!" minimumFontSize="17" id="y2L-cm-hgb" userLabel="Title Text Field">
+                            <textField key="customView" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Type to add a caption!" minimumFontSize="17" id="y2L-cm-hgb" userLabel="Title Text Field">
                                 <rect key="frame" x="20" y="0.0" width="280" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -327,7 +331,37 @@
                     <color key="barTintColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.23529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </toolbar>
             </objects>
-            <point key="canvasLocation" x="5838" y="1183"/>
+            <point key="canvasLocation" x="5678" y="1167"/>
+        </scene>
+        <!--Share-->
+        <scene sceneID="fFn-Ke-Wex">
+            <objects>
+                <viewController id="Xik-oT-W0N" customClass="GRVCreateVideoContactPickerVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="9qU-Cl-xkR"/>
+                        <viewControllerLayoutGuide type="bottom" id="wRh-8w-Gks"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="aNr-Cx-FIS">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Share" id="TzL-oO-tVN">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="CREATE" id="rHw-ae-oTc">
+                            <connections>
+                                <action selector="createVideo:" destination="Xik-oT-W0N" id="HAP-ai-hJ9"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="createButton" destination="rHw-ae-oTc" id="iiQ-do-cH2"/>
+                        <segue destination="uuS-gK-pOi" kind="unwind" identifier="createdVideo" unwindAction="createdVideo:" id="z5q-qd-EaX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cQI-5n-BJs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="uuS-gK-pOi" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="6089" y="1167"/>
         </scene>
         <!--Registration View Controller-->
         <scene sceneID="unp-W2-RNc">
@@ -1804,8 +1838,8 @@
         <image name="settingsTell" width="29" height="29"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="fro-ZD-Pot"/>
         <segue reference="Zm6-vw-LFG"/>
-        <segue reference="FIh-LZ-TjA"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.74901960784313726" blue="0.5607843137254902" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

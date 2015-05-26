@@ -7,6 +7,7 @@
 //
 
 #import "GRVLandingViewController.h"
+#import "GRVCreateVideoContactPickerVC.h"
 #import "GRVConstants.h"
 
 #pragma mark - Constants
@@ -50,6 +51,20 @@ static NSString *const kSegueIdentifierCreateVideo = @"showCreateVideoCameraCont
     }
     
     [self performSegueWithIdentifier:kSegueIdentifierCreateVideo sender:self];
+}
+
+
+#pragma mark - Navigation
+#pragma mark Modal Unwinding
+/**
+ * Created a video. Nothing to do here really as we use an NSFetchedResultsController
+ * that will pick up any new event
+ */
+- (IBAction)createdVideo:(UIStoryboardSegue *)segue
+{
+    if ([segue.sourceViewController isKindOfClass:[GRVCreateVideoContactPickerVC class]]) {
+        //GRVCreateVideoContactPickerVC *contactPickerVC = (GRVCreateVideoContactPickerVC *)segue.sourceViewController;
+    }
 }
 
 

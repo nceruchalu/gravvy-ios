@@ -56,12 +56,12 @@
              inManagedObjectContext:(NSManagedObjectContext *)context;
 
 /**
- * Find a user by phone number.
+ * Find a user by phone number in local database.
  *
  * @param phoneNumber    Phone Number string as acquired from an ABPerson reference
  * @param context        handle to database
  *
- * @return Initialized gRVUser instance or nil if event doesnt exist
+ * @return Initialized GRVUser instance or nil if user doesnt exist
  */
 + (instancetype)findUserWithPhoneNumber:(NSString *)phoneNumber
                  inManagedObjectContext:(NSManagedObjectContext *)context;

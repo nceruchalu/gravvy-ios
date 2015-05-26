@@ -25,7 +25,7 @@
 @property (strong, nonatomic) SCRecordSession *recordSession;
 
 /**
- * Preview image snapshot represetnation of the record session.
+ * Preview image snapshot representation of the record session.
  * This serves as the cover image of the mp4.
  */
 @property (strong, nonatomic) UIImage *previewImage;

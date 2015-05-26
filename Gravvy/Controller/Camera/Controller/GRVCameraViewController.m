@@ -75,8 +75,9 @@ static const CGFloat kCountdownContainerCornerRadius = 5.0f;
     // minimum
     self.doneButton.enabled = _recordingDuration >= kGRVClipMinimumDuration;
     
-    // Can only retake recording if recording duration is > 0
-    self.retakeButton.hidden = recordingDuration <= 0.0f;
+    if (recordingDuration == 0.0f) {
+        self.retakeButton.hidden = YES;
+    }
 }
 
 #pragma mark - Class Methods
@@ -335,6 +336,9 @@ static const CGFloat kCountdownContainerCornerRadius = 5.0f;
 {
     // Stop appending video/audio buffers to the session
     [self.recorder pause];
+    
+    // Can only retake recording if recording duration is > 0
+    self.retakeButton.hidden = self.recordingDuration <= 0.0f;
 }
 
 /**
@@ -349,6 +353,9 @@ static const CGFloat kCountdownContainerCornerRadius = 5.0f;
     }
     
     [self prepareSession];
+    
+    // Hide retake button
+    self.retakeButton.hidden = YES;
 }
 
 

@@ -126,12 +126,10 @@ static NSString *const kGRVAddressBookPersonRecordIdKey = @"recordId";
 
 
 /**
- * Delete GRVContact objects not in a provided array of event person records.
+ * Delete GRVContact objects not in a provided array of person records.
  *
  * @param peopleRecords     Array of ABPerson records
  * @param context           handle to database
- *
- * @return Initiailized GRVEvent instances (of course based on passed in eventDicts)
  */
 + (void)deleteContactsNotInPersonRecordArray:(CFArrayRef)peopleRecords
                       inManagedObjectContext:(NSManagedObjectContext *)context

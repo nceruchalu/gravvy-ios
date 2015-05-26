@@ -10,7 +10,7 @@
 
 #pragma mark - Constants
 // Slide view removal duration
-static NSTimeInterval const kSlideViewRemovalDuration  = 0.6f;
+static NSTimeInterval const kSlideViewRemovalDuration  = 0.45f;
 // Slide view presentation duration
 static NSTimeInterval const kSlideViewPresentationDuration = 0.15f;
 

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="48" id="bR3-G9-goX" userLabel="Selected Contact Cell" customClass="GRVSelectedContactPickerTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bR3-G9-goX" id="PTH-oC-flO">
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nT4-3C-q1u" userLabel="Avatar View" customClass="GRVUserAvatarView">
+                        <rect key="frame" x="12" y="4" width="36" height="36"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="36" id="Bjc-Ri-AJY"/>
+                            <constraint firstAttribute="width" secondItem="nT4-3C-q1u" secondAttribute="height" multiplier="1:1" id="HHS-Pt-WKd"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8q1-hQ-1nb" userLabel="Cell divider">
+                        <rect key="frame" x="56" y="23" width="218" height="2"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="2" id="GWN-Mv-pRv"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nnoduka Eruchalu" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E58-jz-KDD" userLabel="Display Name Label">
+                        <rect key="frame" x="56" y="3" width="218" height="20"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="+1 626 660 4830" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2kU-wU-BWW" userLabel="Phone Number Label">
+                        <rect key="frame" x="56" y="25" width="218" height="14"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                        <color key="textColor" red="0.57254901960000004" green="0.57254901960000004" blue="0.57254901960000004" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dcv-dY-g7A" userLabel="Remove Contact Button">
+                        <rect key="frame" x="274" y="1" width="42" height="42"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="42" id="4PV-dq-sTD"/>
+                            <constraint firstAttribute="width" secondItem="Dcv-dY-g7A" secondAttribute="height" multiplier="1:1" id="o0I-nC-Rdu"/>
+                        </constraints>
+                        <inset key="imageEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                        <state key="normal" image="less">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="centerY" secondItem="nT4-3C-q1u" secondAttribute="centerY" id="02j-Xs-kRO"/>
+                    <constraint firstAttribute="centerY" secondItem="8q1-hQ-1nb" secondAttribute="centerY" constant="-2" id="4rL-mD-1Ag"/>
+                    <constraint firstItem="2kU-wU-BWW" firstAttribute="trailing" secondItem="E58-jz-KDD" secondAttribute="trailing" id="9un-P5-jU9"/>
+                    <constraint firstItem="8q1-hQ-1nb" firstAttribute="leading" secondItem="nT4-3C-q1u" secondAttribute="trailing" constant="8" symbolic="YES" id="CGW-NG-if6"/>
+                    <constraint firstItem="E58-jz-KDD" firstAttribute="leading" secondItem="nT4-3C-q1u" secondAttribute="trailing" constant="8" symbolic="YES" id="G6W-NO-6fl"/>
+                    <constraint firstItem="2kU-wU-BWW" firstAttribute="top" secondItem="8q1-hQ-1nb" secondAttribute="bottom" id="ITS-Jb-x33"/>
+                    <constraint firstAttribute="centerY" secondItem="Dcv-dY-g7A" secondAttribute="centerY" id="Lfn-rp-u8E"/>
+                    <constraint firstItem="8q1-hQ-1nb" firstAttribute="top" secondItem="E58-jz-KDD" secondAttribute="bottom" id="ZHy-4O-Z5C"/>
+                    <constraint firstItem="8q1-hQ-1nb" firstAttribute="trailing" secondItem="E58-jz-KDD" secondAttribute="trailing" id="bEH-HY-OEp"/>
+                    <constraint firstAttribute="trailing" secondItem="Dcv-dY-g7A" secondAttribute="trailing" constant="4" id="fok-db-cR1"/>
+                    <constraint firstItem="Dcv-dY-g7A" firstAttribute="leading" secondItem="E58-jz-KDD" secondAttribute="trailing" id="hPM-mT-oim"/>
+                    <constraint firstItem="nT4-3C-q1u" firstAttribute="leading" secondItem="PTH-oC-flO" secondAttribute="leading" constant="12" id="oqw-7r-HSD"/>
+                    <constraint firstItem="2kU-wU-BWW" firstAttribute="leading" secondItem="E58-jz-KDD" secondAttribute="leading" id="wnz-hg-4Sq"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="avatarView" destination="nT4-3C-q1u" id="R54-aR-BG9"/>
+                <outlet property="displayNameLabel" destination="E58-jz-KDD" id="vue-6V-gfg"/>
+                <outlet property="phoneNumberLabel" destination="2kU-wU-BWW" id="xSO-Fw-igP"/>
+                <outlet property="removeButton" destination="Dcv-dY-g7A" id="SG2-RB-8aD"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="less" width="22" height="22"/>
+    </resources>
+</document>

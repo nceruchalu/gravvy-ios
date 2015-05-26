@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="48" id="qOn-aO-cUI" userLabel="Filtered Contact Cell" customClass="GRVFilteredContactPickerTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qOn-aO-cUI" id="Bhh-f2-PST">
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eDv-2d-Y2N" userLabel="Avatar View" customClass="GRVUserAvatarView">
+                        <rect key="frame" x="12" y="4" width="36" height="36"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="eDv-2d-Y2N" secondAttribute="height" multiplier="1:1" id="3si-GN-4I3"/>
+                            <constraint firstAttribute="width" constant="36" id="Zi9-kg-dOA"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gt6-JE-5Qd" userLabel="Cell divider">
+                        <rect key="frame" x="56" y="23" width="220" height="2"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="2" id="zSj-hh-e5E"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Nnoduka Eruchalu" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iwG-RD-CIb" userLabel="Display Name Label">
+                        <rect key="frame" x="56" y="3" width="220" height="20"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="+1 626 660 4830" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y17-T2-brc" userLabel="Phone Number Label">
+                        <rect key="frame" x="56" y="25" width="220" height="14"/>
+                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                        <color key="textColor" red="0.57254901960000004" green="0.57254901960000004" blue="0.57254901960000004" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="gt6-JE-5Qd" firstAttribute="top" secondItem="iwG-RD-CIb" secondAttribute="bottom" id="4GF-n5-pf0"/>
+                    <constraint firstItem="y17-T2-brc" firstAttribute="leading" secondItem="iwG-RD-CIb" secondAttribute="leading" id="4Kf-gI-AZL"/>
+                    <constraint firstAttribute="centerY" secondItem="eDv-2d-Y2N" secondAttribute="centerY" id="ADR-Wj-5q9"/>
+                    <constraint firstAttribute="trailing" secondItem="iwG-RD-CIb" secondAttribute="trailing" constant="44" id="G6z-ux-lmy"/>
+                    <constraint firstAttribute="centerY" secondItem="gt6-JE-5Qd" secondAttribute="centerY" constant="-2" id="RIY-gp-izN"/>
+                    <constraint firstItem="eDv-2d-Y2N" firstAttribute="leading" secondItem="Bhh-f2-PST" secondAttribute="leading" constant="12" id="RLc-fC-cJE"/>
+                    <constraint firstItem="gt6-JE-5Qd" firstAttribute="trailing" secondItem="iwG-RD-CIb" secondAttribute="trailing" id="Vzn-K6-Cr6"/>
+                    <constraint firstItem="y17-T2-brc" firstAttribute="top" secondItem="gt6-JE-5Qd" secondAttribute="bottom" id="afV-GB-mBp"/>
+                    <constraint firstItem="gt6-JE-5Qd" firstAttribute="leading" secondItem="eDv-2d-Y2N" secondAttribute="trailing" constant="8" symbolic="YES" id="lSF-AI-a5c"/>
+                    <constraint firstItem="y17-T2-brc" firstAttribute="trailing" secondItem="iwG-RD-CIb" secondAttribute="trailing" id="q2z-qD-nwX"/>
+                    <constraint firstItem="iwG-RD-CIb" firstAttribute="leading" secondItem="eDv-2d-Y2N" secondAttribute="trailing" constant="8" symbolic="YES" id="vGi-Vf-92g"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="avatarView" destination="eDv-2d-Y2N" id="nmz-WU-Mdj"/>
+                <outlet property="displayNameLabel" destination="iwG-RD-CIb" id="UxY-vX-3y2"/>
+                <outlet property="phoneNumberLabel" destination="y17-T2-brc" id="S9m-QW-ZpA"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>

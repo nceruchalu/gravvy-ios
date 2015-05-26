@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GRVContactPickerViewController">
+            <connections>
+                <outlet property="searchTextField" destination="yOU-Hh-icI" id="XQP-LT-3kU"/>
+                <outlet property="spinner" destination="eCb-AL-Pot" id="CUE-LP-exM"/>
+                <outlet property="tableView" destination="d5u-9C-grh" id="KMw-u6-zbJ"/>
+                <outlet property="topBorderView" destination="0Ol-Hz-ZR0" id="VgU-fS-zx9"/>
+                <outlet property="view" destination="QLZ-vb-937" id="atc-Nv-VXR"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="QLZ-vb-937" userLabel="Contact Picker View">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Ol-Hz-ZR0" userLabel="Top Border View">
+                    <rect key="frame" x="0.0" y="64" width="600" height="1"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="g3G-gP-BG7"/>
+                    </constraints>
+                    <variation key="widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="g3G-gP-BG7"/>
+                        </mask>
+                    </variation>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UsH-js-woR" userLabel="Search Box Container">
+                    <rect key="frame" x="0.0" y="65" width="600" height="45"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="contactSearch" translatesAutoresizingMaskIntoConstraints="NO" id="s7a-Ca-tpb" userLabel="Contact Search Icon">
+                            <rect key="frame" x="19" y="11.5" width="22" height="22"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="22" id="65M-o2-CoI"/>
+                                <constraint firstAttribute="width" secondItem="s7a-Ca-tpb" secondAttribute="height" multiplier="1:1" id="pEh-UJ-EDu"/>
+                            </constraints>
+                            <variation key="widthClass=compact">
+                                <mask key="constraints">
+                                    <include reference="65M-o2-CoI"/>
+                                    <include reference="pEh-UJ-EDu"/>
+                                </mask>
+                            </variation>
+                        </imageView>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Share with a contact" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yOU-Hh-icI" userLabel="Search Text Field">
+                            <rect key="frame" x="56" y="0.0" width="498" height="45"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <action selector="textFieldDidChange:" destination="-1" eventType="editingChanged" id="feF-ez-sBU"/>
+                            </connections>
+                        </textField>
+                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EwL-H3-YCF" userLabel="Multi Contact Select Button">
+                            <rect key="frame" x="554" y="1.5" width="42" height="42"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="42" id="BFw-wY-TzC"/>
+                                <constraint firstAttribute="width" secondItem="EwL-H3-YCF" secondAttribute="height" multiplier="1:1" id="ncb-o2-iPB"/>
+                            </constraints>
+                            <inset key="imageEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
+                            <state key="normal" image="plus">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <variation key="widthClass=compact">
+                                <mask key="constraints">
+                                    <include reference="BFw-wY-TzC"/>
+                                    <include reference="ncb-o2-iPB"/>
+                                </mask>
+                            </variation>
+                            <connections>
+                                <action selector="presentMultiContactPicker:" destination="-1" eventType="touchUpInside" id="mO4-m9-LUE"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="EwL-H3-YCF" secondAttribute="trailing" constant="4" id="9ec-c8-bxI"/>
+                        <constraint firstAttribute="bottom" secondItem="yOU-Hh-icI" secondAttribute="bottom" id="DLF-ZJ-hBR"/>
+                        <constraint firstAttribute="height" constant="45" id="Lw6-h1-1AA"/>
+                        <constraint firstAttribute="centerY" secondItem="EwL-H3-YCF" secondAttribute="centerY" id="Xmv-qf-PIk"/>
+                        <constraint firstItem="yOU-Hh-icI" firstAttribute="leading" secondItem="s7a-Ca-tpb" secondAttribute="trailing" constant="15" id="jb5-3d-nbd"/>
+                        <constraint firstItem="yOU-Hh-icI" firstAttribute="top" secondItem="UsH-js-woR" secondAttribute="top" id="li7-0H-gSS"/>
+                        <constraint firstItem="s7a-Ca-tpb" firstAttribute="leading" secondItem="UsH-js-woR" secondAttribute="leading" constant="19" id="oVg-Q2-avZ"/>
+                        <constraint firstAttribute="centerY" secondItem="s7a-Ca-tpb" secondAttribute="centerY" id="sT1-YK-Zrp"/>
+                        <constraint firstItem="EwL-H3-YCF" firstAttribute="leading" secondItem="yOU-Hh-icI" secondAttribute="trailing" id="wri-2H-VVc"/>
+                    </constraints>
+                    <variation key="widthClass=compact">
+                        <mask key="subviews">
+                            <include reference="s7a-Ca-tpb"/>
+                            <include reference="yOU-Hh-icI"/>
+                            <include reference="EwL-H3-YCF"/>
+                        </mask>
+                        <mask key="constraints">
+                            <include reference="Lw6-h1-1AA"/>
+                            <include reference="oVg-Q2-avZ"/>
+                            <include reference="sT1-YK-Zrp"/>
+                            <include reference="DLF-ZJ-hBR"/>
+                            <include reference="jb5-3d-nbd"/>
+                            <include reference="li7-0H-gSS"/>
+                            <include reference="9ec-c8-bxI"/>
+                            <include reference="Xmv-qf-PIk"/>
+                            <include reference="wri-2H-VVc"/>
+                        </mask>
+                    </variation>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G76-w8-fRo" userLabel="Search Box Bottom Border">
+                    <rect key="frame" x="0.0" y="110" width="600" height="1"/>
+                    <color key="backgroundColor" red="0.8862745098" green="0.8862745098" blue="0.89411764709999997" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="35m-gt-LTx"/>
+                    </constraints>
+                    <variation key="widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="35m-gt-LTx"/>
+                        </mask>
+                    </variation>
+                </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="48" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="d5u-9C-grh" userLabel="Contacts Table View">
+                    <rect key="frame" x="0.0" y="111" width="600" height="489"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="tintColor" red="0.0" green="0.74901960779999999" blue="0.56078431370000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </tableView>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="eCb-AL-Pot">
+                    <rect key="frame" x="281.5" y="281.5" width="37" height="37"/>
+                    <color key="color" red="0.0" green="0.74901960779999999" blue="0.56078431370000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </activityIndicatorView>
+            </subviews>
+            <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="UsH-js-woR" firstAttribute="top" secondItem="0Ol-Hz-ZR0" secondAttribute="bottom" id="0rd-Tr-Vby"/>
+                <constraint firstAttribute="bottom" secondItem="d5u-9C-grh" secondAttribute="bottom" id="2TJ-XB-6xa"/>
+                <constraint firstItem="UsH-js-woR" firstAttribute="leading" secondItem="QLZ-vb-937" secondAttribute="leading" id="8AV-6s-eag"/>
+                <constraint firstItem="d5u-9C-grh" firstAttribute="top" secondItem="G76-w8-fRo" secondAttribute="bottom" id="8HZ-4n-dUX"/>
+                <constraint firstItem="0Ol-Hz-ZR0" firstAttribute="top" secondItem="QLZ-vb-937" secondAttribute="top" priority="900" constant="64" id="GN2-MT-Vbo"/>
+                <constraint firstAttribute="trailing" secondItem="d5u-9C-grh" secondAttribute="trailing" id="IgA-aS-rL2"/>
+                <constraint firstItem="0Ol-Hz-ZR0" firstAttribute="leading" secondItem="QLZ-vb-937" secondAttribute="leading" id="Rjh-x9-BOB"/>
+                <constraint firstAttribute="centerX" secondItem="eCb-AL-Pot" secondAttribute="centerX" id="YLT-GP-kvr"/>
+                <constraint firstAttribute="trailing" secondItem="0Ol-Hz-ZR0" secondAttribute="trailing" id="h9G-Yk-rXM"/>
+                <constraint firstItem="d5u-9C-grh" firstAttribute="leading" secondItem="QLZ-vb-937" secondAttribute="leading" id="hkX-aJ-shO"/>
+                <constraint firstItem="G76-w8-fRo" firstAttribute="leading" secondItem="QLZ-vb-937" secondAttribute="leading" id="kLc-oi-RoP"/>
+                <constraint firstAttribute="trailing" secondItem="G76-w8-fRo" secondAttribute="trailing" id="o4k-zV-3Rx"/>
+                <constraint firstAttribute="trailing" secondItem="UsH-js-woR" secondAttribute="trailing" id="oqg-Sc-daG"/>
+                <constraint firstItem="G76-w8-fRo" firstAttribute="top" secondItem="UsH-js-woR" secondAttribute="bottom" id="rHc-Yk-g9w"/>
+                <constraint firstAttribute="centerY" secondItem="eCb-AL-Pot" secondAttribute="centerY" id="t9z-Sa-ifw"/>
+            </constraints>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+            <variation key="widthClass=compact">
+                <mask key="subviews">
+                    <include reference="0Ol-Hz-ZR0"/>
+                    <include reference="UsH-js-woR"/>
+                    <include reference="G76-w8-fRo"/>
+                    <include reference="d5u-9C-grh"/>
+                    <include reference="eCb-AL-Pot"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="GN2-MT-Vbo"/>
+                    <include reference="Rjh-x9-BOB"/>
+                    <include reference="h9G-Yk-rXM"/>
+                    <include reference="8AV-6s-eag"/>
+                    <include reference="oqg-Sc-daG"/>
+                    <include reference="kLc-oi-RoP"/>
+                    <include reference="o4k-zV-3Rx"/>
+                    <include reference="rHc-Yk-g9w"/>
+                    <include reference="2TJ-XB-6xa"/>
+                    <include reference="8HZ-4n-dUX"/>
+                    <include reference="IgA-aS-rL2"/>
+                    <include reference="hkX-aJ-shO"/>
+                    <include reference="YLT-GP-kvr"/>
+                    <include reference="t9z-Sa-ifw"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="139" y="171"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="contactSearch" width="23" height="23"/>
+        <image name="plus" width="22" height="22"/>
+    </resources>
+</document>

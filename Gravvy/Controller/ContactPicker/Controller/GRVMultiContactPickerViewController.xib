@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GRVMultiContactPickerViewController">
+            <connections>
+                <outlet property="doneButton" destination="Ulh-sm-N9U" id="Mso-Rx-0wG"/>
+                <outlet property="tableView" destination="BlM-SQ-vzd" id="cQE-l6-lXc"/>
+                <outlet property="view" destination="1kX-WR-HAL" id="QBR-jf-C5B"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="1kX-WR-HAL" userLabel="Multi Contact Picker View">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TDj-gs-Uyu">
+                    <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                    <items>
+                        <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="GxC-pN-K6s"/>
+                        <barButtonItem systemItem="cancel" id="02c-SR-ASd">
+                            <color key="tintColor" red="0.0" green="0.74901960779999999" blue="0.56078431370000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="cancel" destination="-1" id="JG2-8O-6Wp"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="4eo-5a-mPl"/>
+                        <barButtonItem enabled="NO" systemItem="done" id="Ulh-sm-N9U">
+                            <color key="tintColor" red="0.0" green="0.74901960779999999" blue="0.56078431370000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="done:" destination="-1" id="IcV-lh-juY"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="V9i-7S-HBg"/>
+                    </items>
+                    <color key="tintColor" red="0.0" green="0.74901960779999999" blue="0.56078431370000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </toolbar>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="BlM-SQ-vzd" userLabel="Multi Contacts Table View">
+                    <rect key="frame" x="0.0" y="64" width="600" height="492"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="tintColor" red="0.0" green="0.74901960779999999" blue="0.56078431370000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="TDj-gs-Uyu" firstAttribute="top" secondItem="BlM-SQ-vzd" secondAttribute="bottom" id="9XB-PF-p8l"/>
+                <constraint firstItem="BlM-SQ-vzd" firstAttribute="leading" secondItem="1kX-WR-HAL" secondAttribute="leading" id="AXs-qz-lLK"/>
+                <constraint firstAttribute="bottom" secondItem="TDj-gs-Uyu" secondAttribute="bottom" id="B9U-jK-RiM"/>
+                <constraint firstItem="BlM-SQ-vzd" firstAttribute="top" secondItem="1kX-WR-HAL" secondAttribute="top" priority="900" constant="64" id="JUe-Za-YmX"/>
+                <constraint firstAttribute="trailing" secondItem="TDj-gs-Uyu" secondAttribute="trailing" id="evR-u1-wPf"/>
+                <constraint firstAttribute="trailing" secondItem="BlM-SQ-vzd" secondAttribute="trailing" id="gFT-x2-LK2"/>
+                <constraint firstItem="TDj-gs-Uyu" firstAttribute="leading" secondItem="1kX-WR-HAL" secondAttribute="leading" id="qYI-wZ-2iR"/>
+            </constraints>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+            <variation key="widthClass=compact">
+                <mask key="subviews">
+                    <include reference="TDj-gs-Uyu"/>
+                    <include reference="BlM-SQ-vzd"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="AXs-qz-lLK"/>
+                    <include reference="JUe-Za-YmX"/>
+                    <include reference="gFT-x2-LK2"/>
+                    <include reference="9XB-PF-p8l"/>
+                    <include reference="B9U-jK-RiM"/>
+                    <include reference="evR-u1-wPf"/>
+                    <include reference="qYI-wZ-2iR"/>
+                </mask>
+            </variation>
+        </view>
+    </objects>
+</document>
