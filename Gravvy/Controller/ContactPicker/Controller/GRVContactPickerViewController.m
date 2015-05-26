@@ -60,6 +60,9 @@ static NSString *const kFilteredContactCellNibName    = @"GRVFilteredContactPick
 // Search Results Table View is the tableView @property
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
+// View that is displayed when there isn't address book access
+@property (weak, nonatomic) IBOutlet UIView *noAddressBookAccessView;
+
 @end
 
 @implementation GRVContactPickerViewController
@@ -117,6 +120,14 @@ static NSString *const kFilteredContactCellNibName    = @"GRVFilteredContactPick
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
     
     [self refreshTableView];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    // Confirm address book access and show a warning view if access not granted
+    self.noAddressBookAccessView.hidden = [GRVAddressBookManager authorized];
 }
 
 - (void)viewDidAppear:(BOOL)animated

@@ -154,6 +154,18 @@
 		40F937C41B0C48CE000F7BCB /* GRVTextViewContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 40F937C31B0C48CE000F7BCB /* GRVTextViewContainer.m */; };
 		40F937C71B0C491F000F7BCB /* GRVFeedbackFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40F937C61B0C491F000F7BCB /* GRVFeedbackFormViewController.m */; };
 		40F937CA1B0C4A81000F7BCB /* GRVAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40F937C91B0C4A81000F7BCB /* GRVAboutViewController.m */; };
+		40FAD4401B13D7BF0039B03A /* GRVContactPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40FAD4281B13D7BF0039B03A /* GRVContactPickerViewController.m */; };
+		40FAD4411B13D7BF0039B03A /* GRVContactPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40FAD4291B13D7BF0039B03A /* GRVContactPickerViewController.xib */; };
+		40FAD4431B13D7BF0039B03A /* GRVMultiContactPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40FAD42F1B13D7BF0039B03A /* GRVMultiContactPickerViewController.m */; };
+		40FAD4441B13D7BF0039B03A /* GRVMultiContactPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40FAD4301B13D7BF0039B03A /* GRVMultiContactPickerViewController.xib */; };
+		40FAD4451B13D7BF0039B03A /* GRVContactPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 40FAD4331B13D7BF0039B03A /* GRVContactPickerTableViewCell.m */; };
+		40FAD4461B13D7BF0039B03A /* GRVFilteredContactPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 40FAD4351B13D7BF0039B03A /* GRVFilteredContactPickerTableViewCell.m */; };
+		40FAD4471B13D7BF0039B03A /* GRVFilteredContactPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40FAD4361B13D7BF0039B03A /* GRVFilteredContactPickerTableViewCell.xib */; };
+		40FAD44A1B13D7BF0039B03A /* GRVMultiContactPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 40FAD43B1B13D7BF0039B03A /* GRVMultiContactPickerTableViewCell.m */; };
+		40FAD44B1B13D7BF0039B03A /* GRVMultiContactPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40FAD43C1B13D7BF0039B03A /* GRVMultiContactPickerTableViewCell.xib */; };
+		40FAD44C1B13D7BF0039B03A /* GRVSelectedContactPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 40FAD43E1B13D7BF0039B03A /* GRVSelectedContactPickerTableViewCell.m */; };
+		40FAD44D1B13D7BF0039B03A /* GRVSelectedContactPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40FAD43F1B13D7BF0039B03A /* GRVSelectedContactPickerTableViewCell.xib */; };
+		40FAD4501B13E0E10039B03A /* GRVCreateVideoContactPickerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 40FAD44F1B13E0E10039B03A /* GRVCreateVideoContactPickerVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -449,6 +461,26 @@
 		40F937C61B0C491F000F7BCB /* GRVFeedbackFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVFeedbackFormViewController.m; sourceTree = "<group>"; };
 		40F937C81B0C4A81000F7BCB /* GRVAboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVAboutViewController.h; sourceTree = "<group>"; };
 		40F937C91B0C4A81000F7BCB /* GRVAboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVAboutViewController.m; sourceTree = "<group>"; };
+		40FAD4271B13D7BF0039B03A /* GRVContactPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVContactPickerViewController.h; sourceTree = "<group>"; };
+		40FAD4281B13D7BF0039B03A /* GRVContactPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVContactPickerViewController.m; sourceTree = "<group>"; };
+		40FAD4291B13D7BF0039B03A /* GRVContactPickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GRVContactPickerViewController.xib; sourceTree = "<group>"; };
+		40FAD42D1B13D7BF0039B03A /* GRVMultiContactPickerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVMultiContactPickerDelegate.h; sourceTree = "<group>"; };
+		40FAD42E1B13D7BF0039B03A /* GRVMultiContactPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVMultiContactPickerViewController.h; sourceTree = "<group>"; };
+		40FAD42F1B13D7BF0039B03A /* GRVMultiContactPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVMultiContactPickerViewController.m; sourceTree = "<group>"; };
+		40FAD4301B13D7BF0039B03A /* GRVMultiContactPickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GRVMultiContactPickerViewController.xib; sourceTree = "<group>"; };
+		40FAD4321B13D7BF0039B03A /* GRVContactPickerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVContactPickerTableViewCell.h; sourceTree = "<group>"; };
+		40FAD4331B13D7BF0039B03A /* GRVContactPickerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVContactPickerTableViewCell.m; sourceTree = "<group>"; };
+		40FAD4341B13D7BF0039B03A /* GRVFilteredContactPickerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVFilteredContactPickerTableViewCell.h; sourceTree = "<group>"; };
+		40FAD4351B13D7BF0039B03A /* GRVFilteredContactPickerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVFilteredContactPickerTableViewCell.m; sourceTree = "<group>"; };
+		40FAD4361B13D7BF0039B03A /* GRVFilteredContactPickerTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GRVFilteredContactPickerTableViewCell.xib; sourceTree = "<group>"; };
+		40FAD43A1B13D7BF0039B03A /* GRVMultiContactPickerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVMultiContactPickerTableViewCell.h; sourceTree = "<group>"; };
+		40FAD43B1B13D7BF0039B03A /* GRVMultiContactPickerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVMultiContactPickerTableViewCell.m; sourceTree = "<group>"; };
+		40FAD43C1B13D7BF0039B03A /* GRVMultiContactPickerTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GRVMultiContactPickerTableViewCell.xib; sourceTree = "<group>"; };
+		40FAD43D1B13D7BF0039B03A /* GRVSelectedContactPickerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVSelectedContactPickerTableViewCell.h; sourceTree = "<group>"; };
+		40FAD43E1B13D7BF0039B03A /* GRVSelectedContactPickerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVSelectedContactPickerTableViewCell.m; sourceTree = "<group>"; };
+		40FAD43F1B13D7BF0039B03A /* GRVSelectedContactPickerTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GRVSelectedContactPickerTableViewCell.xib; sourceTree = "<group>"; };
+		40FAD44E1B13E0E10039B03A /* GRVCreateVideoContactPickerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVCreateVideoContactPickerVC.h; sourceTree = "<group>"; };
+		40FAD44F1B13E0E10039B03A /* GRVCreateVideoContactPickerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVCreateVideoContactPickerVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -696,6 +728,8 @@
 				4064A18C1B11AA8500E9C4CB /* GRVCreateVideoCameraVC.m */,
 				4064A1941B12B01000E9C4CB /* GRVCreateVideoCameraReviewVC.h */,
 				4064A1951B12B01000E9C4CB /* GRVCreateVideoCameraReviewVC.m */,
+				40FAD44E1B13E0E10039B03A /* GRVCreateVideoContactPickerVC.h */,
+				40FAD44F1B13E0E10039B03A /* GRVCreateVideoContactPickerVC.m */,
 				40F937BA1B0C46B0000F7BCB /* GRVSettingsTVC.h */,
 				40F937BB1B0C46B0000F7BCB /* GRVSettingsTVC.m */,
 				40F937BF1B0C4849000F7BCB /* GRVSettingsProfileSettingsTVC.h */,
@@ -706,6 +740,7 @@
 				40F937C61B0C491F000F7BCB /* GRVFeedbackFormViewController.m */,
 				40F937C81B0C4A81000F7BCB /* GRVAboutViewController.h */,
 				40F937C91B0C4A81000F7BCB /* GRVAboutViewController.m */,
+				40FAD4251B13D7BF0039B03A /* ContactPicker */,
 				40D853AF1B0C5FAA001A206A /* Camera */,
 				402329911B09AA0200BFD2D5 /* ContainerTransitions */,
 			);
@@ -1023,6 +1058,47 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		40FAD4251B13D7BF0039B03A /* ContactPicker */ = {
+			isa = PBXGroup;
+			children = (
+				40FAD4261B13D7BF0039B03A /* Controller */,
+				40FAD4311B13D7BF0039B03A /* View */,
+			);
+			path = ContactPicker;
+			sourceTree = "<group>";
+		};
+		40FAD4261B13D7BF0039B03A /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				40FAD4271B13D7BF0039B03A /* GRVContactPickerViewController.h */,
+				40FAD4281B13D7BF0039B03A /* GRVContactPickerViewController.m */,
+				40FAD4291B13D7BF0039B03A /* GRVContactPickerViewController.xib */,
+				40FAD42D1B13D7BF0039B03A /* GRVMultiContactPickerDelegate.h */,
+				40FAD42E1B13D7BF0039B03A /* GRVMultiContactPickerViewController.h */,
+				40FAD42F1B13D7BF0039B03A /* GRVMultiContactPickerViewController.m */,
+				40FAD4301B13D7BF0039B03A /* GRVMultiContactPickerViewController.xib */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		40FAD4311B13D7BF0039B03A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				40FAD4321B13D7BF0039B03A /* GRVContactPickerTableViewCell.h */,
+				40FAD4331B13D7BF0039B03A /* GRVContactPickerTableViewCell.m */,
+				40FAD4341B13D7BF0039B03A /* GRVFilteredContactPickerTableViewCell.h */,
+				40FAD4351B13D7BF0039B03A /* GRVFilteredContactPickerTableViewCell.m */,
+				40FAD4361B13D7BF0039B03A /* GRVFilteredContactPickerTableViewCell.xib */,
+				40FAD43A1B13D7BF0039B03A /* GRVMultiContactPickerTableViewCell.h */,
+				40FAD43B1B13D7BF0039B03A /* GRVMultiContactPickerTableViewCell.m */,
+				40FAD43C1B13D7BF0039B03A /* GRVMultiContactPickerTableViewCell.xib */,
+				40FAD43D1B13D7BF0039B03A /* GRVSelectedContactPickerTableViewCell.h */,
+				40FAD43E1B13D7BF0039B03A /* GRVSelectedContactPickerTableViewCell.m */,
+				40FAD43F1B13D7BF0039B03A /* GRVSelectedContactPickerTableViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1107,12 +1183,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				407620821AFEC41200100550 /* Main.storyboard in Resources */,
+				40FAD4441B13D7BF0039B03A /* GRVMultiContactPickerViewController.xib in Resources */,
+				40FAD4471B13D7BF0039B03A /* GRVFilteredContactPickerTableViewCell.xib in Resources */,
+				40FAD44D1B13D7BF0039B03A /* GRVSelectedContactPickerTableViewCell.xib in Resources */,
 				4076236A1AFEF0E300100550 /* NBPhoneNumberMetadata.plist in Resources */,
 				407620871AFEC41200100550 /* LaunchScreen.xib in Resources */,
 				407620841AFEC41200100550 /* Images.xcassets in Resources */,
+				40FAD4411B13D7BF0039B03A /* GRVContactPickerViewController.xib in Resources */,
 				403D34551B1015FF004FF19E /* GRVCameraSlideUpView.xib in Resources */,
 				407620CF1AFEEE8A00100550 /* notification.caf in Resources */,
 				40D853BD1B0C69D1001A206A /* GRVCameraViewController.xib in Resources */,
+				40FAD44B1B13D7BF0039B03A /* GRVMultiContactPickerTableViewCell.xib in Resources */,
 				403D34571B101630004FF19E /* GRVCameraSlideDownView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1150,6 +1231,7 @@
 				407623111AFEF08E00100550 /* AFURLSessionManager.m in Sources */,
 				403D349B1B114768004FF19E /* SCMediaTypeConfiguration.m in Sources */,
 				403D349D1B114768004FF19E /* SCVideoConfiguration.m in Sources */,
+				40FAD4431B13D7BF0039B03A /* GRVMultiContactPickerViewController.m in Sources */,
 				407623D61AFF280500100550 /* GRVRegionStore.m in Sources */,
 				403BC9371AFF3DFA009BBD2B /* GRVContact.m in Sources */,
 				4034AD851B000E1900162F2C /* GRVVerificationViewController.m in Sources */,
@@ -1165,6 +1247,7 @@
 				402875B31B0483F300699F60 /* GRVLandingViewController.m in Sources */,
 				407623991AFEF13400100550 /* UIImage+GIF.m in Sources */,
 				407623181AFEF08E00100550 /* UIRefreshControl+AFNetworking.m in Sources */,
+				40FAD4461B13D7BF0039B03A /* GRVFilteredContactPickerTableViewCell.m in Sources */,
 				403D34531B101528004FF19E /* GRVCameraSlideDownView.m in Sources */,
 				407623951AFEF13400100550 /* SDWebImageDownloaderOperation.m in Sources */,
 				40F937C71B0C491F000F7BCB /* GRVFeedbackFormViewController.m in Sources */,
@@ -1186,13 +1269,16 @@
 				407623611AFEF0E300100550 /* NBMetadataCoreMapper.m in Sources */,
 				407620CB1AFEEE8A00100550 /* KeychainItemWrapper.m in Sources */,
 				40F937CA1B0C4A81000F7BCB /* GRVAboutViewController.m in Sources */,
+				40FAD44C1B13D7BF0039B03A /* GRVSelectedContactPickerTableViewCell.m in Sources */,
 				407623D91AFF28B600100550 /* GRVUserAvatarView.m in Sources */,
+				40FAD4501B13E0E10039B03A /* GRVCreateVideoContactPickerVC.m in Sources */,
 				4034AD821B000CA600162F2C /* GRVCountrySelectTVC.m in Sources */,
 				4076239E1AFEF13400100550 /* UIView+WebCacheOperation.m in Sources */,
 				4089BFF11B03BC36003DF4AA /* ExtendedTableViewController.m in Sources */,
 				403D34C21B114848004FF19E /* SCFilter.m in Sources */,
 				407623C51AFF212E00100550 /* GRVHTTPManager.m in Sources */,
 				407623141AFEF08E00100550 /* UIAlertView+AFNetworking.m in Sources */,
+				40FAD4401B13D7BF0039B03A /* GRVContactPickerViewController.m in Sources */,
 				407623E51AFF31D400100550 /* Gravvy.xcdatamodeld in Sources */,
 				4064A1901B12A8C100E9C4CB /* GRVPlayerView.m in Sources */,
 				403BC94C1AFF40A9009BBD2B /* GRVUserThumbnail+Create.m in Sources */,
@@ -1240,6 +1326,7 @@
 				407623691AFEF0E300100550 /* NBPhoneNumberDesc.m in Sources */,
 				407623131AFEF08E00100550 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				407623931AFEF13400100550 /* SDWebImageDecoder.m in Sources */,
+				40FAD4451B13D7BF0039B03A /* GRVContactPickerTableViewCell.m in Sources */,
 				403BC9521AFF4366009BBD2B /* GRVUser+AddressBook.m in Sources */,
 				407623121AFEF08E00100550 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				4076239C1AFEF13400100550 /* UIImageView+HighlightedWebCache.m in Sources */,
@@ -1251,6 +1338,7 @@
 				407620791AFEC41200100550 /* main.m in Sources */,
 				407623DC1AFF2B1400100550 /* GRVAlertBannerView.m in Sources */,
 				407623981AFEF13400100550 /* UIButton+WebCache.m in Sources */,
+				40FAD44A1B13D7BF0039B03A /* GRVMultiContactPickerTableViewCell.m in Sources */,
 				403D349A1B114768004FF19E /* SCAudioConfiguration.m in Sources */,
 				40F937C41B0C48CE000F7BCB /* GRVTextViewContainer.m in Sources */,
 				407623BC1AFF18FF00100550 /* GRVConstants.m in Sources */,

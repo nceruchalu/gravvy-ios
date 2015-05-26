@@ -8,6 +8,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GRVContactPickerViewController">
             <connections>
+                <outlet property="noAddressBookAccessView" destination="Zti-uA-4j6" id="rFm-ci-vfU"/>
                 <outlet property="searchTextField" destination="yOU-Hh-icI" id="XQP-LT-3kU"/>
                 <outlet property="spinner" destination="eCb-AL-Pot" id="CUE-LP-exM"/>
                 <outlet property="tableView" destination="d5u-9C-grh" id="KMw-u6-zbJ"/>
@@ -36,7 +37,7 @@
                     <rect key="frame" x="0.0" y="65" width="600" height="45"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="contactSearch" translatesAutoresizingMaskIntoConstraints="NO" id="s7a-Ca-tpb" userLabel="Contact Search Icon">
-                            <rect key="frame" x="19" y="11.5" width="22" height="22"/>
+                            <rect key="frame" x="19" y="11" width="22" height="22"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="22" id="65M-o2-CoI"/>
                                 <constraint firstAttribute="width" secondItem="s7a-Ca-tpb" secondAttribute="height" multiplier="1:1" id="pEh-UJ-EDu"/>
@@ -57,7 +58,7 @@
                             </connections>
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EwL-H3-YCF" userLabel="Multi Contact Select Button">
-                            <rect key="frame" x="554" y="1.5" width="42" height="42"/>
+                            <rect key="frame" x="554" y="1" width="42" height="42"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="42" id="BFw-wY-TzC"/>
                                 <constraint firstAttribute="width" secondItem="EwL-H3-YCF" secondAttribute="height" multiplier="1:1" id="ncb-o2-iPB"/>
@@ -126,9 +127,35 @@
                     <color key="tintColor" red="0.0" green="0.74901960779999999" blue="0.56078431370000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </tableView>
                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="eCb-AL-Pot">
-                    <rect key="frame" x="281.5" y="281.5" width="37" height="37"/>
+                    <rect key="frame" x="281" y="281" width="37" height="37"/>
                     <color key="color" red="0.0" green="0.74901960779999999" blue="0.56078431370000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </activityIndicatorView>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zti-uA-4j6" userLabel="No Address Book Access View">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This app does not have access to your contacts." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XId-Vt-e5w">
+                            <rect key="frame" x="20" y="290" width="560" height="20.5"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                            <color key="textColor" red="0.42745098039215684" green="0.42745098039215684" blue="0.42745098039215684" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enable access to your contacts in iPhone Settings &gt; Privacy &gt; Contacts &gt; Gravvy." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UVd-sc-olI">
+                            <rect key="frame" x="20" y="330" width="560" height="37.5"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                            <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="centerY" secondItem="XId-Vt-e5w" secondAttribute="centerY" id="CWB-wP-JEF"/>
+                        <constraint firstItem="UVd-sc-olI" firstAttribute="trailing" secondItem="XId-Vt-e5w" secondAttribute="trailing" id="DPL-JQ-qP0"/>
+                        <constraint firstItem="XId-Vt-e5w" firstAttribute="leading" secondItem="Zti-uA-4j6" secondAttribute="leading" constant="20" symbolic="YES" id="GBq-u7-fil"/>
+                        <constraint firstAttribute="trailing" secondItem="XId-Vt-e5w" secondAttribute="trailing" constant="20" symbolic="YES" id="LpZ-1v-enz"/>
+                        <constraint firstItem="UVd-sc-olI" firstAttribute="top" secondItem="XId-Vt-e5w" secondAttribute="bottom" constant="20" id="bv1-1G-MBA"/>
+                        <constraint firstItem="UVd-sc-olI" firstAttribute="leading" secondItem="XId-Vt-e5w" secondAttribute="leading" id="xW2-Rh-WZU"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
@@ -136,10 +163,12 @@
                 <constraint firstAttribute="bottom" secondItem="d5u-9C-grh" secondAttribute="bottom" id="2TJ-XB-6xa"/>
                 <constraint firstItem="UsH-js-woR" firstAttribute="leading" secondItem="QLZ-vb-937" secondAttribute="leading" id="8AV-6s-eag"/>
                 <constraint firstItem="d5u-9C-grh" firstAttribute="top" secondItem="G76-w8-fRo" secondAttribute="bottom" id="8HZ-4n-dUX"/>
+                <constraint firstAttribute="trailing" secondItem="Zti-uA-4j6" secondAttribute="trailing" id="8On-wX-V1B"/>
                 <constraint firstItem="0Ol-Hz-ZR0" firstAttribute="top" secondItem="QLZ-vb-937" secondAttribute="top" priority="900" constant="64" id="GN2-MT-Vbo"/>
                 <constraint firstAttribute="trailing" secondItem="d5u-9C-grh" secondAttribute="trailing" id="IgA-aS-rL2"/>
                 <constraint firstItem="0Ol-Hz-ZR0" firstAttribute="leading" secondItem="QLZ-vb-937" secondAttribute="leading" id="Rjh-x9-BOB"/>
                 <constraint firstAttribute="centerX" secondItem="eCb-AL-Pot" secondAttribute="centerX" id="YLT-GP-kvr"/>
+                <constraint firstItem="Zti-uA-4j6" firstAttribute="top" secondItem="QLZ-vb-937" secondAttribute="top" id="h3a-XY-ZcC"/>
                 <constraint firstAttribute="trailing" secondItem="0Ol-Hz-ZR0" secondAttribute="trailing" id="h9G-Yk-rXM"/>
                 <constraint firstItem="d5u-9C-grh" firstAttribute="leading" secondItem="QLZ-vb-937" secondAttribute="leading" id="hkX-aJ-shO"/>
                 <constraint firstItem="G76-w8-fRo" firstAttribute="leading" secondItem="QLZ-vb-937" secondAttribute="leading" id="kLc-oi-RoP"/>
@@ -147,6 +176,8 @@
                 <constraint firstAttribute="trailing" secondItem="UsH-js-woR" secondAttribute="trailing" id="oqg-Sc-daG"/>
                 <constraint firstItem="G76-w8-fRo" firstAttribute="top" secondItem="UsH-js-woR" secondAttribute="bottom" id="rHc-Yk-g9w"/>
                 <constraint firstAttribute="centerY" secondItem="eCb-AL-Pot" secondAttribute="centerY" id="t9z-Sa-ifw"/>
+                <constraint firstItem="Zti-uA-4j6" firstAttribute="leading" secondItem="QLZ-vb-937" secondAttribute="leading" id="vIA-OC-QnQ"/>
+                <constraint firstAttribute="bottom" secondItem="Zti-uA-4j6" secondAttribute="bottom" id="wt8-oi-tpa"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
             <variation key="widthClass=compact">
