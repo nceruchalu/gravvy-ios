@@ -30,4 +30,10 @@
     return CGRectGetMaxY(self.frame);
 }
 
+- (CGFloat)heightWithView:(UIView *)view
+{
+    // Account for the off by effect that appears int he VC
+    return (CGRectGetHeight(view.frame)/2 + 1.0f);
+}
+
 @end

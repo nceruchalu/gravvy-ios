@@ -127,6 +127,8 @@ static const CGFloat kCountdownContainerCornerRadius = 5.0f;
                                             options:nil];
     self.slideDownView = [slideDownNibViews firstObject];
     
+    self.previewView.backgroundColor = [UIColor clearColor];
+    
     // Set marker for minimum recording duration
     self.minimumProgressIndicatorWidthLayoutConstraint.constant = self.view.frame.size.width * kGRVClipMinimumDuration/kGRVClipMaximumDuration;
     
@@ -193,40 +195,45 @@ static const CGFloat kCountdownContainerCornerRadius = 5.0f;
     // done revealing the capture view
     self.actionsView.hidden = YES;
     self.shootButton.enabled = NO;
-    
-    [self.slideUpView addSlideToView:self.previewView
-                         withOriginY:[self.slideUpView initialPositionWithView:self.previewView]];
-    [self.slideDownView addSlideToView:self.previewView
-                           withOriginY:[self.slideDownView initialPositionWithView:self.previewView]];
+    self.retakeButton.enabled = NO;
     
     // Prepare record session
     [self prepareSession];
+    
+    // Register observers
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(appDidEnterBackground)
+                                                 name:UIApplicationDidEnterBackgroundNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(appWillEnterForeground)
+                                                 name:UIApplicationWillEnterForegroundNotification
+                                               object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    // Remove separator view as we start revealing capture view
-    self.separatorView.hidden = YES;
-    
-    // Reveal capture view
-    [GRVCameraSlideView hideSlideUpView:self.slideUpView
-                          slideDownView:self.slideDownView
-                                 atView:self.previewView
-                             completion:^{
-                                 // show action buttons and enable other buttons
-                                 self.actionsView.hidden = NO;
-                                 self.shootButton.enabled = YES;
-                             }];
-    
-    [self.recorder startRunning];
+    [self setupVCOnAppear];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [self.recorder stopRunning];
+    [self cleanupVCOnDisappear];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    // remove observers
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIApplicationDidEnterBackgroundNotification
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIApplicationWillEnterForegroundNotification
+                                                  object:nil];
 }
 
 
@@ -286,6 +293,51 @@ static const CGFloat kCountdownContainerCornerRadius = 5.0f;
         self.recordingDuration = 0;
     }
 }
+
+#pragma mark Appearance/Disappearance Setup
+/**
+ * VC's view is appearing. Reveal capture view and start the recorder.
+ */
+- (void)setupVCOnAppear
+{
+    // Remove separator view as we start revealing capture view
+    self.separatorView.hidden = YES;
+    
+    // Reveal capture view
+    [GRVCameraSlideView hideSlideUpView:self.slideUpView
+                          slideDownView:self.slideDownView
+                                 atView:self.previewView
+                             completion:^{
+                                 // show action buttons and enable other buttons
+                                 self.actionsView.hidden = NO;
+                                 self.shootButton.enabled = YES;
+                                 self.retakeButton.enabled = YES;
+                             }];
+    
+    [self.recorder startRunning];
+}
+
+/**
+ * VC's view is disappearing. Cover capture view.
+ * Would be nice to stop the recorder here, but that slows down the VC's
+ * disappearance
+ */
+- (void)cleanupVCOnDisappear
+{
+    //[self.recorder stopRunning];
+    
+    // Cover capture view
+    [GRVCameraSlideView showSlideUpView:self.slideUpView slideDownView:self.slideDownView atView:self.previewView completion:^{
+        // Show separator view as we finish covering capture view
+        self.separatorView.hidden = NO;
+        
+        // Hide action buttons and disable other buttons
+        self.actionsView.hidden = YES;
+        self.shootButton.enabled = NO;
+        self.retakeButton.enabled = NO;
+    }];
+}
+
 
 #pragma mark - Target/Action Methods
 - (IBAction)flipCamera:(UIButton *)sender
@@ -361,7 +413,20 @@ static const CGFloat kCountdownContainerCornerRadius = 5.0f;
 
 - (IBAction)cancel
 {
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    // Stop the capture session in the background so that we don't get
+    // a weird hang as the view is dismissed
+    // To ensure this works properly, deallocate the recorder @property now
+    // so that the cleanupVCOnDisappear method works without a hitch
+    SCRecorder *recorder = self.recorder;
+    self.recorder = nil;
+    
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:^{
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [recorder stopRunning];
+            });
+        });
+    }];
 }
 
 - (IBAction)done:(UIBarButtonItem *)sender
@@ -410,5 +475,24 @@ static const CGFloat kCountdownContainerCornerRadius = 5.0f;
     NSLog(@"didCompleteSession:");
     [self processSession:recordSession];
 }
+
+
+#pragma mark - Notification Observer Methods
+/**
+ * App entering background, so stop the player
+ */
+- (void)appDidEnterBackground
+{
+    [self cleanupVCOnDisappear];
+}
+
+/**
+ * App entering foreground, so setup player
+ */
+- (void)appWillEnterForeground
+{
+    [self setupVCOnAppear];
+}
+
 
 @end

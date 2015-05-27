@@ -52,7 +52,7 @@ const NSUInteger kGRVVideoTitleMaxLength    = 100;
     #if TARGET_IPHONE_SIMULATOR
     NSString *const kGRVHTTPBaseURL     = @"http://localhost:8000/api/v1/";
     #else
-    NSString *const kGRVHTTPBaseURL     = @"http://gravvy.nnoduka.com/api/v1/";
+    NSString *const kGRVHTTPBaseURL     = @"http://10.0.0.4:8000/api/v1/";
     #endif
 
 #else

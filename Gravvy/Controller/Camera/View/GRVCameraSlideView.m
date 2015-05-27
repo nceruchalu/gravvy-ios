@@ -10,7 +10,7 @@
 
 #pragma mark - Constants
 // Slide view removal duration
-static NSTimeInterval const kSlideViewRemovalDuration  = 0.45f;
+static NSTimeInterval const kSlideViewRemovalDuration  = 0.30f;
 // Slide view presentation duration
 static NSTimeInterval const kSlideViewPresentationDuration = 0.15f;
 
@@ -28,8 +28,12 @@ static NSTimeInterval const kSlideViewPresentationDuration = 0.15f;
                  atView:(UIView *)view
              completion:(void (^)(void))completion
 {
-    [slideUpView addSlideToView:view withOriginY:[slideUpView finalPosition]];
-    [slideDownView addSlideToView:view withOriginY:[slideDownView finalPosition]];
+    [slideUpView addSlideToView:view
+                    withOriginY:[slideUpView finalPosition]
+                    usingHeight:[slideUpView heightWithView:view]];
+    [slideDownView addSlideToView:view
+                      withOriginY:[slideDownView finalPosition]
+                      usingHeight:[slideDownView heightWithView:view]];
     
     [slideUpView removeSlideFromSuperview:NO withDuration:kSlideViewPresentationDuration originY:[slideUpView initialPositionWithView:view] completion:nil];
     [slideDownView removeSlideFromSuperview:NO withDuration:kSlideViewPresentationDuration originY:[slideDownView initialPositionWithView:view] completion:completion];
@@ -44,28 +48,14 @@ static NSTimeInterval const kSlideViewPresentationDuration = 0.15f;
     [slideDownView hideWithAnimationAtView:view withTimeInterval:kSlideViewRemovalDuration completion:completion];
 }
 
+
 #pragma mark - Instance Methods
-#pragma mark Public
-- (void)addSlideToView:(UIView *)view withOriginY:(CGFloat)originY
-{
-    CGFloat width = CGRectGetWidth(view.frame);
-    CGFloat height = CGRectGetHeight(view.frame)/2;
-    
-    CGRect frame = self.frame;
-    frame.size.width = width;
-    frame.size.height = height;
-    frame.origin.y = originY;
-    self.frame = frame;
-    
-    [view addSubview:self];
-}
-
-
 #pragma mark Private
 - (void)showWithAnimationAtView:(UIView *)view completion:(void (^)(void))completion
 {
     [self addSlideToView:view
-             withOriginY:[self finalPosition]];
+             withOriginY:[self finalPosition]
+             usingHeight:[self heightWithView:view]];
     
     [self removeSlideFromSuperview:NO
                       withDuration:kSlideViewPresentationDuration
@@ -82,6 +72,10 @@ static NSTimeInterval const kSlideViewPresentationDuration = 0.15f;
 
 - (void)hideWithAnimationAtView:(UIView *)view withTimeInterval:(CGFloat)timeInterval completion:(void (^)(void))completion
 {
+    [self addSlideToView:view
+             withOriginY:[self initialPositionWithView:view]
+             usingHeight:[self heightWithView:view]];
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         dispatch_async(dispatch_get_main_queue(), ^{
             [self removeSlideFromSuperview:YES
@@ -91,6 +85,29 @@ static NSTimeInterval const kSlideViewPresentationDuration = 0.15f;
         });
     });
 }
+
+/**
+ * Use slide view to cover half the height of another view (capture view).
+ * Ideally this is setup for eventual removal by calling
+ * hideSlideUpView:slideDownView:atView:completion:
+ *
+ * @param view      View that will be covered
+ * @param originY   y positiion of the slide view's frame
+ * @param height    height of the slide view's frame
+ */
+- (void)addSlideToView:(UIView *)view withOriginY:(CGFloat)originY usingHeight:(CGFloat)height
+{
+    CGFloat width = CGRectGetWidth(view.frame);
+    
+    CGRect frame = self.frame;
+    frame.size.width = width;
+    frame.size.height = height;
+    frame.origin.y = originY;
+    self.frame = frame;
+    
+    [view addSubview:self];
+}
+
 
 - (void)removeSlideFromSuperview:(BOOL)remove withDuration:(CGFloat)duration originY:(CGFloat)originY completion:(void (^)(void))completion
 {
@@ -124,6 +141,12 @@ static NSTimeInterval const kSlideViewPresentationDuration = 0.15f;
 {
     // Abstract
     return 0.;
+}
+
+- (CGFloat)heightWithView:(UIView *)view
+{
+    // Abstract;
+    return CGRectGetHeight(view.frame)/2;
 }
 
 

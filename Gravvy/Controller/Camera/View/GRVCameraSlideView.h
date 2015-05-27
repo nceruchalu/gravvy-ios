@@ -16,6 +16,7 @@
 
 - (CGFloat)initialPositionWithView:(UIView *)view;
 - (CGFloat)finalPosition;
+- (CGFloat)heightWithView:(UIView *)view;
 
 @end
 
@@ -55,17 +56,5 @@
           slideDownView:(GRVCameraSlideView *)slideDownView
                  atView:(UIView *)view
              completion:(void (^)(void))completion;
-
-
-#pragma mark - Instance Methods
-/**
- * Use slide view to cover half the height of another view (capture view).
- * Ideally this is setup for eventual removal by calling
- * hideSlideUpView:slideDownView:atView:completion:
- *
- * @param view      View that will be covered
- * @param originY   y positiion of the slide view's frame 
- */
-- (void)addSlideToView:(UIView *)view withOriginY:(CGFloat)originY;
 
 @end

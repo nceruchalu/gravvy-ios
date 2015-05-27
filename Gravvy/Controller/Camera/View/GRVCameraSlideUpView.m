@@ -30,4 +30,9 @@
     return -CGRectGetHeight(self.frame);
 }
 
+- (CGFloat)heightWithView:(UIView *)view
+{
+    return CGRectGetHeight(view.frame)/2;
+}
+
 @end
