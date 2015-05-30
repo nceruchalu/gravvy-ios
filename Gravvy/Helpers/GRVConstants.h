@@ -194,6 +194,7 @@ extern NSString *const kGRVRESTVideoPhotoThumbnailKey;
 extern NSString *const kGRVRESTVideoPlaysCountKey;
 extern NSString *const kGRVRESTVideoTitleKey;
 extern NSString *const kGRVRESTVideoUpdatedAtKey;
+extern NSString *const kGRVRESTVideoUsersKey;
 
 // Clip object
 extern NSString *const kGRVRESTClipDurationKey;

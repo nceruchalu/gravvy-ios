@@ -104,6 +104,7 @@ NSString *const kGRVRESTVideoPhotoThumbnailKey      = @"photo_thumbnail";
 NSString *const kGRVRESTVideoPlaysCountKey          = @"plays_count";
 NSString *const kGRVRESTVideoTitleKey               = @"title";
 NSString *const kGRVRESTVideoUpdatedAtKey           = @"updated_at";
+NSString *const kGRVRESTVideoUsersKey               = @"users";
 
 // Clip object
 NSString *const kGRVRESTClipDurationKey             = @"duration";

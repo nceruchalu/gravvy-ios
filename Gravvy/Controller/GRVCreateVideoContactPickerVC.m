@@ -50,7 +50,8 @@ static NSString *const kUnwindSegueIdentifier = @"createdVideo";
     NSString *durationKey = [NSString stringWithFormat:@"%@.%@", kGRVRESTVideoLeadClipKey, kGRVRESTClipDurationKey];
     // Parameters required for video upload
     
-    NSMutableDictionary *parameters = [@{durationKey: @(self.duration)} mutableCopy];
+    NSMutableDictionary *parameters = [@{durationKey: @(self.duration),
+                                         kGRVRESTVideoUsersKey: videoUsersJSON} mutableCopy];
     if ([self.videoTitle length]) {
         parameters[kGRVRESTVideoTitleKey] = self.videoTitle;
     }
