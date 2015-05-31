@@ -46,6 +46,7 @@
     // incase dictionary values are NULL
     newVideo.createdAt = createdAt;
     newVideo.hashKey = [[videoDictionary objectForKey:kGRVRESTVideoHashKeyKey] description];
+    newVideo.liked = @([[videoDictionary objectForKey:kGRVRESTVideoLikedKey] boolValue]);
     newVideo.likesCount = [videoDictionary objectForKey:kGRVRESTVideoLikesCountKey];
     newVideo.photoThumbnailURL = [[videoDictionary objectForKey:kGRVRESTVideoPhotoThumbnailKey] description];
     newVideo.playsCount = [videoDictionary objectForKey:kGRVRESTVideoPlaysCountKey];
@@ -92,6 +93,7 @@
     if (![updatedAt isEqualToDate:existingVideo.updatedAt]) {
         
         // Update properties that will be sync'd
+        existingVideo.liked = @([[videoDictionary objectForKey:kGRVRESTVideoLikedKey] boolValue]);
         existingVideo.likesCount = [videoDictionary objectForKey:kGRVRESTVideoLikesCountKey];
         existingVideo.photoThumbnailURL = [[videoDictionary objectForKey:kGRVRESTVideoPhotoThumbnailKey] description];
         existingVideo.playsCount = [videoDictionary objectForKey:kGRVRESTVideoPlaysCountKey];

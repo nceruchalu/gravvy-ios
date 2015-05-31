@@ -102,6 +102,7 @@ NSString *const kGRVRESTVideoClipsKey               = @"clips";
 NSString *const kGRVRESTVideoCreatedAtKey           = @"created_at";
 NSString *const kGRVRESTVideoHashKeyKey             = @"hash_key";
 NSString *const kGRVRESTVideoLeadClipKey            = @"lead_clip";
+NSString *const kGRVRESTVideoLikedKey               = @"liked";
 NSString *const kGRVRESTVideoLikesCountKey          = @"likes_count";
 NSString *const kGRVRESTVideoOwnerKey               = @"owner";
 NSString *const kGRVRESTVideoPhotoThumbnailKey      = @"photo_thumbnail";

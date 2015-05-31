@@ -15,6 +15,7 @@
 
 @property (nonatomic, retain) NSDate * createdAt;
 @property (nonatomic, retain) NSString * hashKey;
+@property (nonatomic, retain) NSNumber * liked;
 @property (nonatomic, retain) NSNumber * likesCount;
 @property (nonatomic, retain) NSNumber * membership;
 @property (nonatomic, retain) NSString * photoThumbnailURL;

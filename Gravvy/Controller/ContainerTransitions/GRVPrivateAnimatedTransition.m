@@ -13,7 +13,7 @@
 /**
  * Spacing between child views which is visible during transition
  */
-static CGFloat const kChildViewPadding = 16.0f;
+static CGFloat const kChildViewPadding = 5.0f;
 
 /**
  * Transition animation dynamic parameters.

@@ -200,6 +200,7 @@ extern NSString *const kGRVRESTVideoClipsKey;
 extern NSString *const kGRVRESTVideoCreatedAtKey;
 extern NSString *const kGRVRESTVideoHashKeyKey;
 extern NSString *const kGRVRESTVideoLeadClipKey;
+extern NSString *const kGRVRESTVideoLikedKey;
 extern NSString *const kGRVRESTVideoLikesCountKey;
 extern NSString *const kGRVRESTVideoOwnerKey;
 extern NSString *const kGRVRESTVideoPhotoThumbnailKey;

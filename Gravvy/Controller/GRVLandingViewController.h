@@ -6,11 +6,11 @@
 //  Copyright (c) 2015 Nnoduka Eruchalu. All rights reserved.
 //
 
-#import "GRVVideosCDTVC.h"
+#import "GRVContainerViewController.h"
 
 /**
  * GRVLandingViewController is the landing VC of the app.
  */
-@interface GRVLandingViewController : GRVVideosCDTVC
+@interface GRVLandingViewController : GRVContainerViewController
 
 @end

@@ -4,6 +4,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller: Launch-->
@@ -159,6 +160,72 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BEK-NR-Bpm" userLabel="Buttons View Container">
+                                <rect key="frame" x="0.0" y="64" width="600" height="41"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="As4-xs-aAN" userLabel="Bottom Border">
+                                        <rect key="frame" x="0.0" y="40" width="600" height="1"/>
+                                        <color key="backgroundColor" red="0.87450980392156863" green="0.87450980392156863" blue="0.87450980392156863" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="zrl-6P-Uxo"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f4o-pX-Aul" userLabel="Videos Button Indicator">
+                                        <rect key="frame" x="28" y="39" width="244" height="2"/>
+                                        <color key="backgroundColor" red="0.0" green="0.74901960779999999" blue="0.56078431370000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="2" id="B9L-g5-dWS"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b5i-ft-QLS" userLabel="Videos Button">
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="41"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="13"/>
+                                        <state key="normal" title="VIDEOS">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zyc-fK-roB" userLabel="Notifications Button Indicator">
+                                        <rect key="frame" x="328" y="39" width="244" height="2"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="2" id="0f5-aN-lLX"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="obv-sf-P5h" userLabel="Notifications Button">
+                                        <rect key="frame" x="300" y="0.0" width="300" height="41"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="13"/>
+                                        <state key="normal" title="UPDATES">
+                                            <color key="titleColor" red="0.23137254901960785" green="0.23137254901960785" blue="0.23137254901960785" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="b5i-ft-QLS" firstAttribute="centerY" secondItem="obv-sf-P5h" secondAttribute="centerY" id="1Zc-8H-58M"/>
+                                    <constraint firstItem="Zyc-fK-roB" firstAttribute="width" secondItem="obv-sf-P5h" secondAttribute="width" multiplier="13/16" id="4X4-Hz-poK"/>
+                                    <constraint firstItem="f4o-pX-Aul" firstAttribute="width" secondItem="b5i-ft-QLS" secondAttribute="width" multiplier="13/16" id="6MR-Bg-7Xg"/>
+                                    <constraint firstItem="obv-sf-P5h" firstAttribute="top" secondItem="BEK-NR-Bpm" secondAttribute="top" id="Mzy-ws-FeI"/>
+                                    <constraint firstAttribute="trailing" secondItem="obv-sf-P5h" secondAttribute="trailing" id="Oas-bt-bmK"/>
+                                    <constraint firstItem="As4-xs-aAN" firstAttribute="leading" secondItem="BEK-NR-Bpm" secondAttribute="leading" id="Syu-ru-NCc"/>
+                                    <constraint firstAttribute="height" constant="41" id="TQH-H7-oLP"/>
+                                    <constraint firstAttribute="trailing" secondItem="As4-xs-aAN" secondAttribute="trailing" id="TjL-j5-d1H"/>
+                                    <constraint firstItem="Zyc-fK-roB" firstAttribute="centerX" secondItem="obv-sf-P5h" secondAttribute="centerX" id="aMS-8X-iaA"/>
+                                    <constraint firstAttribute="bottom" secondItem="b5i-ft-QLS" secondAttribute="bottom" id="cHr-4m-F6e"/>
+                                    <constraint firstItem="obv-sf-P5h" firstAttribute="leading" secondItem="b5i-ft-QLS" secondAttribute="trailing" id="d0W-1f-HD6"/>
+                                    <constraint firstItem="b5i-ft-QLS" firstAttribute="leading" secondItem="BEK-NR-Bpm" secondAttribute="leading" id="eD1-3L-iKp"/>
+                                    <constraint firstItem="obv-sf-P5h" firstAttribute="width" secondItem="b5i-ft-QLS" secondAttribute="width" id="f8D-NT-fY3"/>
+                                    <constraint firstItem="f4o-pX-Aul" firstAttribute="centerX" secondItem="b5i-ft-QLS" secondAttribute="centerX" id="mgu-cO-dfI"/>
+                                    <constraint firstItem="f4o-pX-Aul" firstAttribute="bottom" secondItem="b5i-ft-QLS" secondAttribute="bottom" id="oZk-8p-HYu"/>
+                                    <constraint firstItem="obv-sf-P5h" firstAttribute="height" secondItem="b5i-ft-QLS" secondAttribute="height" id="rJr-Ek-LWt"/>
+                                    <constraint firstAttribute="bottom" secondItem="As4-xs-aAN" secondAttribute="bottom" id="rh3-G0-RzT"/>
+                                    <constraint firstItem="Zyc-fK-roB" firstAttribute="bottom" secondItem="obv-sf-P5h" secondAttribute="bottom" id="xEr-dQ-fjm"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QDF-nW-e4j" userLabel="Container View">
+                                <rect key="frame" x="0.0" y="105" width="600" height="495"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a1m-7F-DL1" userLabel="Create Video Button">
                                 <rect key="frame" x="266" y="511" width="69" height="69"/>
                                 <state key="normal" image="recordCircle">
@@ -171,7 +238,14 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="KUA-dZ-rzT" firstAttribute="top" secondItem="QDF-nW-e4j" secondAttribute="bottom" id="14o-af-y7q"/>
+                            <constraint firstItem="BEK-NR-Bpm" firstAttribute="leading" secondItem="13Z-dE-Tnh" secondAttribute="leading" id="28H-8e-3PH"/>
+                            <constraint firstAttribute="trailing" secondItem="BEK-NR-Bpm" secondAttribute="trailing" id="8vd-wt-hLu"/>
+                            <constraint firstItem="QDF-nW-e4j" firstAttribute="leading" secondItem="13Z-dE-Tnh" secondAttribute="leading" id="Hxb-ad-XQX"/>
+                            <constraint firstItem="QDF-nW-e4j" firstAttribute="top" secondItem="BEK-NR-Bpm" secondAttribute="bottom" id="NPr-hw-IX5"/>
                             <constraint firstAttribute="centerX" secondItem="a1m-7F-DL1" secondAttribute="centerX" id="Wbs-vF-uYF"/>
+                            <constraint firstItem="BEK-NR-Bpm" firstAttribute="top" secondItem="eiz-7z-HV5" secondAttribute="bottom" id="jek-sc-VVK"/>
+                            <constraint firstAttribute="trailing" secondItem="QDF-nW-e4j" secondAttribute="trailing" id="sxe-3p-Ftf"/>
                             <constraint firstItem="KUA-dZ-rzT" firstAttribute="top" secondItem="a1m-7F-DL1" secondAttribute="bottom" constant="20" id="x7n-or-U6a"/>
                         </constraints>
                     </view>
@@ -184,6 +258,12 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="containerView" destination="QDF-nW-e4j" id="Itl-TX-edp"/>
+                        <outlet property="navigationButtonsContainerView" destination="BEK-NR-Bpm" id="16c-Hm-kiP"/>
+                        <outlet property="updatesButton" destination="obv-sf-P5h" id="HSM-Ja-o8d"/>
+                        <outlet property="updatesButtonIndicator" destination="Zyc-fK-roB" id="ejK-bb-iH3"/>
+                        <outlet property="videosButton" destination="b5i-ft-QLS" id="fIE-SM-BjX"/>
+                        <outlet property="videosButtonIndicator" destination="f4o-pX-Aul" id="wqV-mJ-YBQ"/>
                         <segue destination="Q3S-KQ-9M0" kind="presentation" identifier="showCreateVideoCameraController" id="gQM-eP-nL3"/>
                     </connections>
                 </viewController>
@@ -1336,7 +1416,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vaH-CD-ZUz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4376" y="2239"/>
+            <point key="canvasLocation" x="4376" y="1951"/>
         </scene>
         <!--Profile Settings: From Settings-->
         <scene sceneID="gbi-0P-yyG">
@@ -1502,7 +1582,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ojo-Ob-6Re" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5093" y="2238"/>
+            <point key="canvasLocation" x="5093" y="1950"/>
         </scene>
         <!--Feedback Form-->
         <scene sceneID="3p6-JH-j9V">
@@ -1623,7 +1703,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ys0-x6-TjW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5860" y="2239"/>
+            <point key="canvasLocation" x="5860" y="1951"/>
         </scene>
         <!--About-->
         <scene sceneID="hSW-vw-Uw1">
@@ -1786,7 +1866,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lq6-Da-d8o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6560" y="2239"/>
+            <point key="canvasLocation" x="6560" y="1951"/>
         </scene>
         <!--Navigation Controller: Settings-->
         <scene sceneID="d7m-Qk-Pje">
@@ -1804,7 +1884,43 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eTI-bV-rqT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3616" y="2239"/>
+            <point key="canvasLocation" x="3616" y="1951"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="tH6-vh-NgK">
+            <objects>
+                <viewController storyboardIdentifier="Videos" id="c3W-gi-yhK" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="isZ-GM-EKO"/>
+                        <viewControllerLayoutGuide type="bottom" id="1Uz-4p-xDt"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="N1Q-a7-iP5">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.79044621550000005" green="0.15686274510000001" blue="0.15686274510000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8gS-G8-PvA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3616" y="2751"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="6oq-Ea-q4U">
+            <objects>
+                <viewController storyboardIdentifier="Updates" id="2xq-pb-XrW" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1lH-r1-1I8"/>
+                        <viewControllerLayoutGuide type="bottom" id="nTP-e7-R9g"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="bg9-zN-itp">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oyv-AQ-PY3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4376" y="2751"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="4C3-2s-V7m">

@@ -16,6 +16,7 @@
 
 @dynamic createdAt;
 @dynamic hashKey;
+@dynamic liked;
 @dynamic likesCount;
 @dynamic membership;
 @dynamic photoThumbnailURL;
