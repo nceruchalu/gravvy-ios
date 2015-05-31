@@ -15,7 +15,6 @@
 @implementation GRVVideo
 
 @dynamic createdAt;
-@dynamic details;
 @dynamic hashKey;
 @dynamic likesCount;
 @dynamic membership;

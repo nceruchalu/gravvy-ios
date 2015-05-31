@@ -159,9 +159,19 @@ extern NSString *const kGRVRESTPushRegister;
 extern NSString *const kGRVRESTFeedbacks;
 
 /**
+ * kGRVRESTUserVideos: URL for videos that authenticated user is a member of
+ */
+extern NSString *const kGRVRESTUserVideos;
+
+/**
  * kGRVRESTVideos: URL for creating a new video.
  */
 extern NSString *const kGRVRESTVideos;
+
+/**
+ * kGRVRESTVideoMembers: URL for members sub-list of a specific video
+ */
+extern NSString *const kGRVRESTVideoMembers;
 
 
 // -----------------------------------------------------------------------------
@@ -186,6 +196,8 @@ extern NSString *const kGRVRESTPushRegistrationIdKey;
 extern NSString *const kGRVRESTFeedbackBodyKey;
 
 // Video object
+extern NSString *const kGRVRESTVideoClipsKey;
+extern NSString *const kGRVRESTVideoCreatedAtKey;
 extern NSString *const kGRVRESTVideoHashKeyKey;
 extern NSString *const kGRVRESTVideoLeadClipKey;
 extern NSString *const kGRVRESTVideoLikesCountKey;
@@ -204,6 +216,13 @@ extern NSString *const kGRVRESTClipOrderKey;
 extern NSString *const kGRVRESTClipOwnerKey;
 extern NSString *const kGRVRESTClipPhotoKey;
 extern NSString *const kGRVRESTClipUpdatedAtKey;
+
+// Video Member object
+extern NSString *const kGRVRESTMemberCreatedAtKey;
+extern NSString *const kGRVRESTMemberIdentifierKey;
+extern NSString *const kGRVRESTMemberStatusKey;
+extern NSString *const kGRVRESTMemberUpdatedAtKey;
+extern NSString *const kGRVRESTMemberUserKey;
 
 
 // -----------------------------------------------------------------------------
