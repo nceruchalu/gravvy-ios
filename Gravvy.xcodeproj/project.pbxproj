@@ -459,6 +459,7 @@
 		4089BFEE1B03BC36003DF4AA /* ExtendedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtendedTableViewController.m; sourceTree = "<group>"; };
 		4089BFEF1B03BC36003DF4AA /* ExtendedCoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtendedCoreDataTableViewController.h; sourceTree = "<group>"; };
 		4089BFF01B03BC36003DF4AA /* ExtendedCoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtendedCoreDataTableViewController.m; sourceTree = "<group>"; };
+		4090FBBE1B1BFAAA00197D82 /* GRVPrivateTransitionContextDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GRVPrivateTransitionContextDelegate.h; sourceTree = "<group>"; };
 		40D853B81B0C69D1001A206A /* GRVCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVCameraViewController.h; sourceTree = "<group>"; };
 		40D853B91B0C69D1001A206A /* GRVCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVCameraViewController.m; sourceTree = "<group>"; };
 		40D853BA1B0C69D1001A206A /* GRVCameraViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GRVCameraViewController.xib; sourceTree = "<group>"; };
@@ -534,6 +535,7 @@
 				402329941B09AA0200BFD2D5 /* GRVContainerViewControllerDelegate.h */,
 				402329991B09AA0200BFD2D5 /* GRVPrivateTransitionContext.h */,
 				4023299A1B09AA0200BFD2D5 /* GRVPrivateTransitionContext.m */,
+				4090FBBE1B1BFAAA00197D82 /* GRVPrivateTransitionContextDelegate.h */,
 				402329971B09AA0200BFD2D5 /* GRVPrivateAnimatedTransition.h */,
 				402329981B09AA0200BFD2D5 /* GRVPrivateAnimatedTransition.m */,
 				402329951B09AA0200BFD2D5 /* GRVPanGestureInteractiveTransition.h */,

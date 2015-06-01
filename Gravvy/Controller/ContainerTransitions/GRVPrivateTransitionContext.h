@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+@protocol GRVPrivateTransitionContextDelegate;
+
 /**
  * A private UIViewControllerContextTransitioning class to be passed on to our
  * transitioning delegates.
@@ -42,6 +44,11 @@
  * Private setter for the interactive property
  */
 @property (nonatomic, getter=isInteractive) BOOL interactive;
+
+/**
+ * The delegate for an interactive transition context.
+ */
+@property (weak, nonatomic) id<GRVPrivateTransitionContextDelegate>delegate;
 
 
 #pragma mark - Initialization

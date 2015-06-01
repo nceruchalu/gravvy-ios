@@ -7,6 +7,7 @@
 //
 
 #import "GRVPrivateTransitionContext.h"
+#import "GRVPrivateTransitionContextDelegate.h"
 
 @interface GRVPrivateTransitionContext ()
 
@@ -18,6 +19,7 @@
 @property (weak, nonatomic) UIView *containerView;
 @property (nonatomic) UIModalPresentationStyle presentationStyle;
 @property (nonatomic) BOOL transitionWasCancelled;
+@property (nonatomic) BOOL goingRight;
 
 @end
 
@@ -36,6 +38,7 @@
         self.containerView = fromViewController.view.superview;
         self.privateViewControllers = @{UITransitionContextFromViewControllerKey : fromViewController,
                                         UITransitionContextToViewControllerKey : toViewController};
+        self.goingRight = goingRight;
         
         // Set the view frame properties which make sense in our specialized
         // ContainerViewController context. Views appear from and disappear to
@@ -89,17 +92,27 @@
 // of the protocol:
 - (void)updateInteractiveTransition:(CGFloat)percentComplete
 {
-    // TODO: Animate the buttons along with the transition
+    if ([self.delegate respondsToSelector:@selector(transitionContext:didUpdateInteractiveTransition:goingRight:)]) {
+        [self.delegate transitionContext:self didUpdateInteractiveTransition:percentComplete goingRight:self.goingRight];
+    }
 }
 
 - (void)finishInteractiveTransition
 {
     self.transitionWasCancelled = NO;
+    
+    if ([self.delegate respondsToSelector:@selector(transitionContext:didFinishInteractiveTransitionGoingRight:)]) {
+        [self.delegate transitionContext:self didFinishInteractiveTransitionGoingRight:self.goingRight];
+    }
 }
 
 - (void)cancelInteractiveTransition
 {
     self.transitionWasCancelled = YES;
+    
+    if ([self.delegate respondsToSelector:@selector(transitionContext:didCancelInteractiveTransitionGoingRight:)]) {
+        [self.delegate transitionContext:self didCancelInteractiveTransitionGoingRight:self.goingRight];
+    }
 }
 
 @end

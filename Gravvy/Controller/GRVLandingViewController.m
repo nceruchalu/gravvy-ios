@@ -9,6 +9,8 @@
 #import "GRVLandingViewController.h"
 #import "GRVCreateVideoContactPickerVC.h"
 #import "GRVConstants.h"
+#import "GRVPanGestureInteractiveTransition.h"
+#import "GRVPrivateTransitionContextDelegate.h"
 
 #pragma mark - Constants
 /**
@@ -32,22 +34,67 @@ static NSString *const kStoryboardName                  = @"Main";
 static NSString *const kStoryboardIdentifierVideos      = @"Videos";
 static NSString *const kStoryboardIdentifierUpdates     = @"Updates";
 
-@interface GRVLandingViewController ()
+@interface GRVLandingViewController () <GRVPrivateTransitionContextDelegate>
 
 #pragma mark - Properties
 #pragma mark Outlets
 @property (weak, nonatomic) IBOutlet UIButton *videosButton;
-@property (weak, nonatomic) IBOutlet UIView *videosButtonIndicator;
 @property (weak, nonatomic) IBOutlet UIButton *updatesButton;
-@property (weak, nonatomic) IBOutlet UIView *updatesButtonIndicator;
 
-#pragma mark Outlets
+/**
+ * Horizontal position of center of button indicator in the navigation buttons
+ * container
+ */
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *currentButtonIndicatorHorizontalCenterLayout;
+
+#pragma mark Private
 // ordering of navigation buttons matches that of view controllers
 @property (copy, nonatomic) NSArray *navigationButtons;
+// Percentage offset of current position of button indicator, with 0 implying
+// videosButton, and 1 implying updatesButton
+@property (nonatomic) CGFloat buttonIndicatorOffset;
 
 @end
 
 @implementation GRVLandingViewController
+
+#pragma mark - Properties
+- (void)setButtonIndicatorOffset:(CGFloat)buttonIndicatorOffset
+{
+    _buttonIndicatorOffset = buttonIndicatorOffset;
+    
+    CGFloat videosButtonCenter = self.videosButton.frame.origin.x + self.videosButton.frame.size.width/2.0f;
+    CGFloat updatesButtonCenter = self.updatesButton.frame.origin.x + self.updatesButton.frame.size.width/2.0f;
+    
+    self.currentButtonIndicatorHorizontalCenterLayout.constant = (updatesButtonCenter - videosButtonCenter)*buttonIndicatorOffset + videosButtonCenter;
+    
+    // Emphasize appropriate button based on button indicator
+    NSUInteger emphasizedButtonIndex = 0;
+    if (_buttonIndicatorOffset == 0.0) {
+        emphasizedButtonIndex = 0;
+        
+    } else if (_buttonIndicatorOffset == 1.0) {
+        emphasizedButtonIndex = 1;
+    
+    } else {
+        // Start by assuming emphasized button won't change
+        emphasizedButtonIndex = self.selectedIndex;
+        
+        // Determine what the max change has to be for the current button to change
+        CGFloat offsetDelta = kGRVPanGestureInteractiveMinimumPercentComplete * [self.navigationButtons count];
+        BOOL goingRight = (self.selectedIndex == 0);
+        if (goingRight && _buttonIndicatorOffset > offsetDelta) {
+            emphasizedButtonIndex = 1;
+        } else if (!goingRight && (1 - _buttonIndicatorOffset) > offsetDelta) {
+            emphasizedButtonIndex = 0;
+        }
+    }
+    
+    UIButton *emphasizedButton = self.navigationButtons[emphasizedButtonIndex];
+    UIButton *mutedButton = self.navigationButtons[1-emphasizedButtonIndex];
+    [emphasizedButton setTitleColor:kGRVThemeColor forState:UIControlStateNormal];
+    [mutedButton setTitleColor:kInactiveTintColor forState:UIControlStateNormal];
+}
 
 #pragma mark - Initialization
 #pragma mark Concrete Helpers
@@ -86,10 +133,6 @@ static NSString *const kStoryboardIdentifierUpdates     = @"Updates";
     // Ordering of the navigation buttons must match ordering of self.viewControllers
     self.navigationButtons = @[self.videosButton, self.updatesButton];
     
-    // Setup button indicators
-    self.videosButtonIndicator.backgroundColor = kGRVThemeColor;
-    self.updatesButtonIndicator.backgroundColor = [UIColor clearColor];
-    
     NSUInteger idx = 0;
     for (idx=0; idx < [self.navigationButtons count]; idx++) {
         UIButton *navigationButton = self.navigationButtons[idx];
@@ -99,11 +142,10 @@ static NSString *const kStoryboardIdentifierUpdates     = @"Updates";
         
         // Set up button target/action method
         [navigationButton addTarget:self action:@selector(navigationButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-        
-        // Set all but the first button to an inacitve tint color
-        UIColor *buttonColor = (idx == 0) ? kGRVThemeColor : kInactiveTintColor;
-        [navigationButton setTitleColor:buttonColor forState:UIControlStateNormal];
     }
+    
+    // Setup button indicator
+    self.buttonIndicatorOffset = 0.0;
 }
 
 #pragma mark - View Lifecycle
@@ -111,6 +153,7 @@ static NSString *const kStoryboardIdentifierUpdates     = @"Updates";
 {
     [super viewDidLoad];
     self.navigationItem.hidesBackButton = YES;
+    self.buttonIndicatorOffset = 0;
 }
 
 
@@ -122,23 +165,7 @@ static NSString *const kStoryboardIdentifierUpdates     = @"Updates";
  */
 - (void)updateNavigationButtonSelection
 {
-    [self.navigationButtons enumerateObjectsUsingBlock:^(UIButton *navigationButton, NSUInteger idx, BOOL *stop) {
-       BOOL navigationButtonSelected = self.viewControllers[idx] == self.selectedViewController;
-        
-        UIColor *buttonColor = navigationButtonSelected ? kGRVThemeColor : kInactiveTintColor;
-        navigationButton.tintColor = buttonColor;
-        [navigationButton setTitleColor:buttonColor forState:UIControlStateNormal];
-        
-        // Setup button indicators
-        UIView *buttonIndicator = nil;
-        if (navigationButton == self.videosButton) {
-            buttonIndicator = self.videosButtonIndicator;
-        } else if (navigationButton == self.updatesButton){
-            buttonIndicator = self.updatesButtonIndicator;
-        }
-        UIColor *buttonIndicatorColor = navigationButtonSelected ? kGRVThemeColor : [UIColor clearColor];
-        buttonIndicator.backgroundColor = buttonIndicatorColor;
-    }];
+    self.buttonIndicatorOffset = (CGFloat)self.selectedIndex;
 }
 
 #pragma mark Target/Action methods
@@ -160,6 +187,28 @@ static NSString *const kStoryboardIdentifierUpdates     = @"Updates";
     }
     
     [self performSegueWithIdentifier:kSegueIdentifierCreateVideo sender:self];
+}
+
+
+#pragma mark - GRVPrivateTransitionContextDelegate
+- (void)transitionContext:(GRVPrivateTransitionContext *)transitionContext didUpdateInteractiveTransition:(CGFloat)percentComplete goingRight:(BOOL)goingRight
+{
+    // Scale the percent complete to a 0 to 1 scale
+    CGFloat scaledPercentComplete = percentComplete * [self.navigationButtons count];
+    if (!goingRight) {
+        scaledPercentComplete = 1 - scaledPercentComplete;
+    }
+    self.buttonIndicatorOffset = scaledPercentComplete;
+}
+
+- (void)transitionContext:(GRVPrivateTransitionContext *)transitionContext didFinishInteractiveTransitionGoingRight:(BOOL)goingRight
+{
+    self.buttonIndicatorOffset = goingRight ? 1.0 : 0.0;
+}
+
+- (void)transitionContext:(GRVPrivateTransitionContext *)transitionContext didCancelInteractiveTransitionGoingRight:(BOOL)goingRight
+{
+    self.buttonIndicatorOffset = goingRight ? 0.0 : 1.0;
 }
 
 

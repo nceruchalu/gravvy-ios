@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -170,7 +171,7 @@
                                             <constraint firstAttribute="height" constant="1" id="zrl-6P-Uxo"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f4o-pX-Aul" userLabel="Videos Button Indicator">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f4o-pX-Aul" userLabel="Current Button Indicator">
                                         <rect key="frame" x="28" y="39" width="244" height="2"/>
                                         <color key="backgroundColor" red="0.0" green="0.74901960779999999" blue="0.56078431370000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -184,13 +185,6 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                     </button>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zyc-fK-roB" userLabel="Notifications Button Indicator">
-                                        <rect key="frame" x="328" y="39" width="244" height="2"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="2" id="0f5-aN-lLX"/>
-                                        </constraints>
-                                    </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="obv-sf-P5h" userLabel="Notifications Button">
                                         <rect key="frame" x="300" y="0.0" width="300" height="41"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="13"/>
@@ -203,23 +197,20 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="b5i-ft-QLS" firstAttribute="centerY" secondItem="obv-sf-P5h" secondAttribute="centerY" id="1Zc-8H-58M"/>
-                                    <constraint firstItem="Zyc-fK-roB" firstAttribute="width" secondItem="obv-sf-P5h" secondAttribute="width" multiplier="13/16" id="4X4-Hz-poK"/>
-                                    <constraint firstItem="f4o-pX-Aul" firstAttribute="width" secondItem="b5i-ft-QLS" secondAttribute="width" multiplier="13/16" id="6MR-Bg-7Xg"/>
+                                    <constraint firstItem="f4o-pX-Aul" firstAttribute="width" secondItem="BEK-NR-Bpm" secondAttribute="width" multiplier="13/32" id="3hP-52-O3E"/>
                                     <constraint firstItem="obv-sf-P5h" firstAttribute="top" secondItem="BEK-NR-Bpm" secondAttribute="top" id="Mzy-ws-FeI"/>
                                     <constraint firstAttribute="trailing" secondItem="obv-sf-P5h" secondAttribute="trailing" id="Oas-bt-bmK"/>
                                     <constraint firstItem="As4-xs-aAN" firstAttribute="leading" secondItem="BEK-NR-Bpm" secondAttribute="leading" id="Syu-ru-NCc"/>
                                     <constraint firstAttribute="height" constant="41" id="TQH-H7-oLP"/>
                                     <constraint firstAttribute="trailing" secondItem="As4-xs-aAN" secondAttribute="trailing" id="TjL-j5-d1H"/>
-                                    <constraint firstItem="Zyc-fK-roB" firstAttribute="centerX" secondItem="obv-sf-P5h" secondAttribute="centerX" id="aMS-8X-iaA"/>
                                     <constraint firstAttribute="bottom" secondItem="b5i-ft-QLS" secondAttribute="bottom" id="cHr-4m-F6e"/>
                                     <constraint firstItem="obv-sf-P5h" firstAttribute="leading" secondItem="b5i-ft-QLS" secondAttribute="trailing" id="d0W-1f-HD6"/>
                                     <constraint firstItem="b5i-ft-QLS" firstAttribute="leading" secondItem="BEK-NR-Bpm" secondAttribute="leading" id="eD1-3L-iKp"/>
                                     <constraint firstItem="obv-sf-P5h" firstAttribute="width" secondItem="b5i-ft-QLS" secondAttribute="width" id="f8D-NT-fY3"/>
-                                    <constraint firstItem="f4o-pX-Aul" firstAttribute="centerX" secondItem="b5i-ft-QLS" secondAttribute="centerX" id="mgu-cO-dfI"/>
+                                    <constraint firstItem="f4o-pX-Aul" firstAttribute="centerX" secondItem="BEK-NR-Bpm" secondAttribute="leading" constant="150" id="jan-Ne-p3X"/>
                                     <constraint firstItem="f4o-pX-Aul" firstAttribute="bottom" secondItem="b5i-ft-QLS" secondAttribute="bottom" id="oZk-8p-HYu"/>
                                     <constraint firstItem="obv-sf-P5h" firstAttribute="height" secondItem="b5i-ft-QLS" secondAttribute="height" id="rJr-Ek-LWt"/>
                                     <constraint firstAttribute="bottom" secondItem="As4-xs-aAN" secondAttribute="bottom" id="rh3-G0-RzT"/>
-                                    <constraint firstItem="Zyc-fK-roB" firstAttribute="bottom" secondItem="obv-sf-P5h" secondAttribute="bottom" id="xEr-dQ-fjm"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QDF-nW-e4j" userLabel="Container View">
@@ -259,11 +250,10 @@
                     </navigationItem>
                     <connections>
                         <outlet property="containerView" destination="QDF-nW-e4j" id="Itl-TX-edp"/>
+                        <outlet property="currentButtonIndicatorHorizontalCenterLayout" destination="jan-Ne-p3X" id="lba-y5-S3Y"/>
                         <outlet property="navigationButtonsContainerView" destination="BEK-NR-Bpm" id="16c-Hm-kiP"/>
                         <outlet property="updatesButton" destination="obv-sf-P5h" id="HSM-Ja-o8d"/>
-                        <outlet property="updatesButtonIndicator" destination="Zyc-fK-roB" id="ejK-bb-iH3"/>
                         <outlet property="videosButton" destination="b5i-ft-QLS" id="fIE-SM-BjX"/>
-                        <outlet property="videosButtonIndicator" destination="f4o-pX-Aul" id="wqV-mJ-YBQ"/>
                         <segue destination="Q3S-KQ-9M0" kind="presentation" identifier="showCreateVideoCameraController" id="gQM-eP-nL3"/>
                     </connections>
                 </viewController>

@@ -10,6 +10,15 @@
 #import "AWPercentDrivenInteractiveTransition.h"
 
 /**
+ * Minimum percentage complete before finishing the transition.
+ * During a pan gesture, if the user doesn't make it this far the transition
+ * is canceled. This aids aborting a transition after it has been started.
+ *
+ * This number ranges from 0.0 to 0.4 so keep it <= 0.2f
+ */
+extern const CGFloat kGRVPanGestureInteractiveMinimumPercentComplete;
+
+/**
  * GRVPanGestureInteractiveTransition is a gesture recognizer to be used by the
  * GRVContainerViewController for swiping through the child view controllers.
  *

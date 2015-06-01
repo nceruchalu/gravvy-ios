@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GRVPrivateTransitionContextDelegate.h"
 
 @protocol GRVContainerViewControllerDelegate;
 
@@ -21,7 +22,7 @@
  * @ref http://www.iosnomad.com/blog/2014/5/12/interactive-custom-container-view-controller-transitions
  */
 
-@interface GRVContainerViewController : UIViewController
+@interface GRVContainerViewController : UIViewController <GRVPrivateTransitionContextDelegate>
 
 #pragma mark - Properties
 /**

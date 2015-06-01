@@ -228,51 +228,53 @@ toViewController:(UIViewController *)toViewController
     BOOL animatorIsDefault = (animator == nil);
     if (!animator) animator = [[GRVPrivateAnimatedTransition alloc] init];
         
-        // Because of the nature of our view controller, with horizontally arranged
-        // buttons, we instantiate our private transition context with information
-        // about whether this is a left-to-right or right-to-left transition. The
-        // animator can use this information if it wants.
-        NSUInteger fromIndex = [self.viewControllers indexOfObject:fromViewController];
-        NSUInteger toIndex = [self.viewControllers indexOfObject:toViewController];
-        GRVPrivateTransitionContext *transitionContext = [[GRVPrivateTransitionContext alloc] initWithFromViewController:fromViewController toViewController:toViewController goingRight:(toIndex > fromIndex)];
+    // Because of the nature of our view controller, with horizontally arranged
+    // buttons, we instantiate our private transition context with information
+    // about whether this is a left-to-right or right-to-left transition. The
+    // animator can use this information if it wants.
+    NSUInteger fromIndex = [self.viewControllers indexOfObject:fromViewController];
+    NSUInteger toIndex = [self.viewControllers indexOfObject:toViewController];
+    GRVPrivateTransitionContext *transitionContext = [[GRVPrivateTransitionContext alloc] initWithFromViewController:fromViewController toViewController:toViewController goingRight:(toIndex > fromIndex)];
+    
+    transitionContext.animated = YES;
+    
+    // At the start of the transition, we need to figure out if we should be
+    // interactive or not. We do this by trying to fetch an interaction controller.
+    id <UIViewControllerInteractiveTransitioning> interactionController = [self interactionControllerForAnimator:animator animatorIsDefault:animatorIsDefault];
+    transitionContext.interactive = (interactionController != nil);
+    
+    transitionContext.delegate = self;
         
-        transitionContext.animated = YES;
+    transitionContext.completionBlock = ^(BOOL didComplete) {
         
-        // At the start of the transition, we need to figure out if we should be
-        // interactive or not. We do this by trying to fetch an interaction controller.
-        id <UIViewControllerInteractiveTransitioning> interactionController = [self interactionControllerForAnimator:animator animatorIsDefault:animatorIsDefault];
-        transitionContext.interactive = (interactionController != nil);
-        
-        transitionContext.completionBlock = ^(BOOL didComplete) {
-            
-            if (didComplete) {
-                [fromViewController.view removeFromSuperview];
-                [fromViewController removeFromParentViewController];
-                [toViewController didMoveToParentViewController:self];
-                [self finishCycleToViewController:toViewController];
-                
-            } else {
-                [toViewController.view removeFromSuperview];
-            }
-            
-            
-            if ([animator respondsToSelector:@selector(animationEnded:)]) {
-                [animator animationEnded:didComplete];
-            }
-            self.navigationButtonsContainerView.userInteractionEnabled = YES;
-        };
-        
-        // Prevent user tapping butons, mid-transition, messing up state
-        self.navigationButtonsContainerView.userInteractionEnabled = NO;
-        
-        if (transitionContext.isInteractive) {
-            [interactionController startInteractiveTransition:transitionContext];
-        } else {
-            [animator animateTransition:transitionContext];
-            // Not interactive so no transition cancellation here. So might as
-            // well finish the cycling. This isn't necessary but doesn't hurt.
+        if (didComplete) {
+            [fromViewController.view removeFromSuperview];
+            [fromViewController removeFromParentViewController];
+            [toViewController didMoveToParentViewController:self];
             [self finishCycleToViewController:toViewController];
+            
+        } else {
+            [toViewController.view removeFromSuperview];
         }
+        
+        
+        if ([animator respondsToSelector:@selector(animationEnded:)]) {
+            [animator animationEnded:didComplete];
+        }
+        self.navigationButtonsContainerView.userInteractionEnabled = YES;
+    };
+    
+    // Prevent user tapping butons, mid-transition, messing up state
+    self.navigationButtonsContainerView.userInteractionEnabled = NO;
+    
+    if (transitionContext.isInteractive) {
+        [interactionController startInteractiveTransition:transitionContext];
+    } else {
+        [animator animateTransition:transitionContext];
+        // Not interactive so no transition cancellation here. So might as
+        // well finish the cycling. This isn't necessary but doesn't hurt.
+        [self finishCycleToViewController:toViewController];
+    }
 }
 
 - (void)finishCycleToViewController:(UIViewController *)toViewController

@@ -9,14 +9,7 @@
 #import "GRVPanGestureInteractiveTransition.h"
 
 #pragma mark - Constants
-/**
- * Minimum percentage complete before finishing the transition.
- * During a pan gesture, if the user doesn't make it this far the transition
- * is canceled. This aids aborting a transition after it has been started.
- *
- * This number ranges from 0.0 to 0.4 so keep it <= 0.2f
- */
-static CGFloat const kMinimumPercentComplete = 0.15f;
+const CGFloat kGRVPanGestureInteractiveMinimumPercentComplete = 0.15;
 
 @interface GRVPanGestureInteractiveTransition ()
 
@@ -62,7 +55,7 @@ static CGFloat const kMinimumPercentComplete = 0.15f;
         [self updateInteractiveTransition:travelDistance*0.5];
     
     } else if (recognizer.state >= UIGestureRecognizerStateEnded) {
-        if (self.percentComplete > kMinimumPercentComplete) {
+        if (self.percentComplete > kGRVPanGestureInteractiveMinimumPercentComplete) {
             [self finishInteractiveTransition];
         } else {
             [self cancelInteractiveTransition];
