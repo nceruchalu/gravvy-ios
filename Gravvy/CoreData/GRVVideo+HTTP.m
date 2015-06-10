@@ -44,24 +44,32 @@
     
     // Get and save dictionary attributes being sure call the description method
     // incase dictionary values are NULL
-    newVideo.createdAt = createdAt;
     newVideo.hashKey = [[videoDictionary objectForKey:kGRVRESTVideoHashKeyKey] description];
-    newVideo.liked = @([[videoDictionary objectForKey:kGRVRESTVideoLikedKey] boolValue]);
-    newVideo.likesCount = [videoDictionary objectForKey:kGRVRESTVideoLikesCountKey];
-    newVideo.photoThumbnailURL = [[videoDictionary objectForKey:kGRVRESTVideoPhotoThumbnailKey] description];
-    newVideo.playsCount = [videoDictionary objectForKey:kGRVRESTVideoPlaysCountKey];
     newVideo.title = [[videoDictionary objectForKey:kGRVRESTVideoTitleKey] description];
-    newVideo.updatedAt = updatedAt;
+    newVideo.photoSmallThumbnailURL = [[videoDictionary objectForKey:kGRVRESTVideoPhotoSmallThumbnailKey] description];
+    
+    // Optional fields not present in the minimal JSON retrieved by the activity
+    // stream might not be present so don't setup those fields or set an updatedAt
+    // timestamp. The sync method works properly when we get the full JSON object.
+    if ([videoDictionary objectForKey:kGRVRESTVideoPhotoThumbnailKey]) {
+        // Working with a full JSON representation
+        newVideo.createdAt = createdAt;
+        newVideo.liked = @([[videoDictionary objectForKey:kGRVRESTVideoLikedKey] boolValue]);
+        newVideo.likesCount = [videoDictionary objectForKey:kGRVRESTVideoLikesCountKey];
+        newVideo.photoThumbnailURL = [[videoDictionary objectForKey:kGRVRESTVideoPhotoThumbnailKey] description];
+        newVideo.playsCount = [videoDictionary objectForKey:kGRVRESTVideoPlaysCountKey];
+        newVideo.updatedAt = updatedAt;
+        
+        // Setup the relationships
+        // Setup the clips
+        NSArray *clipDicts = [videoDictionary objectForKey:kGRVRESTVideoClipsKey];
+        [GRVClip clipsWithClipInfoArray:clipDicts associatedVideo:newVideo inManagedObjectContext:context];
+    }
     
     // Setup the relationships
-    
     // Set the owner
     newVideo.owner = [GRVUser userWithUserInfo:[videoDictionary objectForKey:kGRVRESTVideoOwnerKey]
                         inManagedObjectContext:context];
-    
-    // Setup the clips
-    NSArray *clipDicts = [videoDictionary objectForKey:kGRVRESTVideoClipsKey];
-    [GRVClip clipsWithClipInfoArray:clipDicts associatedVideo:newVideo inManagedObjectContext:context];
     
     return newVideo;
 }
@@ -87,25 +95,49 @@
     // If we implemented the related object syncs properly then this won't result
     // in unnecessary writes.
     NSArray *clipDicts = [videoDictionary objectForKey:kGRVRESTVideoClipsKey];
-    [GRVClip clipsWithClipInfoArray:clipDicts associatedVideo:existingVideo inManagedObjectContext:context];
+    if (clipDicts) {
+        // Clip dictionaries only available if we have the full JSON representation
+        [GRVClip clipsWithClipInfoArray:clipDicts associatedVideo:existingVideo inManagedObjectContext:context];
+    }
+    
+    // video might not have changed but video owner might have been updated
+    GRVUser *owner = [GRVUser userWithUserInfo:[videoDictionary objectForKey:kGRVRESTVideoOwnerKey]
+                        inManagedObjectContext:context];
     
     // only perform a sync if there are any changes
     if (![updatedAt isEqualToDate:existingVideo.updatedAt]) {
         
-        // Update properties that will be sync'd
-        existingVideo.liked = @([[videoDictionary objectForKey:kGRVRESTVideoLikedKey] boolValue]);
-        existingVideo.likesCount = [videoDictionary objectForKey:kGRVRESTVideoLikesCountKey];
-        existingVideo.photoThumbnailURL = [[videoDictionary objectForKey:kGRVRESTVideoPhotoThumbnailKey] description];
-        existingVideo.photoSmallThumbnailURL = [[videoDictionary objectForKey:kGRVRESTVideoPhotoSmallThumbnailKey] description];
-        existingVideo.playsCount = [videoDictionary objectForKey:kGRVRESTVideoPlaysCountKey];
-        existingVideo.title = [[videoDictionary objectForKey:kGRVRESTVideoTitleKey] description];
-        // finally sync updatedAt
-        existingVideo.updatedAt = updatedAt;
+        // If this isn't a minimal JSON object, update all fields including the
+        // owner which was set to a dummy value by the Activity Stream.
+        if ([videoDictionary objectForKey:kGRVRESTVideoPhotoThumbnailKey]) {
+            // Working with a full JSON representation
+            
+            NSString *rfc3339CreatedAt = [[videoDictionary objectForKey:kGRVRESTVideoCreatedAtKey] description];
+            NSDate *createdAt = [rfc3339DateFormatter dateFromString:rfc3339CreatedAt];
+            
+            // Update properties that will be sync'd
+            existingVideo.createdAt = createdAt;
+            existingVideo.liked = @([[videoDictionary objectForKey:kGRVRESTVideoLikedKey] boolValue]);
+            existingVideo.likesCount = [videoDictionary objectForKey:kGRVRESTVideoLikesCountKey];
+            existingVideo.photoSmallThumbnailURL = [[videoDictionary objectForKey:kGRVRESTVideoPhotoSmallThumbnailKey] description];
+            existingVideo.photoThumbnailURL = [[videoDictionary objectForKey:kGRVRESTVideoPhotoThumbnailKey] description];
+            existingVideo.playsCount = [videoDictionary objectForKey:kGRVRESTVideoPlaysCountKey];
+            existingVideo.title = [[videoDictionary objectForKey:kGRVRESTVideoTitleKey] description];
+            existingVideo.updatedAt = updatedAt;
+            existingVideo.owner = owner;
+            
+        } else {
+            // Working with minimal JSON representation
+            NSString *title = [[videoDictionary objectForKey:kGRVRESTVideoTitleKey] description];
+            NSString *photoSmallThumbnailURL = [[videoDictionary objectForKey:kGRVRESTVideoPhotoSmallThumbnailKey] description];
+            
+            // Only update fields if they've changed
+            if (![title isEqualToString:existingVideo.title] || ![photoSmallThumbnailURL isEqualToString:existingVideo.photoSmallThumbnailURL]) {
+                existingVideo.title = title;
+                existingVideo.photoSmallThumbnailURL = photoSmallThumbnailURL;
+            }
+        }
     }
-    
-    // video might not have changed but video owner might have been updated
-    [GRVUser userWithUserInfo:[videoDictionary objectForKey:kGRVRESTVideoOwnerKey]
-       inManagedObjectContext:context];
 }
 
 

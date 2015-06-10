@@ -53,7 +53,9 @@
     // Set the target
     id target = [activityDictionary objectForKey:kGRVRESTActivityTargetKey];
     if ([target isKindOfClass:[NSDictionary class]] && [target objectForKey:kGRVRESTVideoHashKeyKey]) {
-        newActivity.targetVideo = [GRVVideo videoWithVideoInfo:target inManagedObjectContext:context];
+        NSMutableDictionary *targetVideoDictionary = [target mutableCopy];
+        targetVideoDictionary[kGRVRESTVideoOwnerKey] = actorDictionary;
+        newActivity.targetVideo = [GRVVideo videoWithVideoInfo:targetVideoDictionary inManagedObjectContext:context];
     } else { // if (target == [NSNull null])
         // Nothing to do but ignore
     }
@@ -62,7 +64,9 @@
     NSDictionary *object = [activityDictionary objectForKey:kGRVRESTActivityObjectKey];
     if ([object objectForKey:kGRVRESTVideoHashKeyKey]) {
         // object is a video
-        newActivity.objectVideo = [GRVVideo videoWithVideoInfo:object inManagedObjectContext:context];
+        NSMutableDictionary *objectVideoDictionary = [object mutableCopy];
+        objectVideoDictionary[kGRVRESTVideoOwnerKey] = actorDictionary;
+        newActivity.objectVideo = [GRVVideo videoWithVideoInfo:objectVideoDictionary inManagedObjectContext:context];
 
     } else if ([object objectForKey:kGRVRESTClipDurationKey]) {
         // object is a clip, but only valid if we have a target video
@@ -96,13 +100,15 @@
     // Activities don't change, but related objects might have changed
     
     // Update the actor
-    [GRVUser userWithUserInfo:[activityDictionary objectForKey:kGRVRESTActivityActorKey]
-       inManagedObjectContext:context];
+    NSDictionary *actorDictionary = [activityDictionary objectForKey:kGRVRESTActivityActorKey];
+    [GRVUser userWithUserInfo:actorDictionary inManagedObjectContext:context];
     
     // Update the target
     id target = [activityDictionary objectForKey:kGRVRESTActivityTargetKey];
     if ([target isKindOfClass:[NSDictionary class]] && [target objectForKey:kGRVRESTVideoHashKeyKey]) {
-        [GRVVideo videoWithVideoInfo:target inManagedObjectContext:context];
+        NSMutableDictionary *targetVideoDictionary = [target mutableCopy];
+        targetVideoDictionary[kGRVRESTVideoOwnerKey] = actorDictionary;
+        [GRVVideo videoWithVideoInfo:targetVideoDictionary inManagedObjectContext:context];
     } else { // if (target == [NSNull null])
         // Nothing to do but ignore
     }
@@ -111,13 +117,12 @@
     NSDictionary *object = [activityDictionary objectForKey:kGRVRESTActivityObjectKey];
     if ([object objectForKey:kGRVRESTVideoHashKeyKey]) {
         // object is a video
-        [GRVVideo videoWithVideoInfo:object inManagedObjectContext:context];
+        NSMutableDictionary *objectVideoDictionary = [object mutableCopy];
+        objectVideoDictionary[kGRVRESTVideoOwnerKey] = actorDictionary;
+        [GRVVideo videoWithVideoInfo:objectVideoDictionary inManagedObjectContext:context];
         
     } else if ([object objectForKey:kGRVRESTClipDurationKey]) {
-        // object is a clip, but only valid if we have a target video
-        if (existingActivity.targetVideo) {
-            [GRVClip clipWithClipInfo:object associatedVideo:existingActivity.targetVideo inManagedObjectContext:context];
-        }
+        // object is a clip, which don't change
         
     } else if ([object objectForKey:kGRVRESTUserPhoneNumberKey]) {
         // object is a user

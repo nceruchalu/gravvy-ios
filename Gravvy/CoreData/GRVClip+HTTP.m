@@ -39,9 +39,16 @@
     // incase dictionary values are NULL
     newClip.duration = [clipDictionary objectForKey:kGRVRESTClipDurationKey];
     newClip.identifier = [clipDictionary objectForKey:kGRVRESTClipIdentifierKey];
-    newClip.mp4URL = [[clipDictionary objectForKey:kGRVRESTClipMp4Key] description];
-    newClip.order = [clipDictionary objectForKey:kGRVRESTClipOrderKey];
-    newClip.updatedAt = updatedAt;
+    
+    // Optional fields not present in the minimal JSON retrieved by the activity
+    // stream might not be present so don't setup those fields or set an updatedAt
+    // timestamp. The sync method works properly when we get the full JSON object.
+    if ([clipDictionary objectForKey:kGRVRESTClipMp4Key]) {
+        // Working with a full JSON representation
+        newClip.mp4URL = [[clipDictionary objectForKey:kGRVRESTClipMp4Key] description];
+        newClip.order = [clipDictionary objectForKey:kGRVRESTClipOrderKey];
+        newClip.updatedAt = updatedAt;
+    }
     
     // Setup required relationships
     newClip.owner = [GRVUser userWithUserInfo:[clipDictionary objectForKey:kGRVRESTClipOwnerKey] inManagedObjectContext:context];
@@ -59,8 +66,23 @@
 + (void)syncClip:(GRVClip *)existingClip
     withClipInfo:(NSDictionary *)clipDictionary
 {
-    // Clips don't get updated, but clip owner might have been updated
-    // Even though clip migClip might not have changed but video owner might have been updated
+    NSDateFormatter *rfc3339DateFormatter = [GRVFormatterUtils generateRFC3339DateFormatter];
+    
+    // get updatedAt date which is used for sync
+    NSString *rfc3339UpdatedAt = [[clipDictionary objectForKey:kGRVRESTClipUpdatedAtKey] description];
+    NSDate *updatedAt = [rfc3339DateFormatter dateFromString:rfc3339UpdatedAt];
+    
+    // only perform a sync if there are any changes and this isn't a minimal JSON
+    // object.
+    if (![updatedAt isEqualToDate:existingClip.updatedAt] &&
+        [clipDictionary objectForKey:kGRVRESTClipMp4Key]) {
+        // Working with a full JSON representation
+        existingClip.mp4URL = [[clipDictionary objectForKey:kGRVRESTClipMp4Key] description];
+        existingClip.order = [clipDictionary objectForKey:kGRVRESTClipOrderKey];
+        existingClip.updatedAt = updatedAt;
+    }
+    
+    // Even though clip might might not have changed but video owner might have been updated
     [GRVUser userWithUserInfo:[clipDictionary objectForKey:kGRVRESTClipOwnerKey]
        inManagedObjectContext:existingClip.managedObjectContext];
 }
