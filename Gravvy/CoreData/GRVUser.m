@@ -2,11 +2,12 @@
 //  GRVUser.m
 //  Gravvy
 //
-//  Created by Nnoduka Eruchalu on 5/10/15.
+//  Created by Nnoduka Eruchalu on 6/9/15.
 //  Copyright (c) 2015 Nnoduka Eruchalu. All rights reserved.
 //
 
 #import "GRVUser.h"
+#import "GRVActivity.h"
 #import "GRVClip.h"
 #import "GRVContact.h"
 #import "GRVMember.h"
@@ -24,7 +25,9 @@
 @dynamic avatarThumbnail;
 @dynamic contact;
 @dynamic ownedVideos;
-@dynamic videoMemberships;
 @dynamic uploadedClips;
+@dynamic videoMemberships;
+@dynamic activitiesUsingAsActor;
+@dynamic activitiesUsingAsObject;
 
 @end

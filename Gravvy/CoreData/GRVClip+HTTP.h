@@ -14,6 +14,7 @@
  *
  * Property             Purpose
  * duration             Clip duration, in seconds
+ * identifier           Clip identifier
  * mp4URL               URL where clip's mp4 file can be downloaded
  * order                Order in video's clips, where order 0 comes first
  * updatedAt            this attribute will automatically be updated with the
@@ -22,9 +23,10 @@
  *
  * @see http://stackoverflow.com/a/5052208 for more on updatedAt
  *
- * Relationship         Purpose
- * owner                Clip's owner
- * video                Clip's parent video
+ * Relationship             Purpose
+ * activitiesUsingAsObject  Activity objects where this clip is the object
+ * owner                    Clip's owner
+ * video                    Clip's parent video
  */
 @interface GRVClip (HTTP)
 

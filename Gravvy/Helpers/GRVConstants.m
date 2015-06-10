@@ -71,6 +71,7 @@ NSString *const kGRVRESTAccountObtainAuthToken  = @"account/auth/";
 NSString *const kGRVRESTUser                    = @"user/";
 NSString *const kGRVRESTPushRegister            = @"push/apns/";
 NSString *const kGRVRESTFeedbacks               = @"feedbacks/";
+NSString *const kGRVRESTUserActivities          = @"user/activities/";
 NSString *const kGRVRESTUserVideos              = @"user/videos/";
 NSString *const kGRVRESTVideos                  = @"videos/";
 NSString *const kGRVRESTVideoMembers            = @"users/";
@@ -105,6 +106,7 @@ NSString *const kGRVRESTVideoLeadClipKey            = @"lead_clip";
 NSString *const kGRVRESTVideoLikedKey               = @"liked";
 NSString *const kGRVRESTVideoLikesCountKey          = @"likes_count";
 NSString *const kGRVRESTVideoOwnerKey               = @"owner";
+NSString *const kGRVRESTVideoPhotoSmallThumbnailKey = @"photo_small_thumbnail";
 NSString *const kGRVRESTVideoPhotoThumbnailKey      = @"photo_thumbnail";
 NSString *const kGRVRESTVideoPlaysCountKey          = @"plays_count";
 NSString *const kGRVRESTVideoTitleKey               = @"title";
@@ -126,6 +128,14 @@ NSString *const kGRVRESTMemberIdentifierKey         = @"user.phone_number";
 NSString *const kGRVRESTMemberStatusKey             = @"status";
 NSString *const kGRVRESTMemberUpdatedAtKey          = @"updated_at";
 NSString *const kGRVRESTMemberUserKey               = @"user";
+
+// Activity object
+NSString *const kGRVRESTActivityActorKey            = @"actor";
+NSString *const kGRVRESTActivityCreatedAtKey        = @"created_at";
+NSString *const kGRVRESTActivityIdentifierKey       = @"id";
+NSString *const kGRVRESTActivityObjectKey           = @"object";
+NSString *const kGRVRESTActivityTargetKey           = @"target";
+NSString *const kGRVRESTActivityVerbKey             = @"verb";
 
 
 // -----------------------------------------------------------------------------

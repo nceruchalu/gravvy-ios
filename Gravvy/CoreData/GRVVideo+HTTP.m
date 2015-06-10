@@ -96,6 +96,7 @@
         existingVideo.liked = @([[videoDictionary objectForKey:kGRVRESTVideoLikedKey] boolValue]);
         existingVideo.likesCount = [videoDictionary objectForKey:kGRVRESTVideoLikesCountKey];
         existingVideo.photoThumbnailURL = [[videoDictionary objectForKey:kGRVRESTVideoPhotoThumbnailKey] description];
+        existingVideo.photoSmallThumbnailURL = [[videoDictionary objectForKey:kGRVRESTVideoPhotoSmallThumbnailKey] description];
         existingVideo.playsCount = [videoDictionary objectForKey:kGRVRESTVideoPlaysCountKey];
         existingVideo.title = [[videoDictionary objectForKey:kGRVRESTVideoTitleKey] description];
         // finally sync updatedAt

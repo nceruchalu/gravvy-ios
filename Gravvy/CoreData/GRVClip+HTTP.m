@@ -38,6 +38,7 @@
     // Get and save dictionary attributes being sure to call the description method
     // incase dictionary values are NULL
     newClip.duration = [clipDictionary objectForKey:kGRVRESTClipDurationKey];
+    newClip.identifier = [clipDictionary objectForKey:kGRVRESTClipIdentifierKey];
     newClip.mp4URL = [[clipDictionary objectForKey:kGRVRESTClipMp4Key] description];
     newClip.order = [clipDictionary objectForKey:kGRVRESTClipOrderKey];
     newClip.updatedAt = updatedAt;

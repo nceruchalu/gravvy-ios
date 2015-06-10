@@ -12,24 +12,27 @@
  * Using this file as a location to document the GRVVideo model which is what
  * represents a video.
  *
- * Property             Purpose
- * createdAt            Video creation date
- * hashKey              Video's unique identifier
- * likesCount           Number of likes
- * membership           Is user a member/invited to this video.
- * photoThumbnailURL    URL where video's cover image thumbnail can be downloaded
- * playsCount           Number of video plays
- * title                Video title/caption
- * updatedAt            this attribute will automatically be updated with the
- *                        current date and time by the server whenever anything
- *                        changes on a Video record. It is used for sync purposes
+ * Property                 Purpose
+ * createdAt                Video creation date
+ * hashKey                  Video's unique identifier
+ * likesCount               Number of likes
+ * membership               Is user a member/invited to this video.
+ * photoSmallThumbnailURL   URL location of video's activity feed thumbnail image
+ * photoThumbnailURL        URL location of video's cover image
+ * playsCount               Number of video plays
+ * title                    Video title/caption
+ * updatedAt                this attribute will automatically be updated with the
+ *                            current date and time by the server whenever anything
+ *                            changes on a Video record. It is used for sync purposes
  *
  * @see http://stackoverflow.com/a/5052208 for more on updatedAt
  *
- * Relationship         Purpose
- * clips                Video's associated clips
- * members              Video's invited members
- * owner                Video's owner
+ * Relationship             Purpose
+ * activitiesUsingAsObject  Activity objects where this video is the object
+ * activitiesUsingAsTarget  Activity objects where this video is the target
+ * clips                    Video's associated clips
+ * members                  Video's invited members
+ * owner                    Video's owner
  */
 @interface GRVVideo (HTTP)
 

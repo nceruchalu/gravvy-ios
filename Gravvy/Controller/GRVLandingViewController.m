@@ -156,6 +156,13 @@ static NSString *const kStoryboardIdentifierUpdates     = @"Updates";
     self.buttonIndicatorOffset = 0;
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    // To ensure button indicator is setup properly
+    // Noticed invalid frame sizes in viewDidLoad when using simulator
+    self.buttonIndicatorOffset = self.buttonIndicatorOffset;
+}
+
 
 #pragma mark - Instance Methods
 #pragma mark Concrete

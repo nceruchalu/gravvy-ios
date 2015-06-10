@@ -159,6 +159,11 @@ extern NSString *const kGRVRESTPushRegister;
 extern NSString *const kGRVRESTFeedbacks;
 
 /**
+ * kGRVRESTUserActivities: URL for activiies of interest to authenticated user
+ */
+extern NSString *const kGRVRESTUserActivities;
+
+/**
  * kGRVRESTUserVideos: URL for videos that authenticated user is a member of
  */
 extern NSString *const kGRVRESTUserVideos;
@@ -203,6 +208,7 @@ extern NSString *const kGRVRESTVideoLeadClipKey;
 extern NSString *const kGRVRESTVideoLikedKey;
 extern NSString *const kGRVRESTVideoLikesCountKey;
 extern NSString *const kGRVRESTVideoOwnerKey;
+extern NSString *const kGRVRESTVideoPhotoSmallThumbnailKey;
 extern NSString *const kGRVRESTVideoPhotoThumbnailKey;
 extern NSString *const kGRVRESTVideoPlaysCountKey;
 extern NSString *const kGRVRESTVideoTitleKey;
@@ -224,6 +230,14 @@ extern NSString *const kGRVRESTMemberIdentifierKey;
 extern NSString *const kGRVRESTMemberStatusKey;
 extern NSString *const kGRVRESTMemberUpdatedAtKey;
 extern NSString *const kGRVRESTMemberUserKey;
+
+// Activity object
+extern NSString *const kGRVRESTActivityActorKey;
+extern NSString *const kGRVRESTActivityCreatedAtKey;
+extern NSString *const kGRVRESTActivityIdentifierKey;
+extern NSString *const kGRVRESTActivityObjectKey;
+extern NSString *const kGRVRESTActivityTargetKey;
+extern NSString *const kGRVRESTActivityVerbKey;
 
 
 // -----------------------------------------------------------------------------
@@ -372,8 +386,10 @@ typedef enum : NSUInteger {
     GRVRemoteNotificationTypeAddedMember = 11,
     GRVRemoteNotificationTypeRemovedMember = 12,
     
-    GRVRemoteNotificationTypeAddedClip = 20,
-    GRVRemoteNotificationTypeDeletedClip = 21
+    GRVRemoteNotificationTypeLiked = 20,
+    
+    GRVRemoteNotificationTypeAddedClip = 30,
+    GRVRemoteNotificationTypeDeletedClip = 31
 } GRVRemoteNotificationType;
 
 

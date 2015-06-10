@@ -2,14 +2,14 @@
 //  GRVUser.h
 //  Gravvy
 //
-//  Created by Nnoduka Eruchalu on 5/10/15.
+//  Created by Nnoduka Eruchalu on 6/9/15.
 //  Copyright (c) 2015 Nnoduka Eruchalu. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class GRVClip, GRVContact, GRVMember, GRVUserThumbnail, GRVVideo;
+@class GRVActivity, GRVClip, GRVContact, GRVMember, GRVUserThumbnail, GRVVideo;
 
 @interface GRVUser : NSManagedObject
 
@@ -21,8 +21,10 @@
 @property (nonatomic, retain) GRVUserThumbnail *avatarThumbnail;
 @property (nonatomic, retain) GRVContact *contact;
 @property (nonatomic, retain) NSSet *ownedVideos;
-@property (nonatomic, retain) NSSet *videoMemberships;
 @property (nonatomic, retain) NSSet *uploadedClips;
+@property (nonatomic, retain) NSSet *videoMemberships;
+@property (nonatomic, retain) NSSet *activitiesUsingAsActor;
+@property (nonatomic, retain) NSSet *activitiesUsingAsObject;
 @end
 
 @interface GRVUser (CoreDataGeneratedAccessors)
@@ -32,14 +34,24 @@
 - (void)addOwnedVideos:(NSSet *)values;
 - (void)removeOwnedVideos:(NSSet *)values;
 
+- (void)addUploadedClipsObject:(GRVClip *)value;
+- (void)removeUploadedClipsObject:(GRVClip *)value;
+- (void)addUploadedClips:(NSSet *)values;
+- (void)removeUploadedClips:(NSSet *)values;
+
 - (void)addVideoMembershipsObject:(GRVMember *)value;
 - (void)removeVideoMembershipsObject:(GRVMember *)value;
 - (void)addVideoMemberships:(NSSet *)values;
 - (void)removeVideoMemberships:(NSSet *)values;
 
-- (void)addUploadedClipsObject:(GRVClip *)value;
-- (void)removeUploadedClipsObject:(GRVClip *)value;
-- (void)addUploadedClips:(NSSet *)values;
-- (void)removeUploadedClips:(NSSet *)values;
+- (void)addActivitiesUsingAsActorObject:(GRVActivity *)value;
+- (void)removeActivitiesUsingAsActorObject:(GRVActivity *)value;
+- (void)addActivitiesUsingAsActor:(NSSet *)values;
+- (void)removeActivitiesUsingAsActor:(NSSet *)values;
+
+- (void)addActivitiesUsingAsObjectObject:(GRVActivity *)value;
+- (void)removeActivitiesUsingAsObjectObject:(GRVActivity *)value;
+- (void)addActivitiesUsingAsObject:(NSSet *)values;
+- (void)removeActivitiesUsingAsObject:(NSSet *)values;
 
 @end

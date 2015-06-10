@@ -23,8 +23,13 @@
  *
  * @see http://stackoverflow.com/a/5052208 for more on updatedAt
  *
- * Relationship        Purpose
- * avatarThumbnail     cached thumbnail image data
+ * Relationship             Purpose
+ * activitiesUsingAsActor   Activity objects that have this user as an actor
+ * activitiesUsingAsObject  Activity objects that have this user as an object
+ * avatarThumbnail          cached thumbnail image data
+ * ownedVideos              Videos owned by this user
+ * uploadedClips            Clips uploaded by this user
+ * videoMemberships         Video Member objects this user is associated with.
  */
 @interface GRVUser (HTTP)
 
