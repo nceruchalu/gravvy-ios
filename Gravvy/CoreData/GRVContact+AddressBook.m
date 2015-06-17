@@ -320,10 +320,17 @@ static NSString *const kGRVAddressBookPersonRecordIdKey = @"recordId";
             
             // finally execute the callback block on main queue
             dispatch_async(dispatch_get_main_queue(), ^{
-                // notify all listeners that the contacts are now refreshed
-                [[NSNotificationCenter defaultCenter] postNotificationName:kGRVContactsRefreshedNotification
-                                                                    object:self];
-                if (contactsAreSynced) contactsAreSynced();
+                // First write to persistent data store, otherwise Core Data will
+                // use cached values in fetch requests with predicates traversing
+                // more than 1-level of relationships. This means you won't see
+                // the changes reflected just yet in the activity feed which uses
+                // predicates like `actor.contact`
+                [[GRVModelManager sharedManager] saveUserDocument:^{
+                    if (contactsAreSynced) contactsAreSynced();
+                    // notify all listeners that the contacts are now refreshed
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kGRVContactsRefreshedNotification
+                                                                        object:self];
+                }];
             });
         }];
         
