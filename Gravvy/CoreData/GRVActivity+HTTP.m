@@ -130,6 +130,25 @@
     }
 }
 
+/**
+ * Delete GRVActivity objects not in a provided array of activity JSON objects.
+ *
+ * @param activityDicts     Array of activityDictionary objects, where each
+ *                          contains JSON data as expected from server.
+ * @param context           handle to database
+ */
++ (void)deleteActivitiesNotInActivityInfoArray:(NSArray *)activityDicts
+                        inManagedObjectContext:(NSManagedObjectContext *)context
+{
+    [GRVCoreDataImport deleteObjectsNotInObjectInfoArray:activityDicts
+                                  inManagedObjectContext:context
+                                                forClass:[GRVActivity class]
+                                usingAdditionalPredicate:nil
+                                 withObjectIdentifierKey:@"identifier"
+                                    andDictIdentifierKey:kGRVRESTActivityIdentifierKey];
+}
+
+
 #pragma mark Public
 + (instancetype)activityWithActivityInfo:(NSDictionary *)activityDictionary
                   inManagedObjectContext:(NSManagedObjectContext *)context
@@ -189,7 +208,8 @@
                      NSManagedObjectContext *workerContext = [GRVModelManager sharedManager].workerContext;
                      if (workerContext) {
                          [workerContext performBlock:^{
-                             // Delete activities that you aren't still a member of
+                             // Delete activities that aren't still relevant
+                             [GRVActivity deleteActivitiesNotInActivityInfoArray:activitiesJSON inManagedObjectContext:workerContext];
                              
                              // Now refresh the activities
                              [GRVActivity activitiesWithActivityInfoArray:activitiesJSON inManagedObjectContext:workerContext];

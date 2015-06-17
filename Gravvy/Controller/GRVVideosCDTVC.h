@@ -6,12 +6,12 @@
 //  Copyright (c) 2015 Nnoduka Eruchalu. All rights reserved.
 //
 
-#import "ExtendedCoreDataTableViewController.h"
+#import "GRVExtendedCoreDataTableViewController.h"
 
 /**
  * GRVVideosCDTVC is a class that represents a Core Data TableViewController
- * which is specialized to displaying a list of Video summaries.
+ * which is specialized to displaying a list of Videos.
  */
-@interface GRVVideosCDTVC : ExtendedCoreDataTableViewController
+@interface GRVVideosCDTVC : GRVExtendedCoreDataTableViewController
 
 @end

@@ -32,14 +32,14 @@ static NSString *const kStoryboardName                  = @"Main";
  * Child view controllers' storyboard identifiers
  */
 static NSString *const kStoryboardIdentifierVideos      = @"Videos";
-static NSString *const kStoryboardIdentifierUpdates     = @"Updates";
+static NSString *const kStoryboardIdentifierActivities  = @"Activities";
 
 @interface GRVLandingViewController () <GRVPrivateTransitionContextDelegate>
 
 #pragma mark - Properties
 #pragma mark Outlets
 @property (weak, nonatomic) IBOutlet UIButton *videosButton;
-@property (weak, nonatomic) IBOutlet UIButton *updatesButton;
+@property (weak, nonatomic) IBOutlet UIButton *activitiesButton;
 
 /**
  * Horizontal position of center of button indicator in the navigation buttons
@@ -51,7 +51,7 @@ static NSString *const kStoryboardIdentifierUpdates     = @"Updates";
 // ordering of navigation buttons matches that of view controllers
 @property (copy, nonatomic) NSArray *navigationButtons;
 // Percentage offset of current position of button indicator, with 0 implying
-// videosButton, and 1 implying updatesButton
+// videosButton, and 1 implying activitiesButton
 @property (nonatomic) CGFloat buttonIndicatorOffset;
 
 @end
@@ -64,9 +64,9 @@ static NSString *const kStoryboardIdentifierUpdates     = @"Updates";
     _buttonIndicatorOffset = buttonIndicatorOffset;
     
     CGFloat videosButtonCenter = self.videosButton.frame.origin.x + self.videosButton.frame.size.width/2.0f;
-    CGFloat updatesButtonCenter = self.updatesButton.frame.origin.x + self.updatesButton.frame.size.width/2.0f;
+    CGFloat activitiesButtonCenter = self.activitiesButton.frame.origin.x + self.activitiesButton.frame.size.width/2.0f;
     
-    self.currentButtonIndicatorHorizontalCenterLayout.constant = (updatesButtonCenter - videosButtonCenter)*buttonIndicatorOffset + videosButtonCenter;
+    self.currentButtonIndicatorHorizontalCenterLayout.constant = (activitiesButtonCenter - videosButtonCenter)*buttonIndicatorOffset + videosButtonCenter;
     
     // Emphasize appropriate button based on button indicator
     NSUInteger emphasizedButtonIndex = 0;
@@ -111,10 +111,10 @@ static NSString *const kStoryboardIdentifierUpdates     = @"Updates";
     
     // Instantiate and initialize view controllers
     UIViewController *videosVC = (UIViewController *)[storyboard instantiateViewControllerWithIdentifier:kStoryboardIdentifierVideos];
-    UIViewController *updatesVC = (UIViewController *)[storyboard instantiateViewControllerWithIdentifier:kStoryboardIdentifierUpdates];
+    UIViewController *activitiesVC = (UIViewController *)[storyboard instantiateViewControllerWithIdentifier:kStoryboardIdentifierActivities];
     
     // ordering of the view controllers must match ordering of self.navigationButtons
-    self.viewControllers = @[videosVC, updatesVC];
+    self.viewControllers = @[videosVC, activitiesVC];
 
 }
 
@@ -131,7 +131,7 @@ static NSString *const kStoryboardIdentifierUpdates     = @"Updates";
 - (void)setupNavigationButtons
 {
     // Ordering of the navigation buttons must match ordering of self.viewControllers
-    self.navigationButtons = @[self.videosButton, self.updatesButton];
+    self.navigationButtons = @[self.videosButton, self.activitiesButton];
     
     NSUInteger idx = 0;
     for (idx=0; idx < [self.navigationButtons count]; idx++) {
