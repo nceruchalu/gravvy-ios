@@ -92,14 +92,47 @@
 
 
 #pragma mark Empty State View
+/**
+ * Show the empty state view by setting up the tableView's headerView
+ */
+- (void)showEmptyStateView
+{
+    // Set table header view
+    self.tableView.tableHeaderView = self.emptyStateView;
+    
+    // set table header after updating its height so as to force relayout of views
+    // Set table header view height
+    CGRect tableHeaderViewFrame = self.tableView.tableHeaderView.frame;
+    tableHeaderViewFrame.size.height = self.view.frame.size.height;
+    self.tableView.tableHeaderView.frame = tableHeaderViewFrame;
+    self.tableView.tableHeaderView = self.tableView.tableHeaderView;
+}
+
+/**
+ * Hide the empty state view by setting the height of the headerView to 1.
+ * Simply setting the headerView to nil forces a section header height for the
+ * first section following a refresh.
+ */
+- (void)hideEmptyStateView
+{
+    // Have to set the header view to something so that we have a frame to
+    // adjust
+    self.tableView.tableHeaderView = [[UIView alloc] init];
+    
+    CGRect tableHeaderViewFrame = self.tableView.tableHeaderView.frame;
+    tableHeaderViewFrame.size.height = 1;
+    self.tableView.tableHeaderView.frame = tableHeaderViewFrame;
+    self.tableView.tableHeaderView = self.tableView.tableHeaderView;
+}
+
 - (void)showOrHideEmptyStateView
 {
     if ([self.fetchedResultsController.fetchedObjects count] > 0 ) {
         // if there are contents to display then hide empty state view
-        self.emptyStateView.hidden = YES;
+        [self hideEmptyStateView];
     } else {
         // Nothing to dispaly, so show user something informative
-        self.emptyStateView.hidden = NO;
+        [self showEmptyStateView];
     }
 }
 

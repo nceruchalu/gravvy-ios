@@ -163,7 +163,7 @@ static NSUInteger const kMaxDisplayedVideoTitleLength = 30;
     if ([activity.actor.phoneNumber isEqualToString:[GRVAccountManager sharedManager].phoneNumber]) {
         actorDisplayName = @"You";
     } else {
-        actorDisplayName = [[GRVUserViewHelper userFullNameOrPhoneNumber:activity.actor] capitalizedString];
+        actorDisplayName = [GRVUserViewHelper userFullNameOrPhoneNumber:activity.actor];
         emphasizeActor = (activity.actor.contact != nil);
     }
     NSDictionary *actorAttrsDictionary = emphasizeActor ? emphasizedTextAttrsDictionary : textAttrsDictionary;
@@ -228,7 +228,7 @@ static NSUInteger const kMaxDisplayedVideoTitleLength = 30;
             object = @"you";
             emphasized = YES;
         } else {
-            object = [[GRVUserViewHelper userFullNameOrPhoneNumber:activity.objectUser] capitalizedString];
+            object = [GRVUserViewHelper userFullNameOrPhoneNumber:activity.objectUser];
             // Emphasize this object if activity's actor is not in address book
             emphasized = (activity.actor.contact == nil);
         }
