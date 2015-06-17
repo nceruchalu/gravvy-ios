@@ -320,6 +320,9 @@ static NSString *const kGRVAddressBookPersonRecordIdKey = @"recordId";
             
             // finally execute the callback block on main queue
             dispatch_async(dispatch_get_main_queue(), ^{
+                // notify all listeners that the contacts are now refreshed
+                [[NSNotificationCenter defaultCenter] postNotificationName:kGRVContactsRefreshedNotification
+                                                                    object:self];
                 if (contactsAreSynced) contactsAreSynced();
             });
         }];

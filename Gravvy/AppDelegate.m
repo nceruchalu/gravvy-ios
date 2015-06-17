@@ -14,6 +14,8 @@
 #import "GRVModelManager.h"
 #import "GRVConstants.h"
 #import "GRVUser+HTTP.h"
+#import "GRVVideo+HTTP.h"
+#import "GRVActivity+HTTP.h"
 #import "GRVAlertBannerView.h"
 #import "GRVAlertBannerManager.h"
 #import "GRVUserViewHelper.h"
@@ -197,14 +199,21 @@ static NSString *const kRemoteNotificationSoundFileExtension = @"caf";
         BOOL httpIsRegistered = [GRVAccountManager sharedManager].isRegistered;
         BOOL profileIsConfigured = [GRVModelManager sharedManager].profileConfiguredPostActivation;
         
-        if (httpIsRegistered && profileIsConfigured && !httpIsAuthenticated) {
+        if (httpIsRegistered && profileIsConfigured) {
             
-            [[GRVAccountManager sharedManager] authenticateWithSuccess:nil failure:^(NSUInteger statusCode) {
-                // Force the user to restart by going to the app's launch view controller
-                UINavigationController *rootNVC = (UINavigationController *)self.window.rootViewController;
-                [rootNVC dismissViewControllerAnimated:YES completion:nil];
-                [rootNVC popToRootViewControllerAnimated:NO];
-            }];
+            if (!httpIsAuthenticated) {
+                [[GRVAccountManager sharedManager] authenticateWithSuccess:nil failure:^(NSUInteger statusCode) {
+                    // Force the user to restart by going to the app's launch view controller
+                    UINavigationController *rootNVC = (UINavigationController *)self.window.rootViewController;
+                    [rootNVC dismissViewControllerAnimated:YES completion:nil];
+                    [rootNVC popToRootViewControllerAnimated:NO];
+                }];
+            } else {
+                // Already authenticated so refresh content
+                [GRVVideo refreshVideos:nil];
+                [GRVActivity refreshActivities:nil];
+            }
+            
         }
     }
     

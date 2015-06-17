@@ -157,6 +157,7 @@ NSString *const kGRVSettingsSounds          = @"kGRVSettingsSounds";
 NSString *const kGRVMOCAvailableNotification        = @"kGRVMOCAvailableNotification";
 NSString *const kGRVMOCDeletedNotification          = @"kGRVMOCDeletedNotification";
 NSString *const kGRVHTTPAuthenticationNotification  = @"kGRVHTTPAuthenticationNotification";
+NSString *const kGRVContactsRefreshedNotification   = @"kGRVContactsRefreshedNotification";
 
 
 // EOF

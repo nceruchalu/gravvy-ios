@@ -214,30 +214,56 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QDF-nW-e4j" userLabel="Container View">
-                                <rect key="frame" x="0.0" y="105" width="600" height="495"/>
+                                <rect key="frame" x="0.0" y="105" width="600" height="451"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a1m-7F-DL1" userLabel="Create Video Button">
-                                <rect key="frame" x="266" y="511" width="69" height="69"/>
-                                <state key="normal" image="recordCircle">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="recordVideo:" destination="FEH-fj-5s4" eventType="touchUpInside" id="El8-2m-pVO"/>
-                                </connections>
-                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1rn-dR-4Se" userLabel="Bottom Tab Bar">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mbr-8F-EPr" userLabel="Create Video Background">
+                                        <rect key="frame" x="240" y="0.0" width="120" height="44"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a1m-7F-DL1" userLabel="Create Video Button">
+                                                <rect key="frame" x="0.0" y="0.0" width="120" height="44"/>
+                                                <state key="normal" image="record">
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="recordVideo:" destination="FEH-fj-5s4" eventType="touchUpInside" id="El8-2m-pVO"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.0" green="0.74901960779999999" blue="0.56078431370000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="a1m-7F-DL1" firstAttribute="leading" secondItem="mbr-8F-EPr" secondAttribute="leading" id="I39-dh-T5m"/>
+                                            <constraint firstAttribute="bottom" secondItem="a1m-7F-DL1" secondAttribute="bottom" id="eKW-Gh-XlR"/>
+                                            <constraint firstAttribute="trailing" secondItem="a1m-7F-DL1" secondAttribute="trailing" id="gfc-bk-6KV"/>
+                                            <constraint firstItem="a1m-7F-DL1" firstAttribute="top" secondItem="mbr-8F-EPr" secondAttribute="top" id="imt-9F-SVB"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.23529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="0Of-aZ-xgJ"/>
+                                    <constraint firstAttribute="centerX" secondItem="mbr-8F-EPr" secondAttribute="centerX" id="Bfe-Ky-9au"/>
+                                    <constraint firstAttribute="bottom" secondItem="mbr-8F-EPr" secondAttribute="bottom" id="UxS-Ti-B2g"/>
+                                    <constraint firstItem="mbr-8F-EPr" firstAttribute="top" secondItem="1rn-dR-4Se" secondAttribute="top" id="h0h-rC-wfG"/>
+                                    <constraint firstItem="mbr-8F-EPr" firstAttribute="width" secondItem="1rn-dR-4Se" secondAttribute="width" multiplier="0.2" id="iVc-Cf-I3Y"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="KUA-dZ-rzT" firstAttribute="top" secondItem="QDF-nW-e4j" secondAttribute="bottom" id="14o-af-y7q"/>
                             <constraint firstItem="BEK-NR-Bpm" firstAttribute="leading" secondItem="13Z-dE-Tnh" secondAttribute="leading" id="28H-8e-3PH"/>
                             <constraint firstAttribute="trailing" secondItem="BEK-NR-Bpm" secondAttribute="trailing" id="8vd-wt-hLu"/>
+                            <constraint firstItem="KUA-dZ-rzT" firstAttribute="top" secondItem="1rn-dR-4Se" secondAttribute="bottom" id="ADf-oE-GYH"/>
                             <constraint firstItem="QDF-nW-e4j" firstAttribute="leading" secondItem="13Z-dE-Tnh" secondAttribute="leading" id="Hxb-ad-XQX"/>
                             <constraint firstItem="QDF-nW-e4j" firstAttribute="top" secondItem="BEK-NR-Bpm" secondAttribute="bottom" id="NPr-hw-IX5"/>
-                            <constraint firstAttribute="centerX" secondItem="a1m-7F-DL1" secondAttribute="centerX" id="Wbs-vF-uYF"/>
+                            <constraint firstAttribute="trailing" secondItem="1rn-dR-4Se" secondAttribute="trailing" id="d5h-Le-lpA"/>
+                            <constraint firstItem="1rn-dR-4Se" firstAttribute="leading" secondItem="13Z-dE-Tnh" secondAttribute="leading" id="fSl-Wd-gdF"/>
                             <constraint firstItem="BEK-NR-Bpm" firstAttribute="top" secondItem="eiz-7z-HV5" secondAttribute="bottom" id="jek-sc-VVK"/>
+                            <constraint firstItem="1rn-dR-4Se" firstAttribute="top" secondItem="QDF-nW-e4j" secondAttribute="bottom" id="mBr-De-PuR"/>
                             <constraint firstAttribute="trailing" secondItem="QDF-nW-e4j" secondAttribute="trailing" id="sxe-3p-Ftf"/>
-                            <constraint firstItem="KUA-dZ-rzT" firstAttribute="top" secondItem="a1m-7F-DL1" secondAttribute="bottom" constant="20" id="x7n-or-U6a"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -1892,20 +1918,20 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholderVideos" translatesAutoresizingMaskIntoConstraints="NO" id="7dG-CL-zaM">
-                                        <rect key="frame" x="267" y="182" width="66" height="66"/>
+                                        <rect key="frame" x="267" y="197" width="66" height="66"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="66" id="FwK-AM-TLu"/>
                                             <constraint firstAttribute="width" secondItem="7dG-CL-zaM" secondAttribute="height" multiplier="1:1" id="M1a-4X-UPE"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to Gravvy" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bq2-t3-Bl7">
-                                        <rect key="frame" x="20" y="268" width="560" height="21.5"/>
+                                        <rect key="frame" x="20" y="283" width="560" height="21.5"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="18"/>
                                         <color key="textColor" red="0.34901960784313724" green="0.34901960784313724" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create videos, with the camera button below, and your friends can add clips to your reel." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FTH-V6-bWl">
-                                        <rect key="frame" x="20" y="297.5" width="560" height="40"/>
+                                        <rect key="frame" x="20" y="312.5" width="560" height="40"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                         <color key="textColor" red="0.71764705880000002" green="0.71764705880000002" blue="0.71764705880000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1916,7 +1942,7 @@
                                     <constraint firstItem="Bq2-t3-Bl7" firstAttribute="leading" secondItem="nKU-4G-lHw" secondAttribute="leading" constant="20" id="4FP-Ob-dof"/>
                                     <constraint firstItem="FTH-V6-bWl" firstAttribute="top" secondItem="Bq2-t3-Bl7" secondAttribute="bottom" constant="8" symbolic="YES" id="Hez-hb-aZu"/>
                                     <constraint firstAttribute="centerX" secondItem="7dG-CL-zaM" secondAttribute="centerX" id="Yu2-fs-zNf"/>
-                                    <constraint firstAttribute="centerY" secondItem="7dG-CL-zaM" secondAttribute="centerY" constant="85" id="geh-iW-mfE"/>
+                                    <constraint firstAttribute="centerY" secondItem="7dG-CL-zaM" secondAttribute="centerY" constant="70" id="geh-iW-mfE"/>
                                     <constraint firstItem="Bq2-t3-Bl7" firstAttribute="top" secondItem="7dG-CL-zaM" secondAttribute="bottom" constant="20" id="hmg-bo-EKN"/>
                                     <constraint firstItem="Bq2-t3-Bl7" firstAttribute="leading" secondItem="FTH-V6-bWl" secondAttribute="leading" id="iqw-vZ-X5W"/>
                                     <constraint firstItem="Bq2-t3-Bl7" firstAttribute="trailing" secondItem="FTH-V6-bWl" secondAttribute="trailing" id="mI4-ul-XGf"/>
@@ -1951,29 +1977,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="rf4-vl-cEw">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="70" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="rf4-vl-cEw">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="50" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <view key="tableFooterView" contentMode="scaleToFill" id="adf-hE-nNh" userLabel="Footer Padding View">
-                                    <rect key="frame" x="0.0" y="82" width="600" height="90"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Zb-1X-7cA" userLabel="Top Border">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="1"/>
-                                            <color key="backgroundColor" red="0.73725490196078436" green="0.72941176470588232" blue="0.75686274509803919" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="1" id="3aI-bN-IHD"/>
-                                            </constraints>
-                                        </view>
-                                    </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <constraints>
-                                        <constraint firstItem="6Zb-1X-7cA" firstAttribute="top" secondItem="adf-hE-nNh" secondAttribute="top" id="4au-BR-PjV"/>
-                                        <constraint firstAttribute="trailing" secondItem="6Zb-1X-7cA" secondAttribute="trailing" id="j9b-h4-oTM"/>
-                                        <constraint firstItem="6Zb-1X-7cA" firstAttribute="leading" secondItem="adf-hE-nNh" secondAttribute="leading" id="sgF-sW-Loi"/>
-                                    </constraints>
-                                </view>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Activity Cell" id="0rt-38-dVv" customClass="GRVActivityTableViewCell">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -1981,7 +1988,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ByB-U9-TH7" userLabel="Actor Avatar View" customClass="GRVUserAvatarView">
-                                                    <rect key="frame" x="8" y="13" width="34" height="34"/>
+                                                    <rect key="frame" x="8" y="18" width="34" height="34"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="34" id="dGC-i3-BwJ"/>
@@ -1989,13 +1996,13 @@
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Noddy liked your video." lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7pO-tt-kJe" userLabel="Description Label">
-                                                    <rect key="frame" x="50" y="21" width="490" height="15.5"/>
+                                                    <rect key="frame" x="50" y="27" width="490" height="15.5"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
                                                     <color key="textColor" red="0.14901960784313725" green="0.14901960784313725" blue="0.14901960784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wnz-4K-RSK" userLabel="Video Background View">
-                                                    <rect key="frame" x="548" y="8" width="44" height="44"/>
+                                                    <rect key="frame" x="548" y="13" width="44" height="44"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZXb-3U-5S9" userLabel="Video Image View">
                                                             <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
@@ -2034,14 +2041,14 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholderActivities" translatesAutoresizingMaskIntoConstraints="NO" id="3t3-4A-Zic">
-                                        <rect key="frame" x="267" y="182" width="66" height="66"/>
+                                        <rect key="frame" x="267" y="197" width="66" height="66"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="66" id="Nem-sN-Vzg"/>
                                             <constraint firstAttribute="width" secondItem="3t3-4A-Zic" secondAttribute="height" multiplier="1:1" id="kxi-1U-4SX"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="When you create or add to a video, its activity will show up here." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B5u-FV-NI7">
-                                        <rect key="frame" x="20" y="268" width="560" height="20"/>
+                                        <rect key="frame" x="20" y="283" width="560" height="20"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                         <color key="textColor" red="0.71764705882352942" green="0.71764705882352942" blue="0.71764705882352942" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -2052,7 +2059,7 @@
                                     <constraint firstItem="B5u-FV-NI7" firstAttribute="leading" secondItem="a5J-UC-PlO" secondAttribute="leading" constant="20" id="8M0-wG-6fj"/>
                                     <constraint firstAttribute="trailing" secondItem="B5u-FV-NI7" secondAttribute="trailing" constant="20" id="9aT-6e-nnb"/>
                                     <constraint firstItem="B5u-FV-NI7" firstAttribute="top" secondItem="3t3-4A-Zic" secondAttribute="bottom" constant="20" id="AK4-fj-HiR"/>
-                                    <constraint firstAttribute="centerY" secondItem="3t3-4A-Zic" secondAttribute="centerY" constant="85" id="gd1-iL-I2C"/>
+                                    <constraint firstAttribute="centerY" secondItem="3t3-4A-Zic" secondAttribute="centerY" constant="70" id="gd1-iL-I2C"/>
                                     <constraint firstAttribute="centerX" secondItem="3t3-4A-Zic" secondAttribute="centerX" id="pWb-fh-95X"/>
                                 </constraints>
                             </view>
@@ -2102,7 +2109,7 @@
         <image name="launchIcon" width="102" height="100"/>
         <image name="placeholderActivities" width="66" height="66"/>
         <image name="placeholderVideos" width="100" height="100"/>
-        <image name="recordCircle" width="69" height="69"/>
+        <image name="record" width="28" height="17"/>
         <image name="settings" width="25" height="25"/>
         <image name="settingsAbout" width="29" height="29"/>
         <image name="settingsContact" width="29" height="29"/>

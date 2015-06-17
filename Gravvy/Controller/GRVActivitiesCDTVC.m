@@ -15,6 +15,7 @@
 #import "UIImageView+WebCache.h"
 #import "GRVAccountManager.h"
 #import "GRVFormatterUtils.h"
+#import "GRVConstants.h"
 
 #pragma mark - Constants
 /**
@@ -47,10 +48,25 @@ static NSUInteger const kMaxDisplayedVideoTitleLength = 30;
 
 
 #pragma mark - View Lifecycle
-- (void)viewDidLoad
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    [super viewWillAppear:animated];
+    
+    // register observers
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(contactsRefreshed:)
+                                                 name:kGRVContactsRefreshedNotification
+                                               object:nil];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    // remove observers
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:kGRVContactsRefreshedNotification
+                                                  object:nil];
 }
 
 
@@ -86,6 +102,17 @@ static NSUInteger const kMaxDisplayedVideoTitleLength = 30;
     [self showOrHideEmptyStateView];
 }
 
+#pragma mark Private
+/**
+ * Reload contents of tableview, but first all downloads before 
+ * to prevent hanging
+ */
+- (void)refreshTableView
+{
+    [[SDWebImageManager sharedManager] cancelAll];
+    [self.tableView reloadData];
+}
+
 #pragma mark - Refresh
 - (IBAction)refresh
 {
@@ -95,7 +122,7 @@ static NSUInteger const kMaxDisplayedVideoTitleLength = 30;
             // run in main queue UIKit only runs there
             [self.refreshControl endRefreshing];
             // Reload table to reflect changes in the activities' related objects
-            [self.tableView reloadData];
+            [self refreshTableView];
         });
     }];
 }
@@ -237,5 +264,17 @@ static NSUInteger const kMaxDisplayedVideoTitleLength = 30;
     }
     return representation;
 }
+
+
+#pragma mark - Notification Observer Methods
+/**
+ * Core Data contacts are now synced with address book.
+ */
+- (void)contactsRefreshed:(NSNotification *)aNotification
+{
+    // Reload tableview
+    [self setupFetchedResultsController];
+}
+
 
 @end

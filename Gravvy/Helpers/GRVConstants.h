@@ -285,6 +285,12 @@ extern NSString *const kGRVMOCDeletedNotification;
  */
 extern NSString *const kGRVHTTPAuthenticationNotification;
 
+/**
+ * kGRVContactsRefreshedNotification is the NSNotification identifier for
+ * successful contacts refresh
+ */
+extern NSString *const kGRVContactsRefreshedNotification;
+
 
 // -----------------------------------------------------------------------------
 // Custom Type Defs
