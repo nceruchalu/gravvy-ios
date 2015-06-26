@@ -47,6 +47,18 @@
 + (NSNumber *)stringToNum:(NSString *)string;
 
 
+#pragma mark - Number
+/**
+ * Convert an integer number to a comma-separated string
+ *
+ * @param number    Number object to be converted to a string
+ *
+ * @return An NSString object created by passing number. Returns nil if number
+ *      couldn't be successfully parsed.
+ */
++ (NSString *)numToString:(NSNumber *)number;
+
+
 #pragma mark - Date
 /**
  * Generate the RFC 3339 DateFormatter.

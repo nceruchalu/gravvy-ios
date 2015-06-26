@@ -13,6 +13,7 @@
 #import "GRVConstants.h"
 #import "GRVContact+AddressBook.h"
 #import "GRVActivity+HTTP.h"
+#import "GRVVideo+HTTP.h"
 #import "NBPhoneNumberUtil+Shared.h"
 #import "NBPhoneNumber.h"
 #import <Crashlytics/Crashlytics.h>
@@ -301,7 +302,7 @@
                          // we can sync the top level objects, contacts, videos
                          // and activities
                          [GRVContact refreshContacts:nil];
-                         //[GRVVideo refreshVideos:nil];
+                         [GRVVideo refreshVideos:nil];
                          [GRVActivity refreshActivities:nil];
                      }];
                      

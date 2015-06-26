@@ -58,6 +58,18 @@ static const NSInteger kSecondsInDay       = 86400;
     return [numberFormatter numberFromString:string];
 }
 
+#pragma mark - Number
++ (NSString *)numToString:(NSNumber *)number
+{
+    // if the number formatters isn't already setup, create it and cache for reuse.
+    static NSNumberFormatter *numberFormatter = nil;
+    if (!numberFormatter) {
+        numberFormatter = [[NSNumberFormatter alloc] init];
+        numberFormatter.numberStyle = NSNumberFormatterDecimalStyle;
+    }
+    return [numberFormatter stringFromNumber:number];
+}
+
 
 #pragma mark - Date
 + (NSDateFormatter *)generateRFC3339DateFormatter

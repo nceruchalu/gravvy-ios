@@ -50,6 +50,7 @@
 		403D34BC1B11480E004FF19E /* SCWeakSelectorTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 403D34B61B11480E004FF19E /* SCWeakSelectorTarget.m */; };
 		403D34C21B114848004FF19E /* SCFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 403D34BF1B114848004FF19E /* SCFilter.m */; };
 		403D34C31B114848004FF19E /* SCFilterAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 403D34C11B114848004FF19E /* SCFilterAnimation.m */; };
+		404CB2071B3CD0A400890D45 /* GRVVideoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 404CB2061B3CD0A400890D45 /* GRVVideoTableViewCell.m */; };
 		405BD0531B1A89EF00EDA8F6 /* GRVVideo+HTTP.m in Sources */ = {isa = PBXBuildFile; fileRef = 405BD0521B1A89EF00EDA8F6 /* GRVVideo+HTTP.m */; };
 		405BD0561B1AA01700EDA8F6 /* GRVClip+HTTP.m in Sources */ = {isa = PBXBuildFile; fileRef = 405BD0551B1AA01700EDA8F6 /* GRVClip+HTTP.m */; };
 		405BD0591B1ABF5100EDA8F6 /* GRVRestUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 405BD0581B1ABF5100EDA8F6 /* GRVRestUtils.m */; };
@@ -273,6 +274,8 @@
 		403D34BF1B114848004FF19E /* SCFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCFilter.m; path = ThirdParty/SCRecorder/Library/Sources/SCFilter.m; sourceTree = SOURCE_ROOT; };
 		403D34C01B114848004FF19E /* SCFilterAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCFilterAnimation.h; path = ThirdParty/SCRecorder/Library/Sources/SCFilterAnimation.h; sourceTree = SOURCE_ROOT; };
 		403D34C11B114848004FF19E /* SCFilterAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCFilterAnimation.m; path = ThirdParty/SCRecorder/Library/Sources/SCFilterAnimation.m; sourceTree = SOURCE_ROOT; };
+		404CB2051B3CD0A400890D45 /* GRVVideoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVVideoTableViewCell.h; sourceTree = "<group>"; };
+		404CB2061B3CD0A400890D45 /* GRVVideoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVVideoTableViewCell.m; sourceTree = "<group>"; };
 		405BD0511B1A89EF00EDA8F6 /* GRVVideo+HTTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GRVVideo+HTTP.h"; sourceTree = "<group>"; };
 		405BD0521B1A89EF00EDA8F6 /* GRVVideo+HTTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GRVVideo+HTTP.m"; sourceTree = "<group>"; };
 		405BD0541B1AA01700EDA8F6 /* GRVClip+HTTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GRVClip+HTTP.h"; sourceTree = "<group>"; };
@@ -913,6 +916,8 @@
 				4064A18F1B12A8C100E9C4CB /* GRVPlayerView.m */,
 				408DC1011B3149FC00E28094 /* GRVActivityTableViewCell.h */,
 				408DC1021B3149FC00E28094 /* GRVActivityTableViewCell.m */,
+				404CB2051B3CD0A400890D45 /* GRVVideoTableViewCell.h */,
+				404CB2061B3CD0A400890D45 /* GRVVideoTableViewCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1310,6 +1315,7 @@
 				402875B01B047FFC00699F60 /* GRVVideosCDTVC.m in Sources */,
 				40F937BC1B0C46B0000F7BCB /* GRVSettingsTVC.m in Sources */,
 				407623C21AFF209C00100550 /* GRVAccountManager.m in Sources */,
+				404CB2071B3CD0A400890D45 /* GRVVideoTableViewCell.m in Sources */,
 				403D34B81B11480E004FF19E /* SCAssetExportSession.m in Sources */,
 				407623901AFEF13400100550 /* NSData+ImageContentType.m in Sources */,
 				407623621AFEF0E300100550 /* NBMetadataCoreTest.m in Sources */,
