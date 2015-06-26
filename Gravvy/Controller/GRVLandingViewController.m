@@ -36,6 +36,11 @@ static NSString *const kStoryboardName                  = @"Main";
 static NSString *const kStoryboardIdentifierVideos      = @"Videos";
 static NSString *const kStoryboardIdentifierActivities  = @"Activities";
 
+
+
+// scrolling nav bar delay
+static CGFloat const scrollingNavBarDelay = 200.0f;
+
 @interface GRVLandingViewController () <GRVPrivateTransitionContextDelegate>
 
 #pragma mark - Properties
@@ -162,7 +167,7 @@ static NSString *const kStoryboardIdentifierActivities  = @"Activities";
     // Setup Scrollable UINavigationBar that follows the scrolling of a UIScrollView
     self.navigationController.navigationBar.translucent = NO;
     [self followScrollView:((GRVExtendedCoreDataTableViewController *)self.selectedViewController).tableView
-        usingTopConstraint:self.topLayoutConstraint];
+        usingTopConstraint:self.topLayoutConstraint withDelay:scrollingNavBarDelay];
     self.navigationController.navigationBar.translucent = YES;
     [self setShouldScrollWhenContentFits:YES];
 }
@@ -206,7 +211,7 @@ static NSString *const kStoryboardIdentifierActivities  = @"Activities";
     [self stopFollowingScrollView];
     self.navigationController.navigationBar.translucent = NO;
     [self followScrollView:((GRVExtendedCoreDataTableViewController *)self.selectedViewController).tableView
-        usingTopConstraint:self.topLayoutConstraint];
+        usingTopConstraint:self.topLayoutConstraint withDelay:scrollingNavBarDelay];
     self.navigationController.navigationBar.translucent = YES;
 }
 
