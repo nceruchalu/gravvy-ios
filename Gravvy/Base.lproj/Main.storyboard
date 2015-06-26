@@ -279,6 +279,7 @@
                         <outlet property="containerView" destination="QDF-nW-e4j" id="Itl-TX-edp"/>
                         <outlet property="currentButtonIndicatorHorizontalCenterLayout" destination="jan-Ne-p3X" id="lba-y5-S3Y"/>
                         <outlet property="navigationButtonsContainerView" destination="BEK-NR-Bpm" id="16c-Hm-kiP"/>
+                        <outlet property="topLayoutConstraint" destination="jek-sc-VVK" id="PrG-2h-IxH"/>
                         <outlet property="videosButton" destination="b5i-ft-QLS" id="fIE-SM-BjX"/>
                         <segue destination="Q3S-KQ-9M0" kind="presentation" identifier="showCreateVideoCameraController" id="gQM-eP-nL3"/>
                     </connections>

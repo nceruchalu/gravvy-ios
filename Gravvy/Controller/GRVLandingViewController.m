@@ -11,6 +11,8 @@
 #import "GRVConstants.h"
 #import "GRVPanGestureInteractiveTransition.h"
 #import "GRVPrivateTransitionContextDelegate.h"
+#import "GRVExtendedCoreDataTableViewController.h"
+#import "UIViewController+ScrollingNavbar.h"
 
 #pragma mark - Constants
 /**
@@ -46,6 +48,8 @@ static NSString *const kStoryboardIdentifierActivities  = @"Activities";
  * container
  */
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *currentButtonIndicatorHorizontalCenterLayout;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topLayoutConstraint;
 
 #pragma mark Private
 // ordering of navigation buttons matches that of view controllers
@@ -154,6 +158,13 @@ static NSString *const kStoryboardIdentifierActivities  = @"Activities";
     [super viewDidLoad];
     self.navigationItem.hidesBackButton = YES;
     self.buttonIndicatorOffset = 0;
+    
+    // Setup Scrollable UINavigationBar that follows the scrolling of a UIScrollView
+    self.navigationController.navigationBar.translucent = NO;
+    [self followScrollView:((GRVExtendedCoreDataTableViewController *)self.selectedViewController).tableView
+        usingTopConstraint:self.topLayoutConstraint];
+    self.navigationController.navigationBar.translucent = YES;
+    [self setShouldScrollWhenContentFits:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -161,6 +172,17 @@ static NSString *const kStoryboardIdentifierActivities  = @"Activities";
     // To ensure button indicator is setup properly
     // Noticed invalid frame sizes in viewDidLoad when using simulator
     self.buttonIndicatorOffset = self.buttonIndicatorOffset;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self showNavBarAnimated:NO];
+}
+
+- (void)dealloc
+{
+    [self stopFollowingScrollView];
 }
 
 
@@ -173,7 +195,21 @@ static NSString *const kStoryboardIdentifierActivities  = @"Activities";
 - (void)updateNavigationButtonSelection
 {
     self.buttonIndicatorOffset = (CGFloat)self.selectedIndex;
+    
+    // Switch the scroll view being followed as this is only called when
+    // switching tabs
+    [self switchFollowingScrollView];
 }
+
+- (void)switchFollowingScrollView {
+    [self showNavBarAnimated:YES];
+    [self stopFollowingScrollView];
+    self.navigationController.navigationBar.translucent = NO;
+    [self followScrollView:((GRVExtendedCoreDataTableViewController *)self.selectedViewController).tableView
+        usingTopConstraint:self.topLayoutConstraint];
+    self.navigationController.navigationBar.translucent = YES;
+}
+
 
 #pragma mark Target/Action methods
 - (IBAction)recordVideo:(UIButton *)sender

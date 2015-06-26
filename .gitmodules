@@ -13,3 +13,6 @@
 [submodule "ThirdParty/SCRecorder"]
 	path = ThirdParty/SCRecorder
 	url = https://github.com/rFlex/SCRecorder
+[submodule "ThirdParty/AMScrollingNavbar"]
+	path = ThirdParty/AMScrollingNavbar
+	url = https://github.com/andreamazz/AMScrollingNavbar.git

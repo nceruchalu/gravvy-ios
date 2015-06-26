@@ -17,6 +17,7 @@
 * [libPhoneNumber-iOS](http://github.com/iziz/libPhoneNumber-iOS)
 * [SCRecorder](https://github.com/rFlex/SCRecorder)
 * [SDWebImage](https://github.com/rs/SDWebImage)
+* [AMScrollingNavbar](https://github.com/andreamazz/AMScrollingNavbar)
 
 #### Other Libraries
 * [ALAlertBanner](https://github.com/alobi/ALAlertBanner): Using modified version of this.

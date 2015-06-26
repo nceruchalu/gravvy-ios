@@ -28,6 +28,9 @@ a new module. Keep list in alphabetical order.
 #### [AFNetworking](https://github.com/AFNetworking/AFNetworking)
 Networking framework
 
+#### [AMScrollingNavbar](https://github.com/andreamazz/AMScrollingNavbar)
+Scrollable UINavigationBar that follows the scrolling of a UIScrollView
+
 #### [AWPercentDrivenInteractiveTransition](https://github.com/MrAlek/AWPercentDrivenInteractiveTransition)
 Drop-in replacement for UIPercentDrivenInteractiveTransition for use in custom
 container view controllers
@@ -40,4 +43,3 @@ iOS camera engine with tap to record functionality
 
 #### [SDWebImage](https://github.com/rs/SDWebImage)
 Asynchronous image downloader with cache support with an UIImageView category
-

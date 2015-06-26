@@ -51,6 +51,7 @@
 		403D34C21B114848004FF19E /* SCFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 403D34BF1B114848004FF19E /* SCFilter.m */; };
 		403D34C31B114848004FF19E /* SCFilterAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 403D34C11B114848004FF19E /* SCFilterAnimation.m */; };
 		404CB2071B3CD0A400890D45 /* GRVVideoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 404CB2061B3CD0A400890D45 /* GRVVideoTableViewCell.m */; };
+		404CB2151B3CF4B200890D45 /* UIViewController+ScrollingNavbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 404CB2131B3CF4B200890D45 /* UIViewController+ScrollingNavbar.m */; };
 		405BD0531B1A89EF00EDA8F6 /* GRVVideo+HTTP.m in Sources */ = {isa = PBXBuildFile; fileRef = 405BD0521B1A89EF00EDA8F6 /* GRVVideo+HTTP.m */; };
 		405BD0561B1AA01700EDA8F6 /* GRVClip+HTTP.m in Sources */ = {isa = PBXBuildFile; fileRef = 405BD0551B1AA01700EDA8F6 /* GRVClip+HTTP.m */; };
 		405BD0591B1ABF5100EDA8F6 /* GRVRestUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 405BD0581B1ABF5100EDA8F6 /* GRVRestUtils.m */; };
@@ -276,6 +277,8 @@
 		403D34C11B114848004FF19E /* SCFilterAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCFilterAnimation.m; path = ThirdParty/SCRecorder/Library/Sources/SCFilterAnimation.m; sourceTree = SOURCE_ROOT; };
 		404CB2051B3CD0A400890D45 /* GRVVideoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVVideoTableViewCell.h; sourceTree = "<group>"; };
 		404CB2061B3CD0A400890D45 /* GRVVideoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVVideoTableViewCell.m; sourceTree = "<group>"; };
+		404CB2121B3CF4B200890D45 /* UIViewController+ScrollingNavbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ScrollingNavbar.h"; sourceTree = "<group>"; };
+		404CB2131B3CF4B200890D45 /* UIViewController+ScrollingNavbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ScrollingNavbar.m"; sourceTree = "<group>"; };
 		405BD0511B1A89EF00EDA8F6 /* GRVVideo+HTTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GRVVideo+HTTP.h"; sourceTree = "<group>"; };
 		405BD0521B1A89EF00EDA8F6 /* GRVVideo+HTTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GRVVideo+HTTP.m"; sourceTree = "<group>"; };
 		405BD0541B1AA01700EDA8F6 /* GRVClip+HTTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GRVClip+HTTP.h"; sourceTree = "<group>"; };
@@ -633,6 +636,16 @@
 			name = Filters;
 			sourceTree = "<group>";
 		};
+		404CB20F1B3CF4B200890D45 /* AMScrollingNavbar */ = {
+			isa = PBXGroup;
+			children = (
+				404CB2121B3CF4B200890D45 /* UIViewController+ScrollingNavbar.h */,
+				404CB2131B3CF4B200890D45 /* UIViewController+ScrollingNavbar.m */,
+			);
+			name = AMScrollingNavbar;
+			path = ThirdParty/AMScrollingNavbar/AMScrollingNavbar;
+			sourceTree = SOURCE_ROOT;
+		};
 		4076206A1AFEC41200100550 = {
 			isa = PBXGroup;
 			children = (
@@ -900,6 +913,7 @@
 				407622E31AFEF08E00100550 /* AFNetworking */,
 				407622F71AFEF08E00100550 /* UIKit+AFNetworking */,
 				403D34591B10433D004FF19E /* SCRecorder */,
+				404CB20F1B3CF4B200890D45 /* AMScrollingNavbar */,
 			);
 			path = Vendor;
 			sourceTree = "<group>";
@@ -1293,6 +1307,7 @@
 				407623651AFEF0E300100550 /* NBNumberFormat.m in Sources */,
 				408B288B1B27F3080032A659 /* GRVClip.m in Sources */,
 				407623BF1AFF1FDE00100550 /* GRVCoreDataImport.m in Sources */,
+				404CB2151B3CF4B200890D45 /* UIViewController+ScrollingNavbar.m in Sources */,
 				407623671AFEF0E300100550 /* NBPhoneMetaDataGenerator.m in Sources */,
 				407623601AFEF0E300100550 /* NBMetadataCore.m in Sources */,
 				40F937C11B0C4849000F7BCB /* GRVSettingsProfileSettingsTVC.m in Sources */,
