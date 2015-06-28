@@ -104,7 +104,7 @@ static NSUInteger const kMaxDisplayedVideoTitleLength = 30;
 
 #pragma mark Private
 /**
- * Reload contents of tableview, but first all downloads before 
+ * Reload contents of tableview, but first cancel all downloads before doing so
  * to prevent hanging
  */
 - (void)refreshTableView

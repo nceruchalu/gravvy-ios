@@ -39,7 +39,7 @@ static NSString *const kStoryboardIdentifierActivities  = @"Activities";
 
 
 // scrolling nav bar delay
-static CGFloat const scrollingNavBarDelay = 200.0f;
+static CGFloat const scrollingNavBarDelay = 480.0f;
 
 @interface GRVLandingViewController () <GRVPrivateTransitionContextDelegate>
 

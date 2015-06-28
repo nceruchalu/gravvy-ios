@@ -9,14 +9,26 @@
 #import "GRVVideosCDTVC.h"
 #import "GRVVideo+HTTP.h"
 #import "GRVVideoTableViewCell.h"
+#import "GRVVideoHeaderTableViewCell.h"
 #import "GRVUserViewHelper.h"
 #import "GRVFormatterUtils.h"
+#import "UIImageView+WebCache.h"
 
 #pragma mark - Constants
 /**
  * Height of table view cell rows excluding the player view
  */
-static CGFloat const kTableViewCellHeightNoPlayer = 153.0f;
+static CGFloat const kTableViewCellHeightNoPlayer = 99.0f;
+
+/**
+ * Table section header view's height
+ */
+static CGFloat const kTableViewSectionHeaderViewHeight = 54.0f;
+
+/**
+ * Table section footer view's height
+ */
+static CGFloat const kTableViewSectionFooterViewHeight = 8.0f;
 
 
 @interface GRVVideosCDTVC ()
@@ -35,6 +47,9 @@ static CGFloat const kTableViewCellHeightNoPlayer = 153.0f;
     // Setup height of each tableview row
     CGFloat playerViewHeight = self.view.frame.size.width;
     self.tableView.rowHeight = kTableViewCellHeightNoPlayer + playerViewHeight;
+    
+    // Hide separator insets
+    self.tableView.separatorColor = [UIColor clearColor];
 }
 
 
@@ -55,13 +70,23 @@ static CGFloat const kTableViewCellHeightNoPlayer = 153.0f;
         request.sortDescriptors = @[updatedAtSort];
         request.fetchBatchSize = 20;
         
-        self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+        self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"hashKey" cacheName:nil];
         
     } else {
         self.fetchedResultsController = nil;
     }
     
     [self showOrHideEmptyStateView];
+}
+
+/**
+ * Reload contents of tableview, but first cancel all downloads before doing so
+ * to prevent hanging
+ */
+- (void)refreshTableView
+{
+    [[SDWebImageManager sharedManager] cancelAll];
+    [self.tableView reloadData];
 }
 
 
@@ -71,17 +96,9 @@ static CGFloat const kTableViewCellHeightNoPlayer = 153.0f;
     GRVVideoTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     
     GRVVideo *video = [self.fetchedResultsController objectAtIndexPath:indexPath];
-
-    // Summary details first: Owner, Creation date and Play count
-    GRVUserAvatarView *avatarView = [GRVUserViewHelper userAvatarView:video.owner];
-    cell.ownerAvatarView.thumbnail = avatarView.thumbnail;
-    cell.ownerAvatarView.userInitials = avatarView.userInitials;
-    
-    cell.ownerNameLabel.text = [GRVUserViewHelper userFullNameOrPhoneNumber:video.owner];
-    cell.createdAtLabel.text = [GRVFormatterUtils dayAndYearStringForDate:video.createdAt];
-    cell.playsCountLabel.text = [GRVFormatterUtils numToString:video.playsCount];
     
     // Video details
+    [cell.previewImageView sd_setImageWithURL:[NSURL URLWithString:video.photoThumbnailURL]];
     cell.titleLabel.text = video.title;
     
     NSString *likesCount = [GRVFormatterUtils numToString:video.likesCount];
@@ -93,6 +110,60 @@ static CGFloat const kTableViewCellHeightNoPlayer = 153.0f;
     
     // Configure the cell with data from the managed object
     return cell;
+}
+
+
+#pragma mark Sections
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
+{
+    // Don't want an index list
+    return nil;
+}
+
+
+#pragma mark - UITableViewDelegate
+#pragma mark Custom Section Headers
+/**
+ * Custom section header using logic from: http://stackoverflow.com/a/11396643
+ */
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    static NSString *cellIdentifier = @"Video Header Cell"; // get the cell
+    GRVVideoHeaderTableViewCell *headerView = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    
+    // Get the video
+    NSString *hashKey = [[[self.fetchedResultsController sections] objectAtIndex:section] name];
+    GRVVideo *video = [GRVVideo videoWithVideoHashKey:hashKey inManagedObjectContext:self.managedObjectContext];
+    
+    // Create view with summary details: Owner, Creation date and Play count
+    GRVUserAvatarView *avatarView = [GRVUserViewHelper userAvatarView:video.owner];
+    headerView.ownerAvatarView.thumbnail = avatarView.thumbnail;
+    headerView.ownerAvatarView.userInitials = avatarView.userInitials;
+    
+    headerView.ownerNameLabel.text = [GRVUserViewHelper userFullNameOrPhoneNumber:video.owner];
+    headerView.createdAtLabel.text = [GRVFormatterUtils dayAndYearStringForDate:video.createdAt];
+    headerView.playsCountLabel.text = [GRVFormatterUtils numToString:video.playsCount];
+    
+    return headerView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return kTableViewSectionHeaderViewHeight;
+}
+
+#pragma mark Custom Section Footers
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    // Create custom view
+    UIView *view = [[UIView alloc] init];
+    view.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    return view;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return kTableViewSectionFooterViewHeight;
 }
 
 
