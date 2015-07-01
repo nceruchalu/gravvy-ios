@@ -52,7 +52,6 @@ static const NSString *PlayerCurrentItemContext;
  */
 @property (strong, nonatomic) GRVVideo *activeVideo;
 @property (strong, nonatomic) GRVVideoTableViewCell *activeVideoCell;
-@property (strong, nonatomic, readonly) NSIndexPath *activeVideoCellIndexPath;
 
 /**
  * Are we currently playing a video?
@@ -96,11 +95,6 @@ static const NSString *PlayerCurrentItemContext;
     _activeVideoCell.playerView.player = nil;
     
     _activeVideoCell = activeVideoCell;
-}
-
-- (NSIndexPath *)activeVideoCellIndexPath
-{
-    return [self.tableView indexPathForCell:self.activeVideoCell];
 }
 
 - (void)setPlayerItems:(NSArray *)playerItems
@@ -401,7 +395,10 @@ static const NSString *PlayerCurrentItemContext;
 
 #pragma mark Custom Section Headers
 /**
- * Custom section header using logic from: http://stackoverflow.com/a/11396643
+ * Custom section header using storyboards
+ * 
+ * @ref http://stackoverflow.com/a/11396643
+ * @ref http://stackoverflow.com/a/24044628
  */
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
@@ -421,7 +418,13 @@ static const NSString *PlayerCurrentItemContext;
     headerView.createdAtLabel.text = [GRVFormatterUtils dayAndYearStringForDate:video.createdAt];
     headerView.playsCountLabel.text = [GRVFormatterUtils numToString:video.playsCount];
     
-    return headerView;
+    // Remove section header gesture recognizers that cause crashes when loading
+    // views from cells
+    while ([headerView.contentView.gestureRecognizers count]) {
+        [headerView.contentView removeGestureRecognizer:[headerView.contentView.gestureRecognizers objectAtIndex:0]];
+    }
+    
+    return [headerView contentView];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
