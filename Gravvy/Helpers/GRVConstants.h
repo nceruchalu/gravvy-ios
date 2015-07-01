@@ -178,6 +178,16 @@ extern NSString *const kGRVRESTVideos;
  */
 extern NSString *const kGRVRESTVideoMembers;
 
+/**
+ * kGRVRESTVideoPlay: URL for play endpoint of a specific video
+ */
+extern NSString *const kGRVRESTVideoPlay;
+
+/**
+ * kGRVRESTVideoLike: URL for like endpoint of a specific video
+ */
+extern NSString *const kGRVRESTVideoLike;
+
 
 // -----------------------------------------------------------------------------
 // REST API Object Keys

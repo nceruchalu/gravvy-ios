@@ -2024,16 +2024,16 @@
                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
                                                         </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CqZ-UM-gs9" userLabel="Share Button">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CqZ-UM-gs9" userLabel="Add Clip Button">
                                                             <rect key="frame" x="160" y="0.0" width="80" height="44"/>
-                                                            <state key="normal" image="share">
+                                                            <state key="normal" image="addClip">
                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
                                                         </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ACB-cm-10O" userLabel="Add Clip Button">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ACB-cm-10O" userLabel="More Button">
                                                             <rect key="frame" x="240" y="0.0" width="79.5" height="44"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                                            <state key="normal" image="addClip">
+                                                            <state key="normal" image="more">
                                                                 <color key="titleColor" red="0.58431372549019611" green="0.58431372549019611" blue="0.58431372549019611" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
@@ -2061,7 +2061,7 @@
                                                     </constraints>
                                                 </view>
                                             </subviews>
-                                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                            <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="TCd-9K-Zet" secondAttribute="trailing" id="017-y3-4mH"/>
                                                 <constraint firstItem="TCd-9K-Zet" firstAttribute="leading" secondItem="2cf-UO-Qie" secondAttribute="leading" id="32K-JU-yDk"/>
@@ -2149,7 +2149,7 @@
                                                     </constraints>
                                                 </view>
                                             </subviews>
-                                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                            <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="Sz4-Oh-SjP" secondAttribute="bottom" id="0oH-Qa-GWz"/>
                                                 <constraint firstItem="Sz4-Oh-SjP" firstAttribute="top" secondItem="0rE-KO-rFG" secondAttribute="top" id="DYy-pR-Npw"/>
@@ -2365,6 +2365,7 @@
         <image name="chevron" width="8" height="13"/>
         <image name="launchIcon" width="102" height="100"/>
         <image name="likeInactive" width="23" height="23"/>
+        <image name="more" width="23" height="23"/>
         <image name="placeholderActivities" width="66" height="66"/>
         <image name="placeholderVideos" width="100" height="100"/>
         <image name="record" width="28" height="17"/>
@@ -2374,7 +2375,6 @@
         <image name="settingsNotifications" width="29" height="29"/>
         <image name="settingsProfile" width="29" height="29"/>
         <image name="settingsTell" width="29" height="29"/>
-        <image name="share" width="23" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Zm6-vw-LFG"/>

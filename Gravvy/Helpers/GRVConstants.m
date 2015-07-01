@@ -75,7 +75,8 @@ NSString *const kGRVRESTUserActivities          = @"user/activities/";
 NSString *const kGRVRESTUserVideos              = @"user/videos/";
 NSString *const kGRVRESTVideos                  = @"videos/";
 NSString *const kGRVRESTVideoMembers            = @"users/";
-
+NSString *const kGRVRESTVideoPlay               = @"play/";
+NSString *const kGRVRESTVideoLike               = @"like/";
 
 // -----------------------------------------------------------------------------
 // REST API Object Keys

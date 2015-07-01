@@ -306,6 +306,42 @@
 
 #pragma mark - Instance Methods
 #pragma mark Public
+- (void)play
+{
+    NSLog(@"start");
+    NSString *videoDetailPlayURL = [GRVRestUtils videoDetailPlayURL:self.hashKey];
+    
+    // Start by assume a successful operation for immediate user feedback
+    self.playsCount = @([self.playsCount integerValue]);
+    
+    [[GRVHTTPManager sharedManager] request:GRVHTTPMethodPUT forURL:videoDetailPlayURL parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        // refresh video
+        [self refreshVideo:nil];
+    } failure:nil];
+    NSLog(@"done");
+}
+
+- (void)toggleLike
+{
+    NSString *videoDetailLikeURL = [GRVRestUtils videoDetailLikeURL:self.hashKey];
+    
+    // if already liked, then unlike and vice-versa
+    GRVHTTPMethod method = self.liked ? GRVHTTPMethodDELETE : GRVHTTPMethodPUT;
+    
+    // Start by assume a successful operation for immediate user feedback
+    BOOL originalLiked = [self.liked boolValue];
+    self.liked = @(!originalLiked);
+    
+    [[GRVHTTPManager sharedManager] request:method forURL:videoDetailLikeURL parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        // refresh video
+        [self refreshVideo:nil];
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error, id responseObject) {
+        // revert like action
+        self.liked = @(originalLiked);
+    }];
+}
+
 - (void)revokeMembershipWithCompletion:(void (^)())membershipIsRevoked
 {
     // TODO: delete video if owner

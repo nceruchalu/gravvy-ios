@@ -105,6 +105,16 @@
 
 #pragma mark - Instance Methods
 /**
+ * Record play of this video on the server and locally
+ */
+- (void)play;
+
+/**
+ * Record like/unlike of this video on the server and locally
+ */
+- (void)toggleLike;
+
+/**
  * Revoke app user's membership from this video locally and on server.
  *
  * @param membershipIsRevoked   block to be called after revoking membership

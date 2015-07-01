@@ -16,6 +16,18 @@
     return [NSString stringWithFormat:@"%@%@/",kGRVRESTVideos, videoHashKey];
 }
 
++ (NSString *)videoDetailPlayURL:(NSString *)videoHashKey
+{
+    NSString *videoDetailURL = [GRVRestUtils videoDetailURL:videoHashKey];
+    return [NSString stringWithFormat:@"%@%@", videoDetailURL, kGRVRESTVideoPlay];
+}
+
++ (NSString *)videoDetailLikeURL:(NSString *)videoHashKey
+{
+    NSString *videoDetailURL = [GRVRestUtils videoDetailURL:videoHashKey];
+    return [NSString stringWithFormat:@"%@%@", videoDetailURL, kGRVRESTVideoLike];
+}
+
 + (NSString *)videoMemberListURL:(NSString *)videoHashKey
 {
     NSString *videoDetailURL = [GRVRestUtils videoDetailURL:videoHashKey];
