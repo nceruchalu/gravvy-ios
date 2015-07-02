@@ -52,6 +52,9 @@ static NSUInteger const kMaxDisplayedVideoTitleLength = 30;
 {
     [super viewWillAppear:animated];
     
+    // Silently refresh to pull in recent activities
+    [self refresh];
+    
     // register observers
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(contactsRefreshed:)

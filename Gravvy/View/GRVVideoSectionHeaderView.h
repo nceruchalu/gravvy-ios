@@ -1,8 +1,8 @@
 //
-//  GRVVideoHeaderTableViewCell.h
+//  GRVVideoSectionHeaderView.h
 //  Gravvy
 //
-//  Created by Nnoduka Eruchalu on 6/27/15.
+//  Created by Nnoduka Eruchalu on 7/1/15.
 //  Copyright (c) 2015 Nnoduka Eruchalu. All rights reserved.
 //
 
@@ -10,10 +10,13 @@
 #import "GRVUserAvatarView.h"
 
 /**
- * GRVVideoTableViewCell represents a section header in a table view controller 
- * and is used to display a video's summary info as the header cell.
+ * GRVVideoSectionHeaderView is a custom view for section headers in a Table
+ * View of Videos.
+ *
+ * This loads the contents from a XIB file using some trickery.
+ * @ref http://sebastiancelis.com/2014/06/12/using-xibs-layout-custom-views/
  */
-@interface GRVVideoHeaderTableViewCell : UITableViewCell
+@interface GRVVideoSectionHeaderView : UIView
 
 @property (weak, nonatomic) IBOutlet GRVUserAvatarView *ownerAvatarView;
 @property (weak, nonatomic) IBOutlet UILabel *ownerNameLabel;

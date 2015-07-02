@@ -23,6 +23,7 @@
 @dynamic photoThumbnailURL;
 @dynamic photoSmallThumbnailURL;
 @dynamic playsCount;
+@dynamic sectionIdentifier;
 @dynamic title;
 @dynamic updatedAt;
 @dynamic clips;

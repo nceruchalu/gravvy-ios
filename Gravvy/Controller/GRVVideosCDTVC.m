@@ -10,7 +10,7 @@
 #import "GRVVideo+HTTP.h"
 #import "GRVClip.h"
 #import "GRVVideoTableViewCell.h"
-#import "GRVVideoHeaderTableViewCell.h"
+#import "GRVVideoSectionHeaderView.h"
 #import "GRVUserViewHelper.h"
 #import "GRVFormatterUtils.h"
 #import "UIImageView+WebCache.h"
@@ -42,11 +42,20 @@ static CGFloat const kActiveCellPlayerHeightCutoff = 0.1f;
  * Constants for the key-value observation context.
  */
 static const NSString *PlayerItemStatusContext;
+static const NSString *PlayerRateContext;
 static const NSString *PlayerCurrentItemContext;
 
 @interface GRVVideosCDTVC ()
 
 #pragma mark - Properties
+/**
+ * All section header views stored in memory, with dictionary
+ * keys being video hash keys and values being the views
+ * This makes it easy to retrieve and update section headers without reloading
+ * sections or the entire tableview
+ */
+@property (strong, nonatomic) NSMutableDictionary *sectionHeaderViews;
+
 /**
  * Currently active video and video cell which might or might not be playing
  */
@@ -88,6 +97,14 @@ static const NSString *PlayerCurrentItemContext;
 @implementation GRVVideosCDTVC
 
 #pragma mark - Properties
+- (NSMutableDictionary *)sectionHeaderViews
+{
+    // lazy instantiation
+    if (!_sectionHeaderViews) {
+        _sectionHeaderViews = [NSMutableDictionary dictionary];
+    }
+    return _sectionHeaderViews;
+}
 - (void)setActiveVideoCell:(GRVVideoTableViewCell *)activeVideoCell
 {
     // Show preview image of old video cell
@@ -109,6 +126,7 @@ static const NSString *PlayerCurrentItemContext;
     }
     
     // Remove observers from player associated with old player items
+    [self.player removeObserver:self forKeyPath:@"rate"];
     [self.player removeObserver:self forKeyPath:@"currentItem"];
     
     // Set new player items
@@ -127,6 +145,21 @@ static const NSString *PlayerCurrentItemContext;
     
     // Hide separator insets
     self.tableView.separatorColor = [UIColor clearColor];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    // Silently refresh to pull in recent video updates
+    [self refresh];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    // Pause VC as we switch screen
+    if (self.isPlaying) [self playOrPause];
 }
 
 - (void)dealloc
@@ -154,11 +187,11 @@ static const NSString *PlayerCurrentItemContext;
         // fetch all our videos so no predicate
         
         // Show latest videos first (updatedAt storted descending)
-        NSSortDescriptor *updatedAtSort = [NSSortDescriptor sortDescriptorWithKey:@"updatedAt" ascending:NO];
-        request.sortDescriptors = @[updatedAtSort];
+        NSSortDescriptor *createdAtSort = [NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO];
+        request.sortDescriptors = @[createdAtSort];
         request.fetchBatchSize = 20;
         
-        self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"hashKey" cacheName:nil];
+        self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"sectionIdentifier" cacheName:nil];
         
     } else {
         self.fetchedResultsController = nil;
@@ -234,6 +267,7 @@ static const NSString *PlayerCurrentItemContext;
     ((AVPlayerLayer *)(self.activeVideoCell.playerView.layer)).videoGravity = AVLayerVideoGravityResizeAspectFill;
     
     // Add observers
+    [self.player addObserver:self forKeyPath:@"rate" options:0 context:&PlayerRateContext];
     [self.player addObserver:self forKeyPath:@"currentItem" options:0 context:&PlayerCurrentItemContext];
 }
 
@@ -309,6 +343,7 @@ static const NSString *PlayerCurrentItemContext;
         if (!self.isPlaying) {
             [self playOrPause];
         }
+        [self.activeVideo play];
         self.performedAutoPlay = YES;
     }
 }
@@ -351,6 +386,13 @@ static const NSString *PlayerCurrentItemContext;
     // Configure the cell with data from the managed object
     GRVVideo *video = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
+    [self configureCell:cell withVideo:video];
+    return cell;
+}
+
+#pragma mark Helper
+- (void)configureCell:(GRVVideoTableViewCell *)cell withVideo:(GRVVideo *)video
+{
     // Video details
     [cell.previewImageView sd_setImageWithURL:[NSURL URLWithString:video.photoThumbnailURL]];
     cell.titleLabel.text = video.title;
@@ -364,16 +406,21 @@ static const NSString *PlayerCurrentItemContext;
     
     // if not on the active video's cell, show preview image so we don't see video
     // playing in reused cells
-    if (![self.activeVideo.hashKey isEqualToString:video.hashKey]) {
-         cell.previewImageView.hidden = NO;
-    }
-    
-    
-    return cell;
+    cell.previewImageView.hidden = [self.activeVideo.hashKey isEqualToString:video.hashKey];
 }
 
 
 #pragma mark Sections
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSString *sectionIdentifier = [[[self.fetchedResultsController sections] objectAtIndex:section] name];
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:section];
+    GRVVideo *video = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    return [NSString stringWithFormat:@"%@: %@", video.hashKey, sectionIdentifier];
+}
+
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
     // Don't want an index list
@@ -402,14 +449,26 @@ static const NSString *PlayerCurrentItemContext;
  */
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    static NSString *cellIdentifier = @"Video Header Cell"; // get the cell
-    GRVVideoHeaderTableViewCell *headerView = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    
+    GRVVideoSectionHeaderView *headerView = [[GRVVideoSectionHeaderView alloc] initWithFrame:CGRectZero];
     // Get the video
-    NSString *hashKey = [[[self.fetchedResultsController sections] objectAtIndex:section] name];
-    GRVVideo *video = [GRVVideo videoWithVideoHashKey:hashKey inManagedObjectContext:self.managedObjectContext];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:section];
+    GRVVideo *video = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    // Create view with summary details: Owner, Creation date and Play count
+    [self configureSectionHeaderView:headerView withVideo:video];
+    
+    self.sectionHeaderViews[video.hashKey] = headerView;
+    return headerView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return kTableViewSectionHeaderViewHeight;
+}
+
+#pragma mark Helper
+- (void)configureSectionHeaderView:(GRVVideoSectionHeaderView *)headerView withVideo:(GRVVideo *)video
+{
+    // Configure view with summary details: Owner, Creation date and Play count
     GRVUserAvatarView *avatarView = [GRVUserViewHelper userAvatarView:video.owner];
     headerView.ownerAvatarView.thumbnail = avatarView.thumbnail;
     headerView.ownerAvatarView.userInitials = avatarView.userInitials;
@@ -417,19 +476,6 @@ static const NSString *PlayerCurrentItemContext;
     headerView.ownerNameLabel.text = [GRVUserViewHelper userFullNameOrPhoneNumber:video.owner];
     headerView.createdAtLabel.text = [GRVFormatterUtils dayAndYearStringForDate:video.createdAt];
     headerView.playsCountLabel.text = [GRVFormatterUtils numToString:video.playsCount];
-    
-    // Remove section header gesture recognizers that cause crashes when loading
-    // views from cells
-    while ([headerView.contentView.gestureRecognizers count]) {
-        [headerView.contentView removeGestureRecognizer:[headerView.contentView.gestureRecognizers objectAtIndex:0]];
-    }
-    
-    return [headerView contentView];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return kTableViewSectionHeaderViewHeight;
 }
 
 #pragma mark Custom Section Footers
@@ -494,6 +540,71 @@ static const NSString *PlayerCurrentItemContext;
     self.playing = !self.isPlaying;
 }
 
+- (IBAction)toggleLike:(UIButton *)sender
+{
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    
+    // to ensure the button indeed is in a cell: I know this is overkill...
+    if (indexPath) {
+        GRVVideo *video = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        sender.enabled = NO;
+        [video toggleLike:^{
+            sender.enabled = YES;
+        }];
+    }
+}
+
+
+
+#pragma mark - NSFetchedResultsControllerDelegate
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
+{
+    // If this is the currently active row, then don't allow a reload
+    GRVVideo *video = (GRVVideo *)anObject;
+    if ([video.hashKey isEqualToString:self.activeVideo.hashKey]) {
+        // on active cell, so be careful to not reload entire cell.
+        // Update header and cell when object updates
+        indexPath = [self mapIndexPathFromFetchedResultsController:indexPath];
+        newIndexPath = [self mapIndexPathFromFetchedResultsController:newIndexPath];
+        
+        if (!self.suspendAutomaticTrackingOfChangesInManagedObjectContext) {
+            switch (type) {
+                case NSFetchedResultsChangeInsert:
+                    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+                                          withRowAnimation:UITableViewRowAnimationFade];
+                    break;
+                    
+                case NSFetchedResultsChangeDelete:
+                    [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                                          withRowAnimation:UITableViewRowAnimationFade];
+                    break;
+                    
+                case NSFetchedResultsChangeUpdate:
+                {
+                    GRVVideoSectionHeaderView *headerView = self.sectionHeaderViews[video.hashKey];
+                    [self configureSectionHeaderView:headerView withVideo:video];
+                    [self configureCell:self.activeVideoCell withVideo:video];
+                }
+                    break;
+                    
+                case NSFetchedResultsChangeMove:
+                    [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
+                                          withRowAnimation:UITableViewRowAnimationFade];
+                    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
+                                          withRowAnimation:UITableViewRowAnimationFade];
+                    break;
+                    
+                default:
+                    break;
+            }
+        }
+
+    } else {
+        [super controller:controller didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:newIndexPath];
+    }
+}
+
 
 #pragma mark - Notification Observer Methods
 /**
@@ -508,6 +619,10 @@ static const NSString *PlayerCurrentItemContext;
     
     [self.player advanceToNextItem];
     [self.player insertItem:playedItem afterItem:nil];
+    
+    if (playedItem == [self.playerItems lastObject]) {
+        [self.activeVideo play];
+    }
 }
 
 
@@ -527,14 +642,17 @@ static const NSString *PlayerCurrentItemContext;
     
     if (context == &PlayerItemStatusContext) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            //NSLog(@"player item status: %@ %ld", object, (long)[((AVPlayerItem *)object) status]);
             [self syncPlayerWithUI];
             [self attemptAutoPlay];
         });
       
+    } else if (context == &PlayerRateContext) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self syncPlayerWithUI];
+        });
+        
     } else if (context == &PlayerCurrentItemContext) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            // NSLog(@"player current item: %@ %@", object, ((AVPlayer *)object).currentItem);
             [self syncPlayerWithUI];
         });
         

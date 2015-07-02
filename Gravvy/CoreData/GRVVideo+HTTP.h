@@ -111,8 +111,10 @@
 
 /**
  * Record like/unlike of this video on the server and locally
+ *
+ * @param likeIsToggled   block to be called after toggling the like of a video
  */
-- (void)toggleLike;
+- (void)toggleLike:(void (^)())likeIsToggled;
 
 /**
  * Revoke app user's membership from this video locally and on server.

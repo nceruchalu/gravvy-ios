@@ -21,6 +21,7 @@
 @property (nonatomic, retain) NSString * photoSmallThumbnailURL;
 @property (nonatomic, retain) NSString * photoThumbnailURL;
 @property (nonatomic, retain) NSNumber * playsCount;
+@property (nonatomic, retain) NSString * sectionIdentifier;
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSDate * updatedAt;
 @property (nonatomic, retain) NSSet *clips;

@@ -308,7 +308,6 @@
 #pragma mark Public
 - (void)play
 {
-    NSLog(@"start");
     NSString *videoDetailPlayURL = [GRVRestUtils videoDetailPlayURL:self.hashKey];
     
     // Start by assume a successful operation for immediate user feedback
@@ -318,27 +317,37 @@
         // refresh video
         [self refreshVideo:nil];
     } failure:nil];
-    NSLog(@"done");
 }
 
-- (void)toggleLike
+- (void)toggleLike:(void (^)())likeIsToggled
 {
     NSString *videoDetailLikeURL = [GRVRestUtils videoDetailLikeURL:self.hashKey];
     
-    // if already liked, then unlike and vice-versa
-    GRVHTTPMethod method = self.liked ? GRVHTTPMethodDELETE : GRVHTTPMethodPUT;
-    
     // Start by assume a successful operation for immediate user feedback
     BOOL originalLiked = [self.liked boolValue];
+    NSUInteger originalLikesCount = [self.likesCount integerValue];
+    
+    // if already liked, then unlike and vice-versa
     self.liked = @(!originalLiked);
+    GRVHTTPMethod method;
+    if (originalLiked) {
+        method = GRVHTTPMethodDELETE;
+        self.likesCount = @(originalLikesCount - 1);
+    } else {
+        method = GRVHTTPMethodPUT;
+        self.likesCount = @(originalLikesCount + 1);
+    }
     
     [[GRVHTTPManager sharedManager] request:method forURL:videoDetailLikeURL parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         // refresh video
         [self refreshVideo:nil];
+        if (likeIsToggled) likeIsToggled();
         
     } failure:^(NSURLSessionDataTask *task, NSError *error, id responseObject) {
         // revert like action
         self.liked = @(originalLiked);
+        self.likesCount = @(originalLikesCount);
+        if (likeIsToggled) likeIsToggled();
     }];
 }
 
