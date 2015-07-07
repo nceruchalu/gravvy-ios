@@ -45,9 +45,7 @@ static CGFloat const kTableViewFooterHeight = 80.0f;
     [self setupRefreshControl];
     
     // A footer view is needed to remove extra separators from tableview
-    CGRect footerViewFrame = CGRectMake(0, 0, 0, kTableViewFooterHeight);
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:footerViewFrame];
-    self.tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -117,6 +115,8 @@ static CGFloat const kTableViewFooterHeight = 80.0f;
     tableHeaderViewFrame.size.height = self.view.frame.size.height;
     self.tableView.tableHeaderView.frame = tableHeaderViewFrame;
     self.tableView.tableHeaderView = self.tableView.tableHeaderView;
+    
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 /**
@@ -134,6 +134,8 @@ static CGFloat const kTableViewFooterHeight = 80.0f;
     tableHeaderViewFrame.size.height = 1;
     self.tableView.tableHeaderView.frame = tableHeaderViewFrame;
     self.tableView.tableHeaderView = self.tableView.tableHeaderView;
+    
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, kTableViewFooterHeight)];
 }
 
 - (void)showOrHideEmptyStateView

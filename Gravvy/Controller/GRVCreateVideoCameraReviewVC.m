@@ -17,12 +17,6 @@
  */
 static NSString *const kSegueIdentifierShowContactPicker = @"showInvitePeopleVC";
 
-/**
- * Navigation bar title
- */
-static NSString *const kNavigationTitle = @"Review";
-
-
 @interface GRVCreateVideoCameraReviewVC () <UITextFieldDelegate>
 
 #pragma mark - Properties
@@ -79,22 +73,6 @@ static NSString *const kNavigationTitle = @"Review";
                                             andColor:[UIColor whiteColor]];
     }
 }
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    self.navigationItem.title = kNavigationTitle;
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    // Ensure the back button of the contact picker VC doesn't have text by
-    // explicitly setting the navigation Item of this title to a blank string
-    self.navigationItem.title = @"";
-
-}
-
 
 #pragma mark - Instance Methods
 #pragma mark Concrete

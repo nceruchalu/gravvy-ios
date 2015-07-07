@@ -46,7 +46,6 @@ static NSUInteger const kMaxDisplayedVideoTitleLength = 30;
 
 @implementation GRVActivitiesCDTVC
 
-
 #pragma mark - View Lifecycle
 - (void)viewWillAppear:(BOOL)animated
 {

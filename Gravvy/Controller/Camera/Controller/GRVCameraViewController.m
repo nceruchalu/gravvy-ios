@@ -135,6 +135,85 @@ static const CGFloat kCountdownContainerCornerRadius = 5.0f;
     // Initialize recording duration to update outlets
     self.recordingDuration = 0.0f;
     
+    [self setupRecorder];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    // Prepare to animate the reveal of the capture view by showing the
+    // separator of the sliding views
+    self.separatorView.hidden = NO;
+    
+    // Hide action buttons and disable buttons not in action view till we are
+    // done revealing the capture view
+    self.actionsView.hidden = YES;
+    self.shootButton.enabled = NO;
+    self.retakeButton.enabled = NO;
+    
+    // Prepare record session
+    [self prepareSession];
+    
+    // Register observers
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(appDidEnterBackground)
+                                                 name:UIApplicationDidEnterBackgroundNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(appWillEnterForeground)
+                                                 name:UIApplicationWillEnterForegroundNotification
+                                               object:nil];
+    // register observers
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(mediaServicesWereReset:)
+                                                 name:AVAudioSessionMediaServicesWereResetNotification
+                                               object:nil];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self setupVCOnAppear];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self cleanupVCOnDisappear];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    // remove observers
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIApplicationDidEnterBackgroundNotification
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIApplicationWillEnterForegroundNotification
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:AVAudioSessionMediaServicesWereResetNotification
+                                                  object:nil];
+}
+
+
+#pragma mark - Instance Methods
+#pragma mark Abstract
+- (void)processCompletedSession:(SCRecordSession *)recordSession
+               withPreviewImage:(UIImage *)previewImage
+{
+    // Abstract
+}
+
+#pragma mark Private
+/**
+ * Setup recorder
+ */
+- (void)setupRecorder
+{
     // Setup recorder
     self.recorder = [SCRecorder recorder];
     self.recorder.captureSessionPreset = AVCaptureSessionPreset640x480;
@@ -183,69 +262,6 @@ static const CGFloat kCountdownContainerCornerRadius = 5.0f;
     }
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-
-    // Prepare to animate the reveal of the capture view by showing the
-    // separator of the sliding views
-    self.separatorView.hidden = NO;
-    
-    // Hide action buttons and disable buttons not in action view till we are
-    // done revealing the capture view
-    self.actionsView.hidden = YES;
-    self.shootButton.enabled = NO;
-    self.retakeButton.enabled = NO;
-    
-    // Prepare record session
-    [self prepareSession];
-    
-    // Register observers
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(appDidEnterBackground)
-                                                 name:UIApplicationDidEnterBackgroundNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(appWillEnterForeground)
-                                                 name:UIApplicationWillEnterForegroundNotification
-                                               object:nil];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    [self setupVCOnAppear];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [self cleanupVCOnDisappear];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    
-    // remove observers
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIApplicationDidEnterBackgroundNotification
-                                                  object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIApplicationWillEnterForegroundNotification
-                                                  object:nil];
-}
-
-
-#pragma mark - Instance Methods
-#pragma mark Abstract
-- (void)processCompletedSession:(SCRecordSession *)recordSession
-               withPreviewImage:(UIImage *)previewImage
-{
-    // Abstract
-}
-
-#pragma mark Private
 /**
  * Prepare recording session if this hasn't already been done
  */
@@ -491,6 +507,19 @@ static const CGFloat kCountdownContainerCornerRadius = 5.0f;
  */
 - (void)appWillEnterForeground
 {
+    [self setupVCOnAppear];
+}
+
+/**
+ * Media services were reset so reinitialize player
+ */
+- (void)mediaServicesWereReset:(NSNotification *)aNotification
+{
+    // Setup recorder
+    [self setupRecorder];
+    // Prepare record session
+    [self prepareSession];
+    // Finally present camera view
     [self setupVCOnAppear];
 }
 

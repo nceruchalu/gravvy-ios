@@ -108,6 +108,10 @@ static NSString *const kRemoteNotificationSoundFileExtension = @"caf";
                                       NSForegroundColorAttributeName: [UIColor whiteColor]};
     [[UINavigationBar appearance] setTitleTextAttributes:titleAttributes];
     
+    // Remove the back button item title
+    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60)
+                                                         forBarMetrics:UIBarMetricsDefault];
+    
     // Starting app from "Not running" state.
     self.activatedFromBackground = NO;
     

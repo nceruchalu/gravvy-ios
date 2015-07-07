@@ -15,6 +15,7 @@
 #import "GRVFormatterUtils.h"
 #import "UIImageView+WebCache.h"
 #import "GRVConstants.h"
+#import "GRVMembersCDTVC.h"
 
 #pragma mark - Constants
 /**
@@ -38,6 +39,11 @@ static CGFloat const kTableViewSectionFooterViewHeight = 0.0f;
  * for it to be deemed the currently active cell.
  */
 static CGFloat const kActiveCellPlayerHeightCutoff = 0.1f;
+
+/**
+ * Segue identifier for showing Members TVC
+ */
+static NSString *const kSegueIdentifierShowMembers = @"showMembersVC";
 
 /** 
  * Constants for the key-value observation context.
@@ -154,6 +160,12 @@ static const NSString *PlayerCurrentItemContext;
     
     // Silently refresh to pull in recent video updates
     [self refresh];
+    
+    // register observers
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(mediaServicesWereReset:)
+                                                 name:AVAudioSessionMediaServicesWereResetNotification
+                                               object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -161,6 +173,16 @@ static const NSString *PlayerCurrentItemContext;
     [super viewWillDisappear:animated];
     // Pause VC as we switch screen
     if (self.isPlaying) [self playOrPause];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    // remove observers
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:AVAudioSessionMediaServicesWereResetNotification
+                                                  object:nil];
 }
 
 - (void)dealloc
@@ -530,6 +552,9 @@ static const NSString *PlayerCurrentItemContext;
             [self.refreshControl endRefreshing];
             self.suspendAutomaticTrackingOfChangesInManagedObjectContext = NO;
             [self.tableView reloadData];
+            
+            self.activeVideo = nil;
+            self.activeVideoCell = nil;
             [self autoPlayVideo];
         });
     }];
@@ -560,6 +585,11 @@ static const NSString *PlayerCurrentItemContext;
             sender.enabled = YES;
         }];
     }
+}
+
+- (IBAction)showMembers:(UIButton *)sender
+{
+    [self performSegueWithIdentifier:kSegueIdentifierShowMembers sender:sender];
 }
 
 
@@ -615,6 +645,17 @@ static const NSString *PlayerCurrentItemContext;
 
 #pragma mark - Notification Observer Methods
 /**
+ * Media services were reset so reinitialize player
+ */
+- (void)mediaServicesWereReset:(NSNotification *)aNotification
+{
+    self.activeVideo = nil;
+    self.activeVideoCell = nil;
+    [self autoPlayVideo];
+}
+
+
+/**
  * Done playing item, advance to the next and add item back to the end of
  * playing queue. This way we implement infinite looping of player items and
  * prevent a black screen at the end of it all.
@@ -669,6 +710,58 @@ static const NSString *PlayerCurrentItemContext;
     
     return;
 }
+
+#pragma mark - Navigation
+- (void)prepareViewController:(id)vc
+                     forSegue:(NSString *)segueIdentifier
+                fromIndexPath:(NSIndexPath *)indexPath
+{
+    GRVVideo *video = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    if ([vc isKindOfClass:[GRVMembersCDTVC class]]) {
+        if (![segueIdentifier length] || [segueIdentifier isEqualToString:kSegueIdentifierShowMembers]) {
+            // prepare vc
+            GRVMembersCDTVC *membersVC = (GRVMembersCDTVC *)vc;
+            membersVC.video = video;
+        }
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSIndexPath *indexPath = nil;
+    if ([sender isKindOfClass:[UITableViewCell class]]) {
+        indexPath = [self.tableView indexPathForCell:sender];
+    
+    } else if ([sender isKindOfClass:[UIButton class]]) {
+        CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+        indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    }
+    
+    // Grab the destination View Controller
+    id destinationVC = segue.destinationViewController;
+    
+    // Account for the destination VC being embedded in a UINavigationController
+    // which happens when this is a modal presentation segue
+    if ([destinationVC isKindOfClass:[UINavigationController class]]) {
+        destinationVC = [((UINavigationController *)destinationVC).viewControllers firstObject];
+    }
+    
+    [self prepareViewController:destinationVC
+                       forSegue:segue.identifier
+                  fromIndexPath:indexPath];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    id detailVC = [self.splitViewController.viewControllers lastObject];
+    if ([detailVC isKindOfClass:[UINavigationController class]]) {
+        detailVC = [((UINavigationController *)detailVC).viewControllers firstObject];
+        [self prepareViewController:detailVC
+                           forSegue:nil
+                      fromIndexPath:indexPath];
+    }
+}
+
 
 
 @end
