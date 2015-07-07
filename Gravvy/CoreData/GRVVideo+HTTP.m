@@ -48,6 +48,8 @@
     newVideo.title = [[videoDictionary objectForKey:kGRVRESTVideoTitleKey] description];
     newVideo.photoSmallThumbnailURL = [[videoDictionary objectForKey:kGRVRESTVideoPhotoSmallThumbnailKey] description];
     
+    newVideo.order = @(kGRVVideoOrderNew);
+    
     // Optional fields not present in the minimal JSON retrieved by the activity
     // stream might not be present so don't setup those fields or set an updatedAt
     // timestamp. The sync method works properly when we get the full JSON object.
@@ -277,7 +279,16 @@
                              [GRVVideo deleteVideosNotInVideoInfoArray:videosJSON inManagedObjectContext:workerContext];
                              
                              // Now refresh the videos
-                             [GRVVideo videosWithVideoInfoArray:videosJSON inManagedObjectContext:workerContext];
+                             NSArray *refreshedVideos = [GRVVideo videosWithVideoInfoArray:videosJSON inManagedObjectContext:workerContext];
+                             
+                             // Order refreshed videos by descending updatedAt
+                             NSSortDescriptor *updatedAtSort = [NSSortDescriptor sortDescriptorWithKey:@"updatedAt" ascending:NO];
+                             refreshedVideos = [refreshedVideos sortedArrayUsingDescriptors:@[updatedAtSort]];
+                             NSUInteger idx = 0;
+                             for (GRVVideo *video in refreshedVideos) {
+                                 video.order = @(idx);
+                                 idx++;
+                             }
                              
                              // Push changes up to main thread context. Alternatively,
                              // could turn all objects into faults but this is easier.

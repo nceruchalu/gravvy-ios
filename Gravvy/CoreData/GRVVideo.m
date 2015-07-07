@@ -20,10 +20,10 @@
 @dynamic liked;
 @dynamic likesCount;
 @dynamic membership;
+@dynamic order;
 @dynamic photoThumbnailURL;
 @dynamic photoSmallThumbnailURL;
 @dynamic playsCount;
-@dynamic sectionIdentifier;
 @dynamic title;
 @dynamic updatedAt;
 @dynamic clips;

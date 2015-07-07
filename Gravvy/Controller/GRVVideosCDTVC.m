@@ -14,6 +14,7 @@
 #import "GRVUserViewHelper.h"
 #import "GRVFormatterUtils.h"
 #import "UIImageView+WebCache.h"
+#import "GRVConstants.h"
 
 #pragma mark - Constants
 /**
@@ -184,14 +185,15 @@ static const NSString *PlayerCurrentItemContext;
         // prefetch to avoid faulting relationships individually
         request.relationshipKeyPathsForPrefetching = @[@"owner", @"clips"];
         
-        // fetch all our videos so no predicate
+        // fetch all ordered videos
+        request.predicate = [NSPredicate predicateWithFormat:@"order > %d", kGRVVideoOrderNew];
         
         // Show latest videos first (updatedAt storted descending)
-        NSSortDescriptor *createdAtSort = [NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO];
-        request.sortDescriptors = @[createdAtSort];
+        NSSortDescriptor *orderSort = [NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES];
+        request.sortDescriptors = @[orderSort];
         request.fetchBatchSize = 20;
         
-        self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"sectionIdentifier" cacheName:nil];
+        self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"order" cacheName:nil];
         
     } else {
         self.fetchedResultsController = nil;
@@ -519,11 +521,16 @@ static const NSString *PlayerCurrentItemContext;
 #pragma mark - Refresh
 - (IBAction)refresh
 {
+    self.suspendAutomaticTrackingOfChangesInManagedObjectContext = YES;
+    
     // Refresh videos from server
     [GRVVideo refreshVideos:^{
         dispatch_async(dispatch_get_main_queue(), ^{
             // run in main queue UIKit only runs there
             [self.refreshControl endRefreshing];
+            self.suspendAutomaticTrackingOfChangesInManagedObjectContext = NO;
+            [self.tableView reloadData];
+            [self autoPlayVideo];
         });
     }];
 }

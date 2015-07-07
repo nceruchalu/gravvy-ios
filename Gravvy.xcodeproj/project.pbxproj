@@ -56,7 +56,6 @@
 		405BD0561B1AA01700EDA8F6 /* GRVClip+HTTP.m in Sources */ = {isa = PBXBuildFile; fileRef = 405BD0551B1AA01700EDA8F6 /* GRVClip+HTTP.m */; };
 		405BD0591B1ABF5100EDA8F6 /* GRVRestUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 405BD0581B1ABF5100EDA8F6 /* GRVRestUtils.m */; };
 		405BD05C1B1ACD4700EDA8F6 /* GRVMember+HTTP.m in Sources */ = {isa = PBXBuildFile; fileRef = 405BD05B1B1ACD4700EDA8F6 /* GRVMember+HTTP.m */; };
-		405D03741B4479A000271A54 /* GRVVideo+Section.m in Sources */ = {isa = PBXBuildFile; fileRef = 405D03731B4479A000271A54 /* GRVVideo+Section.m */; };
 		4064A18D1B11AA8500E9C4CB /* GRVCreateVideoCameraVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4064A18C1B11AA8500E9C4CB /* GRVCreateVideoCameraVC.m */; };
 		4064A1901B12A8C100E9C4CB /* GRVPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4064A18F1B12A8C100E9C4CB /* GRVPlayerView.m */; };
 		4064A1931B12AD0900E9C4CB /* GRVCameraReviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4064A1921B12AD0900E9C4CB /* GRVCameraReviewViewController.m */; };
@@ -290,8 +289,6 @@
 		405BD0581B1ABF5100EDA8F6 /* GRVRestUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVRestUtils.m; sourceTree = "<group>"; };
 		405BD05A1B1ACD4700EDA8F6 /* GRVMember+HTTP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GRVMember+HTTP.h"; sourceTree = "<group>"; };
 		405BD05B1B1ACD4700EDA8F6 /* GRVMember+HTTP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GRVMember+HTTP.m"; sourceTree = "<group>"; };
-		405D03721B4479A000271A54 /* GRVVideo+Section.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GRVVideo+Section.h"; sourceTree = "<group>"; };
-		405D03731B4479A000271A54 /* GRVVideo+Section.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "GRVVideo+Section.m"; sourceTree = "<group>"; };
 		4064A18B1B11AA8500E9C4CB /* GRVCreateVideoCameraVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVCreateVideoCameraVC.h; sourceTree = "<group>"; };
 		4064A18C1B11AA8500E9C4CB /* GRVCreateVideoCameraVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVCreateVideoCameraVC.m; sourceTree = "<group>"; };
 		4064A18E1B12A8C100E9C4CB /* GRVPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVPlayerView.h; sourceTree = "<group>"; };
@@ -830,8 +827,6 @@
 				407623BE1AFF1FDE00100550 /* GRVCoreDataImport.m */,
 				405BD0511B1A89EF00EDA8F6 /* GRVVideo+HTTP.h */,
 				405BD0521B1A89EF00EDA8F6 /* GRVVideo+HTTP.m */,
-				405D03721B4479A000271A54 /* GRVVideo+Section.h */,
-				405D03731B4479A000271A54 /* GRVVideo+Section.m */,
 				405BD0541B1AA01700EDA8F6 /* GRVClip+HTTP.h */,
 				405BD0551B1AA01700EDA8F6 /* GRVClip+HTTP.m */,
 				408B288F1B27F4E00032A659 /* GRVActivity+HTTP.h */,
@@ -1333,7 +1328,6 @@
 				403D34531B101528004FF19E /* GRVCameraSlideDownView.m in Sources */,
 				40DAD9AA1B44F63B0038B8CB /* GRVVideoSectionHeaderView.m in Sources */,
 				407623951AFEF13400100550 /* SDWebImageDownloaderOperation.m in Sources */,
-				405D03741B4479A000271A54 /* GRVVideo+Section.m in Sources */,
 				40F937C71B0C491F000F7BCB /* GRVFeedbackFormViewController.m in Sources */,
 				407623151AFEF08E00100550 /* UIButton+AFNetworking.m in Sources */,
 				407623D31AFF275000100550 /* GRVRegion.m in Sources */,

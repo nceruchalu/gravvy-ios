@@ -111,6 +111,16 @@ extern const NSUInteger kGRVVideoTitleMaxLength;
 
 
 // -----------------------------------------------------------------------------
+// Model Field Constants
+// -----------------------------------------------------------------------------
+/**
+ * Order that indicates a video is new and shouldn't be displayed in the video
+ * list until the UI is refreshed
+ */
+extern const NSInteger kGRVVideoOrderNew;
+
+
+// -----------------------------------------------------------------------------
 // HTTP Connection info.
 // -----------------------------------------------------------------------------
 /**

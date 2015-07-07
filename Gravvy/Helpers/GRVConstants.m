@@ -44,6 +44,13 @@ const float kGRVVideoSizeHeight = 480.0f;
 const NSUInteger kGRVUserFullNameMaxLength  = 25;
 const NSUInteger kGRVVideoTitleMaxLength    = 100;
 
+
+// -----------------------------------------------------------------------------
+// Model Field Constants
+// -----------------------------------------------------------------------------
+const NSInteger kGRVVideoOrderNew           = -2;
+
+
 // -----------------------------------------------------------------------------
 // HTTP Connection info.
 // -----------------------------------------------------------------------------

@@ -210,7 +210,6 @@ static NSString *const kRemoteNotificationSoundFileExtension = @"caf";
                 }];
             } else {
                 // Already authenticated so refresh content
-                [GRVVideo refreshVideos:nil];
                 [GRVActivity refreshActivities:nil];
             }
             

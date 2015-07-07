@@ -17,6 +17,10 @@
  * hashKey                  Video's unique identifier
  * likesCount               Number of likes
  * membership               Is user a member/invited to this video.
+ * order                    Fixed ordering of videos based on descending updatedAt
+ *                          as recorded during last refresh operation.
+ *                          This ensures the UI doesn't go re-ordering videos
+ *                          on each update.
  * photoSmallThumbnailURL   URL location of video's activity feed thumbnail image
  * photoThumbnailURL        URL location of video's cover image
  * playsCount               Number of video plays
