@@ -214,56 +214,30 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QDF-nW-e4j" userLabel="Container View">
-                                <rect key="frame" x="0.0" y="105" width="600" height="451"/>
+                                <rect key="frame" x="0.0" y="105" width="600" height="495"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1rn-dR-4Se" userLabel="Bottom Tab Bar">
-                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mbr-8F-EPr" userLabel="Create Video Background">
-                                        <rect key="frame" x="240" y="0.0" width="120" height="44"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a1m-7F-DL1" userLabel="Create Video Button">
-                                                <rect key="frame" x="0.0" y="0.0" width="120" height="44"/>
-                                                <state key="normal" image="record">
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="recordVideo:" destination="FEH-fj-5s4" eventType="touchUpInside" id="El8-2m-pVO"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" red="0.0" green="0.74901960779999999" blue="0.56078431370000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstItem="a1m-7F-DL1" firstAttribute="leading" secondItem="mbr-8F-EPr" secondAttribute="leading" id="I39-dh-T5m"/>
-                                            <constraint firstAttribute="bottom" secondItem="a1m-7F-DL1" secondAttribute="bottom" id="eKW-Gh-XlR"/>
-                                            <constraint firstAttribute="trailing" secondItem="a1m-7F-DL1" secondAttribute="trailing" id="gfc-bk-6KV"/>
-                                            <constraint firstItem="a1m-7F-DL1" firstAttribute="top" secondItem="mbr-8F-EPr" secondAttribute="top" id="imt-9F-SVB"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
-                                <color key="backgroundColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.23529411759999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="0Of-aZ-xgJ"/>
-                                    <constraint firstAttribute="centerX" secondItem="mbr-8F-EPr" secondAttribute="centerX" id="Bfe-Ky-9au"/>
-                                    <constraint firstAttribute="bottom" secondItem="mbr-8F-EPr" secondAttribute="bottom" id="UxS-Ti-B2g"/>
-                                    <constraint firstItem="mbr-8F-EPr" firstAttribute="top" secondItem="1rn-dR-4Se" secondAttribute="top" id="h0h-rC-wfG"/>
-                                    <constraint firstItem="mbr-8F-EPr" firstAttribute="width" secondItem="1rn-dR-4Se" secondAttribute="width" multiplier="0.2" id="iVc-Cf-I3Y"/>
-                                </constraints>
-                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a1m-7F-DL1" userLabel="Create Video Button">
+                                <rect key="frame" x="520" y="520" width="64" height="64"/>
+                                <state key="normal" image="recordCircle">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="recordVideo:" destination="FEH-fj-5s4" eventType="touchUpInside" id="El8-2m-pVO"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="BEK-NR-Bpm" firstAttribute="leading" secondItem="13Z-dE-Tnh" secondAttribute="leading" id="28H-8e-3PH"/>
                             <constraint firstAttribute="trailing" secondItem="BEK-NR-Bpm" secondAttribute="trailing" id="8vd-wt-hLu"/>
-                            <constraint firstItem="KUA-dZ-rzT" firstAttribute="top" secondItem="1rn-dR-4Se" secondAttribute="bottom" id="ADf-oE-GYH"/>
                             <constraint firstItem="QDF-nW-e4j" firstAttribute="leading" secondItem="13Z-dE-Tnh" secondAttribute="leading" id="Hxb-ad-XQX"/>
                             <constraint firstItem="QDF-nW-e4j" firstAttribute="top" secondItem="BEK-NR-Bpm" secondAttribute="bottom" id="NPr-hw-IX5"/>
-                            <constraint firstAttribute="trailing" secondItem="1rn-dR-4Se" secondAttribute="trailing" id="d5h-Le-lpA"/>
-                            <constraint firstItem="1rn-dR-4Se" firstAttribute="leading" secondItem="13Z-dE-Tnh" secondAttribute="leading" id="fSl-Wd-gdF"/>
+                            <constraint firstItem="KUA-dZ-rzT" firstAttribute="top" secondItem="QDF-nW-e4j" secondAttribute="bottom" id="NhD-22-RRO"/>
                             <constraint firstItem="BEK-NR-Bpm" firstAttribute="top" secondItem="eiz-7z-HV5" secondAttribute="bottom" id="jek-sc-VVK"/>
-                            <constraint firstItem="1rn-dR-4Se" firstAttribute="top" secondItem="QDF-nW-e4j" secondAttribute="bottom" id="mBr-De-PuR"/>
+                            <constraint firstAttribute="trailing" secondItem="a1m-7F-DL1" secondAttribute="trailing" constant="16" id="pO1-LQ-zyP"/>
                             <constraint firstAttribute="trailing" secondItem="QDF-nW-e4j" secondAttribute="trailing" id="sxe-3p-Ftf"/>
+                            <constraint firstItem="KUA-dZ-rzT" firstAttribute="top" secondItem="a1m-7F-DL1" secondAttribute="bottom" constant="16" id="v9J-Sm-zjE"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -2286,7 +2260,7 @@
         <image name="more" width="23" height="23"/>
         <image name="placeholderActivities" width="66" height="66"/>
         <image name="placeholderVideos" width="100" height="100"/>
-        <image name="record" width="28" height="17"/>
+        <image name="recordCircle" width="64" height="64"/>
         <image name="settings" width="25" height="25"/>
         <image name="settingsAbout" width="29" height="29"/>
         <image name="settingsContact" width="29" height="29"/>

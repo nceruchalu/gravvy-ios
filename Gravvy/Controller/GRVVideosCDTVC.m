@@ -155,9 +155,9 @@ static const NSString *PlayerCurrentItemContext;
     [self refresh];
 }
 
-- (void)viewDidDisappear:(BOOL)animated
+- (void)viewWillDisappear:(BOOL)animated
 {
-    [super viewDidDisappear:animated];
+    [super viewWillDisappear:animated];
     // Pause VC as we switch screen
     if (self.isPlaying) [self playOrPause];
 }

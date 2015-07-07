@@ -12,9 +12,16 @@
 #import "GRVPanGestureInteractiveTransition.h"
 #import "GRVPrivateTransitionContextDelegate.h"
 #import "GRVExtendedCoreDataTableViewController.h"
-#import "UIViewController+ScrollingNavbar.h"
+//#import "UIViewController+ScrollingNavbar.h"
 
 #pragma mark - Constants
+
+/**
+ * Comment this out to use the ScrollingNavBar
+ */
+//#define GRV_USE_SCROLLING_NAVBAR
+
+
 /**
  * Segue identifier for starting video creation workflow
  */
@@ -37,9 +44,10 @@ static NSString *const kStoryboardIdentifierVideos      = @"Videos";
 static NSString *const kStoryboardIdentifierActivities  = @"Activities";
 
 
-
+#ifdef GRV_USE_SCROLLING_NAVBAR
 // scrolling nav bar delay
 static CGFloat const scrollingNavBarDelay = 480.0f;
+#endif
 
 @interface GRVLandingViewController () <GRVPrivateTransitionContextDelegate>
 
@@ -164,12 +172,14 @@ static CGFloat const scrollingNavBarDelay = 480.0f;
     self.navigationItem.hidesBackButton = YES;
     self.buttonIndicatorOffset = 0;
     
+#ifdef GRV_USE_SCROLLING_NAVBAR
     // Setup Scrollable UINavigationBar that follows the scrolling of a UIScrollView
     self.navigationController.navigationBar.translucent = NO;
     [self followScrollView:((GRVExtendedCoreDataTableViewController *)self.selectedViewController).tableView
         usingTopConstraint:self.topLayoutConstraint withDelay:scrollingNavBarDelay];
     self.navigationController.navigationBar.translucent = YES;
     [self setShouldScrollWhenContentFits:YES];
+#endif
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -182,13 +192,17 @@ static CGFloat const scrollingNavBarDelay = 480.0f;
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+#ifdef GRV_USE_SCROLLING_NAVBAR
     [self showNavBarAnimated:NO];
+#endif
 }
 
+#ifdef GRV_USE_SCROLLING_NAVBAR
 - (void)dealloc
 {
     [self stopFollowingScrollView];
 }
+#endif
 
 
 #pragma mark - Instance Methods
@@ -203,9 +217,12 @@ static CGFloat const scrollingNavBarDelay = 480.0f;
     
     // Switch the scroll view being followed as this is only called when
     // switching tabs
+#ifdef GRV_USE_SCROLLING_NAVBAR
     [self switchFollowingScrollView];
+#endif
 }
 
+#ifdef GRV_USE_SCROLLING_NAVBAR
 - (void)switchFollowingScrollView {
     [self showNavBarAnimated:YES];
     [self stopFollowingScrollView];
@@ -214,6 +231,7 @@ static CGFloat const scrollingNavBarDelay = 480.0f;
         usingTopConstraint:self.topLayoutConstraint withDelay:scrollingNavBarDelay];
     self.navigationController.navigationBar.translucent = YES;
 }
+#endif
 
 
 #pragma mark Target/Action methods

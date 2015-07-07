@@ -10,6 +10,12 @@
 #import "GRVConstants.h"
 #import "GRVModelManager.h"
 
+#pragma mark - Constants
+/**
+ * Height of table footer view, needed to prevent blocking by the camera button
+ */
+static CGFloat const kTableViewFooterHeight = 80.0f;
+
 @interface GRVExtendedCoreDataTableViewController ()
 
 #pragma mark - Properties
@@ -38,8 +44,10 @@
     // Do any additional setup after loading the view.
     [self setupRefreshControl];
     
-    // This will remove extra separators from tableview
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    // A footer view is needed to remove extra separators from tableview
+    CGRect footerViewFrame = CGRectMake(0, 0, 0, kTableViewFooterHeight);
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:footerViewFrame];
+    self.tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated
