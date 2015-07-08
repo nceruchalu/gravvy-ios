@@ -19,7 +19,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *previewImageView;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *likesCountLabel;
+@property (weak, nonatomic) IBOutlet UILabel *currentClipIndexLabel;
 @property (weak, nonatomic) IBOutlet UIButton *likeButton;
-
 
 @end

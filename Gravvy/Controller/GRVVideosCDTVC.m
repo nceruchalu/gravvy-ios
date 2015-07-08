@@ -279,7 +279,6 @@ static const NSString *PlayerCurrentItemContext;
     [self.player pause];
     self.playing = NO;
     self.performedAutoPlay = NO;
-    [self syncPlayerWithUI];
     
     // Get ordered clips of video
     // and creating an animated display
@@ -326,6 +325,8 @@ static const NSString *PlayerCurrentItemContext;
     // Add observers
     [self.player addObserver:self forKeyPath:@"rate" options:0 context:&PlayerRateContext];
     [self.player addObserver:self forKeyPath:@"currentItem" options:0 context:&PlayerCurrentItemContext];
+    
+    [self syncPlayerWithUI];
 }
 
 /**
@@ -384,6 +385,17 @@ static const NSString *PlayerCurrentItemContext;
         
     } else {
         self.playing = NO;
+    }
+    
+    // Update current clip index and count
+    NSInteger currentClipIndex = NSNotFound;
+    if (self.player.currentItem && [self.playerItems count]) {
+        currentClipIndex =  [self.playerItems indexOfObject:self.player.currentItem];
+    }
+    if (currentClipIndex != NSNotFound) {
+        [self configureCell:self.activeVideoCell withCurrentClip:(currentClipIndex+1) andClipsCount:[self.playerItems count]];
+    } else {
+        [self configureCell:self.activeVideoCell withCurrentClip:1 andClipsCount:[self.activeVideo.clips count]];
     }
 }
 
@@ -461,9 +473,25 @@ static const NSString *PlayerCurrentItemContext;
     NSString *likeButtonImageName = [video.liked boolValue] ? @"likeActive" : @"likeInactive";
     [cell.likeButton setImage:[UIImage imageNamed:likeButtonImageName] forState:UIControlStateNormal];
     
-    // if not on the active video's cell, show preview image so we don't see video
-    // playing in reused cells
-    cell.previewImageView.hidden = [self.activeVideo.hashKey isEqualToString:video.hashKey];
+    if ([self.activeVideo.hashKey isEqualToString:video.hashKey]) {
+        // if on the active video's cell, don't block player with preview image
+        cell.previewImageView.hidden = YES;
+        
+    } else {
+        // if not on the active video's cell, show preview image so we don't see
+        // video playing in reused cells
+        cell.previewImageView.hidden = NO;
+        // Since preview image is showing, we must be on first clip
+        [self configureCell:cell withCurrentClip:1 andClipsCount:[video.clips count]];
+    }
+    
+}
+
+- (void)configureCell:(GRVVideoTableViewCell *)cell
+      withCurrentClip:(NSUInteger)currentClipIndex
+        andClipsCount:(NSUInteger)clipsCount
+{
+    cell.currentClipIndexLabel.text = [NSString stringWithFormat:@"%lu/%lu", (unsigned long)currentClipIndex, (unsigned long)clipsCount];
 }
 
 
