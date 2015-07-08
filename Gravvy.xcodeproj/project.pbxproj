@@ -182,6 +182,8 @@
 		40FAD44C1B13D7BF0039B03A /* GRVSelectedContactPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 40FAD43E1B13D7BF0039B03A /* GRVSelectedContactPickerTableViewCell.m */; };
 		40FAD44D1B13D7BF0039B03A /* GRVSelectedContactPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40FAD43F1B13D7BF0039B03A /* GRVSelectedContactPickerTableViewCell.xib */; };
 		40FAD4501B13E0E10039B03A /* GRVCreateVideoContactPickerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 40FAD44F1B13E0E10039B03A /* GRVCreateVideoContactPickerVC.m */; };
+		40FFFEF41B4CCEF000AFC183 /* GRVAddClipCameraVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 40FFFEF31B4CCEF000AFC183 /* GRVAddClipCameraVC.m */; };
+		40FFFEF71B4CD16C00AFC183 /* GRVAddClipCameraReviewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 40FFFEF61B4CD16C00AFC183 /* GRVAddClipCameraReviewVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -529,6 +531,10 @@
 		40FAD43F1B13D7BF0039B03A /* GRVSelectedContactPickerTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GRVSelectedContactPickerTableViewCell.xib; sourceTree = "<group>"; };
 		40FAD44E1B13E0E10039B03A /* GRVCreateVideoContactPickerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVCreateVideoContactPickerVC.h; sourceTree = "<group>"; };
 		40FAD44F1B13E0E10039B03A /* GRVCreateVideoContactPickerVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVCreateVideoContactPickerVC.m; sourceTree = "<group>"; };
+		40FFFEF21B4CCEF000AFC183 /* GRVAddClipCameraVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVAddClipCameraVC.h; sourceTree = "<group>"; };
+		40FFFEF31B4CCEF000AFC183 /* GRVAddClipCameraVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVAddClipCameraVC.m; sourceTree = "<group>"; };
+		40FFFEF51B4CD16C00AFC183 /* GRVAddClipCameraReviewVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVAddClipCameraReviewVC.h; sourceTree = "<group>"; };
+		40FFFEF61B4CD16C00AFC183 /* GRVAddClipCameraReviewVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVAddClipCameraReviewVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -797,6 +803,10 @@
 				404C2D361B4BA27D00839B95 /* GRVMembersCDTVC.m */,
 				404C2D3B1B4BC79500839B95 /* GRVMembersContactPickerVC.h */,
 				404C2D3C1B4BC79500839B95 /* GRVMembersContactPickerVC.m */,
+				40FFFEF21B4CCEF000AFC183 /* GRVAddClipCameraVC.h */,
+				40FFFEF31B4CCEF000AFC183 /* GRVAddClipCameraVC.m */,
+				40FFFEF51B4CD16C00AFC183 /* GRVAddClipCameraReviewVC.h */,
+				40FFFEF61B4CD16C00AFC183 /* GRVAddClipCameraReviewVC.m */,
 				40F937BA1B0C46B0000F7BCB /* GRVSettingsTVC.h */,
 				40F937BB1B0C46B0000F7BCB /* GRVSettingsTVC.m */,
 				40F937BF1B0C4849000F7BCB /* GRVSettingsProfileSettingsTVC.h */,
@@ -1339,11 +1349,13 @@
 				402875B31B0483F300699F60 /* GRVLandingViewController.m in Sources */,
 				407623991AFEF13400100550 /* UIImage+GIF.m in Sources */,
 				405BD0591B1ABF5100EDA8F6 /* GRVRestUtils.m in Sources */,
+				40FFFEF41B4CCEF000AFC183 /* GRVAddClipCameraVC.m in Sources */,
 				407623181AFEF08E00100550 /* UIRefreshControl+AFNetworking.m in Sources */,
 				40FAD4461B13D7BF0039B03A /* GRVFilteredContactPickerTableViewCell.m in Sources */,
 				403D34531B101528004FF19E /* GRVCameraSlideDownView.m in Sources */,
 				40DAD9AA1B44F63B0038B8CB /* GRVVideoSectionHeaderView.m in Sources */,
 				407623951AFEF13400100550 /* SDWebImageDownloaderOperation.m in Sources */,
+				40FFFEF71B4CD16C00AFC183 /* GRVAddClipCameraReviewVC.m in Sources */,
 				40F937C71B0C491F000F7BCB /* GRVFeedbackFormViewController.m in Sources */,
 				407623151AFEF08E00100550 /* UIButton+AFNetworking.m in Sources */,
 				407623D31AFF275000100550 /* GRVRegion.m in Sources */,

@@ -16,6 +16,8 @@
 #import "UIImageView+WebCache.h"
 #import "GRVConstants.h"
 #import "GRVMembersCDTVC.h"
+#import "GRVAddClipCameraReviewVC.h"
+#import "GRVAddClipCameraVC.h"
 
 #pragma mark - Constants
 /**
@@ -44,6 +46,11 @@ static CGFloat const kActiveCellPlayerHeightCutoff = 0.1f;
  * Segue identifier for showing Members TVC
  */
 static NSString *const kSegueIdentifierShowMembers = @"showMembersVC";
+
+/**
+ * Segue identifier for showing Add Clip Camera VC
+ */
+static NSString *const kSegueIdentifierAddClip = @"showAddClipCameraVC";
 
 /** 
  * Constants for the key-value observation context.
@@ -592,6 +599,10 @@ static const NSString *PlayerCurrentItemContext;
     [self performSegueWithIdentifier:kSegueIdentifierShowMembers sender:sender];
 }
 
+- (IBAction)addClip:(UIButton *)sender
+{
+    [self performSegueWithIdentifier:kSegueIdentifierAddClip sender:sender];
+}
 
 
 #pragma mark - NSFetchedResultsControllerDelegate
@@ -723,6 +734,12 @@ static const NSString *PlayerCurrentItemContext;
             GRVMembersCDTVC *membersVC = (GRVMembersCDTVC *)vc;
             membersVC.video = video;
         }
+    } else if ([vc isKindOfClass:[GRVAddClipCameraVC class]]) {
+        if (![segueIdentifier length] || [segueIdentifier isEqualToString:kSegueIdentifierAddClip]) {
+            // prepare vc
+            GRVAddClipCameraVC *cameraVC = (GRVAddClipCameraVC *)vc;
+            cameraVC.video = video;
+        }
     }
 }
 
@@ -762,6 +779,16 @@ static const NSString *PlayerCurrentItemContext;
     }
 }
 
+#pragma mark Modal Unwinding
+/**
+ * Added clip to the video. Nothing to do here really
+ */
+- (IBAction)addedClip:(UIStoryboardSegue *)segue
+{
+    if ([segue.sourceViewController isKindOfClass:[GRVAddClipCameraReviewVC class]]) {
+        //GRVAddClipCameraReviewVC *cameraReviewVC = (GRVAddClipCameraReviewVC *)segue.sourceViewController;
+    }
+}
 
 
 @end

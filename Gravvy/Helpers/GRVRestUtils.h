@@ -60,6 +60,13 @@
  */
 + (NSString *)videoMemberDetailURL:(NSString *)videoHashKey member:(NSString *)phoneNumber;
 
-
+/**
+ * Generate the relative URL for a REST API's Video Clip List
+ *
+ * @param videoHashKey      hashKey of video of interest
+ *
+ * @return relative URL
+ */
++ (NSString *)videoClipListURL:(NSString *)videoHashKey;
 
 @end

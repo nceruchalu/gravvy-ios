@@ -18,7 +18,7 @@
 
 #pragma mark - Properties
 /**
- * The mermbers are specific to an vidoe, making this the View Controller's
+ * The members are specific to an video, making this the View Controller's
  * model.
  * This property should be set before seguing to this VC.
  */

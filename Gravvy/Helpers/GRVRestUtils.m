@@ -40,4 +40,10 @@
     return [NSString stringWithFormat:@"%@%@/", videoMemberListURL, phoneNumber];
 }
 
++ (NSString *)videoClipListURL:(NSString *)videoHashKey
+{
+    NSString *videoDetailURL = [GRVRestUtils videoDetailURL:videoHashKey];
+    return [NSString stringWithFormat:@"%@%@", videoDetailURL, kGRVRESTVideoClips];
+}
+
 @end

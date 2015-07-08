@@ -36,6 +36,7 @@ const NSTimeInterval kGRVClipMaximumDuration = 5.0f;
 const NSTimeInterval kGRVClipMinimumDuration = 1.0f;
 const float kGRVVideoSizeWidth = 480.0f;
 const float kGRVVideoSizeHeight = 480.0f;
+const float kGRVVideoPhotoCompressionQuality = 0.4f;
 
 
 // -----------------------------------------------------------------------------
@@ -82,6 +83,7 @@ NSString *const kGRVRESTUserActivities          = @"user/activities/";
 NSString *const kGRVRESTUserVideos              = @"user/videos/";
 NSString *const kGRVRESTVideos                  = @"videos/";
 NSString *const kGRVRESTVideoMembers            = @"users/";
+NSString *const kGRVRESTVideoClips              = @"clips/";
 NSString *const kGRVRESTVideoPlay               = @"play/";
 NSString *const kGRVRESTVideoLike               = @"like/";
 

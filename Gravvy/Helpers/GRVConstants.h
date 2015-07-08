@@ -95,6 +95,11 @@ extern const NSTimeInterval kGRVClipMinimumDuration;
 extern const float kGRVVideoSizeWidth;
 extern const float kGRVVideoSizeHeight;
 
+/**
+ * Video preview image compression quality when converting to JPEG
+ */
+extern const float kGRVVideoPhotoCompressionQuality;
+
 
 // -----------------------------------------------------------------------------
 // Model Field Settings (Max Lengths)
@@ -187,6 +192,11 @@ extern NSString *const kGRVRESTVideos;
  * kGRVRESTVideoMembers: URL for members sub-list of a specific video
  */
 extern NSString *const kGRVRESTVideoMembers;
+
+/**
+ * kGRVRESTVideoClips: URL for clips sub-list of a specific video
+ */
+extern NSString *const kGRVRESTVideoClips;
 
 /**
  * kGRVRESTVideoPlay: URL for play endpoint of a specific video

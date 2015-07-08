@@ -10,6 +10,7 @@
 #import "GRVModelManager.h"
 #import "GRVHTTPManager.h"
 #import "GRVUser.h"
+#import "GRVVideo+HTTP.h"
 
 #pragma mark - Constants
 /**
@@ -69,43 +70,50 @@ static NSString *const kUnwindSegueIdentifier = @"createdVideo";
     [[GRVHTTPManager sharedManager] operationRequest:GRVHTTPMethodPOST
                                               forURL:kGRVRESTVideos
                                           parameters:[parameters copy]
-                           constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-                               
-                               // Keys for mp4 and photo object in request
-                               NSString *mp4Key = [NSString stringWithFormat:@"%@.%@", kGRVRESTVideoLeadClipKey, kGRVRESTClipMp4Key];
-                               NSString *photoKey = [NSString stringWithFormat:@"%@.%@", kGRVRESTVideoLeadClipKey, kGRVRESTClipPhotoKey];
-                               
-                               // Come up with a random file name. Doesn't have
-                               // to be unique as the server will handle that
-                               NSString *baseFileName = [[[NSUUID UUID] UUIDString] substringToIndex:8];
-                               NSString *mp4FileName = [NSString stringWithFormat:@"%@.mp4", baseFileName];
-                               NSString *photoFileName = [NSString stringWithFormat:@"%@.jpg", baseFileName];
-                               
-                               [formData appendPartWithFileData:self.mp4
-                                                           name:mp4Key
-                                                       fileName:mp4FileName
-                                                       mimeType:@"video/mp4"];
-                               [formData appendPartWithFileData:UIImageJPEGRepresentation(self.previewImage, 0.4f)
-                                                           name:photoKey
-                                                       fileName:photoFileName
-                                                       mimeType:@"image/jpeg"];
-                           }
-                                             success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                                 // TODO: Sync new video
-                                                 
-                                                 // No need to refresh create button or
-                                                 // stop spinner as we unwind VC
-                                                 [self performSegueWithIdentifier:kUnwindSegueIdentifier sender:self];
-                                             }
-                                             failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                                 [GRVHTTPManager alertWithFailedResponse:nil withAlternateTitle:@"Can't create video." andMessage:@"Something went wrong. Please try again."];
-                                                 
-                                                 // refresh create button
-                                                 [self selectedContactsChanged];
-                                                 
-                                                 // inform user server activity is done
-                                                 [self stopSpinner];
-                                             }
+                           constructingBodyWithBlock:^(id<AFMultipartFormData> formData)
+     {
+         // Keys for mp4 and photo object in request
+         NSString *mp4Key = [NSString stringWithFormat:@"%@.%@", kGRVRESTVideoLeadClipKey, kGRVRESTClipMp4Key];
+         NSString *photoKey = [NSString stringWithFormat:@"%@.%@", kGRVRESTVideoLeadClipKey, kGRVRESTClipPhotoKey];
+         
+         // Come up with a random file name. Doesn't have
+         // to be unique as the server will handle that
+         NSString *baseFileName = [[[NSUUID UUID] UUIDString] substringToIndex:8];
+         NSString *mp4FileName = [NSString stringWithFormat:@"%@.mp4", baseFileName];
+         NSString *photoFileName = [NSString stringWithFormat:@"%@.jpg", baseFileName];
+         
+         [formData appendPartWithFileData:self.mp4
+                                     name:mp4Key
+                                 fileName:mp4FileName
+                                 mimeType:@"video/mp4"];
+         [formData appendPartWithFileData:UIImageJPEGRepresentation(self.previewImage,
+                                                                    kGRVVideoPhotoCompressionQuality)
+                                     name:photoKey
+                                 fileName:photoFileName
+                                 mimeType:@"image/jpeg"];
+     }
+                                             success:^(AFHTTPRequestOperation *operation, id responseObject)
+     {
+         // Sync new video
+         [GRVVideo videoWithVideoInfo:responseObject
+               inManagedObjectContext:[GRVModelManager sharedManager].managedObjectContext];
+         
+         // No need to refresh create button or
+         // stop spinner as we unwind VC
+         [self performSegueWithIdentifier:kUnwindSegueIdentifier sender:self];
+     }
+                                             failure:^(AFHTTPRequestOperation *operation, NSError *error)
+     {
+         [GRVHTTPManager alertWithFailedResponse:nil
+                              withAlternateTitle:@"Can't create video."
+                                      andMessage:@"Something went wrong. Please try again."];
+         
+         // refresh create button
+         [self selectedContactsChanged];
+         
+         // inform user server activity is done
+         [self stopSpinner];
+     }
                                  operationDependency:nil];
 }
 
