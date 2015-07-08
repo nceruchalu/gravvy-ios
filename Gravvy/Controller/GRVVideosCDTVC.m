@@ -73,6 +73,11 @@ static const NSString *PlayerCurrentItemContext;
 @property (strong, nonatomic) NSMutableDictionary *sectionHeaderViews;
 
 /**
+ * Skip refresh table view next time Table View appears
+ */
+@property (nonatomic) BOOL skipRefreshOnNextAppearance;
+
+/**
  * Currently active video and video cell which might or might not be playing
  */
 @property (strong, nonatomic) GRVVideo *activeVideo;
@@ -184,7 +189,10 @@ static const NSString *PlayerCurrentItemContext;
     [super viewWillAppear:animated];
     
     // Silently refresh to pull in recent video updates
-    [self refresh];
+    if (!self.skipRefreshOnNextAppearance) {
+        [self refresh];
+    }
+    self.skipRefreshOnNextAppearance = NO;
     
     // register observers
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -816,6 +824,9 @@ static const NSString *PlayerCurrentItemContext;
             // prepare vc
             GRVMembersCDTVC *membersVC = (GRVMembersCDTVC *)vc;
             membersVC.video = video;
+            
+            // Don't refresh next time this vc appears
+            self.skipRefreshOnNextAppearance = YES;
         }
     } else if ([vc isKindOfClass:[GRVAddClipCameraVC class]]) {
         if (![segueIdentifier length] || [segueIdentifier isEqualToString:kSegueIdentifierAddClip]) {
@@ -864,12 +875,15 @@ static const NSString *PlayerCurrentItemContext;
 
 #pragma mark Modal Unwinding
 /**
- * Added clip to the video. Nothing to do here really
+ * Added clip to the video.
  */
 - (IBAction)addedClip:(UIStoryboardSegue *)segue
 {
     if ([segue.sourceViewController isKindOfClass:[GRVAddClipCameraReviewVC class]]) {
         //GRVAddClipCameraReviewVC *cameraReviewVC = (GRVAddClipCameraReviewVC *)segue.sourceViewController;
+        // Updated video is now at the top of the tableview, so scroll to top
+        [self.tableView setContentOffset:CGPointMake(0.0, 0.0 - self.tableView.contentInset.top)
+                                animated:YES];
     }
 }
 

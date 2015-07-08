@@ -328,6 +328,10 @@ static const CGFloat kCountdownContainerCornerRadius = 5.0f;
                                  self.actionsView.hidden = NO;
                                  self.shootButton.enabled = YES;
                                  self.retakeButton.enabled = YES;
+                                
+                                 // Show retake button if there's already a
+                                 // recording to edit
+                                 self.retakeButton.hidden = self.recordingDuration <= 0.0f;
                              }];
     
     [self.recorder startRunning];
