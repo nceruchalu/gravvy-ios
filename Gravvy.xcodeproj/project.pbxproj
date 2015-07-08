@@ -160,6 +160,8 @@
 		408B28941B296ABD0032A659 /* GRVActivitiesCDTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 408B28931B296ABD0032A659 /* GRVActivitiesCDTVC.m */; };
 		408DC1001B31360700E28094 /* GRVExtendedCoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 408DC0FF1B31360700E28094 /* GRVExtendedCoreDataTableViewController.m */; };
 		408DC1031B3149FC00E28094 /* GRVActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 408DC1021B3149FC00E28094 /* GRVActivityTableViewCell.m */; };
+		40D09E441B4DD70F00A4EF2A /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40D09E421B4DD70F00A4EF2A /* FBSDKCoreKit.framework */; };
+		40D09E451B4DD70F00A4EF2A /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40D09E431B4DD70F00A4EF2A /* FBSDKShareKit.framework */; };
 		40D853BC1B0C69D1001A206A /* GRVCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D853B91B0C69D1001A206A /* GRVCameraViewController.m */; };
 		40D853BD1B0C69D1001A206A /* GRVCameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40D853BA1B0C69D1001A206A /* GRVCameraViewController.xib */; };
 		40DAD9AA1B44F63B0038B8CB /* GRVVideoSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DAD9A91B44F63B0038B8CB /* GRVVideoSectionHeaderView.m */; };
@@ -494,6 +496,8 @@
 		408DC1011B3149FC00E28094 /* GRVActivityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVActivityTableViewCell.h; sourceTree = "<group>"; };
 		408DC1021B3149FC00E28094 /* GRVActivityTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVActivityTableViewCell.m; sourceTree = "<group>"; };
 		4090FBBE1B1BFAAA00197D82 /* GRVPrivateTransitionContextDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GRVPrivateTransitionContextDelegate.h; sourceTree = "<group>"; };
+		40D09E421B4DD70F00A4EF2A /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = Gravvy/Vendor/FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		40D09E431B4DD70F00A4EF2A /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = Gravvy/Vendor/FBSDKShareKit.framework; sourceTree = "<group>"; };
 		40D853B81B0C69D1001A206A /* GRVCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVCameraViewController.h; sourceTree = "<group>"; };
 		40D853B91B0C69D1001A206A /* GRVCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVCameraViewController.m; sourceTree = "<group>"; };
 		40D853BA1B0C69D1001A206A /* GRVCameraViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GRVCameraViewController.xib; sourceTree = "<group>"; };
@@ -544,6 +548,7 @@
 			files = (
 				403D348E1B10470E004FF19E /* CoreVideo.framework in Frameworks */,
 				40F937BE1B0C46F2000F7BCB /* MessageUI.framework in Frameworks */,
+				40D09E451B4DD70F00A4EF2A /* FBSDKShareKit.framework in Frameworks */,
 				403BC9571AFF4514009BBD2B /* AddressBook.framework in Frameworks */,
 				407623D01AFF270200100550 /* AudioToolbox.framework in Frameworks */,
 				407623AD1AFEF6A000100550 /* QuartzCore.framework in Frameworks */,
@@ -553,6 +558,7 @@
 				407623A61AFEF2AD00100550 /* Crashlytics.framework in Frameworks */,
 				407620A21AFED89400100550 /* CoreData.framework in Frameworks */,
 				407620A01AFED88A00100550 /* Foundation.framework in Frameworks */,
+				40D09E441B4DD70F00A4EF2A /* FBSDKCoreKit.framework in Frameworks */,
 				4076209E1AFED87800100550 /* UIKit.framework in Frameworks */,
 				407623A71AFEF2AD00100550 /* Fabric.framework in Frameworks */,
 			);
@@ -737,6 +743,8 @@
 		4076209C1AFED85400100550 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				40D09E421B4DD70F00A4EF2A /* FBSDKCoreKit.framework */,
+				40D09E431B4DD70F00A4EF2A /* FBSDKShareKit.framework */,
 				403D348D1B10470E004FF19E /* CoreVideo.framework */,
 				40F937BD1B0C46F2000F7BCB /* MessageUI.framework */,
 				403BC9561AFF4514009BBD2B /* AddressBook.framework */,

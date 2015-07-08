@@ -21,6 +21,9 @@
 #import "GRVAddClipCameraVC.h"
 #import "GRVAccountManager.h"
 
+#import <FBSDKShareKit/FBSDKShareKit.h>
+#import <FBSDKCoreKit/FBSDKConstants.h>
+
 #pragma mark - Constants
 /**
  * Height of table view cell rows excluding the player view
@@ -61,7 +64,19 @@ static const NSString *PlayerItemStatusContext;
 static const NSString *PlayerRateContext;
 static const NSString *PlayerCurrentItemContext;
 
-@interface GRVVideosCDTVC () <UIActionSheetDelegate>
+/**
+ * button indices in more actions action sheet
+ */
+static const NSInteger kMoreActionsIndexShareFacebook   = 0; // Share on facebook
+static const NSInteger kMoreActionsIndexShareTwitter    = 1; // Share on twitter
+
+/**
+ * Format string for creating a video's share URL
+ */
+static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/v/%@";
+
+
+@interface GRVVideosCDTVC () <UIActionSheetDelegate, FBSDKSharingDelegate>
 
 #pragma mark - Properties
 /**
@@ -655,6 +670,10 @@ static const NSString *PlayerCurrentItemContext;
 
 - (IBAction)addClip:(UIButton *)sender
 {
+    // quit if camera is not available for recording videos
+    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        return;
+    }
     [self performSegueWithIdentifier:kSegueIdentifierAddClip sender:sender];
 }
 
@@ -677,7 +696,7 @@ static const NSString *PlayerCurrentItemContext;
                                                               delegate:self
                                                      cancelButtonTitle:@"Cancel"
                                                 destructiveButtonTitle:nil
-                                                     otherButtonTitles:destructiveButtonTitle, nil];
+                                                     otherButtonTitles:@"Share on Facebook", @"Share on Twitter", destructiveButtonTitle, nil];
     self.moreActionsActionSheet.destructiveButtonIndex = (self.moreActionsActionSheet.numberOfButtons-2);
     [self.moreActionsActionSheet showInView:self.view];
 }
@@ -706,6 +725,20 @@ static const NSString *PlayerCurrentItemContext;
                                                                destructiveButtonTitle:destructiveButtonTitle
                                                                     otherButtonTitles:nil];
             [self.removeConfirmationActionSheet showInView:self.view];
+        
+        } else if (buttonIndex != actionSheet.cancelButtonIndex) {
+            switch (buttonIndex-actionSheet.firstOtherButtonIndex) {
+                case kMoreActionsIndexShareFacebook:
+                    [self shareOnFacebook:video];
+                    break;
+                
+                case kMoreActionsIndexShareTwitter:
+                    [self shareOnTwitter:video];
+                    break;
+                    
+                default:
+                    break;
+            }
         }
         
     } else if (actionSheet == self.removeConfirmationActionSheet) {
@@ -721,6 +754,86 @@ static const NSString *PlayerCurrentItemContext;
             }];
         }
     }
+}
+
+#pragma mark Helpers
+/**
+ * Generate URL to be used when sharing a video
+ * 
+ * @param video Video to be shared
+ *
+ * @return a string of the web-URL of a video
+ */
+- (NSString *)videoShareURL:(GRVVideo *)video
+{
+    return [NSString stringWithFormat:kVideoShareURLFormatString, video.hashKey];
+}
+
+/**
+ * Generate Title to be used when sharing a video
+ *
+ * @param video Video to be shared
+ *
+ * @return a string of the title of a video
+ */
+- (NSString *)videoShareTitle:(GRVVideo *)video
+{
+    NSString *title;
+    if ([video.title length]) {
+        title = [NSString stringWithFormat:@"Gravvy App Video: \"%@\"", video.title];
+    } else {
+        title = @"Gravvy App Video";
+    }
+    return title;
+}
+
+/**
+ * Share a video using the Facebook SDK
+ *
+ * @param video Video to be shared
+ */
+- (void)shareOnFacebook:(GRVVideo *)video
+{
+    // Create share content
+    FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
+    content.contentURL = [NSURL URLWithString:[self videoShareURL:video]];
+    content.imageURL = [NSURL URLWithString:video.photoThumbnailURL];
+    content.contentTitle = [self videoShareTitle:video];
+    
+    // Use a share dialog
+    [FBSDKShareDialog showFromViewController:self withContent:content delegate:self];
+}
+
+/**
+ * Share a video on twitter
+ *
+ * @param video Video to be shared
+ */
+- (void)shareOnTwitter:(GRVVideo *)video
+{
+    NSLog(@"twitter: %@", [self videoShareURL:video]);
+}
+
+
+#pragma mark - FBSDKSharingDelegate
+
+- (void)sharer:(id<FBSDKSharing>)sharer didCompleteWithResults:(NSDictionary *)results
+{
+    // TODO: use alert banner to say  "completed share on Facebook"
+}
+
+- (void)sharer:(id<FBSDKSharing>)sharer didFailWithError:(NSError *)error
+{
+    NSString *message = error.userInfo[FBSDKErrorLocalizedDescriptionKey] ?:
+    @"There was a problem sharing, please try again later.";
+    NSString *title = error.userInfo[FBSDKErrorLocalizedTitleKey] ?: @"Oops!";
+    
+    [[[UIAlertView alloc] initWithTitle:title message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+}
+
+- (void)sharerDidCancel:(id<FBSDKSharing>)sharer
+{
+    // Do nothing
 }
 
 

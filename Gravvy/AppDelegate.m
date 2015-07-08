@@ -24,6 +24,7 @@
 
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 #pragma mark - Constants
 /**
@@ -157,6 +158,10 @@ static NSString *const kRemoteNotificationSoundFileExtension = @"caf";
     }
     [sharedApp cancelAllLocalNotifications];
     
+    // Connect app delegate to FBSDKCoreKit
+    [[FBSDKApplicationDelegate sharedInstance] application:application
+                             didFinishLaunchingWithOptions:launchOptions];
+    
     return YES;
 }
 
@@ -229,6 +234,9 @@ static NSString *const kRemoteNotificationSoundFileExtension = @"caf";
     dispatch_async(q, ^{
         if ([GRVAddressBookManager authorized]) [GRVContact refreshContacts:nil];
     });
+    
+    // Connect app delegate to FBSDKCoreKit
+    [FBSDKAppEvents activateApp];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -459,6 +467,17 @@ static NSString *const kRemoteNotificationSoundFileExtension = @"caf";
 {
     // Continue registration for push notifications
     [application registerForRemoteNotifications];
+}
+
+
+#pragma mark - Opening a URL Resource
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    // Connect app delegate to FBSDKCoreKit
+    return [[FBSDKApplicationDelegate sharedInstance] application:application
+                                                          openURL:url
+                                                sourceApplication:sourceApplication
+                                                       annotation:annotation];
 }
 
 
