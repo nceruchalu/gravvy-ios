@@ -9,6 +9,7 @@
 #import "GRVVideosCDTVC.h"
 #import "GRVVideo+HTTP.h"
 #import "GRVClip.h"
+#import "GRVUser.h"
 #import "GRVVideoTableViewCell.h"
 #import "GRVVideoSectionHeaderView.h"
 #import "GRVUserViewHelper.h"
@@ -18,6 +19,7 @@
 #import "GRVMembersCDTVC.h"
 #import "GRVAddClipCameraReviewVC.h"
 #import "GRVAddClipCameraVC.h"
+#import "GRVAccountManager.h"
 
 #pragma mark - Constants
 /**
@@ -59,7 +61,7 @@ static const NSString *PlayerItemStatusContext;
 static const NSString *PlayerRateContext;
 static const NSString *PlayerCurrentItemContext;
 
-@interface GRVVideosCDTVC ()
+@interface GRVVideosCDTVC () <UIActionSheetDelegate>
 
 #pragma mark - Properties
 /**
@@ -105,6 +107,22 @@ static const NSString *PlayerCurrentItemContext;
  * time elapsed or time remaining
  */
 @property (strong, nonatomic) id playerObserver;
+
+/**
+ * Action sheet shown on more actions tap
+ */
+@property (strong, nonatomic) UIActionSheet *moreActionsActionSheet;
+/**
+ * Action Sheet to confirm video removal
+ */
+@property (strong, nonatomic) UIActionSheet *removeConfirmationActionSheet;
+
+/**
+ * Index Path of cell that moreActions action sheet was triggered from
+ */
+@property (strong, nonatomic) NSIndexPath *moreActionsIndexPath;
+
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
 @end
 
@@ -602,6 +620,71 @@ static const NSString *PlayerCurrentItemContext;
 - (IBAction)addClip:(UIButton *)sender
 {
     [self performSegueWithIdentifier:kSegueIdentifierAddClip sender:sender];
+}
+
+- (IBAction)showMoreActions:(UIButton *)sender
+{
+    if ([sender isKindOfClass:[UIButton class]]) {
+        CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+        self.moreActionsIndexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    }
+    
+    GRVVideo *video = [self.fetchedResultsController objectAtIndexPath:self.moreActionsIndexPath];
+    NSString *destructiveButtonTitle;
+    if ([video.owner.phoneNumber isEqualToString:[GRVAccountManager sharedManager].phoneNumber]) {
+        destructiveButtonTitle = @"Delete";
+    } else {
+        destructiveButtonTitle = @"Leave";
+    }
+    
+    self.moreActionsActionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                              delegate:self
+                                                     cancelButtonTitle:@"Cancel"
+                                                destructiveButtonTitle:nil
+                                                     otherButtonTitles:destructiveButtonTitle, nil];
+    self.moreActionsActionSheet.destructiveButtonIndex = (self.moreActionsActionSheet.numberOfButtons-2);
+    [self.moreActionsActionSheet showInView:self.view];
+}
+
+
+#pragma mark - UIActionSheetDelegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    // Get video
+    GRVVideo *video = [self.fetchedResultsController objectAtIndexPath:self.moreActionsIndexPath];
+
+    if (actionSheet == self.moreActionsActionSheet) {
+        // is this a revoke request on a video? if so show a confirmation action
+        // sheet
+        if (buttonIndex == actionSheet.destructiveButtonIndex) {
+            NSString *destructiveButtonTitle;
+            if ([video.owner.phoneNumber isEqualToString:[GRVAccountManager sharedManager].phoneNumber]) {
+                destructiveButtonTitle = @"Delete";
+            } else {
+                destructiveButtonTitle = @"Leave";
+            }
+            
+            self.removeConfirmationActionSheet = [[UIActionSheet alloc] initWithTitle:@"Confirm Deletion"
+                                                                             delegate:self
+                                                                    cancelButtonTitle:@"Cancel"
+                                                               destructiveButtonTitle:destructiveButtonTitle
+                                                                    otherButtonTitles:nil];
+            [self.removeConfirmationActionSheet showInView:self.view];
+        }
+        
+    } else if (actionSheet == self.removeConfirmationActionSheet) {
+        
+        // check if user confirmed desire to leave/delete a video
+        if (buttonIndex == actionSheet.destructiveButtonIndex) {
+            // user indeed wants to leave/delete a video
+            
+            [self.spinner startAnimating];
+            [video revokeMembershipWithCompletion:^{
+                [self.spinner stopAnimating];
+                [self refresh];
+            }];
+        }
+    }
 }
 
 

@@ -364,12 +364,17 @@
 
 - (void)revokeMembershipWithCompletion:(void (^)())membershipIsRevoked
 {
-    // TODO: delete video if owner
+    NSString *revokeURL;
+    if ([self.owner.phoneNumber isEqualToString:[GRVAccountManager sharedManager].phoneNumber]) {
+        // delete video if owner
+        revokeURL = [GRVRestUtils videoDetailURL:self.hashKey];
+    } else {
+        // delete membership if not owner
+        revokeURL = [GRVRestUtils videoMemberDetailURL:self.hashKey
+                                                member:[GRVAccountManager sharedManager].phoneNumber];
+    }
     
-    // revoke membership locally but first get the URL to delete membership
-    NSString *videoDetailMemberURL = [GRVRestUtils videoMemberDetailURL:self.hashKey member:[GRVAccountManager sharedManager].phoneNumber];
-    
-    [[GRVHTTPManager sharedManager] request:GRVHTTPMethodDELETE forURL:videoDetailMemberURL parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+    [[GRVHTTPManager sharedManager] request:GRVHTTPMethodDELETE forURL:revokeURL parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         // Perform a local hard-delete as the membership is gone on the server
         [self.managedObjectContext deleteObject:self];
         if (membershipIsRevoked) membershipIsRevoked();

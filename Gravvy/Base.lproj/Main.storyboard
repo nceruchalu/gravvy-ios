@@ -2195,6 +2195,9 @@
                                                                 <color key="titleColor" red="0.58431372549019611" green="0.58431372549019611" blue="0.58431372549019611" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
+                                                            <connections>
+                                                                <action selector="showMoreActions:" destination="c3W-gi-yhK" eventType="touchUpInside" id="cbU-4z-TE8"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2242,18 +2245,25 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="XrR-CT-P1l">
+                                <rect key="frame" x="141" y="265" width="37" height="37"/>
+                                <color key="color" red="0.0" green="0.74901960779999999" blue="0.56078431370000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <constraints>
+                            <constraint firstAttribute="centerY" secondItem="XrR-CT-P1l" secondAttribute="centerY" id="Xjd-3v-7VW"/>
                             <constraint firstItem="70o-TP-dcB" firstAttribute="leading" secondItem="N1Q-a7-iP5" secondAttribute="leading" id="Xk1-r0-grw"/>
                             <constraint firstItem="70o-TP-dcB" firstAttribute="top" secondItem="N1Q-a7-iP5" secondAttribute="top" id="ZXi-vV-if7"/>
                             <constraint firstAttribute="trailing" secondItem="70o-TP-dcB" secondAttribute="trailing" id="e6w-Su-vKF"/>
                             <constraint firstItem="1Uz-4p-xDt" firstAttribute="top" secondItem="70o-TP-dcB" secondAttribute="bottom" id="mT1-X9-uK0"/>
+                            <constraint firstAttribute="centerX" secondItem="XrR-CT-P1l" secondAttribute="centerX" id="nDy-vi-6Q0"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="QCC-od-6LR"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="emptyStateView" destination="nKU-4G-lHw" id="wnh-dq-JXD"/>
+                        <outlet property="spinner" destination="XrR-CT-P1l" id="nbo-cW-LDw"/>
                         <outlet property="tableView" destination="70o-TP-dcB" id="f30-zw-Tfv"/>
                         <segue destination="STl-Xc-1vC" kind="show" identifier="showMembersVC" id="fkk-CW-na4"/>
                         <segue destination="yYf-5g-aIm" kind="presentation" identifier="showAddClipCameraVC" id="gPR-tw-FYW"/>
