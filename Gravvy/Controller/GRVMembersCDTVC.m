@@ -14,6 +14,7 @@
 #import "GRVAccountManager.h"
 #import "GRVUser.h"
 #import "GRVMembersContactPickerVC.h"
+#import "MBProgressHUD.h"
 
 #pragma mark - Constants
 /**
@@ -56,6 +57,8 @@ static const NSInteger kMemberButtonIndexCall       = 0; // Call user
  */
 @property (strong, nonatomic) UIActionSheet *removeConfirmationActionSheet;
 
+@property (strong, nonatomic) MBProgressHUD *successProgressHUD;
+
 @end
 
 
@@ -66,6 +69,23 @@ static const NSInteger kMemberButtonIndexCall       = 0; // Call user
 {
     _video = video;
     [self setupFetchedResultsController];
+}
+
+- (MBProgressHUD *)successProgressHUD
+{
+    if (!_successProgressHUD) {
+        // Lazy instantiation
+        _successProgressHUD = [[MBProgressHUD alloc] initWithView:self.view];
+        [self.view addSubview:_successProgressHUD];
+        
+        _successProgressHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark"]];
+        // Set custom view mode
+        _successProgressHUD.mode = MBProgressHUDModeCustomView;
+        
+        _successProgressHUD.minSize = CGSizeMake(120, 120);
+        _successProgressHUD.minShowTime = 1;
+    }
+    return _successProgressHUD;
 }
 
 #pragma mark - View Lifecycle
@@ -109,6 +129,13 @@ static const NSInteger kMemberButtonIndexCall       = 0; // Call user
     return [self.video.owner.phoneNumber isEqualToString:[GRVAccountManager sharedManager].phoneNumber];
 }
 
+#pragma mark Action Progress
+- (void)showProgressHUDSuccessMessage:(NSString *)message
+{
+    self.successProgressHUD.labelText = message;
+    [self.successProgressHUD show:YES];
+    [self.successProgressHUD hide:YES afterDelay:1.5];
+}
 
 #pragma mark - Refresh
 - (IBAction)refresh
@@ -252,6 +279,7 @@ static const NSInteger kMemberButtonIndexCall       = 0; // Call user
 {
     if ([segue.sourceViewController isKindOfClass:[GRVMembersContactPickerVC class]]) {
         //GRVMembersContactPickerVC *contactPickerVC = (GRVMembersContactPickerVC *)segue.sourceViewController;
+        [self showProgressHUDSuccessMessage:@"Success"];
     }
 }
 

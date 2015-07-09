@@ -12,6 +12,7 @@
 #import "GRVPanGestureInteractiveTransition.h"
 #import "GRVPrivateTransitionContextDelegate.h"
 #import "GRVExtendedCoreDataTableViewController.h"
+#import "MBProgressHUD.h"
 //#import "UIViewController+ScrollingNavbar.h"
 
 #pragma mark - Constants
@@ -71,6 +72,8 @@ static CGFloat const scrollingNavBarDelay = 480.0f;
 // videosButton, and 1 implying activitiesButton
 @property (nonatomic) CGFloat buttonIndicatorOffset;
 
+@property (strong, nonatomic) MBProgressHUD *successProgressHUD;
+
 @end
 
 @implementation GRVLandingViewController
@@ -112,6 +115,24 @@ static CGFloat const scrollingNavBarDelay = 480.0f;
     [emphasizedButton setTitleColor:kGRVThemeColor forState:UIControlStateNormal];
     [mutedButton setTitleColor:kInactiveTintColor forState:UIControlStateNormal];
 }
+
+- (MBProgressHUD *)successProgressHUD
+{
+    if (!_successProgressHUD) {
+        // Lazy instantiation
+        _successProgressHUD = [[MBProgressHUD alloc] initWithView:self.view];
+        [self.view addSubview:_successProgressHUD];
+        
+        _successProgressHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark"]];
+        // Set custom view mode
+        _successProgressHUD.mode = MBProgressHUDModeCustomView;
+        
+        _successProgressHUD.minSize = CGSizeMake(120, 120);
+        _successProgressHUD.minShowTime = 1;
+    }
+    return _successProgressHUD;
+}
+
 
 #pragma mark - Initialization
 #pragma mark Concrete Helpers
@@ -233,8 +254,16 @@ static CGFloat const scrollingNavBarDelay = 480.0f;
 }
 #endif
 
+#pragma mark Action Progress
+- (void)showProgressHUDSuccessMessage:(NSString *)message
+{
+    self.successProgressHUD.labelText = message;
+    [self.successProgressHUD show:YES];
+    [self.successProgressHUD hide:YES afterDelay:1.5];
+}
 
-#pragma mark Target/Action methods
+
+#pragma mark - Target/Action methods
 - (IBAction)recordVideo:(UIButton *)sender
 {
     [self startCameraController];
@@ -288,6 +317,7 @@ static CGFloat const scrollingNavBarDelay = 480.0f;
 {
     if ([segue.sourceViewController isKindOfClass:[GRVCreateVideoContactPickerVC class]]) {
         //GRVCreateVideoContactPickerVC *contactPickerVC = (GRVCreateVideoContactPickerVC *)segue.sourceViewController;
+        [self showProgressHUDSuccessMessage:@"Created Video"];
     }
 }
 

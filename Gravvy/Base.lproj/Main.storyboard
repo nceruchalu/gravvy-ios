@@ -265,7 +265,7 @@
         <!--Create Video CameraVC-->
         <scene sceneID="Qwa-cv-ObZ">
             <objects>
-                <viewController id="Sgo-pA-KxK" customClass="GRVCreateVideoCameraVC" sceneMemberID="viewController">
+                <viewController id="Sgo-pA-KxK" userLabel="Create Video CameraVC" customClass="GRVCreateVideoCameraVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="kN4-DO-w9c"/>
                         <viewControllerLayoutGuide type="bottom" id="7qP-fU-k5P"/>
@@ -275,7 +275,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="vfm-Fg-GAk"/>
+                    <navigationItem key="navigationItem" title="New Video" id="vfm-Fg-GAk"/>
                     <connections>
                         <segue destination="6oi-7L-nTJ" kind="show" identifier="showCreateVideoCameraReviewVC" id="aOk-DU-m61"/>
                     </connections>
@@ -1514,7 +1514,7 @@
         <!--Add Clip CameraVC-->
         <scene sceneID="ejl-9o-JCq">
             <objects>
-                <viewController id="SwZ-uh-WS2" customClass="GRVAddClipCameraVC" sceneMemberID="viewController">
+                <viewController id="SwZ-uh-WS2" userLabel="Add Clip CameraVC" customClass="GRVAddClipCameraVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="rVm-Tp-9Be"/>
                         <viewControllerLayoutGuide type="bottom" id="1A3-Ek-Jg3"/>
@@ -1524,14 +1524,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Qkr-Eo-ftb"/>
+                    <navigationItem key="navigationItem" title="Add Clip" id="Qkr-Eo-ftb"/>
                     <connections>
                         <segue destination="VlN-tS-lIP" kind="show" identifier="showAddClipCameraReviewVC" id="wbk-ck-IKG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ovr-NZ-Btw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4462" y="3452"/>
+            <point key="canvasLocation" x="4042" y="3452"/>
         </scene>
         <!--Members Contact Picker-->
         <scene sceneID="3wC-aq-pwK">
@@ -2592,7 +2592,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y20-e6-z54" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="5cV-oT-EB3" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="5052" y="3436"/>
+            <point key="canvasLocation" x="4516" y="3452"/>
         </scene>
     </scenes>
     <resources>

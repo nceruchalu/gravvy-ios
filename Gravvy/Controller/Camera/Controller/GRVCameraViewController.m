@@ -99,10 +99,6 @@ static const CGFloat kCountdownContainerCornerRadius = 5.0f;
     UINavigationBar *navigationBar = self.navigationController.navigationBar;
     navigationBar.barTintColor = kGRVCameraViewNavigationBarColor;
     
-    // Ensure the back button of the review VC doesn't have text by explicitly
-    // setting the navigation Item of this title to a blank string
-    self.navigationItem.title = @"";
-    
     // Set navigation bar items, close and done buttons
     self.closeButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(cancel)];
     self.navigationItem.leftBarButtonItem = self.closeButton;

@@ -20,6 +20,7 @@
 #import "GRVAddClipCameraReviewVC.h"
 #import "GRVAddClipCameraVC.h"
 #import "GRVAccountManager.h"
+#import "MBProgressHUD.h"
 
 #import <FBSDKShareKit/FBSDKShareKit.h>
 #import <FBSDKCoreKit/FBSDKConstants.h>
@@ -146,6 +147,8 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
 
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
+@property (strong, nonatomic) MBProgressHUD *successProgressHUD;
+
 @end
 
 @implementation GRVVideosCDTVC
@@ -166,6 +169,23 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
     _activeVideoCell.playerView.player = nil;
     
     _activeVideoCell = activeVideoCell;
+}
+
+- (MBProgressHUD *)successProgressHUD
+{
+    if (!_successProgressHUD) {
+        // Lazy instantiation
+        _successProgressHUD = [[MBProgressHUD alloc] initWithView:self.view];
+        [self.view addSubview:_successProgressHUD];
+        
+        _successProgressHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark"]];
+        // Set custom view mode
+        _successProgressHUD.mode = MBProgressHUDModeCustomView;
+        
+        _successProgressHUD.minSize = CGSizeMake(120, 120);
+        _successProgressHUD.minShowTime = 1;
+    }
+    return _successProgressHUD;
 }
 
 - (void)setPlayerItems:(NSArray *)playerItems
@@ -222,7 +242,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
 {
     [super viewWillDisappear:animated];
     // Pause VC as we switch screen
-    if (self.isPlaying) [self playOrPause];
+    [self pause];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -389,6 +409,14 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
     return activeVideoCell;
 }
 
+#pragma mark Action Progress
+- (void)showProgressHUDSuccessMessage:(NSString *)message
+{
+    self.successProgressHUD.labelText = message;
+    [self.successProgressHUD show:YES];
+    [self.successProgressHUD hide:YES afterDelay:1.5];
+}
+
 #pragma mark AudioVisual Player
 /**
  * Sync the player state with currently active cell
@@ -422,6 +450,12 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
  */
 - (void)attemptAutoPlay
 {
+    // Don't bother and pause if the view is not visible
+    if(!self.view.window) {
+        [self pause];
+        return;
+    }
+    
     // Hide preview image of video cell
     self.activeVideoCell.previewImageView.hidden = YES;
     
@@ -446,6 +480,12 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
  */
 - (void)autoPlayVideo
 {
+    // Don't bother and pause if the view is not visible
+    if(!self.view.window) {
+        [self pause];
+        return;
+    }
+    
     GRVVideoTableViewCell *currentActiveVideoCell = [self determineActiveVideoCell];
     NSIndexPath *currentActiveIndexPath = [self.tableView indexPathForCell:currentActiveVideoCell];
     GRVVideo *currentActiveVideo = [self.fetchedResultsController objectAtIndexPath:currentActiveIndexPath];
@@ -463,6 +503,13 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
     }
 }
 
+/**
+ * Pause the active player
+ */
+- (void)pause
+{
+    if (self.isPlaying) [self playOrPause];
+}
 
 #pragma mark - UITableViewDataSource
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -676,6 +723,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         return;
     }
+    
     [self performSegueWithIdentifier:kSegueIdentifierAddClip sender:sender];
 }
 
@@ -851,7 +899,6 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
         NSString *encodedTweetURL = [GRVFormatterUtils urlEncode:tweetURL];
         NSString *tweetShareURL = [NSString stringWithFormat:@"https://twitter.com/share?text=%@&url=%@", encodedTweetTitle, encodedTweetURL];
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:tweetShareURL]];
-        
     }
 }
 
@@ -864,8 +911,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
 {
     NSString *webURL = [self videoShareURL:video];
     [UIPasteboard generalPasteboard].string = webURL;
-    
-    // TODO: Use alert banner to say "copied link to clip board"
+    [self showProgressHUDSuccessMessage:@"Copied Link"];
 }
 
 
@@ -873,7 +919,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
 
 - (void)sharer:(id<FBSDKSharing>)sharer didCompleteWithResults:(NSDictionary *)results
 {
-    // TODO: use alert banner to say  "completed share on Facebook"
+    [self showProgressHUDSuccessMessage:@"Shared on Facebook"];
 }
 
 - (void)sharer:(id<FBSDKSharing>)sharer didFailWithError:(NSError *)error
@@ -1079,6 +1125,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
         // Updated video is now at the top of the tableview, so scroll to top
         [self.tableView setContentOffset:CGPointMake(0.0, 0.0 - self.tableView.contentInset.top)
                                 animated:YES];
+        [self showProgressHUDSuccessMessage:@"Clip Added"];
     }
 }
 
