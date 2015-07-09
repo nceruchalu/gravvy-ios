@@ -14,4 +14,16 @@
  */
 @interface GRVVideosCDTVC : GRVExtendedCoreDataTableViewController
 
+#pragma mark - Instance Methods
+/**
+ * Stop the player and discard all player resources. Do this to prevent the
+ * existence of multiple player instances when about to present the camera VC.
+ *
+ * @discussion Playing two items at the same time, can cause the exhaustion of
+ *      resources allocated to the iOS Internal Media Services. Thus causing a
+ *      AVAudioSessionMediaServicesWereResetNotification notification.
+ *
+ */
+- (void)stop;
+
 @end

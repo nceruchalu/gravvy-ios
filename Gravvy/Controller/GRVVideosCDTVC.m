@@ -442,6 +442,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
     } else {
         [self configureCell:self.activeVideoCell withCurrentClip:1 andClipsCount:[self.activeVideo.clips count]];
     }
+    
 }
 
 /**
@@ -509,6 +510,20 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
 - (void)pause
 {
     if (self.isPlaying) [self playOrPause];
+}
+
+#pragma mark Public: AudioVisual Player
+- (void)stop
+{
+    // first pause the active player
+    [self.player pause];
+    self.playing = NO;
+    self.performedAutoPlay = NO;
+    
+    // Remove player items, associated observers and player observers
+    self.playerItems = nil;
+    // Release old player
+    self.player = nil;
 }
 
 #pragma mark - UITableViewDataSource
@@ -724,7 +739,12 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
         return;
     }
     
-    [self performSegueWithIdentifier:kSegueIdentifierAddClip sender:sender];
+    // Stop player before continuing
+    [self stop];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // Give the avplayer cleanup some time to occur before presenting camera VC
+        [self performSegueWithIdentifier:kSegueIdentifierAddClip sender:sender];
+    });
 }
 
 - (IBAction)showMoreActions:(UIButton *)sender

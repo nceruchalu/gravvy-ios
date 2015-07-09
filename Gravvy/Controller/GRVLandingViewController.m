@@ -13,6 +13,7 @@
 #import "GRVPrivateTransitionContextDelegate.h"
 #import "GRVExtendedCoreDataTableViewController.h"
 #import "MBProgressHUD.h"
+#import "GRVVideosCDTVC.h"
 //#import "UIViewController+ScrollingNavbar.h"
 
 #pragma mark - Constants
@@ -281,7 +282,17 @@ static CGFloat const scrollingNavBarDelay = 480.0f;
         return;
     }
     
-    [self performSegueWithIdentifier:kSegueIdentifierCreateVideo sender:self];
+    // Stop player before continuing
+    for (UIViewController *vc in self.viewControllers) {
+        if ([vc isKindOfClass:[GRVVideosCDTVC class]]) {
+            GRVVideosCDTVC *videosVC = (GRVVideosCDTVC *)vc;
+            [videosVC stop];
+        }
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // Give the avplayer cleanup some time to occur before presenting camera VC
+        [self performSegueWithIdentifier:kSegueIdentifierCreateVideo sender:self];
+    });
 }
 
 
