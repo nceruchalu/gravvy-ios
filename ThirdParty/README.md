@@ -17,7 +17,14 @@ Please follow these conventions when adding new third-party vendor software.
 
 
 ## Updating a Module
-1. Update a module with: `git submodule update --remote <Module-Name>`
+1. Change to the submodule directory: `cd LibExample`
+2. Chekout desired branch: `git checkout master`
+3. Update: `git pull`
+
+Or if you're a busy person:
+```
+git submodule foreach git pull
+```
 
 ## Modules
 

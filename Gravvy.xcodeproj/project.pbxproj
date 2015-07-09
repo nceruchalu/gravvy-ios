@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		400881641B4E3A4C00F3868C /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 400881461B4E3A4C00F3868C /* MBProgressHUD.m */; };
+		400881741B4E3BA600F3868C /* SCIOPixelBuffers.m in Sources */ = {isa = PBXBuildFile; fileRef = 400881731B4E3BA600F3868C /* SCIOPixelBuffers.m */; };
+		400881771B4E3C0000F3868C /* SCProcessingQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 400881761B4E3C0000F3868C /* SCProcessingQueue.m */; };
+		4008817D1B4E3CFE00F3868C /* SCContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 4008817C1B4E3CFE00F3868C /* SCContext.m */; };
 		4023299B1B09AA0200BFD2D5 /* GRVContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 402329931B09AA0200BFD2D5 /* GRVContainerViewController.m */; };
 		4023299C1B09AA0200BFD2D5 /* GRVPanGestureInteractiveTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 402329961B09AA0200BFD2D5 /* GRVPanGestureInteractiveTransition.m */; };
 		4023299D1B09AA0200BFD2D5 /* GRVPrivateAnimatedTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 402329981B09AA0200BFD2D5 /* GRVPrivateAnimatedTransition.m */; };
@@ -200,6 +204,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		400881451B4E3A4C00F3868C /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		400881461B4E3A4C00F3868C /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		400881721B4E3BA600F3868C /* SCIOPixelBuffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCIOPixelBuffers.h; path = ThirdParty/SCRecorder/Library/Sources/SCIOPixelBuffers.h; sourceTree = SOURCE_ROOT; };
+		400881731B4E3BA600F3868C /* SCIOPixelBuffers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCIOPixelBuffers.m; path = ThirdParty/SCRecorder/Library/Sources/SCIOPixelBuffers.m; sourceTree = SOURCE_ROOT; };
+		400881751B4E3C0000F3868C /* SCProcessingQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCProcessingQueue.h; path = ThirdParty/SCRecorder/Library/Sources/SCProcessingQueue.h; sourceTree = SOURCE_ROOT; };
+		400881761B4E3C0000F3868C /* SCProcessingQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCProcessingQueue.m; path = ThirdParty/SCRecorder/Library/Sources/SCProcessingQueue.m; sourceTree = SOURCE_ROOT; };
+		4008817B1B4E3CFE00F3868C /* SCContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCContext.h; path = ThirdParty/SCRecorder/Library/Sources/SCContext.h; sourceTree = SOURCE_ROOT; };
+		4008817C1B4E3CFE00F3868C /* SCContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCContext.m; path = ThirdParty/SCRecorder/Library/Sources/SCContext.m; sourceTree = SOURCE_ROOT; };
 		402329921B09AA0200BFD2D5 /* GRVContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVContainerViewController.h; sourceTree = "<group>"; };
 		402329931B09AA0200BFD2D5 /* GRVContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVContainerViewController.m; sourceTree = "<group>"; };
 		402329941B09AA0200BFD2D5 /* GRVContainerViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVContainerViewControllerDelegate.h; sourceTree = "<group>"; };
@@ -577,6 +589,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		400881201B4E3A4C00F3868C /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				400881451B4E3A4C00F3868C /* MBProgressHUD.h */,
+				400881461B4E3A4C00F3868C /* MBProgressHUD.m */,
+			);
+			name = MBProgressHUD;
+			path = ThirdParty/MBProgressHUD;
+			sourceTree = SOURCE_ROOT;
+		};
+		4008817A1B4E3CB500F3868C /* FilterDisplayers */ = {
+			isa = PBXGroup;
+			children = (
+				4008817B1B4E3CFE00F3868C /* SCContext.h */,
+				4008817C1B4E3CFE00F3868C /* SCContext.m */,
+			);
+			name = FilterDisplayers;
+			sourceTree = "<group>";
+		};
 		402329911B09AA0200BFD2D5 /* ContainerTransitions */ = {
 			isa = PBXGroup;
 			children = (
@@ -599,6 +630,7 @@
 			children = (
 				403D349E1B114777004FF19E /* Configuration */,
 				403D34AA1B1147B2004FF19E /* Recorder */,
+				4008817A1B4E3CB500F3868C /* FilterDisplayers */,
 				403D34BD1B114814004FF19E /* Tools */,
 				403D34C41B11484E004FF19E /* Filters */,
 			);
@@ -650,6 +682,10 @@
 				403D34B21B11480E004FF19E /* SCRecorderTools.m */,
 				403D34B51B11480E004FF19E /* SCWeakSelectorTarget.h */,
 				403D34B61B11480E004FF19E /* SCWeakSelectorTarget.m */,
+				400881751B4E3C0000F3868C /* SCProcessingQueue.h */,
+				400881761B4E3C0000F3868C /* SCProcessingQueue.m */,
+				400881721B4E3BA600F3868C /* SCIOPixelBuffers.h */,
+				400881731B4E3BA600F3868C /* SCIOPixelBuffers.m */,
 			);
 			name = Tools;
 			sourceTree = "<group>";
@@ -947,6 +983,7 @@
 		407620C81AFEEE8A00100550 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				400881201B4E3A4C00F3868C /* MBProgressHUD */,
 				4076236D1AFEF13400100550 /* SDWebImage */,
 				407623311AFEF0E300100550 /* libPhoneNumber */,
 				4076231C1AFEF0B900100550 /* AWPercentDrivenInteractiveTransition */,
@@ -1400,6 +1437,7 @@
 				408B28941B296ABD0032A659 /* GRVActivitiesCDTVC.m in Sources */,
 				407623141AFEF08E00100550 /* UIAlertView+AFNetworking.m in Sources */,
 				40FAD4401B13D7BF0039B03A /* GRVContactPickerViewController.m in Sources */,
+				400881741B4E3BA600F3868C /* SCIOPixelBuffers.m in Sources */,
 				405BD0531B1A89EF00EDA8F6 /* GRVVideo+HTTP.m in Sources */,
 				407623E51AFF31D400100550 /* Gravvy.xcdatamodeld in Sources */,
 				4064A1901B12A8C100E9C4CB /* GRVPlayerView.m in Sources */,
@@ -1413,6 +1451,7 @@
 				4076207C1AFEC41200100550 /* AppDelegate.m in Sources */,
 				403BC95A1AFF468C009BBD2B /* GRVAddressBookManager.m in Sources */,
 				4034AD7F1B000C4F00162F2C /* GRVRegistrationViewController.m in Sources */,
+				4008817D1B4E3CFE00F3868C /* SCContext.m in Sources */,
 				407623B01AFF164500100550 /* GRVScrollViewContainer.m in Sources */,
 				4034AD881B00103D00162F2C /* GRVProfileSettingsTVC.m in Sources */,
 				407623B31AFF16D800100550 /* GRVLaunchViewController.m in Sources */,
@@ -1441,6 +1480,7 @@
 				407623971AFEF13400100550 /* SDWebImagePrefetcher.m in Sources */,
 				4076236C1AFEF0E300100550 /* NSArray+NBAdditions.m in Sources */,
 				403D34BC1B11480E004FF19E /* SCWeakSelectorTarget.m in Sources */,
+				400881771B4E3C0000F3868C /* SCProcessingQueue.m in Sources */,
 				407623CB1AFF223D00100550 /* GRVHTTPSessionManager.m in Sources */,
 				4076230B1AFEF08E00100550 /* AFHTTPSessionManager.m in Sources */,
 				4076238F1AFEF13400100550 /* MKAnnotationView+WebCache.m in Sources */,
@@ -1462,6 +1502,7 @@
 				403D34B91B11480E004FF19E /* SCAudioTools.m in Sources */,
 				407623B91AFF186100100550 /* GRVModelManager.m in Sources */,
 				407623C81AFF21C000100550 /* GRVJSONResponseSerializer.m in Sources */,
+				400881641B4E3A4C00F3868C /* MBProgressHUD.m in Sources */,
 				407620791AFEC41200100550 /* main.m in Sources */,
 				407623DC1AFF2B1400100550 /* GRVAlertBannerView.m in Sources */,
 				407623981AFEF13400100550 /* UIButton+WebCache.m in Sources */,

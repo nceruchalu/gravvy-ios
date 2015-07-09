@@ -16,3 +16,6 @@
 [submodule "ThirdParty/AMScrollingNavbar"]
 	path = ThirdParty/AMScrollingNavbar
 	url = https://github.com/andreamazz/AMScrollingNavbar.git
+[submodule "ThirdParty/MBProgressHUD"]
+	path = ThirdParty/MBProgressHUD
+	url = https://github.com/jdg/MBProgressHUD.git

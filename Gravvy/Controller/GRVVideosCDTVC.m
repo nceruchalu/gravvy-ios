@@ -689,9 +689,9 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
     GRVVideo *video = [self.fetchedResultsController objectAtIndexPath:self.moreActionsIndexPath];
     NSString *destructiveButtonTitle;
     if ([video.owner.phoneNumber isEqualToString:[GRVAccountManager sharedManager].phoneNumber]) {
-        destructiveButtonTitle = @"Delete";
+        destructiveButtonTitle = @"Delete Video";
     } else {
-        destructiveButtonTitle = @"Leave";
+        destructiveButtonTitle = @"Remove Video";
     }
     
     self.moreActionsActionSheet = [[UIActionSheet alloc] initWithTitle:nil
