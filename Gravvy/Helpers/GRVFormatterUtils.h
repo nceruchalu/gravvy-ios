@@ -46,6 +46,18 @@
  */
 + (NSNumber *)stringToNum:(NSString *)string;
 
+/**
+ * URL encode a string
+ *
+ * @param string    String to be URL-encoded
+ *
+ * @return URL-encoded string
+ *
+ * @ref http://stackoverflow.com/a/3426140
+ * @ref http://stackoverflow.com/a/8088484
+ */
++ (NSString *)urlEncode:(NSString *)string;
+
 
 #pragma mark - Number
 /**

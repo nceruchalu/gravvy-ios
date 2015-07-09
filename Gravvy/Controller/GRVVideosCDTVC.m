@@ -23,6 +23,7 @@
 
 #import <FBSDKShareKit/FBSDKShareKit.h>
 #import <FBSDKCoreKit/FBSDKConstants.h>
+#import <Social/Social.h>
 
 #pragma mark - Constants
 /**
@@ -69,11 +70,12 @@ static const NSString *PlayerCurrentItemContext;
  */
 static const NSInteger kMoreActionsIndexShareFacebook   = 0; // Share on facebook
 static const NSInteger kMoreActionsIndexShareTwitter    = 1; // Share on twitter
+static const NSInteger kMoreActionsIndexCopyLink        = 2; // Copy link
 
 /**
  * Format string for creating a video's share URL
  */
-static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/v/%@";
+static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/v/%@/";
 
 
 @interface GRVVideosCDTVC () <UIActionSheetDelegate, FBSDKSharingDelegate>
@@ -696,7 +698,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
                                                               delegate:self
                                                      cancelButtonTitle:@"Cancel"
                                                 destructiveButtonTitle:nil
-                                                     otherButtonTitles:@"Share on Facebook", @"Share on Twitter", destructiveButtonTitle, nil];
+                                                     otherButtonTitles:@"Share on Facebook", @"Share on Twitter", @"Copy Link", destructiveButtonTitle, nil];
     self.moreActionsActionSheet.destructiveButtonIndex = (self.moreActionsActionSheet.numberOfButtons-2);
     [self.moreActionsActionSheet showInView:self.view];
 }
@@ -714,9 +716,9 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
         if (buttonIndex == actionSheet.destructiveButtonIndex) {
             NSString *destructiveButtonTitle;
             if ([video.owner.phoneNumber isEqualToString:[GRVAccountManager sharedManager].phoneNumber]) {
-                destructiveButtonTitle = @"Delete";
+                destructiveButtonTitle = @"Delete Video";
             } else {
-                destructiveButtonTitle = @"Leave";
+                destructiveButtonTitle = @"Remove Video";
             }
             
             self.removeConfirmationActionSheet = [[UIActionSheet alloc] initWithTitle:@"Confirm Deletion"
@@ -734,6 +736,10 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
                 
                 case kMoreActionsIndexShareTwitter:
                     [self shareOnTwitter:video];
+                    break;
+                    
+                case kMoreActionsIndexCopyLink:
+                    [self copyShareLink:video];
                     break;
                     
                 default:
@@ -811,7 +817,55 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
  */
 - (void)shareOnTwitter:(GRVVideo *)video
 {
-    NSLog(@"twitter: %@", [self videoShareURL:video]);
+    NSString *tweetTitle = [NSString stringWithFormat:@"#np %@", [self videoShareTitle:video]];
+    NSString *tweetURL = [self videoShareURL:video];
+    
+    // Check if twitter account is available on phone
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
+        // Compose a post for twitter
+        __block SLComposeViewController *tweetSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+        [tweetSheet setInitialText:tweetTitle];
+        [tweetSheet addURL:[NSURL URLWithString:tweetURL]];
+        
+        if ([video.hashKey isEqualToString:self.activeVideo.hashKey]) {
+            UIImage *tweetImage = self.activeVideoCell.previewImageView.image;
+            [tweetSheet addImage:tweetImage];
+            [self presentViewController:tweetSheet animated:YES completion:nil];
+            
+        } else {
+            SDWebImageManager *manager = [SDWebImageManager sharedManager];
+            [manager downloadImageWithURL:[NSURL URLWithString:video.photoThumbnailURL]
+                                  options:0
+                                 progress:nil
+                                completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+                                    if (image && finished) {
+                                        [tweetSheet addImage:image];
+                                    }
+                                    [self presentViewController:tweetSheet animated:YES completion:nil];
+                                }];
+        }
+        
+    } else {
+        // twitter account not available so we will open a link in the browser
+        NSString *encodedTweetTitle = [GRVFormatterUtils urlEncode:tweetTitle];
+        NSString *encodedTweetURL = [GRVFormatterUtils urlEncode:tweetURL];
+        NSString *tweetShareURL = [NSString stringWithFormat:@"https://twitter.com/share?text=%@&url=%@", encodedTweetTitle, encodedTweetURL];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:tweetShareURL]];
+        
+    }
+}
+
+/**
+ * Copy video's share link to the clipboard
+ *
+ * @param video Video to be shared
+ */
+- (void)copyShareLink:(GRVVideo *)video
+{
+    NSString *webURL = [self videoShareURL:video];
+    [UIPasteboard generalPasteboard].string = webURL;
+    
+    // TODO: Use alert banner to say "copied link to clip board"
 }
 
 

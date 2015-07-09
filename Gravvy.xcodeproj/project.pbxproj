@@ -160,6 +160,7 @@
 		408B28941B296ABD0032A659 /* GRVActivitiesCDTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 408B28931B296ABD0032A659 /* GRVActivitiesCDTVC.m */; };
 		408DC1001B31360700E28094 /* GRVExtendedCoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 408DC0FF1B31360700E28094 /* GRVExtendedCoreDataTableViewController.m */; };
 		408DC1031B3149FC00E28094 /* GRVActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 408DC1021B3149FC00E28094 /* GRVActivityTableViewCell.m */; };
+		40B4A3521B4DF4F000F2E580 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40B4A3511B4DF4F000F2E580 /* Social.framework */; };
 		40D09E441B4DD70F00A4EF2A /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40D09E421B4DD70F00A4EF2A /* FBSDKCoreKit.framework */; };
 		40D09E451B4DD70F00A4EF2A /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40D09E431B4DD70F00A4EF2A /* FBSDKShareKit.framework */; };
 		40D853BC1B0C69D1001A206A /* GRVCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D853B91B0C69D1001A206A /* GRVCameraViewController.m */; };
@@ -496,6 +497,7 @@
 		408DC1011B3149FC00E28094 /* GRVActivityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVActivityTableViewCell.h; sourceTree = "<group>"; };
 		408DC1021B3149FC00E28094 /* GRVActivityTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVActivityTableViewCell.m; sourceTree = "<group>"; };
 		4090FBBE1B1BFAAA00197D82 /* GRVPrivateTransitionContextDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GRVPrivateTransitionContextDelegate.h; sourceTree = "<group>"; };
+		40B4A3511B4DF4F000F2E580 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		40D09E421B4DD70F00A4EF2A /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = Gravvy/Vendor/FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		40D09E431B4DD70F00A4EF2A /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = Gravvy/Vendor/FBSDKShareKit.framework; sourceTree = "<group>"; };
 		40D853B81B0C69D1001A206A /* GRVCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVCameraViewController.h; sourceTree = "<group>"; };
@@ -546,6 +548,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40B4A3521B4DF4F000F2E580 /* Social.framework in Frameworks */,
 				403D348E1B10470E004FF19E /* CoreVideo.framework in Frameworks */,
 				40F937BE1B0C46F2000F7BCB /* MessageUI.framework in Frameworks */,
 				40D09E451B4DD70F00A4EF2A /* FBSDKShareKit.framework in Frameworks */,
@@ -743,6 +746,7 @@
 		4076209C1AFED85400100550 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				40B4A3511B4DF4F000F2E580 /* Social.framework */,
 				40D09E421B4DD70F00A4EF2A /* FBSDKCoreKit.framework */,
 				40D09E431B4DD70F00A4EF2A /* FBSDKShareKit.framework */,
 				403D348D1B10470E004FF19E /* CoreVideo.framework */,
