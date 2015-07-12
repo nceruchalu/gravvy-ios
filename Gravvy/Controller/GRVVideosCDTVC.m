@@ -202,6 +202,8 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
     // Remove observers from player associated with old player items
     [self.player removeObserver:self forKeyPath:@"rate"];
     [self.player removeObserver:self forKeyPath:@"currentItem"];
+    // Stop player from loading old player items
+    [self.player removeAllItems];
     
     // Set new player items
     _playerItems = [playerItems copy];
@@ -522,7 +524,9 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
     
     // Remove player items, associated observers and player observers
     self.playerItems = nil;
-    // Release old player
+    // Stop old player from loading by removing all items and re-initializng
+    [self.player removeAllItems];
+    self.player = [AVQueuePlayer playerWithURL:[NSURL URLWithString:@""]];
     self.player = nil;
 }
 

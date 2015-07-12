@@ -56,6 +56,11 @@ static const CGFloat kCountdownContainerCornerRadius = 5.0f;
  */
 @property (strong, nonatomic) SCRecorder *recorder;
 
+/**
+ * Communicate with the session and other session objects on this queue.
+ */
+@property (nonatomic) dispatch_queue_t sessionQueue;
+
 @end
 
 
@@ -131,6 +136,15 @@ static const CGFloat kCountdownContainerCornerRadius = 5.0f;
     // Initialize recording duration to update outlets
     self.recordingDuration = 0.0f;
     
+    // In general it is not safe to mutate an AVCaptureSession or any of its
+    // inputs, outputs, or connections from multiple threads at the same time.
+    // Why not do all of this on the main queue?
+    // -[AVCaptureSession startRunning] is a blocking call which can take a long
+    // time. We dispatch session setup to the sessionQueue so that the main
+    // queue isn't blocked (which keeps the UI responsive).
+    dispatch_queue_t sessionQueue = dispatch_queue_create("session queue", DISPATCH_QUEUE_SERIAL);
+    self.sessionQueue = sessionQueue;
+    
     [self setupRecorder];
 }
 
@@ -165,11 +179,6 @@ static const CGFloat kCountdownContainerCornerRadius = 5.0f;
                                              selector:@selector(mediaServicesWereReset:)
                                                  name:AVAudioSessionMediaServicesWereResetNotification
                                                object:nil];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
     [self setupVCOnAppear];
 }
 
@@ -312,6 +321,10 @@ static const CGFloat kCountdownContainerCornerRadius = 5.0f;
  */
 - (void)setupVCOnAppear
 {
+    dispatch_async(self.sessionQueue, ^{
+        [self.recorder startRunning];
+    });
+    
     // Remove separator view as we start revealing capture view
     self.separatorView.hidden = YES;
     
@@ -329,18 +342,17 @@ static const CGFloat kCountdownContainerCornerRadius = 5.0f;
                                  // recording to edit
                                  self.retakeButton.hidden = self.recordingDuration <= 0.0f;
                              }];
-    
-    [self.recorder startRunning];
 }
 
 /**
- * VC's view is disappearing. Cover capture view.
- * Would be nice to stop the recorder here, but that slows down the VC's
- * disappearance
+ * VC's view is disappearing. Cover capture view and stop the recorder
  */
 - (void)cleanupVCOnDisappear
 {
-    //[self.recorder stopRunning];
+    dispatch_async(self.sessionQueue, ^{
+        [self.recorder stopRunning];
+    });
+    
     
     // Cover capture view
     [GRVCameraSlideView showSlideUpView:self.slideUpView slideDownView:self.slideDownView atView:self.previewView completion:^{
