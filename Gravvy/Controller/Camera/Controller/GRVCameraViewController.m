@@ -12,6 +12,7 @@
 #import "GRVConstants.h"
 #import "SCRecorder.h"
 #import "SCRecordSessionSegment.h"
+#import "GRVRecorderManager.h"
 
 /**
  * Countdown container view border radius
@@ -142,7 +143,7 @@ static const CGFloat kCountdownContainerCornerRadius = 5.0f;
     // -[AVCaptureSession startRunning] is a blocking call which can take a long
     // time. We dispatch session setup to the sessionQueue so that the main
     // queue isn't blocked (which keeps the UI responsive).
-    dispatch_queue_t sessionQueue = dispatch_queue_create("session queue", DISPATCH_QUEUE_SERIAL);
+    dispatch_queue_t sessionQueue = dispatch_queue_create("GRVCamera session queue", DISPATCH_QUEUE_SERIAL);
     self.sessionQueue = sessionQueue;
     
     [self setupRecorder];
@@ -165,6 +166,12 @@ static const CGFloat kCountdownContainerCornerRadius = 5.0f;
     // Prepare record session
     [self prepareSession];
     
+    // Could call -[setupVCOnAppear] here but that would make the reveal preview
+    // animation appear as an odd flicker. So simply start running the recorder
+    // here and reveal Camera Preview when the view indeed appears
+    // Start running record session
+    [self startRunningRecorder];
+    
     // Register observers
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(appDidEnterBackground)
@@ -179,7 +186,12 @@ static const CGFloat kCountdownContainerCornerRadius = 5.0f;
                                              selector:@selector(mediaServicesWereReset:)
                                                  name:AVAudioSessionMediaServicesWereResetNotification
                                                object:nil];
-    [self setupVCOnAppear];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self revealCameraPreview];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -219,52 +231,18 @@ static const CGFloat kCountdownContainerCornerRadius = 5.0f;
  */
 - (void)setupRecorder
 {
-    // Setup recorder
-    self.recorder = [SCRecorder recorder];
-    self.recorder.captureSessionPreset = AVCaptureSessionPreset640x480;
-    self.recorder.maxRecordDuration = CMTimeMake(kGRVClipMaximumDuration, 1);
-    self.recorder.delegate = self;
-    self.recorder.autoSetVideoOrientation = YES;
-    self.recorder.initializeSessionLazily = NO;
-    
-    // Setup recorder's video configuration object
-    SCVideoConfiguration *video = self.recorder.videoConfiguration;
-    // Whether the video should be enabled or not
-    video.enabled = YES;
-    // The bitrate of the video video
-    video.bitrate = 1000000; // 1Mbit/s
-    // Size of the video output
-    video.size = CGSizeMake(kGRVVideoSizeWidth, kGRVVideoSizeHeight);
-    // Scaling if the output aspect ratio is different than the output one
-    video.scalingMode = AVVideoScalingModeResizeAspectFill;
-    // The timescale ratio to use. Higher than 1 makes a slow motion,
-    // between 0 and 1 makes a timelapse effect
-    video.timeScale = 1;
-    // Whether the output video size should be infered so it creates a square video
-    video.sizeAsSquare = YES;
-    
-    // Get the audio configuration object
-    SCAudioConfiguration *audio = self.recorder.audioConfiguration;
-    
-    // Whether the audio should be enabled or not
-    audio.enabled = YES;
-    // the bitrate of the audio output is 128kbit/s
-    audio.bitrate = 128000;
-    // Number of audio output channels set to mono
-    audio.channelsCount = 1;
-    // The sample rate of the audio output should be the same as the input
-    audio.sampleRate = 0;
-    // The format of the audio output is AAC
-    audio.format = kAudioFormatMPEG4AAC;
-    
-    // Setup preview view
-    self.recorder.previewView = self.previewView;
-    
-    // Prepare recorder for use
-    NSError *error;
-    if (![self.recorder prepare:&error]) {
-        NSLog(@"Prepare error: %@", error.localizedDescription);
-    }
+    self.recorder = [GRVRecorderManager recorderWithDelegate:self
+                                              andPreviewView:self.previewView];
+}
+
+/**
+ * Start running the already setup recorder @property
+ */
+- (void)startRunningRecorder
+{
+    dispatch_async(self.sessionQueue, ^{
+        [self.recorder startRunning];
+    });
 }
 
 /**
@@ -321,10 +299,15 @@ static const CGFloat kCountdownContainerCornerRadius = 5.0f;
  */
 - (void)setupVCOnAppear
 {
-    dispatch_async(self.sessionQueue, ^{
-        [self.recorder startRunning];
-    });
-    
+    [self startRunningRecorder];
+    [self revealCameraPreview];
+}
+
+/**
+ * Reveal camera preview view
+ */
+- (void)revealCameraPreview
+{
     // Remove separator view as we start revealing capture view
     self.separatorView.hidden = YES;
     
@@ -337,7 +320,7 @@ static const CGFloat kCountdownContainerCornerRadius = 5.0f;
                                  self.actionsView.hidden = NO;
                                  self.shootButton.enabled = YES;
                                  self.retakeButton.enabled = YES;
-                                
+                                 
                                  // Show retake button if there's already a
                                  // recording to edit
                                  self.retakeButton.hidden = self.recordingDuration <= 0.0f;

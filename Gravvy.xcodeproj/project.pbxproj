@@ -153,6 +153,7 @@
 		407623DC1AFF2B1400100550 /* GRVAlertBannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 407623DB1AFF2B1400100550 /* GRVAlertBannerView.m */; };
 		407623E21AFF2CD700100550 /* GRVAlertBannerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 407623E11AFF2CD700100550 /* GRVAlertBannerManager.m */; };
 		407623E51AFF31D400100550 /* Gravvy.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 407623E31AFF31D400100550 /* Gravvy.xcdatamodeld */; };
+		407A16FE1B53561700F086B8 /* GRVRecorderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 407A16FD1B53561700F086B8 /* GRVRecorderManager.m */; };
 		4089BFEC1B03BC17003DF4AA /* CoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4089BFEB1B03BC17003DF4AA /* CoreDataTableViewController.m */; };
 		4089BFF11B03BC36003DF4AA /* ExtendedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4089BFEE1B03BC36003DF4AA /* ExtendedTableViewController.m */; };
 		4089BFF21B03BC36003DF4AA /* ExtendedCoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4089BFF01B03BC36003DF4AA /* ExtendedCoreDataTableViewController.m */; };
@@ -486,6 +487,8 @@
 		407623E01AFF2CD700100550 /* GRVAlertBannerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVAlertBannerManager.h; sourceTree = "<group>"; };
 		407623E11AFF2CD700100550 /* GRVAlertBannerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVAlertBannerManager.m; sourceTree = "<group>"; };
 		407623E41AFF31D400100550 /* Gravvy.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Gravvy.xcdatamodel; sourceTree = "<group>"; };
+		407A16FC1B53561700F086B8 /* GRVRecorderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVRecorderManager.h; sourceTree = "<group>"; };
+		407A16FD1B53561700F086B8 /* GRVRecorderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVRecorderManager.m; sourceTree = "<group>"; };
 		4089BFEA1B03BC17003DF4AA /* CoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataTableViewController.h; sourceTree = "<group>"; };
 		4089BFEB1B03BC17003DF4AA /* CoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataTableViewController.m; sourceTree = "<group>"; };
 		4089BFED1B03BC36003DF4AA /* ExtendedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtendedTableViewController.h; sourceTree = "<group>"; };
@@ -1170,9 +1173,19 @@
 			path = ThirdParty/SDWebImage/SDWebImage;
 			sourceTree = SOURCE_ROOT;
 		};
+		407A16FB1B5355FE00F086B8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				407A16FC1B53561700F086B8 /* GRVRecorderManager.h */,
+				407A16FD1B53561700F086B8 /* GRVRecorderManager.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		40D853AF1B0C5FAA001A206A /* Camera */ = {
 			isa = PBXGroup;
 			children = (
+				407A16FB1B5355FE00F086B8 /* Model */,
 				40D853B71B0C69D1001A206A /* Controller */,
 				40D853BB1B0C69D1001A206A /* View */,
 			);
@@ -1466,6 +1479,7 @@
 				407620CD1AFEEE8A00100550 /* NBPhoneNumberUtil+Shared.m in Sources */,
 				403D34BB1B11480E004FF19E /* SCSampleBufferHolder.m in Sources */,
 				407623161AFEF08E00100550 /* UIImageView+AFNetworking.m in Sources */,
+				407A16FE1B53561700F086B8 /* GRVRecorderManager.m in Sources */,
 				4076239B1AFEF13400100550 /* UIImage+WebP.m in Sources */,
 				407623961AFEF13400100550 /* SDWebImageManager.m in Sources */,
 				403D344A1B100E8F004FF19E /* GRVCameraSlideView.m in Sources */,

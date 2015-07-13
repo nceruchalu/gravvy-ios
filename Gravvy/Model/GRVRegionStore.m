@@ -40,7 +40,7 @@
 - (instancetype)init
 {
     @throw [NSException exceptionWithName:@"Singleton"
-                                   reason:@"Use + [GRVRegionStore sharedManager]"
+                                   reason:@"Use +[GRVRegionStore sharedStore]"
                                  userInfo:nil];
     return nil;
 }

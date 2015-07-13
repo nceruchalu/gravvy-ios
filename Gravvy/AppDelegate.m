@@ -20,6 +20,7 @@
 #import "GRVAlertBannerManager.h"
 #import "GRVUserViewHelper.h"
 #import "GRVUserAvatarView.h"
+#import "GRVRecorderManager.h"
 #import <AudioToolbox/AudioToolbox.h>
 
 #import <Fabric/Fabric.h>
@@ -234,6 +235,9 @@ static NSString *const kRemoteNotificationSoundFileExtension = @"caf";
     dispatch_async(q, ^{
         if ([GRVAddressBookManager authorized]) [GRVContact refreshContacts:nil];
     });
+    
+    // Run AVCaptureSession once so that future launches of camera VC are snappy
+    [[GRVRecorderManager sharedManager] configureCaptureSession];
     
     // Connect app delegate to FBSDKCoreKit
     [FBSDKAppEvents activateApp];
