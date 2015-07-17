@@ -8,9 +8,15 @@
 
 #import "GRVContainerViewController.h"
 
+@class GRVVideosCDTVC;
+
 /**
  * GRVLandingViewController is the landing VC of the app.
  */
 @interface GRVLandingViewController : GRVContainerViewController
+
+#pragma mark - Properties
+// Videos Table View Controller
+@property (strong, nonatomic, readonly) GRVVideosCDTVC *videosVC;
 
 @end

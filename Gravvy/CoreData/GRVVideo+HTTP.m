@@ -99,6 +99,7 @@
     NSArray *clipDicts = [videoDictionary objectForKey:kGRVRESTVideoClipsKey];
     if (clipDicts) {
         // Clip dictionaries only available if we have the full JSON representation
+        [GRVClip deleteClipsNotInClipInfoArray:clipDicts associatedVideo:existingVideo inManagedObjectContext:context];
         [GRVClip clipsWithClipInfoArray:clipDicts associatedVideo:existingVideo inManagedObjectContext:context];
     }
     
@@ -229,6 +230,8 @@
     if (localVideo) {
         // If video is found in local storage, we are done
         if (videoIsFetched) videoIsFetched(localVideo);
+        // still go ahead and refresh the video silentlty
+        [localVideo refreshVideo:nil];
         
     } else {
         // Time for a server request
@@ -317,7 +320,7 @@
 
 #pragma mark - Instance Methods
 #pragma mark Public
-- (void)play
+- (void)play:(void (^)())videoIsPlayed
 {
     NSString *videoDetailPlayURL = [GRVRestUtils videoDetailPlayURL:self.hashKey];
     
@@ -326,7 +329,8 @@
     
     [[GRVHTTPManager sharedManager] request:GRVHTTPMethodPUT forURL:videoDetailPlayURL parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         // refresh video
-        [self refreshVideo:nil];
+        self.playsCount = [responseObject objectForKey:kGRVRESTVideoPlaysCountKey];
+        if (videoIsPlayed) videoIsPlayed();
     } failure:nil];
 }
 

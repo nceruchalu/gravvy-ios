@@ -466,7 +466,10 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
         if (!self.isPlaying) {
             [self playOrPause];
         }
-        [self.activeVideo play];
+        [self.activeVideo play:^{
+            // Refresh video on first autoplay
+            [self.activeVideo refreshVideo:nil];
+        }];
         self.performedAutoPlay = YES;
     }
 }
@@ -702,6 +705,13 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
             [self autoPlayVideo];
         });
     }];
+}
+
+- (void)refreshAndShowSpinner
+{
+    [self.refreshControl beginRefreshing];
+    [self.tableView setContentOffset:CGPointMake(0, 0.0 - self.tableView.contentInset.top - self.refreshControl.frame.size.height) animated:YES];
+    [self refresh];
 }
 
 
@@ -1036,7 +1046,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
     [self.player insertItem:playedItem afterItem:nil];
     
     if (playedItem == [self.playerItems lastObject]) {
-        [self.activeVideo play];
+        [self.activeVideo play:nil];
     }
 }
 

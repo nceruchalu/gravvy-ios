@@ -110,8 +110,10 @@
 #pragma mark - Instance Methods
 /**
  * Record play of this video on the server and locally
+ *
+ * @param videoIsPlayed block to be called after playing the video
  */
-- (void)play;
+- (void)play:(void (^)())videoIsPlayed;
 
 /**
  * Record like/unlike of this video on the server and locally

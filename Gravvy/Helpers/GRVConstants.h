@@ -429,4 +429,15 @@ typedef enum : NSUInteger {
 } GRVRemoteNotificationType;
 
 
+/**
+ * Membership status in Video
+ */
+typedef enum : NSUInteger {
+    GRVVideoMembershipNone = 0,     // Neither video member nor invitee
+    GRVVideoMembershipMember,       // Member of a video
+    GRVVideoMembershipInvited,      // Invited to a video
+    GRVVideoMembershipCreated       // Viewed invitation.
+} GRVVideoMembership;
+
+
 // EOF

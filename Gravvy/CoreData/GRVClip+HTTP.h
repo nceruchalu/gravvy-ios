@@ -61,4 +61,16 @@
                     associatedVideo:(GRVVideo *)video
              inManagedObjectContext:(NSManagedObjectContext *)context;
 
+
+/**
+ * Delete GRVClip objects not in a provided array of clip JSON objects.
+ *
+ * @param clipDicts     Array of clipDictionary objects, where each contains
+ *                      JSON data as expected from server.
+ * @param video         GRVVideo object that clips belong to
+ * @param context       handle to database
+ */
++ (void)deleteClipsNotInClipInfoArray:(NSArray *)clipDicts
+                      associatedVideo:(GRVVideo *)video
+               inManagedObjectContext:(NSManagedObjectContext *)context;
 @end

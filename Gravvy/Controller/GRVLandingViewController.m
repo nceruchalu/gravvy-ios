@@ -134,6 +134,15 @@ static CGFloat const scrollingNavBarDelay = 480.0f;
     return _successProgressHUD;
 }
 
+- (GRVVideosCDTVC *)videosVC
+{
+    GRVVideosCDTVC *vc = nil;
+    if ([self.viewControllers count]) {
+       vc = [self.viewControllers objectAtIndex:0];
+    }
+    return vc;
+}
+
 
 #pragma mark - Initialization
 #pragma mark Concrete Helpers
@@ -283,12 +292,8 @@ static CGFloat const scrollingNavBarDelay = 480.0f;
     }
     
     // Stop player before continuing
-    for (UIViewController *vc in self.viewControllers) {
-        if ([vc isKindOfClass:[GRVVideosCDTVC class]]) {
-            GRVVideosCDTVC *videosVC = (GRVVideosCDTVC *)vc;
-            [videosVC stop];
-        }
-    }
+    [self.videosVC stop];
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         // Give the avplayer cleanup some time to occur before presenting camera VC
         [self performSegueWithIdentifier:kSegueIdentifierCreateVideo sender:self];
@@ -328,6 +333,12 @@ static CGFloat const scrollingNavBarDelay = 480.0f;
 {
     if ([segue.sourceViewController isKindOfClass:[GRVCreateVideoContactPickerVC class]]) {
         //GRVCreateVideoContactPickerVC *contactPickerVC = (GRVCreateVideoContactPickerVC *)segue.sourceViewController;
+
+        // Updated video is now at the top of the video TVC, so scroll to top
+        [self.videosVC.tableView setContentOffset:CGPointMake(0.0, 0.0 - self.videosVC.tableView.contentInset.top)
+                                         animated:YES];
+        
+        
         [self showProgressHUDSuccessMessage:@"Created Video"];
     }
 }

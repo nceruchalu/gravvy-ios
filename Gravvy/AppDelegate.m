@@ -21,6 +21,9 @@
 #import "GRVUserViewHelper.h"
 #import "GRVUserAvatarView.h"
 #import "GRVRecorderManager.h"
+#import "GRVLandingViewController.h"
+#import "GRVVideosCDTVC.h"
+#import "GRVFormatterUtils.h"
 #import <AudioToolbox/AudioToolbox.h>
 
 #import <Fabric/Fabric.h>
@@ -317,7 +320,140 @@ static NSString *const kRemoteNotificationSoundFileExtension = @"caf";
     
     NSManagedObjectContext *context = [GRVModelManager sharedManager].managedObjectContext;
     if (context) {
-#warning finish this method
+        // We only bother with this if there is indeed a context
+        // Now go get the appropriate video either from local storage or the server
+        [GRVVideo fetchVideoWithVideoHashKey:videoHashKey inManagedObjectContext:context withCompletion:^(GRVVideo *video) {
+            if (video) {
+
+                // if app user has been kicked out of the video, delete it
+                if (notificationType == GRVRemoteNotificationTypeRemovedMember) {
+                    if ([notificationObjectIdentifier isKindOfClass:[NSString class]]) {
+                        NSString *phoneNumber = (NSString *)notificationObjectIdentifier;
+                        if ([phoneNumber isEqualToString:[GRVAccountManager sharedManager].phoneNumber]) {
+                            [context deleteObject:video];
+                        }
+                    }
+                }
+                
+                if (application.applicationState == UIApplicationStateInactive ||
+                    application.applicationState == UIApplicationStateBackground) {
+                    // If app was launched by a remote notification when app was
+                    // in the background, process this like we would for a
+                    // remote notification received on application startup.
+                    
+                    // Only cache event name when necessary.
+                    self.remoteNotificationVideoHashKey = videoHashKey;
+                    self.remoteNotificationType = notificationType;
+                    [self processPendingLaunchRemoteNotification];
+                    
+                } else {
+                    // The notification was delivered when app is running in the
+                    // foreground so show an alert banner for the specific event
+                    // if not already in the event view for that event
+                    
+                    // Check if already showing the video view for the video in
+                    // the remote notification
+                    BOOL alreadyShowingVideoView = NO;
+                    UIViewController *topVC = [self topMostViewController];
+                    if ([topVC isKindOfClass:[GRVLandingViewController class]]) {
+                        GRVLandingViewController *landingVC = (GRVLandingViewController *)topVC;
+                        if ((UIViewController *)landingVC.videosVC == landingVC.selectedViewController) {
+                            // Is the videos VC the selected VC? if so check
+                            // if the currently active video is the push
+                            // notification video
+                            if ([landingVC.videosVC.activeVideo.hashKey isEqualToString:videoHashKey]) {
+                                alreadyShowingVideoView = YES;
+                                // TODO: Pass this notification to the videos VC
+                            }
+                        }
+                    }
+                    
+                    if (!alreadyShowingVideoView && [remoteNotificationAlert length]) {
+                        // If not already showing this video's view, and remote
+                        // notification has an alert, show an alert banner
+                        // Get alert title
+                        
+                        NSString *alertTitle;
+                        if ([video.title length]) {
+                            alertTitle = [NSString stringWithFormat:@"\"%@\"", video.title];
+                        } else {
+                            NSString *owner = [GRVUserViewHelper userFirstName:video.owner];
+                            NSString *createdAt = [GRVFormatterUtils dayAndYearStringForDate:video.createdAt];
+                            alertTitle = [NSString stringWithFormat:@"%@'s %@ video", owner, createdAt];
+                        }
+                        
+                        // Get user's name
+                        GRVUser *videoUser = [GRVUser findUserWithPhoneNumber:userPhoneNumber inManagedObjectContext:context];
+                        NSString *senderName = userPhoneNumber;
+                        if (videoUser) {
+                            senderName = [GRVUserViewHelper userFullNameOrPhoneNumber:videoUser];
+                        } else if ([userFullName length]) {
+                            senderName = userFullName;
+                        }
+                        
+                        // Use user's name as part of alert message
+                        NSString *alertMessage = [NSString stringWithFormat:@"%@: %@", senderName, remoteNotificationMessage];
+                        
+                        // Get alert avatar data
+                        GRVUserAvatarView *userAvatarView = [GRVUserViewHelper userAvatarView:videoUser];
+                        
+                        // Cache notification type as this will be used when
+                        // displaying video view
+                        self.remoteNotificationType = notificationType;
+                        __weak AppDelegate *weakSelf = self;
+                        GRVAlertBannerView *banner =
+                        [GRVAlertBannerView alertBannerForView:[self viewForBannerAlert]
+                                                         title:alertTitle message:alertMessage
+                                               avatarThumbnail:userAvatarView.thumbnail
+                                                  withInitials:userAvatarView.userInitials
+                                                   tappedBlock:^(GRVAlertBannerView *alertBanner)
+                        {
+                            // Hide alert banner
+                            [alertBanner hide];
+                            
+                            // Display video's details
+                            [weakSelf displayVideoView:videoHashKey withAnimation:YES];
+                            
+                            // Clear remote notification references that will be
+                            //  reconfigured on next notification
+                            weakSelf.remoteNotificationVideoHashKey = nil;
+                            weakSelf.remoteNotificationType = GRVRemoteNotificationTypeDefault;
+                        }
+                                     andCloseButtonTappedBlock:^(GRVAlertBannerView *alertBanner)
+                        {
+                            // Dismiss event by hiding alert banner
+                            [alertBanner hide];
+                            
+                            // Clear remote notification references that will be
+                            //  reconfigured on next notification
+                            weakSelf.remoteNotificationVideoHashKey = nil;
+                            weakSelf.remoteNotificationType = GRVRemoteNotificationTypeDefault;
+                        }];
+                        
+                        // Hide previous alert banners and show new banner
+                        [[GRVAlertBannerManager sharedManager] hideAllAlertBanners];
+                        [banner show];
+                        
+                        // Play sound if user allows this
+                        // TODO: Vary sounds by remote notification types
+                        if ([GRVModelManager sharedManager].userSoundsSetting) {
+                            AudioServicesPlaySystemSound(self.soundFileObject);
+                            // Could vibrate by uncommenting the below:
+                            // AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+                        }
+                        
+                        // Would cache alert and video hashkey for future
+                        // reference but that's unnecessary given that the
+                        // block captures the event name
+                        
+                    } // end if (!alreadyShowingVideoView)
+                    
+                } // end check for if app is coming from background
+                
+            } // end if(video)
+            
+        }]; // end fetchVideoWithVideoHashKey:inManagedObjectContext:withCompletion:
+        
     } // end if(context)
 }
 
@@ -447,7 +583,7 @@ static NSString *const kRemoteNotificationSoundFileExtension = @"caf";
 }
 
 /**
- * Modally present an Video Container VC for a video of a given hash key
+ * Present an Video View for a video of a given hash key
  *
  * @warning If the video isn't in local storage by the time this is called,
  *      it will do a server fetch first
@@ -455,14 +591,22 @@ static NSString *const kRemoteNotificationSoundFileExtension = @"caf";
  * @param videoHashKey      identifier of video to be displayed
  * @param animated          Should the presentation be animated?
  */
-- (void)displayVideoContainer:(NSString *)videoHashKey withAnimation:(BOOL)animated
+- (void)displayVideoView:(NSString *)videoHashKey withAnimation:(BOOL)animated
 {
     
     // Some basic error checking for an argument
     if (![videoHashKey length]) {
         return;
     }
-#warning finish this method
+    
+    UIViewController *topVC = [self topMostViewController];
+    if ([topVC isKindOfClass:[GRVLandingViewController class]]) {
+        GRVLandingViewController *landingVC = (GRVLandingViewController *)topVC;
+        
+        // Navigate to videosVC and refresh
+        landingVC.selectedIndex = 0;
+        [landingVC.videosVC refreshAndShowSpinner];
+    }
 }
 
 
@@ -489,7 +633,7 @@ static NSString *const kRemoteNotificationSoundFileExtension = @"caf";
 #pragma mark Public
 - (void)processPendingLaunchRemoteNotification
 {
-    [self displayVideoContainer:self.remoteNotificationVideoHashKey withAnimation:YES];
+    [self displayVideoView:self.remoteNotificationVideoHashKey withAnimation:YES];
     
     // Clear remote notification references that will be reconfigured on
     // next notification

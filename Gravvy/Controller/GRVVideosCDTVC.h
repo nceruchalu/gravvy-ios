@@ -8,11 +8,19 @@
 
 #import "GRVExtendedCoreDataTableViewController.h"
 
+@class GRVVideo;
+
 /**
  * GRVVideosCDTVC is a class that represents a Core Data TableViewController
  * which is specialized to displaying a list of Videos.
  */
 @interface GRVVideosCDTVC : GRVExtendedCoreDataTableViewController
+
+#pragma mark - Properties
+/**
+ * Currently active video which might or might not be playing
+ */
+@property (strong, nonatomic, readonly) GRVVideo *activeVideo;
 
 #pragma mark - Instance Methods
 /**
@@ -25,5 +33,10 @@
  *
  */
 - (void)stop;
+
+/**
+ * Refresh and show spinner after scrolling to the top
+ */
+- (void)refreshAndShowSpinner;
 
 @end
