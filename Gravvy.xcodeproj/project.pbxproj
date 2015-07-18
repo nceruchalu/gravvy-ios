@@ -11,6 +11,7 @@
 		400881741B4E3BA600F3868C /* SCIOPixelBuffers.m in Sources */ = {isa = PBXBuildFile; fileRef = 400881731B4E3BA600F3868C /* SCIOPixelBuffers.m */; };
 		400881771B4E3C0000F3868C /* SCProcessingQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 400881761B4E3C0000F3868C /* SCProcessingQueue.m */; };
 		4008817D1B4E3CFE00F3868C /* SCContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 4008817C1B4E3CFE00F3868C /* SCContext.m */; };
+		401EFE141B5A3036003B2507 /* GRVBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 401EFE131B5A3036003B2507 /* GRVBadgeView.m */; };
 		4023299B1B09AA0200BFD2D5 /* GRVContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 402329931B09AA0200BFD2D5 /* GRVContainerViewController.m */; };
 		4023299C1B09AA0200BFD2D5 /* GRVPanGestureInteractiveTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 402329961B09AA0200BFD2D5 /* GRVPanGestureInteractiveTransition.m */; };
 		4023299D1B09AA0200BFD2D5 /* GRVPrivateAnimatedTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 402329981B09AA0200BFD2D5 /* GRVPrivateAnimatedTransition.m */; };
@@ -213,6 +214,8 @@
 		400881761B4E3C0000F3868C /* SCProcessingQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCProcessingQueue.m; path = ThirdParty/SCRecorder/Library/Sources/SCProcessingQueue.m; sourceTree = SOURCE_ROOT; };
 		4008817B1B4E3CFE00F3868C /* SCContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCContext.h; path = ThirdParty/SCRecorder/Library/Sources/SCContext.h; sourceTree = SOURCE_ROOT; };
 		4008817C1B4E3CFE00F3868C /* SCContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCContext.m; path = ThirdParty/SCRecorder/Library/Sources/SCContext.m; sourceTree = SOURCE_ROOT; };
+		401EFE121B5A3036003B2507 /* GRVBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVBadgeView.h; sourceTree = "<group>"; };
+		401EFE131B5A3036003B2507 /* GRVBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVBadgeView.m; sourceTree = "<group>"; };
 		402329921B09AA0200BFD2D5 /* GRVContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVContainerViewController.h; sourceTree = "<group>"; };
 		402329931B09AA0200BFD2D5 /* GRVContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVContainerViewController.m; sourceTree = "<group>"; };
 		402329941B09AA0200BFD2D5 /* GRVContainerViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVContainerViewControllerDelegate.h; sourceTree = "<group>"; };
@@ -1017,6 +1020,8 @@
 				40DAD9A81B44F63B0038B8CB /* GRVVideoSectionHeaderView.h */,
 				40DAD9A91B44F63B0038B8CB /* GRVVideoSectionHeaderView.m */,
 				40DAD9AB1B44F6C00038B8CB /* GRVVideoSectionHeaderView.xib */,
+				401EFE121B5A3036003B2507 /* GRVBadgeView.h */,
+				401EFE131B5A3036003B2507 /* GRVBadgeView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1444,6 +1449,7 @@
 				4034AD821B000CA600162F2C /* GRVCountrySelectTVC.m in Sources */,
 				4076239E1AFEF13400100550 /* UIView+WebCacheOperation.m in Sources */,
 				4089BFF11B03BC36003DF4AA /* ExtendedTableViewController.m in Sources */,
+				401EFE141B5A3036003B2507 /* GRVBadgeView.m in Sources */,
 				403D34C21B114848004FF19E /* SCFilter.m in Sources */,
 				408B28911B27F4E00032A659 /* GRVActivity+HTTP.m in Sources */,
 				407623C51AFF212E00100550 /* GRVHTTPManager.m in Sources */,

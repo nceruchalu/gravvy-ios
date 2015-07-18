@@ -171,6 +171,24 @@
                                             <constraint firstAttribute="height" constant="1" id="zrl-6P-Uxo"/>
                                         </constraints>
                                     </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yQP-FT-Eix" userLabel="Badge View container">
+                                        <rect key="frame" x="260" y="20" width="20" height="20"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Vt-KJ-G5c" customClass="GRVBadgeView">
+                                                <rect key="frame" x="0.0" y="0.5" width="20" height="19.5"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="6Vt-KJ-G5c" secondAttribute="bottom" id="6Me-73-nKL"/>
+                                            <constraint firstAttribute="height" priority="999" constant="20" id="8LN-ou-t5o"/>
+                                            <constraint firstAttribute="trailing" secondItem="6Vt-KJ-G5c" secondAttribute="trailing" id="QG7-VU-uto"/>
+                                            <constraint firstItem="6Vt-KJ-G5c" firstAttribute="leading" secondItem="yQP-FT-Eix" secondAttribute="leading" id="Tnb-4l-W7c"/>
+                                            <constraint firstAttribute="width" priority="999" constant="20" id="i3t-Gs-mSn"/>
+                                            <constraint firstItem="6Vt-KJ-G5c" firstAttribute="top" secondItem="yQP-FT-Eix" secondAttribute="top" id="xHK-Xq-cE8"/>
+                                        </constraints>
+                                    </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f4o-pX-Aul" userLabel="Current Button Indicator">
                                         <rect key="frame" x="28" y="39" width="244" height="2"/>
                                         <color key="backgroundColor" red="0.0" green="0.74901960779999999" blue="0.56078431370000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -207,10 +225,12 @@
                                     <constraint firstItem="obv-sf-P5h" firstAttribute="leading" secondItem="b5i-ft-QLS" secondAttribute="trailing" id="d0W-1f-HD6"/>
                                     <constraint firstItem="b5i-ft-QLS" firstAttribute="leading" secondItem="BEK-NR-Bpm" secondAttribute="leading" id="eD1-3L-iKp"/>
                                     <constraint firstItem="obv-sf-P5h" firstAttribute="width" secondItem="b5i-ft-QLS" secondAttribute="width" id="f8D-NT-fY3"/>
+                                    <constraint firstItem="b5i-ft-QLS" firstAttribute="trailing" secondItem="yQP-FT-Eix" secondAttribute="trailing" constant="20" id="i4t-9W-RlS"/>
                                     <constraint firstItem="f4o-pX-Aul" firstAttribute="centerX" secondItem="BEK-NR-Bpm" secondAttribute="leading" constant="150" id="jan-Ne-p3X"/>
                                     <constraint firstItem="f4o-pX-Aul" firstAttribute="bottom" secondItem="b5i-ft-QLS" secondAttribute="bottom" id="oZk-8p-HYu"/>
                                     <constraint firstItem="obv-sf-P5h" firstAttribute="height" secondItem="b5i-ft-QLS" secondAttribute="height" id="rJr-Ek-LWt"/>
                                     <constraint firstAttribute="bottom" secondItem="As4-xs-aAN" secondAttribute="bottom" id="rh3-G0-RzT"/>
+                                    <constraint firstItem="As4-xs-aAN" firstAttribute="top" secondItem="yQP-FT-Eix" secondAttribute="bottom" id="xwZ-xf-doJ"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QDF-nW-e4j" userLabel="Container View">
@@ -250,6 +270,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="activitiesButton" destination="obv-sf-P5h" id="zI2-ao-REQ"/>
+                        <outlet property="badgeView" destination="6Vt-KJ-G5c" id="foy-Zr-OSK"/>
                         <outlet property="containerView" destination="QDF-nW-e4j" id="Itl-TX-edp"/>
                         <outlet property="currentButtonIndicatorHorizontalCenterLayout" destination="jan-Ne-p3X" id="lba-y5-S3Y"/>
                         <outlet property="navigationButtonsContainerView" destination="BEK-NR-Bpm" id="16c-Hm-kiP"/>

@@ -22,6 +22,7 @@
 #### Other Libraries
 * [ALAlertBanner](https://github.com/alobi/ALAlertBanner): Using modified version of this.
 * [TGCameraViewController](https://github.com/tdginternet/TGCameraViewController): Camera View Controller is based on this.
+* [Sheriff](https://github.com/gemr/sheriff)
 
 ### Working with Git Submodules
 * All submodules can be found in the `ThirdParty/` directory

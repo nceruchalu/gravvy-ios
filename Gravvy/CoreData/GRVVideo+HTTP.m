@@ -288,9 +288,13 @@
                              // Now refresh the videos
                              NSArray *refreshedVideos = [GRVVideo videosWithVideoInfoArray:videosJSON inManagedObjectContext:workerContext];
                              
-                             // Order refreshed videos by descending updatedAt
+                             // Order refreshed videos by descending unseen clips
+                             // count, unseen likes count, and updatedAt
+                             NSSortDescriptor *unseenClipsCountSort = [NSSortDescriptor sortDescriptorWithKey:@"unseenClipsCount" ascending:NO];
+                             NSSortDescriptor *unseenLikesCountSort = [NSSortDescriptor sortDescriptorWithKey:@"unseenLikesCount" ascending:NO];
                              NSSortDescriptor *updatedAtSort = [NSSortDescriptor sortDescriptorWithKey:@"updatedAt" ascending:NO];
-                             refreshedVideos = [refreshedVideos sortedArrayUsingDescriptors:@[updatedAtSort]];
+                             
+                             refreshedVideos = [refreshedVideos sortedArrayUsingDescriptors:@[unseenClipsCountSort, unseenLikesCountSort, updatedAtSort]];
                              NSUInteger idx = 0;
                              for (GRVVideo *video in refreshedVideos) {
                                  video.order = @(idx);

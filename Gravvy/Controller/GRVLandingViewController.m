@@ -14,6 +14,8 @@
 #import "GRVExtendedCoreDataTableViewController.h"
 #import "MBProgressHUD.h"
 #import "GRVVideosCDTVC.h"
+#import "GRVBadgeView.h"
+#import "GRVModelManager.h"
 //#import "UIViewController+ScrollingNavbar.h"
 
 #pragma mark - Constants
@@ -51,12 +53,14 @@ static NSString *const kStoryboardIdentifierActivities  = @"Activities";
 static CGFloat const scrollingNavBarDelay = 480.0f;
 #endif
 
-@interface GRVLandingViewController () <GRVPrivateTransitionContextDelegate>
+@interface GRVLandingViewController () <GRVPrivateTransitionContextDelegate,
+                                        NSFetchedResultsControllerDelegate>
 
 #pragma mark - Properties
 #pragma mark Outlets
 @property (weak, nonatomic) IBOutlet UIButton *videosButton;
 @property (weak, nonatomic) IBOutlet UIButton *activitiesButton;
+@property (weak, nonatomic) IBOutlet GRVBadgeView *badgeView;
 
 /**
  * Horizontal position of center of button indicator in the navigation buttons
@@ -74,6 +78,20 @@ static CGFloat const scrollingNavBarDelay = 480.0f;
 @property (nonatomic) CGFloat buttonIndicatorOffset;
 
 @property (strong, nonatomic) MBProgressHUD *successProgressHUD;
+
+
+#pragma mark Notifications Badge
+@property (nonatomic) NSUInteger badgeValue;
+
+/**
+ * The controller (this class) fetches nothing if this is not set
+ */
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+
+/**
+ * Handle to the database
+ */
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @end
 
@@ -143,6 +161,40 @@ static CGFloat const scrollingNavBarDelay = 480.0f;
     return vc;
 }
 
+- (void)setBadgeValue:(NSUInteger)badgeValue
+{
+    _badgeValue = badgeValue;
+    self.badgeView.badgeValue = badgeValue;
+    
+}
+
+- (void)setManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
+{
+    _managedObjectContext = managedObjectContext;
+    [self setupFetchedResultsController];
+}
+
+// setup new fetchResultsController property
+//   set delegate (as self)
+//   call performFetch if we got a new fetchResultsController
+//      or clear badge view if this was removed
+- (void)setFetchedResultsController:(NSFetchedResultsController *)newfrc
+{
+    // only bother changing the fetchedResultsController if receiving a new one.
+    NSFetchedResultsController *oldfrc = _fetchedResultsController;
+    if (newfrc != oldfrc) {
+        _fetchedResultsController = newfrc;
+        newfrc.delegate = self;
+        
+        // either fetch new data or clear out badge view.
+        if (newfrc) {
+            [self performFetch];
+        } else {
+            self.badgeValue = 0;
+        }
+    }
+}
+
 
 #pragma mark - Initialization
 #pragma mark Concrete Helpers
@@ -203,6 +255,8 @@ static CGFloat const scrollingNavBarDelay = 480.0f;
     self.navigationItem.hidesBackButton = YES;
     self.buttonIndicatorOffset = 0;
     
+    self.badgeValue = 0;
+    
 #ifdef GRV_USE_SCROLLING_NAVBAR
     // Setup Scrollable UINavigationBar that follows the scrolling of a UIScrollView
     self.navigationController.navigationBar.translucent = NO;
@@ -211,6 +265,20 @@ static CGFloat const scrollingNavBarDelay = 480.0f;
     self.navigationController.navigationBar.translucent = YES;
     [self setShouldScrollWhenContentFits:YES];
 #endif
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    // setup the managedObjectContext @property
+    self.managedObjectContext = [GRVModelManager sharedManager].managedObjectContext;
+    
+    // register observers
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(managedObjectContextReady:)
+                                                 name:kGRVMOCAvailableNotification
+                                               object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -227,6 +295,17 @@ static CGFloat const scrollingNavBarDelay = 480.0f;
     [self showNavBarAnimated:NO];
 #endif
 }
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    // remove observers
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:kGRVMOCAvailableNotification
+                                                  object:nil];
+}
+
 
 #ifdef GRV_USE_SCROLLING_NAVBAR
 - (void)dealloc
@@ -341,6 +420,53 @@ static CGFloat const scrollingNavBarDelay = 480.0f;
         
         [self showProgressHUDSuccessMessage:@"Created Video"];
     }
+}
+
+
+#pragma mark - Fetching
+// perform fetch on fetchedResultsController @property
+- (void)performFetch
+{
+    if (self.fetchedResultsController) {
+        NSError *error;
+        [self.fetchedResultsController performFetch:&error];
+    }
+}
+
+- (void)setupFetchedResultsController
+{
+    if (self.managedObjectContext) {
+        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"GRVVideo"];
+        // fetch all new videos or videos with unseen notifications
+        request.predicate = [NSPredicate predicateWithFormat:@"(unseenClipsCount > 0) OR (unseenLikesCount > 0) OR (order == %d)", kGRVVideoOrderNew];
+        
+        // Sort videos because an instance of NSFetchedResultsController requires
+        // a fetch request with sort descriptors
+        NSSortDescriptor *orderSort = [NSSortDescriptor sortDescriptorWithKey:@"updatedAt" ascending:YES];
+        request.sortDescriptors = @[orderSort];
+        
+        self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+        
+    } else {
+        self.fetchedResultsController = nil;
+    }
+}
+
+#pragma mark - NSFetchedResultsControllerDelegate
+- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
+{
+    // Get number of videos with notifications
+    self.badgeValue = [self.fetchedResultsController.fetchedObjects count];
+}
+
+
+#pragma mark - Notification Observer Methods
+/**
+ * ManagedObjectContext now available from EVTModelManager so update local copy
+ */
+- (void)managedObjectContextReady:(NSNotification *)aNotification
+{
+    self.managedObjectContext = [GRVModelManager sharedManager].managedObjectContext;
 }
 
 

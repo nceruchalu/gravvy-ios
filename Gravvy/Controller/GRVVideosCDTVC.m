@@ -470,6 +470,13 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
             // Refresh video on first autoplay
             [self.activeVideo refreshVideo:nil];
         }];
+        
+        // If unread notifications as of the first play, clear those here
+        if (([self.activeVideo.unseenLikesCount integerValue] > 0) ||
+            ([self.activeVideo.unseenClipsCount integerValue] > 0)) {
+            [self.activeVideo clearNotifications:nil];
+        }
+        
         self.performedAutoPlay = YES;
     }
 }
