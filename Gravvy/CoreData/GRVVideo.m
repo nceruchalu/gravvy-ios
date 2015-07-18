@@ -25,6 +25,8 @@
 @dynamic photoSmallThumbnailURL;
 @dynamic playsCount;
 @dynamic title;
+@dynamic unseenClipsCount;
+@dynamic unseenLikesCount;
 @dynamic updatedAt;
 @dynamic clips;
 @dynamic members;

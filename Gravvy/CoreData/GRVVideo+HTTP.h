@@ -25,6 +25,8 @@
  * photoThumbnailURL        URL location of video's cover image
  * playsCount               Number of video plays
  * title                    Video title/caption
+ * unseenClipsCount         Number of unseen video clips
+ * unseenLikesCount         Number of unseen video likes
  * updatedAt                this attribute will automatically be updated with the
  *                            current date and time by the server whenever anything
  *                            changes on a Video record. It is used for sync purposes
@@ -121,6 +123,13 @@
  * @param likeIsToggled   block to be called after toggling the like of a video
  */
 - (void)toggleLike:(void (^)())likeIsToggled;
+
+/**
+ * Clear notifications of this video on the server and locally
+ * 
+ * @param notificationsCleared  block to be called after clearing notifications
+ */
+- (void)clearNotifications:(void (^)())notificationsCleared;
 
 /**
  * Revoke app user's membership from this video locally and on server.

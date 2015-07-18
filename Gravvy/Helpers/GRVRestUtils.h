@@ -42,6 +42,15 @@
 + (NSString *)videoDetailLikeURL:(NSString *)videoHashKey;
 
 /**
+ * Generate the relative URL for a REST API's Video Clear Notifications
+ *
+ * @param videoHashKey      hashKey of video of interest
+ *
+ * @return relative URL
+ */
++ (NSString *)videoDetailClearNotificationsURL:(NSString *)videoHashKey;
+
+/**
  * Generate the relative URL for a REST API's Video Member List
  *
  * @param videoHashKey      hashKey of video of interest

@@ -86,6 +86,7 @@ NSString *const kGRVRESTVideoMembers            = @"users/";
 NSString *const kGRVRESTVideoClips              = @"clips/";
 NSString *const kGRVRESTVideoPlay               = @"play/";
 NSString *const kGRVRESTVideoLike               = @"like/";
+NSString *const kGRVRESTVideoClearNotifications = @"clearnotifications/";
 
 // -----------------------------------------------------------------------------
 // REST API Object Keys
@@ -120,6 +121,8 @@ NSString *const kGRVRESTVideoPhotoSmallThumbnailKey = @"photo_small_thumbnail";
 NSString *const kGRVRESTVideoPhotoThumbnailKey      = @"photo_thumbnail";
 NSString *const kGRVRESTVideoPlaysCountKey          = @"plays_count";
 NSString *const kGRVRESTVideoTitleKey               = @"title";
+NSString *const kGRVRESTVideoUnseenClipsCountKey    = @"new_clips_count";
+NSString *const kGRVRESTVideoUnseenLikesCountKey    = @"new_likes_count";
 NSString *const kGRVRESTVideoUpdatedAtKey           = @"updated_at";
 NSString *const kGRVRESTVideoUsersKey               = @"users";
 

@@ -66,6 +66,8 @@
         <attribute name="photoThumbnailURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="playsCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="unseenClipsCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="unseenLikesCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="activitiesUsingAsObject" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="GRVActivity" inverseName="objectVideo" inverseEntity="GRVActivity" syncable="YES"/>
         <relationship name="activitiesUsingAsTarget" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="GRVActivity" inverseName="targetVideo" inverseEntity="GRVActivity" syncable="YES"/>
@@ -80,6 +82,6 @@
         <element name="GRVMember" positionX="196" positionY="-36" width="128" height="120"/>
         <element name="GRVUser" positionX="-9" positionY="-45" width="128" height="223"/>
         <element name="GRVUserThumbnail" positionX="-189" positionY="-72" width="128" height="88"/>
-        <element name="GRVVideo" positionX="367" positionY="-117" width="128" height="285"/>
+        <element name="GRVVideo" positionX="367" positionY="-117" width="128" height="315"/>
     </elements>
 </model>

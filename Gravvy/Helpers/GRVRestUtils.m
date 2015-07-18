@@ -28,6 +28,12 @@
     return [NSString stringWithFormat:@"%@%@", videoDetailURL, kGRVRESTVideoLike];
 }
 
++ (NSString *)videoDetailClearNotificationsURL:(NSString *)videoHashKey
+{
+    NSString *videoDetailURL = [GRVRestUtils videoDetailURL:videoHashKey];
+    return [NSString stringWithFormat:@"%@%@", videoDetailURL, kGRVRESTVideoClearNotifications];
+}
+
 + (NSString *)videoMemberListURL:(NSString *)videoHashKey
 {
     NSString *videoDetailURL = [GRVRestUtils videoDetailURL:videoHashKey];

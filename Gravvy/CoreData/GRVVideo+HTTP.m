@@ -58,6 +58,8 @@
         newVideo.createdAt = createdAt;
         newVideo.liked = @([[videoDictionary objectForKey:kGRVRESTVideoLikedKey] boolValue]);
         newVideo.likesCount = [videoDictionary objectForKey:kGRVRESTVideoLikesCountKey];
+        newVideo.unseenClipsCount = [videoDictionary objectForKey:kGRVRESTVideoUnseenClipsCountKey];
+        newVideo.unseenLikesCount = [videoDictionary objectForKey:kGRVRESTVideoUnseenLikesCountKey];
         newVideo.photoThumbnailURL = [[videoDictionary objectForKey:kGRVRESTVideoPhotoThumbnailKey] description];
         newVideo.playsCount = [videoDictionary objectForKey:kGRVRESTVideoPlaysCountKey];
         newVideo.updatedAt = updatedAt;
@@ -122,6 +124,8 @@
             existingVideo.createdAt = createdAt;
             existingVideo.liked = @([[videoDictionary objectForKey:kGRVRESTVideoLikedKey] boolValue]);
             existingVideo.likesCount = [videoDictionary objectForKey:kGRVRESTVideoLikesCountKey];
+            existingVideo.unseenClipsCount = [videoDictionary objectForKey:kGRVRESTVideoUnseenClipsCountKey];
+            existingVideo.unseenLikesCount = [videoDictionary objectForKey:kGRVRESTVideoUnseenLikesCountKey];
             existingVideo.photoSmallThumbnailURL = [[videoDictionary objectForKey:kGRVRESTVideoPhotoSmallThumbnailKey] description];
             existingVideo.photoThumbnailURL = [[videoDictionary objectForKey:kGRVRESTVideoPhotoThumbnailKey] description];
             existingVideo.playsCount = [videoDictionary objectForKey:kGRVRESTVideoPlaysCountKey];
@@ -364,6 +368,19 @@
         self.likesCount = @(originalLikesCount);
         if (likeIsToggled) likeIsToggled();
     }];
+}
+
+- (void)clearNotifications:(void (^)())notificationsCleared
+{
+    NSString *videoDetailClearNotificationsURL = [GRVRestUtils videoDetailClearNotificationsURL:self.hashKey];
+    
+    
+    [[GRVHTTPManager sharedManager] request:GRVHTTPMethodPUT forURL:videoDetailClearNotificationsURL parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        // clear video notification stats
+        self.unseenClipsCount = @(0);
+        self.unseenLikesCount = @(0);
+        if (notificationsCleared) notificationsCleared();
+    } failure:nil];
 }
 
 - (void)revokeMembershipWithCompletion:(void (^)())membershipIsRevoked

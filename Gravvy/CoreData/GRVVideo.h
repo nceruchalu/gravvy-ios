@@ -23,6 +23,8 @@
 @property (nonatomic, retain) NSString * photoThumbnailURL;
 @property (nonatomic, retain) NSNumber * playsCount;
 @property (nonatomic, retain) NSString * title;
+@property (nonatomic, retain) NSNumber * unseenClipsCount;
+@property (nonatomic, retain) NSNumber * unseenLikesCount;
 @property (nonatomic, retain) NSDate * updatedAt;
 @property (nonatomic, retain) NSSet *clips;
 @property (nonatomic, retain) NSSet *members;

@@ -208,6 +208,12 @@ extern NSString *const kGRVRESTVideoPlay;
  */
 extern NSString *const kGRVRESTVideoLike;
 
+/**
+ * kGRVRESTVideoClearNotifications: URL for clearing notifications endpoint of a
+ * specific video
+ */
+extern NSString *const kGRVRESTVideoClearNotifications;
+
 
 // -----------------------------------------------------------------------------
 // REST API Object Keys
@@ -242,6 +248,8 @@ extern NSString *const kGRVRESTVideoPhotoSmallThumbnailKey;
 extern NSString *const kGRVRESTVideoPhotoThumbnailKey;
 extern NSString *const kGRVRESTVideoPlaysCountKey;
 extern NSString *const kGRVRESTVideoTitleKey;
+extern NSString *const kGRVRESTVideoUnseenClipsCountKey;
+extern NSString *const kGRVRESTVideoUnseenLikesCountKey;
 extern NSString *const kGRVRESTVideoUpdatedAtKey;
 extern NSString *const kGRVRESTVideoUsersKey;
 
