@@ -327,25 +327,26 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
     // Setup player items
     NSMutableArray *playerItems = [NSMutableArray array];
     for (GRVClip *clip in clips) {
-        NSURL *url = [NSURL URLWithString:clip.mp4URL];
-        AVPlayerItem *playerItem = [AVPlayerItem playerItemWithURL:url];
-        
-        // ensure that observing the status property is done before the
-        // playerItem is associated with the player
-        [playerItem addObserver:self forKeyPath:@"status" options:0 context:&PlayerItemStatusContext];
-        
-        // The item is played only once. After playback, the player's head is set to
-        // the end of the item, and further invocations of the play method will have
-        // no effect. To position the playhead back at the beginning of the item, we
-        // register to receive an AVPlayerItemDidPlayToEndTimeNotification from the
-        // item. In the notification's callback method, we will invoke
-        // seekToTime: with the argument kCMTimeZero
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(playerItemDidReachEnd:)
-                                                     name:AVPlayerItemDidPlayToEndTimeNotification
-                                                   object:playerItem];
-        
-        [playerItems addObject:playerItem];
+        if (clip.mp4URL) {
+            NSURL *url = [NSURL URLWithString:clip.mp4URL];
+            AVPlayerItem *playerItem = [AVPlayerItem playerItemWithURL:url];
+            // ensure that observing the status property is done before the
+            // playerItem is associated with the player
+            [playerItem addObserver:self forKeyPath:@"status" options:0 context:&PlayerItemStatusContext];
+            
+            // The item is played only once. After playback, the player's head is set to
+            // the end of the item, and further invocations of the play method will have
+            // no effect. To position the playhead back at the beginning of the item, we
+            // register to receive an AVPlayerItemDidPlayToEndTimeNotification from the
+            // item. In the notification's callback method, we will invoke
+            // seekToTime: with the argument kCMTimeZero
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                                                     selector:@selector(playerItemDidReachEnd:)
+                                                         name:AVPlayerItemDidPlayToEndTimeNotification
+                                                       object:playerItem];
+            
+            [playerItems addObject:playerItem];
+        }
     }
     // Cache new player items while removing observers for old player items
     // and old player

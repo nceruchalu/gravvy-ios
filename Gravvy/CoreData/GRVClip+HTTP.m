@@ -39,16 +39,9 @@
     // incase dictionary values are NULL
     newClip.duration = [clipDictionary objectForKey:kGRVRESTClipDurationKey];
     newClip.identifier = [clipDictionary objectForKey:kGRVRESTClipIdentifierKey];
-    
-    // Optional fields not present in the minimal JSON retrieved by the activity
-    // stream might not be present so don't setup those fields or set an updatedAt
-    // timestamp. The sync method works properly when we get the full JSON object.
-    if ([clipDictionary objectForKey:kGRVRESTClipMp4Key]) {
-        // Working with a full JSON representation
-        newClip.mp4URL = [[clipDictionary objectForKey:kGRVRESTClipMp4Key] description];
-        newClip.order = [clipDictionary objectForKey:kGRVRESTClipOrderKey];
-        newClip.updatedAt = updatedAt;
-    }
+    newClip.mp4URL = [[clipDictionary objectForKey:kGRVRESTClipMp4Key] description];
+    newClip.order = [clipDictionary objectForKey:kGRVRESTClipOrderKey];
+    newClip.updatedAt = updatedAt;
     
     // Setup required relationships
     newClip.owner = [GRVUser userWithUserInfo:[clipDictionary objectForKey:kGRVRESTClipOwnerKey] inManagedObjectContext:context];
@@ -72,11 +65,8 @@
     NSString *rfc3339UpdatedAt = [[clipDictionary objectForKey:kGRVRESTClipUpdatedAtKey] description];
     NSDate *updatedAt = [rfc3339DateFormatter dateFromString:rfc3339UpdatedAt];
     
-    // only perform a sync if there are any changes and this isn't a minimal JSON
-    // object.
-    if (![updatedAt isEqualToDate:existingClip.updatedAt] &&
-        [clipDictionary objectForKey:kGRVRESTClipMp4Key]) {
-        // Working with a full JSON representation
+    // only perform a sync if there are any changes
+    if (![updatedAt isEqualToDate:existingClip.updatedAt]) {
         existingClip.mp4URL = [[clipDictionary objectForKey:kGRVRESTClipMp4Key] description];
         existingClip.order = [clipDictionary objectForKey:kGRVRESTClipOrderKey];
         existingClip.updatedAt = updatedAt;
