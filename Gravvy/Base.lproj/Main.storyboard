@@ -1524,11 +1524,39 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="emptyStateView" destination="mfS-JJ-eWg" id="4hN-C1-wmi"/>
                         <outlet property="spinner" destination="N66-ru-ceh" id="hag-kl-wV4"/>
                         <outlet property="tableView" destination="ML4-lr-2mc" id="QbO-Io-oeB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FeZ-yQ-a4C" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="mfS-JJ-eWg" userLabel="No Members View">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholderMembers" translatesAutoresizingMaskIntoConstraints="NO" id="Ldt-oq-Nyv">
+                            <rect key="frame" x="127" y="166" width="66" height="66"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="Ldt-oq-Nyv" secondAttribute="height" multiplier="1:1" id="LMG-Wd-ek9"/>
+                                <constraint firstAttribute="height" constant="66" id="lUL-aX-gTB"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share the joy by inviting a friend to this video" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kry-6U-uCC">
+                            <rect key="frame" x="20" y="252" width="280" height="40"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                            <color key="textColor" red="0.71764705880000002" green="0.71764705880000002" blue="0.71764705880000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="centerY" secondItem="Ldt-oq-Nyv" secondAttribute="centerY" constant="85" id="87h-V1-3a2"/>
+                        <constraint firstItem="kry-6U-uCC" firstAttribute="top" secondItem="Ldt-oq-Nyv" secondAttribute="bottom" constant="20" id="RxE-yA-sUh"/>
+                        <constraint firstItem="kry-6U-uCC" firstAttribute="leading" secondItem="mfS-JJ-eWg" secondAttribute="leading" constant="20" id="WZ8-kz-9bk"/>
+                        <constraint firstAttribute="trailing" secondItem="kry-6U-uCC" secondAttribute="trailing" constant="20" id="Zbm-G7-L7e"/>
+                        <constraint firstAttribute="centerX" secondItem="Ldt-oq-Nyv" secondAttribute="centerX" id="a3o-yt-ssZ"/>
+                    </constraints>
+                </view>
             </objects>
             <point key="canvasLocation" x="4042" y="2751"/>
         </scene>
@@ -2625,6 +2653,7 @@
         <image name="likeInactive" width="23" height="23"/>
         <image name="more" width="23" height="23"/>
         <image name="placeholderActivities" width="66" height="66"/>
+        <image name="placeholderMembers" width="66" height="66"/>
         <image name="placeholderVideos" width="100" height="100"/>
         <image name="record" width="28" height="17"/>
         <image name="recordCircle" width="64" height="64"/>
