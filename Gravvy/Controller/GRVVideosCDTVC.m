@@ -25,6 +25,7 @@
 #import <FBSDKShareKit/FBSDKShareKit.h>
 #import <FBSDKCoreKit/FBSDKConstants.h>
 #import <Social/Social.h>
+#import <MessageUI/MessageUI.h>
 
 #pragma mark - Constants
 /**
@@ -71,7 +72,8 @@ static const NSString *PlayerCurrentItemContext;
  */
 static const NSInteger kMoreActionsIndexShareFacebook   = 0; // Share on facebook
 static const NSInteger kMoreActionsIndexShareTwitter    = 1; // Share on twitter
-static const NSInteger kMoreActionsIndexCopyLink        = 2; // Copy link
+static const NSInteger kMoreActionsIndexShareSMS        = 2; // Share via SMS
+static const NSInteger kMoreActionsIndexCopyLink        = 3; // Copy link
 
 /**
  * Format string for creating a video's share URL
@@ -79,7 +81,9 @@ static const NSInteger kMoreActionsIndexCopyLink        = 2; // Copy link
 static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/v/%@/";
 
 
-@interface GRVVideosCDTVC () <UIActionSheetDelegate, FBSDKSharingDelegate>
+@interface GRVVideosCDTVC () <UIActionSheetDelegate,
+                                FBSDKSharingDelegate,
+                                MFMessageComposeViewControllerDelegate>
 
 #pragma mark - Properties
 /**
@@ -132,6 +136,11 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
 @property (strong, nonatomic) id playerObserver;
 
 /**
+ * Action sheet shown on share button tap
+ */
+@property (strong, nonatomic) UIActionSheet *shareActionSheet;
+
+/**
  * Action sheet shown on more actions tap
  */
 @property (strong, nonatomic) UIActionSheet *moreActionsActionSheet;
@@ -141,13 +150,14 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
 @property (strong, nonatomic) UIActionSheet *removeConfirmationActionSheet;
 
 /**
- * Index Path of cell that moreActions action sheet was triggered from
+ * Index Path of cell that action sheet was triggered from
  */
-@property (strong, nonatomic) NSIndexPath *moreActionsIndexPath;
+@property (strong, nonatomic) NSIndexPath *actionSheetIndexPath;
 
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
 @property (strong, nonatomic) MBProgressHUD *successProgressHUD;
+@property (strong, nonatomic) MBProgressHUD *failureProgressHUD;
 
 @end
 
@@ -186,6 +196,23 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
         _successProgressHUD.minShowTime = 1;
     }
     return _successProgressHUD;
+}
+
+- (MBProgressHUD *)failureProgressHUD
+{
+    if (!_failureProgressHUD) {
+        // Lazy instantiation
+        _failureProgressHUD = [[MBProgressHUD alloc] initWithView:self.view];
+        [self.view addSubview:_failureProgressHUD];
+        
+        _failureProgressHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"errorCross"]];
+        // Set custom view mode
+        _failureProgressHUD.mode = MBProgressHUDModeCustomView;
+        _failureProgressHUD.color = [kGRVRedColor colorWithAlphaComponent:_failureProgressHUD.opacity];
+        _failureProgressHUD.minSize = CGSizeMake(120, 120);
+        _failureProgressHUD.minShowTime = 1;
+    }
+    return _failureProgressHUD;
 }
 
 - (void)setPlayerItems:(NSArray *)playerItems
@@ -418,6 +445,13 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
     self.successProgressHUD.labelText = message;
     [self.successProgressHUD show:YES];
     [self.successProgressHUD hide:YES afterDelay:1.5];
+}
+
+- (void)showProgressHUDFailureMessage:(NSString *)message
+{
+    self.failureProgressHUD.labelText = message;
+    [self.failureProgressHUD show:YES];
+    [self.failureProgressHUD hide:YES afterDelay:1.5];
 }
 
 #pragma mark AudioVisual Player
@@ -769,14 +803,30 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
     });
 }
 
+- (IBAction)showShareActions:(UIButton *)sender
+{
+    if ([sender isKindOfClass:[UIButton class]]) {
+        CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+        self.actionSheetIndexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    }
+    
+    self.shareActionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                        delegate:self
+                                               cancelButtonTitle:@"Cancel"
+                                          destructiveButtonTitle:nil
+                                               otherButtonTitles:@"Share on Facebook", @"Share on Twitter", @"Share via SMS", @"Copy Link", nil];
+    [self.shareActionSheet showInView:self.view];
+}
+
+
 - (IBAction)showMoreActions:(UIButton *)sender
 {
     if ([sender isKindOfClass:[UIButton class]]) {
         CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
-        self.moreActionsIndexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+        self.actionSheetIndexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
     }
     
-    GRVVideo *video = [self.fetchedResultsController objectAtIndexPath:self.moreActionsIndexPath];
+    GRVVideo *video = [self.fetchedResultsController objectAtIndexPath:self.actionSheetIndexPath];
     NSString *destructiveButtonTitle;
     if ([video.owner.phoneNumber isEqualToString:[GRVAccountManager sharedManager].phoneNumber]) {
         destructiveButtonTitle = @"Delete Video";
@@ -788,7 +838,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
                                                               delegate:self
                                                      cancelButtonTitle:@"Cancel"
                                                 destructiveButtonTitle:nil
-                                                     otherButtonTitles:@"Share on Facebook", @"Share on Twitter", @"Copy Link", destructiveButtonTitle, nil];
+                                                     otherButtonTitles:destructiveButtonTitle, nil];
     self.moreActionsActionSheet.destructiveButtonIndex = (self.moreActionsActionSheet.numberOfButtons-2);
     [self.moreActionsActionSheet showInView:self.view];
 }
@@ -798,9 +848,34 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     // Get video
-    GRVVideo *video = [self.fetchedResultsController objectAtIndexPath:self.moreActionsIndexPath];
+    GRVVideo *video = [self.fetchedResultsController objectAtIndexPath:self.actionSheetIndexPath];
 
-    if (actionSheet == self.moreActionsActionSheet) {
+    if (actionSheet == self.shareActionSheet) {
+        // Is this a request to share content
+        if (buttonIndex != actionSheet.cancelButtonIndex) {
+            switch (buttonIndex-actionSheet.firstOtherButtonIndex) {
+                case kMoreActionsIndexShareFacebook:
+                    [self shareOnFacebook:video];
+                    break;
+                    
+                case kMoreActionsIndexShareTwitter:
+                    [self shareOnTwitter:video];
+                    break;
+                    
+                case kMoreActionsIndexShareSMS:
+                    [self shareViaSMS:video];
+                    break;
+                    
+                case kMoreActionsIndexCopyLink:
+                    [self copyShareLink:video];
+                    break;
+                    
+                default:
+                    break;
+            }
+        }
+        
+    } else if (actionSheet == self.moreActionsActionSheet) {
         // is this a revoke request on a video? if so show a confirmation action
         // sheet
         if (buttonIndex == actionSheet.destructiveButtonIndex) {
@@ -817,24 +892,6 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
                                                                destructiveButtonTitle:destructiveButtonTitle
                                                                     otherButtonTitles:nil];
             [self.removeConfirmationActionSheet showInView:self.view];
-        
-        } else if (buttonIndex != actionSheet.cancelButtonIndex) {
-            switch (buttonIndex-actionSheet.firstOtherButtonIndex) {
-                case kMoreActionsIndexShareFacebook:
-                    [self shareOnFacebook:video];
-                    break;
-                
-                case kMoreActionsIndexShareTwitter:
-                    [self shareOnTwitter:video];
-                    break;
-                    
-                case kMoreActionsIndexCopyLink:
-                    [self copyShareLink:video];
-                    break;
-                    
-                default:
-                    break;
-            }
         }
         
     } else if (actionSheet == self.removeConfirmationActionSheet) {
@@ -945,6 +1002,30 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
 }
 
 /**
+ * Share a video via SMS
+ *
+ * @param video Video to be shared
+ */
+- (void)shareViaSMS:(GRVVideo *)video
+{
+    NSString *webURL = [self videoShareURL:video];
+    
+    if ([MFMessageComposeViewController canSendText]) {
+        // The device can send SMS.
+        MFMessageComposeViewController *picker = [[MFMessageComposeViewController alloc] init];
+        picker.messageComposeDelegate = self;
+        [picker.navigationBar setTintColor:[UIColor whiteColor]];
+
+        picker.body = [NSString stringWithFormat:@"You might like my Gravvy video: %@", webURL];
+        [self presentViewController:picker animated:YES completion:NULL];
+        
+    } else {
+        // The device can not send SMS.
+        [self showProgressHUDFailureMessage:@"Device can't send SMS"];
+    }
+}
+
+/**
  * Copy video's share link to the clipboard
  *
  * @param video Video to be shared
@@ -976,6 +1057,27 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
 - (void)sharerDidCancel:(id<FBSDKSharing>)sharer
 {
     // Do nothing
+}
+
+#pragma mark - MFMessageComposeViewControllerDelegate
+// -------------------------------------------------------------------------------
+//  messageComposeViewController:didFinishWithResult:
+//  Dismisses the message composition interface when users tap Cancel or Send.
+//  Proceeds to update the feedback message field with the result of the
+//  operation.
+// -------------------------------------------------------------------------------
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller
+                 didFinishWithResult:(MessageComposeResult)result
+{
+    // A good place to notify users about errors associated with the interface
+    [self dismissViewControllerAnimated:YES completion:^{
+        if (result ==  MessageComposeResultSent) {
+            [self showProgressHUDSuccessMessage:@"Shared via SMS"];
+            
+        } else if (result == MessageComposeResultFailed) {
+            [self showProgressHUDFailureMessage:@"SMS failed to send"];
+        }
+    }];
 }
 
 

@@ -74,6 +74,13 @@ static NSString *const kSegueIdentifierShowContactPicker = @"showInvitePeopleVC"
     }
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    // auto-prompt user to add a caption
+    [self beginTitleEntry:nil];
+}
+
 #pragma mark - Instance Methods
 #pragma mark Concrete
 - (void)recordingValidated

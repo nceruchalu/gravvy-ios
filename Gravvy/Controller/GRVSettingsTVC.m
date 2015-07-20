@@ -130,11 +130,11 @@ static NSString *const kTellAFriendActionSheetTitle = @"Tell a friend about Grav
     // will crash when it calls -presentViewController:animated:completion: with
     // a nil view controller.
     if ([MFMessageComposeViewController canSendText]) {
-        // The device can send email.
+        // The device can send SMS.
         [self displaySMSComposerSheet];
         
     } else {
-        // The device can not send email.
+        // The device can not send SMS.
         // This would be a good place to show a message saying device can't
         // send SMS.
     }
@@ -178,6 +178,7 @@ static NSString *const kTellAFriendActionSheetTitle = @"Tell a friend about Grav
 {
     MFMessageComposeViewController *picker = [[MFMessageComposeViewController alloc] init];
     picker.messageComposeDelegate = self;
+    [picker.navigationBar setTintColor:[UIColor whiteColor]];
     
     // You can specify one or more preconfigured recipients.  The user has
     // the option to remove or add recipients from the message composer view

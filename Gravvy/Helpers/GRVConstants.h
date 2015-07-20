@@ -44,6 +44,11 @@
 // Camera View Navigation Bar background color is RGB #282828
 #define kGRVCameraViewNavigationBarColor [UIColor colorWithRed:40.0/255.0 green:40.0/255.0 blue:40.0/255.0 alpha:1.0]
 
+/**
+ * Red color: #D94E4E
+ */
+#define kGRVRedColor [UIColor colorWithRed:217.0/255.0 green:78.0/255.0 blue:78.0/255.0 alpha:1.0]
+
 
 // -----------------------------------------------------------------------------
 // Fonts

@@ -2264,13 +2264,13 @@
                                                                 <action selector="showMembers:" destination="c3W-gi-yhK" eventType="touchUpInside" id="jII-G7-ccp"/>
                                                             </connections>
                                                         </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CqZ-UM-gs9" userLabel="Add Clip Button">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CqZ-UM-gs9" userLabel="Share Button">
                                                             <rect key="frame" x="160" y="0.0" width="80" height="44"/>
-                                                            <state key="normal" image="addClip">
+                                                            <state key="normal" image="share">
                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                             </state>
                                                             <connections>
-                                                                <action selector="addClip:" destination="c3W-gi-yhK" eventType="touchUpInside" id="oDN-LK-pZk"/>
+                                                                <action selector="showShareActions:" destination="c3W-gi-yhK" eventType="touchUpInside" id="93a-Xh-cuF"/>
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ACB-cm-10O" userLabel="More Button">
@@ -2645,7 +2645,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="addClip" width="23" height="23"/>
         <image name="addContact" width="23" height="23"/>
         <image name="cameraType" width="25" height="25"/>
         <image name="chevron" width="8" height="13"/>
@@ -2663,6 +2662,7 @@
         <image name="settingsNotifications" width="29" height="29"/>
         <image name="settingsProfile" width="29" height="29"/>
         <image name="settingsTell" width="29" height="29"/>
+        <image name="share" width="23" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Zm6-vw-LFG"/>
