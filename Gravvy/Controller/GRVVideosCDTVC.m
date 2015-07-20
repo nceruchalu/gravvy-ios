@@ -598,6 +598,10 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
     NSString *likesCountSuffix = ([video.likesCount integerValue] == 1) ? @"like" : @"likes";
     cell.likesCountLabel.text = [NSString stringWithFormat:@"%@ %@", likesCount, likesCountSuffix];
     
+    NSString *playsCount = [GRVFormatterUtils numToString:video.playsCount];
+    NSString *playsCountSuffix = ([video.playsCount integerValue] == 1) ? @"play" : @"plays";
+    cell.playsCountLabel.text = [NSString stringWithFormat:@"%@ %@", playsCount, playsCountSuffix];
+    
     NSString *likeButtonImageName = [video.liked boolValue] ? @"likeActive" : @"likeInactive";
     [cell.likeButton setImage:[UIImage imageNamed:likeButtonImageName] forState:UIControlStateNormal];
     
@@ -668,6 +672,10 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
     GRVVideo *video = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
     [self configureSectionHeaderView:headerView withVideo:video];
+    
+    // Add target-action method but first remove previously added ones
+    [headerView.addClipButton removeTarget:nil action:NULL forControlEvents:UIControlEventTouchUpInside];
+    [headerView.addClipButton addTarget:self action:@selector(addClip:) forControlEvents:UIControlEventTouchUpInside];
     
     self.sectionHeaderViews[video.hashKey] = headerView;
     return headerView;

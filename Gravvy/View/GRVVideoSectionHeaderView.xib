@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -8,10 +8,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GRVVideoSectionHeaderView">
             <connections>
+                <outlet property="addClipButton" destination="ZWC-e5-NPh" id="qPQ-c4-Pq4"/>
                 <outlet property="createdAtLabel" destination="DdH-w6-bqw" id="eeb-MS-Xpd"/>
                 <outlet property="ownerAvatarView" destination="51K-2c-00b" id="cgh-tX-gRE"/>
                 <outlet property="ownerNameLabel" destination="DE9-dP-tkt" id="1nh-AA-GU4"/>
-                <outlet property="playsCountLabel" destination="3rZ-p5-vOc" id="Dj7-KF-2dh"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -23,7 +23,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="381" height="55"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="51K-2c-00b" userLabel="Owner Avatar View" customClass="GRVUserAvatarView">
-                            <rect key="frame" x="10" y="9.5" width="36" height="36"/>
+                            <rect key="frame" x="10" y="9" width="36" height="36"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" priority="999" constant="36" id="6fM-M3-ger"/>
@@ -38,46 +38,42 @@
                             </constraints>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Nnoduka Eruchalu" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DE9-dP-tkt" userLabel="Owner Name Label">
-                            <rect key="frame" x="54" y="11.5" width="114.5" height="15.5"/>
+                            <rect key="frame" x="54" y="11" width="114.5" height="15.5"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="13"/>
                             <color key="textColor" red="0.0" green="0.74901960779999999" blue="0.56078431370000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Jun 11" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DdH-w6-bqw" userLabel="Creation Date Label">
-                            <rect key="frame" x="54" y="30.5" width="33.5" height="13"/>
+                            <rect key="frame" x="54" y="30" width="33.5" height="13"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
                             <color key="textColor" red="0.58823529409999997" green="0.58823529409999997" blue="0.58823529409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="1,234,567" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3rZ-p5-vOc" userLabel="Plays Count Label">
-                            <rect key="frame" x="176" y="11.5" width="194.5" height="15.5"/>
-                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
-                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Plays" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nBx-8r-t6X">
-                            <rect key="frame" x="344" y="30.5" width="26.5" height="13"/>
-                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
-                            <color key="textColor" red="0.58823529409999997" green="0.58823529409999997" blue="0.58823529409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <nil key="highlightedColor"/>
-                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZWC-e5-NPh" userLabel="Add Clip Button">
+                            <rect key="frame" x="336" y="7.5" width="40" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="dCc-Hf-cvg"/>
+                                <constraint firstAttribute="width" secondItem="ZWC-e5-NPh" secondAttribute="height" multiplier="1:1" id="zry-tS-10P"/>
+                            </constraints>
+                            <color key="tintColor" red="0.0" green="0.74901960779999999" blue="0.56078431370000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <state key="normal" image="addClip">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="DE9-dP-tkt" firstAttribute="leading" secondItem="51K-2c-00b" secondAttribute="trailing" priority="999" constant="8" symbolic="YES" id="D1c-5A-Boe"/>
-                        <constraint firstItem="nBx-8r-t6X" firstAttribute="trailing" secondItem="3rZ-p5-vOc" secondAttribute="trailing" id="MZT-lB-qf6"/>
                         <constraint firstAttribute="bottom" secondItem="eV9-Df-SPQ" secondAttribute="bottom" id="Mmv-JJ-Rw1"/>
                         <constraint firstItem="DdH-w6-bqw" firstAttribute="leading" secondItem="DE9-dP-tkt" secondAttribute="leading" id="Nz0-ze-qYf"/>
                         <constraint firstItem="eV9-Df-SPQ" firstAttribute="leading" secondItem="Hxs-Jj-DRY" secondAttribute="leading" id="UMk-hx-PdH"/>
-                        <constraint firstItem="3rZ-p5-vOc" firstAttribute="leading" secondItem="DE9-dP-tkt" secondAttribute="trailing" priority="999" constant="8" symbolic="YES" id="UUj-bf-7g8"/>
                         <constraint firstAttribute="trailing" secondItem="eV9-Df-SPQ" secondAttribute="trailing" id="V9r-gd-Faw"/>
                         <constraint firstItem="DdH-w6-bqw" firstAttribute="top" secondItem="DE9-dP-tkt" secondAttribute="bottom" constant="4" id="Xt1-SE-XNE"/>
                         <constraint firstItem="51K-2c-00b" firstAttribute="centerY" secondItem="DE9-dP-tkt" secondAttribute="centerY" constant="8" id="aMo-kP-z4Z"/>
-                        <constraint firstItem="nBx-8r-t6X" firstAttribute="centerY" secondItem="DdH-w6-bqw" secondAttribute="centerY" id="cdK-eG-IRI"/>
+                        <constraint firstAttribute="trailing" secondItem="ZWC-e5-NPh" secondAttribute="trailing" constant="5" id="l6x-ZY-a5S"/>
+                        <constraint firstItem="51K-2c-00b" firstAttribute="centerY" secondItem="ZWC-e5-NPh" secondAttribute="centerY" id="liw-VO-s7D"/>
                         <constraint firstAttribute="centerY" secondItem="51K-2c-00b" secondAttribute="centerY" id="oRO-1G-06x"/>
-                        <constraint firstItem="DE9-dP-tkt" firstAttribute="centerY" secondItem="3rZ-p5-vOc" secondAttribute="centerY" id="yI7-Dr-xAU"/>
                         <constraint firstItem="51K-2c-00b" firstAttribute="leading" secondItem="Hxs-Jj-DRY" secondAttribute="leading" priority="999" constant="10" id="yOj-OR-LvN"/>
-                        <constraint firstAttribute="trailing" secondItem="3rZ-p5-vOc" secondAttribute="trailing" priority="999" constant="10" id="zly-NK-B50"/>
                     </constraints>
                 </view>
             </subviews>
@@ -92,4 +88,7 @@
             <point key="canvasLocation" x="148.5" y="-13.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="addClip" width="30" height="30"/>
+    </resources>
 </document>

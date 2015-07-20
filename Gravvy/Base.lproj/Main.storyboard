@@ -2221,6 +2221,18 @@
                                                             <color key="textColor" red="0.58823529409999997" green="0.58823529409999997" blue="0.58823529409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="●" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nmd-uI-bqx" userLabel="Counts Separator Label">
+                                                            <rect key="frame" x="67" y="36" width="7" height="13"/>
+                                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
+                                                            <color key="textColor" red="0.58823529409999997" green="0.58823529409999997" blue="0.58823529409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5,678 plays" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jd7-Lr-4hG" userLabel="Plays Count Label">
+                                                            <rect key="frame" x="78" y="36" width="56.5" height="13"/>
+                                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
+                                                            <color key="textColor" red="0.58823529409999997" green="0.58823529409999997" blue="0.58823529409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pbk-LK-IbR" userLabel="Bottom Bar">
                                                             <rect key="frame" x="20" y="53" width="280" height="2"/>
                                                             <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="0.87843137250000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -2235,11 +2247,15 @@
                                                         <constraint firstItem="muR-fl-h8w" firstAttribute="top" secondItem="tIm-to-TTp" secondAttribute="bottom" id="5xw-ZY-kd2"/>
                                                         <constraint firstAttribute="height" constant="55" id="6EJ-oa-pL0"/>
                                                         <constraint firstItem="tIm-to-TTp" firstAttribute="leading" secondItem="muR-fl-h8w" secondAttribute="leading" id="AET-YB-ctY"/>
+                                                        <constraint firstItem="nmd-uI-bqx" firstAttribute="centerY" secondItem="Jd7-Lr-4hG" secondAttribute="centerY" id="Cae-7h-bMm"/>
                                                         <constraint firstAttribute="trailing" secondItem="Pbk-LK-IbR" secondAttribute="trailing" constant="20" symbolic="YES" id="MPZ-K8-zgG"/>
                                                         <constraint firstAttribute="bottom" secondItem="Pbk-LK-IbR" secondAttribute="bottom" id="Nvj-ZW-YgS"/>
                                                         <constraint firstAttribute="trailing" secondItem="tIm-to-TTp" secondAttribute="trailing" constant="10" id="QHD-ah-OS6"/>
+                                                        <constraint firstItem="muR-fl-h8w" firstAttribute="centerY" secondItem="nmd-uI-bqx" secondAttribute="centerY" id="dO7-7T-dzM"/>
                                                         <constraint firstItem="tIm-to-TTp" firstAttribute="leading" secondItem="TCd-9K-Zet" secondAttribute="leading" constant="10" id="eOh-ve-ZLq"/>
+                                                        <constraint firstItem="nmd-uI-bqx" firstAttribute="leading" secondItem="muR-fl-h8w" secondAttribute="trailing" constant="4" id="mDM-Oq-qQP"/>
                                                         <constraint firstItem="tIm-to-TTp" firstAttribute="top" secondItem="TCd-9K-Zet" secondAttribute="top" id="mT3-4r-lLh"/>
+                                                        <constraint firstItem="Jd7-Lr-4hG" firstAttribute="leading" secondItem="nmd-uI-bqx" secondAttribute="trailing" constant="4" id="x9M-4V-4HG"/>
                                                         <constraint firstItem="Pbk-LK-IbR" firstAttribute="leading" secondItem="TCd-9K-Zet" secondAttribute="leading" constant="20" symbolic="YES" id="yL0-OH-BWn"/>
                                                     </constraints>
                                                 </view>
@@ -2325,6 +2341,7 @@
                                             <outlet property="likeButton" destination="eQa-dJ-d3K" id="Zo4-Xi-ZCb"/>
                                             <outlet property="likesCountLabel" destination="muR-fl-h8w" id="mxe-ip-1xu"/>
                                             <outlet property="playerView" destination="b5D-eb-U7h" id="jCb-zj-NVB"/>
+                                            <outlet property="playsCountLabel" destination="Jd7-Lr-4hG" id="wbN-M6-8ou"/>
                                             <outlet property="previewImageView" destination="2Fb-Gg-Dw3" id="1Cv-Le-aj8"/>
                                             <outlet property="titleLabel" destination="Bc1-ag-zL0" id="26M-8U-8Yh"/>
                                         </connections>
