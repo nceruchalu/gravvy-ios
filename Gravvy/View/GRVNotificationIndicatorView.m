@@ -19,7 +19,7 @@ static NSString *const kPulsingAnimationKey = @"AnimateOpacity";
 /**
  * Default alpha value
  */
-static CGFloat const kDefaultAlpha = 0.8f;
+static CGFloat const kDefaultAlpha = 1.0f;
 
 @implementation GRVNotificationIndicatorView
 

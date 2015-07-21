@@ -23,13 +23,13 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hxs-Jj-DRY" userLabel="Summary View">
                     <rect key="frame" x="0.0" y="0.0" width="381" height="55"/>
                     <subviews>
-                        <view alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wdo-oQ-Q3R" userLabel="Notification Indicator View" customClass="GRVNotificationIndicatorView">
-                            <rect key="frame" x="5" y="4" width="46" height="46"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wdo-oQ-Q3R" userLabel="Notification Indicator View" customClass="GRVNotificationIndicatorView">
+                            <rect key="frame" x="3" y="2" width="50" height="50"/>
                             <color key="backgroundColor" red="0.0" green="0.74901960779999999" blue="0.56078431370000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <color key="tintColor" red="0.0" green="0.74901960779999999" blue="0.56078431370000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="Wdo-oQ-Q3R" secondAttribute="height" multiplier="1:1" id="3oS-YT-oP9"/>
-                                <constraint firstAttribute="height" constant="46" id="i47-ck-non"/>
+                                <constraint firstAttribute="height" constant="50" id="i47-ck-non"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="51K-2c-00b" userLabel="Owner Avatar View" customClass="GRVUserAvatarView">
