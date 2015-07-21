@@ -173,6 +173,7 @@
 		40D853BD1B0C69D1001A206A /* GRVCameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40D853BA1B0C69D1001A206A /* GRVCameraViewController.xib */; };
 		40DAD9AA1B44F63B0038B8CB /* GRVVideoSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 40DAD9A91B44F63B0038B8CB /* GRVVideoSectionHeaderView.m */; };
 		40DAD9AC1B44F6C00038B8CB /* GRVVideoSectionHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40DAD9AB1B44F6C00038B8CB /* GRVVideoSectionHeaderView.xib */; };
+		40F900CD1B5E0A5100328BCF /* GRVNotificationIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 40F900CC1B5E0A5100328BCF /* GRVNotificationIndicatorView.m */; };
 		40F937BC1B0C46B0000F7BCB /* GRVSettingsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 40F937BB1B0C46B0000F7BCB /* GRVSettingsTVC.m */; };
 		40F937BE1B0C46F2000F7BCB /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40F937BD1B0C46F2000F7BCB /* MessageUI.framework */; };
 		40F937C11B0C4849000F7BCB /* GRVSettingsProfileSettingsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 40F937C01B0C4849000F7BCB /* GRVSettingsProfileSettingsTVC.m */; };
@@ -524,6 +525,8 @@
 		40DAD9A81B44F63B0038B8CB /* GRVVideoSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVVideoSectionHeaderView.h; sourceTree = "<group>"; };
 		40DAD9A91B44F63B0038B8CB /* GRVVideoSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVVideoSectionHeaderView.m; sourceTree = "<group>"; };
 		40DAD9AB1B44F6C00038B8CB /* GRVVideoSectionHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GRVVideoSectionHeaderView.xib; sourceTree = "<group>"; };
+		40F900CB1B5E0A5100328BCF /* GRVNotificationIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVNotificationIndicatorView.h; sourceTree = "<group>"; };
+		40F900CC1B5E0A5100328BCF /* GRVNotificationIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVNotificationIndicatorView.m; sourceTree = "<group>"; };
 		40F937BA1B0C46B0000F7BCB /* GRVSettingsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVSettingsTVC.h; sourceTree = "<group>"; };
 		40F937BB1B0C46B0000F7BCB /* GRVSettingsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVSettingsTVC.m; sourceTree = "<group>"; };
 		40F937BD1B0C46F2000F7BCB /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -1022,6 +1025,8 @@
 				40DAD9AB1B44F6C00038B8CB /* GRVVideoSectionHeaderView.xib */,
 				401EFE121B5A3036003B2507 /* GRVBadgeView.h */,
 				401EFE131B5A3036003B2507 /* GRVBadgeView.m */,
+				40F900CB1B5E0A5100328BCF /* GRVNotificationIndicatorView.h */,
+				40F900CC1B5E0A5100328BCF /* GRVNotificationIndicatorView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1418,6 +1423,7 @@
 				405BD0591B1ABF5100EDA8F6 /* GRVRestUtils.m in Sources */,
 				40FFFEF41B4CCEF000AFC183 /* GRVAddClipCameraVC.m in Sources */,
 				407623181AFEF08E00100550 /* UIRefreshControl+AFNetworking.m in Sources */,
+				40F900CD1B5E0A5100328BCF /* GRVNotificationIndicatorView.m in Sources */,
 				40FAD4461B13D7BF0039B03A /* GRVFilteredContactPickerTableViewCell.m in Sources */,
 				403D34531B101528004FF19E /* GRVCameraSlideDownView.m in Sources */,
 				40DAD9AA1B44F63B0038B8CB /* GRVVideoSectionHeaderView.m in Sources */,

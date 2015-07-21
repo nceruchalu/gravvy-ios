@@ -118,6 +118,11 @@
 - (BOOL)isVideoOwner;
 
 /**
+ * Does video have any pending notification?
+ */
+- (BOOL)hasPendingNotifications;
+
+/**
  * Record play of this video on the server and locally
  *
  * @param videoIsPlayed block to be called after playing the video

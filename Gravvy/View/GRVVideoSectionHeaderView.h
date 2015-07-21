@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "GRVUserAvatarView.h"
+#import "GRVNotificationIndicatorView.h"
 
 /**
  * GRVVideoSectionHeaderView is a custom view for section headers in a Table
@@ -22,5 +23,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *ownerNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *createdAtLabel;
 @property (weak, nonatomic) IBOutlet UIButton *addClipButton;
+@property (weak, nonatomic) IBOutlet GRVNotificationIndicatorView *notificationIndicatorView;
 
 @end

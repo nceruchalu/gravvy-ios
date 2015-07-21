@@ -51,6 +51,11 @@ static CGFloat const kTableViewSectionFooterViewHeight = 0.0f;
 static CGFloat const kActiveCellPlayerHeightCutoff = 0.1f;
 
 /**
+ * Time interval for animations of showing or hiding notification indicator view
+ */
+static NSTimeInterval const kNotificationIndicatorAnimationInterval = 2.00f;
+
+/**
  * Segue identifier for showing Members TVC
  */
 static NSString *const kSegueIdentifierShowMembers = @"showMembersVC";
@@ -306,8 +311,8 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
         // prefetch to avoid faulting relationships individually
         request.relationshipKeyPathsForPrefetching = @[@"owner", @"clips"];
         
-        // fetch all ordered videos
-        request.predicate = [NSPredicate predicateWithFormat:@"order > %d", kGRVVideoOrderNew];
+        // fetch all ordered videos with clips
+        request.predicate = [NSPredicate predicateWithFormat:@"(order > %d) AND (clips.@count > 0)", kGRVVideoOrderNew];
         
         // Show latest videos first (updatedAt storted descending)
         NSSortDescriptor *orderSort = [NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES];
@@ -504,11 +509,20 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
         
         // Refresh video on first autoplay
         // If unread notifications as of the first play, clear those here
-        if (([self.activeVideo.unseenLikesCount integerValue] > 0) ||
-            ([self.activeVideo.unseenClipsCount integerValue] > 0) ||
-            ([self.activeVideo.membership integerValue] <= GRVVideoMembershipInvited)) {
+        if ([self.activeVideo hasPendingNotifications]) {
+            GRVVideoSectionHeaderView *headerView = self.sectionHeaderViews[self.activeVideo.hashKey];
+            
             [self.activeVideo clearNotifications:^{
                 [self.activeVideo refreshVideo:nil];
+                
+                // delay the hiding of the notification indicator
+                [headerView.notificationIndicatorView stopPulsingAnimation];
+                [UIView animateWithDuration:kNotificationIndicatorAnimationInterval
+                                 animations:^{
+                                     headerView.notificationIndicatorView.alpha = 0.0f;
+                                 } completion:^(BOOL finished) {
+                                     headerView.notificationIndicatorView.hidden = YES;
+                                 }];
             }];
         } else {
             [self.activeVideo refreshVideo:nil];
@@ -700,8 +714,10 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
     headerView.ownerAvatarView.userInitials = avatarView.userInitials;
     
     headerView.ownerNameLabel.text = [GRVUserViewHelper userFullNameOrPhoneNumber:video.owner];
-    //headerView.createdAtLabel.text = [GRVFormatterUtils dayAndYearStringForDate:video.createdAt];
-    headerView.createdAtLabel.text = [NSString stringWithFormat:@"mem:%@ | par:%@ | unC:%@ | unL:%@ | sco:%@", video.membership, video.participation, video.unseenClipsCount, video.unseenLikesCount, video.score];
+    headerView.createdAtLabel.text = [GRVFormatterUtils dayAndYearStringForDate:video.createdAt];
+    
+    // Indicate if video has a notification
+    headerView.notificationIndicatorView.hidden = ![video hasPendingNotifications];
 }
 
 #pragma mark Custom Section Footers

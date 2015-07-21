@@ -374,6 +374,13 @@
     return [self.owner.phoneNumber isEqualToString:[GRVAccountManager sharedManager].phoneNumber];
 }
 
+- (BOOL)hasPendingNotifications
+{
+    return (([self.unseenLikesCount integerValue] > 0) ||
+            ([self.unseenClipsCount integerValue] > 0) ||
+            ([self.membership integerValue] <= GRVVideoMembershipInvited));
+}
+
 - (void)play:(void (^)())videoIsPlayed
 {
     NSString *videoDetailPlayURL = [GRVRestUtils videoDetailPlayURL:self.hashKey];
