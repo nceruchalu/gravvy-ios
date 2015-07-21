@@ -501,15 +501,17 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
         if (!self.isPlaying) {
             [self playOrPause];
         }
-        [self.activeVideo play:^{
-            // Refresh video on first autoplay
-            [self.activeVideo refreshVideo:nil];
-        }];
         
+        // Refresh video on first autoplay
         // If unread notifications as of the first play, clear those here
         if (([self.activeVideo.unseenLikesCount integerValue] > 0) ||
-            ([self.activeVideo.unseenClipsCount integerValue] > 0)) {
-            [self.activeVideo clearNotifications:nil];
+            ([self.activeVideo.unseenClipsCount integerValue] > 0) ||
+            ([self.activeVideo.membership integerValue] <= GRVVideoMembershipInvited)) {
+            [self.activeVideo clearNotifications:^{
+                [self.activeVideo refreshVideo:nil];
+            }];
+        } else {
+            [self.activeVideo refreshVideo:nil];
         }
         
         self.performedAutoPlay = YES;
@@ -1165,7 +1167,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
     [self.player advanceToNextItem];
     [self.player insertItem:playedItem afterItem:nil];
     
-    if (playedItem == [self.playerItems lastObject]) {
+    if (playedItem == [self.playerItems firstObject]) {
         [self.activeVideo play:nil];
     }
 }
