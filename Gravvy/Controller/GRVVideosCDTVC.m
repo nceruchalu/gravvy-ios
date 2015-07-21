@@ -670,8 +670,11 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
     // Get the video
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:section];
     GRVVideo *video = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    
+
     [self configureSectionHeaderView:headerView withVideo:video];
+    
+    // Cache section
+    headerView.addClipButton.tag = section;
     
     // Add target-action method but first remove previously added ones
     [headerView.addClipButton removeTarget:nil action:NULL forControlEvents:UIControlEventTouchUpInside];
@@ -695,8 +698,8 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
     headerView.ownerAvatarView.userInitials = avatarView.userInitials;
     
     headerView.ownerNameLabel.text = [GRVUserViewHelper userFullNameOrPhoneNumber:video.owner];
-    headerView.createdAtLabel.text = [GRVFormatterUtils dayAndYearStringForDate:video.createdAt];
-    headerView.playsCountLabel.text = [GRVFormatterUtils numToString:video.playsCount];
+    //headerView.createdAtLabel.text = [GRVFormatterUtils dayAndYearStringForDate:video.createdAt];
+    headerView.createdAtLabel.text = [NSString stringWithFormat:@"mem:%@ | par:%@ | unC:%@ | unL:%@ | sco:%@", video.membership, video.participation, video.unseenClipsCount, video.unseenLikesCount, video.score];
 }
 
 #pragma mark Custom Section Footers
@@ -741,7 +744,6 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
 - (IBAction)refresh
 {
     self.suspendAutomaticTrackingOfChangesInManagedObjectContext = YES;
-    
     // Refresh videos from server
     [GRVVideo refreshVideos:^{
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -836,7 +838,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
     
     GRVVideo *video = [self.fetchedResultsController objectAtIndexPath:self.actionSheetIndexPath];
     NSString *destructiveButtonTitle;
-    if ([video.owner.phoneNumber isEqualToString:[GRVAccountManager sharedManager].phoneNumber]) {
+    if ([video isVideoOwner]) {
         destructiveButtonTitle = @"Delete Video";
     } else {
         destructiveButtonTitle = @"Remove Video";
@@ -888,7 +890,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
         // sheet
         if (buttonIndex == actionSheet.destructiveButtonIndex) {
             NSString *destructiveButtonTitle;
-            if ([video.owner.phoneNumber isEqualToString:[GRVAccountManager sharedManager].phoneNumber]) {
+            if ([video isVideoOwner]) {
                 destructiveButtonTitle = @"Delete Video";
             } else {
                 destructiveButtonTitle = @"Remove Video";
@@ -1114,8 +1116,8 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
                     
                 case NSFetchedResultsChangeUpdate:
                 {
-                    GRVVideoSectionHeaderView *headerView = self.sectionHeaderViews[video.hashKey];
-                    [self configureSectionHeaderView:headerView withVideo:video];
+                    //GRVVideoSectionHeaderView *headerView = self.sectionHeaderViews[video.hashKey];
+                    //[self configureSectionHeaderView:headerView withVideo:video];
                     [self configureCell:self.activeVideoCell withVideo:video];
                 }
                     break;
@@ -1237,8 +1239,14 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/
         indexPath = [self.tableView indexPathForCell:sender];
     
     } else if ([sender isKindOfClass:[UIButton class]]) {
-        CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
-        indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+        if ([segue.identifier isEqualToString:kSegueIdentifierAddClip]) {
+            UIButton *addClipButton = (UIButton *)sender;
+            indexPath = [NSIndexPath indexPathForItem:0 inSection:addClipButton.tag];
+
+        } else {
+            CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+            indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+        }
     }
     
     // Grab the destination View Controller

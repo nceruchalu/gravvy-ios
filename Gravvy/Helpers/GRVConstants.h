@@ -248,10 +248,12 @@ extern NSString *const kGRVRESTVideoHashKeyKey;
 extern NSString *const kGRVRESTVideoLeadClipKey;
 extern NSString *const kGRVRESTVideoLikedKey;
 extern NSString *const kGRVRESTVideoLikesCountKey;
+extern NSString *const kGRVRESTVideoMembershipKey;
 extern NSString *const kGRVRESTVideoOwnerKey;
 extern NSString *const kGRVRESTVideoPhotoSmallThumbnailKey;
 extern NSString *const kGRVRESTVideoPhotoThumbnailKey;
 extern NSString *const kGRVRESTVideoPlaysCountKey;
+extern NSString *const kGRVRESTVideoScoreKey;
 extern NSString *const kGRVRESTVideoTitleKey;
 extern NSString *const kGRVRESTVideoUnseenClipsCountKey;
 extern NSString *const kGRVRESTVideoUnseenLikesCountKey;
@@ -446,11 +448,20 @@ typedef enum : NSUInteger {
  * Membership status in Video
  */
 typedef enum : NSUInteger {
-    GRVVideoMembershipNone = 0,     // Neither video member nor invitee
-    GRVVideoMembershipMember,       // Member of a video
-    GRVVideoMembershipInvited,      // Invited to a video
-    GRVVideoMembershipCreated       // Viewed invitation.
+    GRVVideoMembershipNone          = 0, // Neither video member nor invitee
+    GRVVideoMembershipInvited       = 1, // Invited to a video
+    GRVVideoMembershipViewed        = 2, // Member of a video without contribution
+    GRVVideoMembershipContributed   = 3, // Member of video with contribution.
 } GRVVideoMembership;
 
+
+/**
+ * Video participation status
+ */
+typedef enum : NSUInteger {
+    GRVVideoParticipationDefault    = 0, // Pre-existing video that you're active in
+    GRVVideoParticipationInvited    = 5, // New video you've been invited to
+    GRVVideoParticipationCreated    = 9, // New video that you just created
+} GRVVideoParticipation;
 
 // EOF

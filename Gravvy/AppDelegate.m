@@ -368,11 +368,10 @@ static NSString *const kRemoteNotificationSoundFileExtension = @"caf";
                         }
                     }
                     
-                    if (!alreadyShowingVideoView && [remoteNotificationAlert length]) {
-                        // If not already showing this video's view, and remote
-                        // notification has an alert, show an alert banner
-                        // Get alert title
+                    if ([remoteNotificationAlert length]) {
+                        // If remote notification has an alert, show an alert banner
                         
+                        // Get alert title
                         NSString *alertTitle;
                         if ([video.title length]) {
                             alertTitle = [NSString stringWithFormat:@"\"%@\"", video.title];

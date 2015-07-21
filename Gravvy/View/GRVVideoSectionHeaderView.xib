@@ -50,9 +50,9 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZWC-e5-NPh" userLabel="Add Clip Button">
-                            <rect key="frame" x="336" y="7.5" width="40" height="40"/>
+                            <rect key="frame" x="334" y="5.5" width="44" height="44"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="40" id="dCc-Hf-cvg"/>
+                                <constraint firstAttribute="height" constant="44" id="dCc-Hf-cvg"/>
                                 <constraint firstAttribute="width" secondItem="ZWC-e5-NPh" secondAttribute="height" multiplier="1:1" id="zry-tS-10P"/>
                             </constraints>
                             <color key="tintColor" red="0.0" green="0.74901960779999999" blue="0.56078431370000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -70,7 +70,7 @@
                         <constraint firstAttribute="trailing" secondItem="eV9-Df-SPQ" secondAttribute="trailing" id="V9r-gd-Faw"/>
                         <constraint firstItem="DdH-w6-bqw" firstAttribute="top" secondItem="DE9-dP-tkt" secondAttribute="bottom" constant="4" id="Xt1-SE-XNE"/>
                         <constraint firstItem="51K-2c-00b" firstAttribute="centerY" secondItem="DE9-dP-tkt" secondAttribute="centerY" constant="8" id="aMo-kP-z4Z"/>
-                        <constraint firstAttribute="trailing" secondItem="ZWC-e5-NPh" secondAttribute="trailing" constant="5" id="l6x-ZY-a5S"/>
+                        <constraint firstAttribute="trailing" secondItem="ZWC-e5-NPh" secondAttribute="trailing" constant="3" id="l6x-ZY-a5S"/>
                         <constraint firstItem="51K-2c-00b" firstAttribute="centerY" secondItem="ZWC-e5-NPh" secondAttribute="centerY" id="liw-VO-s7D"/>
                         <constraint firstAttribute="centerY" secondItem="51K-2c-00b" secondAttribute="centerY" id="oRO-1G-06x"/>
                         <constraint firstItem="51K-2c-00b" firstAttribute="leading" secondItem="Hxs-Jj-DRY" secondAttribute="leading" priority="999" constant="10" id="yOj-OR-LvN"/>

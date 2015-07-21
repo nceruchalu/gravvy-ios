@@ -21,9 +21,11 @@
  *                          as recorded during last refresh operation.
  *                          This ensures the UI doesn't go re-ordering videos
  *                          on each update.
+ * participation            Particpation status. Indicator of if video is new, unseen
  * photoSmallThumbnailURL   URL location of video's activity feed thumbnail image
  * photoThumbnailURL        URL location of video's cover image
  * playsCount               Number of video plays
+ * score                    Relevance rannking score (based on Hacker News ranking)
  * title                    Video title/caption
  * unseenClipsCount         Number of unseen video clips
  * unseenLikesCount         Number of unseen video likes
@@ -110,6 +112,11 @@
 
 
 #pragma mark - Instance Methods
+/**
+ * Is app user the video owner?
+ */
+- (BOOL)isVideoOwner;
+
 /**
  * Record play of this video on the server and locally
  *

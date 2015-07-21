@@ -58,11 +58,15 @@
         newVideo.createdAt = createdAt;
         newVideo.liked = @([[videoDictionary objectForKey:kGRVRESTVideoLikedKey] boolValue]);
         newVideo.likesCount = [videoDictionary objectForKey:kGRVRESTVideoLikesCountKey];
+        newVideo.membership = [videoDictionary objectForKey:kGRVRESTVideoMembershipKey];
         newVideo.unseenClipsCount = [videoDictionary objectForKey:kGRVRESTVideoUnseenClipsCountKey];
         newVideo.unseenLikesCount = [videoDictionary objectForKey:kGRVRESTVideoUnseenLikesCountKey];
         newVideo.photoThumbnailURL = [[videoDictionary objectForKey:kGRVRESTVideoPhotoThumbnailKey] description];
         newVideo.playsCount = [videoDictionary objectForKey:kGRVRESTVideoPlaysCountKey];
+        newVideo.score = [videoDictionary objectForKey:kGRVRESTVideoScoreKey];
         newVideo.updatedAt = updatedAt;
+        
+        [newVideo updateParticipation];
         
         // Setup the relationships
         // Setup the clips
@@ -144,6 +148,15 @@
                 existingVideo.photoSmallThumbnailURL = photoSmallThumbnailURL;
             }
         }
+    }
+    
+    // Some changes happen independent of the updated_at time on the full JSON
+    // representation
+    if ([videoDictionary objectForKey:kGRVRESTVideoPhotoThumbnailKey]) {
+        existingVideo.membership = [videoDictionary objectForKey:kGRVRESTVideoMembershipKey];
+        existingVideo.score = [videoDictionary objectForKey:kGRVRESTVideoScoreKey];
+        
+        [existingVideo updateParticipation];
     }
 }
 
@@ -288,13 +301,20 @@
                              // Now refresh the videos
                              NSArray *refreshedVideos = [GRVVideo videosWithVideoInfoArray:videosJSON inManagedObjectContext:workerContext];
                              
-                             // Order refreshed videos by descending unseen clips
-                             // count, unseen likes count, and updatedAt
+                             // Order refreshed videos by :
+                             // - participation DESC: new and unseen videos first
+                             // - unseen clips count DESC: unseen clips next
+                             // - unseen likes count DESC: unseen likes
+                             // - score DESC: rank indicator
+                             // - updatedAt DESC: in the unlikely event the score
+                             //     isn't unique, video with recent update wins
+                             NSSortDescriptor *participationSort = [NSSortDescriptor sortDescriptorWithKey:@"participation" ascending:NO];
                              NSSortDescriptor *unseenClipsCountSort = [NSSortDescriptor sortDescriptorWithKey:@"unseenClipsCount" ascending:NO];
                              NSSortDescriptor *unseenLikesCountSort = [NSSortDescriptor sortDescriptorWithKey:@"unseenLikesCount" ascending:NO];
+                             NSSortDescriptor *scoreSort = [NSSortDescriptor sortDescriptorWithKey:@"score" ascending:NO];
                              NSSortDescriptor *updatedAtSort = [NSSortDescriptor sortDescriptorWithKey:@"updatedAt" ascending:NO];
                              
-                             refreshedVideos = [refreshedVideos sortedArrayUsingDescriptors:@[unseenClipsCountSort, unseenLikesCountSort, updatedAtSort]];
+                             refreshedVideos = [refreshedVideos sortedArrayUsingDescriptors:@[participationSort, unseenClipsCountSort, unseenLikesCountSort, scoreSort, updatedAtSort]];
                              NSUInteger idx = 0;
                              for (GRVVideo *video in refreshedVideos) {
                                  video.order = @(idx);
@@ -327,7 +347,33 @@
 
 
 #pragma mark - Instance Methods
+#pragma mark Private
+/**
+ * Set the participation on a video
+ */
+- (void)updateParticipation
+{
+    
+    if ([self isVideoOwner] && [self.playsCount integerValue] == 0) {
+        // Check if video is just created by the user
+        // TODO: add a time limit
+        self.participation = @(GRVVideoParticipationCreated);
+
+    } else if ([self.membership integerValue] <= GRVVideoMembershipInvited) {
+        // Have you been invited to the video and haven't viewed it yet?
+        self.participation = @(GRVVideoParticipationInvited);
+    
+    } else {
+        self.participation = @(GRVVideoParticipationDefault);
+    }
+}
+
 #pragma mark Public
+- (BOOL)isVideoOwner
+{
+    return [self.owner.phoneNumber isEqualToString:[GRVAccountManager sharedManager].phoneNumber];
+}
+
 - (void)play:(void (^)())videoIsPlayed
 {
     NSString *videoDetailPlayURL = [GRVRestUtils videoDetailPlayURL:self.hashKey];
@@ -338,6 +384,9 @@
     [[GRVHTTPManager sharedManager] request:GRVHTTPMethodPUT forURL:videoDetailPlayURL parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         // refresh video
         self.playsCount = [responseObject objectForKey:kGRVRESTVideoPlaysCountKey];
+        if ([self.membership integerValue] <= GRVVideoMembershipInvited) {
+            self.membership = @(GRVVideoMembershipViewed);
+        }
         if (videoIsPlayed) videoIsPlayed();
     } failure:nil];
 }
@@ -383,6 +432,9 @@
         // clear video notification stats
         self.unseenClipsCount = @(0);
         self.unseenLikesCount = @(0);
+        if ([self.membership integerValue] <= GRVVideoMembershipInvited) {
+            self.membership = @(GRVVideoMembershipViewed);
+        }
         if (notificationsCleared) notificationsCleared();
     } failure:nil];
 }

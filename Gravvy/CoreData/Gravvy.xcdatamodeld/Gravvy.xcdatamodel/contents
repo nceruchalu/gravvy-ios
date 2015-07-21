@@ -62,9 +62,11 @@
         <attribute name="likesCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="membership" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="order" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="participation" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="photoSmallThumbnailURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="photoThumbnailURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="playsCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="score" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="unseenClipsCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="unseenLikesCount" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -82,6 +84,6 @@
         <element name="GRVMember" positionX="196" positionY="-36" width="128" height="120"/>
         <element name="GRVUser" positionX="-9" positionY="-45" width="128" height="223"/>
         <element name="GRVUserThumbnail" positionX="-189" positionY="-72" width="128" height="88"/>
-        <element name="GRVVideo" positionX="367" positionY="-117" width="128" height="315"/>
+        <element name="GRVVideo" positionX="367" positionY="-117" width="128" height="345"/>
     </elements>
 </model>

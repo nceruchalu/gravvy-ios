@@ -21,7 +21,6 @@
 @property (weak, nonatomic) IBOutlet GRVUserAvatarView *ownerAvatarView;
 @property (weak, nonatomic) IBOutlet UILabel *ownerNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *createdAtLabel;
-@property (weak, nonatomic) IBOutlet UILabel *playsCountLabel;
 @property (weak, nonatomic) IBOutlet UIButton *addClipButton;
 
 @end
