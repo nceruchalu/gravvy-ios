@@ -25,6 +25,7 @@
 #import "GRVVideosCDTVC.h"
 #import "GRVFormatterUtils.h"
 #import <AudioToolbox/AudioToolbox.h>
+#import "AMPopTip.h"
 
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
@@ -117,6 +118,9 @@ static NSString *const kRemoteNotificationSoundFileExtension = @"caf";
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60)
                                                          forBarMetrics:UIBarMetricsDefault];
     
+    // Configure poptip appearance
+    [self configurePopTipAppearance];
+    
     // Starting app from "Not running" state.
     self.activatedFromBackground = NO;
     
@@ -167,6 +171,23 @@ static NSString *const kRemoteNotificationSoundFileExtension = @"caf";
                              didFinishLaunchingWithOptions:launchOptions];
     
     return YES;
+}
+
+#pragma mark Helper
+/**
+ * Customize the appearance of the pop tips to be used in the app
+ */
+- (void)configurePopTipAppearance
+{
+    AMPopTip *appearance = [AMPopTip appearance];
+    appearance.font = [UIFont fontWithName:@"Avenir-Medium" size:14.0f];
+    appearance.textColor = [UIColor whiteColor];
+    appearance.textAlignment = NSTextAlignmentLeft;
+    appearance.popoverColor = kGRVDarkThemeColor;
+    appearance.offset = 2.0f; // Offset between the popover and the origin
+    appearance.edgeInsets = UIEdgeInsetsMake(0, 10, 0, 10);
+    appearance.actionAnimation = AMPopTipActionAnimationPulse;
+    appearance.edgeMargin = 5.0f;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

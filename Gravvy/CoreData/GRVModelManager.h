@@ -70,6 +70,15 @@
  */
 @property (nonatomic) BOOL profileConfiguredPostActivation;
 
+/**
+ * Has the user acknowledged the video creation tip?
+ */
+@property (nonatomic) BOOL acknowledgedVideoCreationTip;
+
+/**
+ * Has the user acknowledged the clip addition tip?
+ */
+@property (nonatomic) BOOL acknowledgedClipAdditionTip;
 
 #pragma mark - Class Methods
 /**

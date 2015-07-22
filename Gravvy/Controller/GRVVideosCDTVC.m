@@ -20,7 +20,9 @@
 #import "GRVAddClipCameraReviewVC.h"
 #import "GRVAddClipCameraVC.h"
 #import "GRVAccountManager.h"
+#import "GRVModelManager.h"
 #import "MBProgressHUD.h"
+#import "AMPopTip.h"
 
 #import <FBSDKShareKit/FBSDKShareKit.h>
 #import <FBSDKCoreKit/FBSDKConstants.h>
@@ -164,6 +166,8 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
 @property (strong, nonatomic) MBProgressHUD *successProgressHUD;
 @property (strong, nonatomic) MBProgressHUD *failureProgressHUD;
 
+@property (strong, nonatomic) AMPopTip *addClipPopTip;
+
 @end
 
 @implementation GRVVideosCDTVC
@@ -241,6 +245,16 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     _playerItems = [playerItems copy];
 }
 
+- (AMPopTip *)addClipPopTip
+{
+    if (!_addClipPopTip) {
+        // lazy instantiation
+        _addClipPopTip = [AMPopTip popTip];
+        _addClipPopTip.shouldDismissOnTap = YES;
+    }
+    return _addClipPopTip;
+}
+
 #pragma mark - View Lifecycle
 - (void)viewDidLoad
 {
@@ -298,6 +312,9 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     
     // remove observers
     self.playerItems = nil;
+    
+    [self.addClipPopTip hide];
+    self.addClipPopTip = nil;
 }
 
 
@@ -359,6 +376,29 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
                                  headerView.notificationIndicatorView.hidden = YES;
                              }];
         }];
+    }
+}
+
+/**
+ * Possibly show a pop tip that shows users how to add clips
+ */
+- (void)showAddClipPopTip
+{
+    // Show video creation poptip
+    if (![GRVModelManager sharedManager].acknowledgedClipAdditionTip) {
+        
+        // Get the active video's section header
+        GRVVideoSectionHeaderView *headerView = [self.sectionHeaderViews objectForKey:self.activeVideo.hashKey];
+        if (headerView) {
+            if (!self.addClipPopTip.containerView || !self.addClipPopTip.isVisible) {
+                [self.addClipPopTip showText:@"Tap button to add video clip"
+                                   direction:AMPopTipDirectionDown
+                                    maxWidth:100.0f
+                                      inView:self.view
+                                   fromFrame:headerView.addClipButton.frame
+                                    duration:kGRVPopTipMinimumDuration];
+            }
+        }
     }
 }
 
@@ -680,6 +720,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     if (!self.activeVideoCell) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self autoPlayVideo];
+            [self showAddClipPopTip];
         });
     }
 }
@@ -772,6 +813,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
         [self clearPendingNotificationsInActiveCell];
     }
     [self autoPlayVideo];
+    [self showAddClipPopTip];
 }
 
 #pragma mark - Refresh
@@ -845,6 +887,11 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
         // Give the avplayer cleanup some time to occur before presenting camera VC
         [self performSegueWithIdentifier:kSegueIdentifierAddClip sender:sender];
     });
+    
+    if (![GRVModelManager sharedManager].acknowledgedClipAdditionTip) {
+        [GRVModelManager sharedManager].acknowledgedClipAdditionTip = YES;
+        [self.addClipPopTip hide];
+    }
 }
 
 - (IBAction)showShareActions:(UIButton *)sender

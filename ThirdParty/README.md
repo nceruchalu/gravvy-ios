@@ -35,6 +35,9 @@ a new module. Keep list in alphabetical order.
 #### [AFNetworking](https://github.com/AFNetworking/AFNetworking)
 Networking framework
 
+#### [AMPopTip](https://github.com/andreamazz/AMPopTip)
+An animated tooltip
+
 #### [AMScrollingNavbar](https://github.com/andreamazz/AMScrollingNavbar)
 Scrollable UINavigationBar that follows the scrolling of a UIScrollView
 

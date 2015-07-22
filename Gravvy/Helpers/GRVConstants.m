@@ -40,6 +40,13 @@ const float kGRVVideoPhotoCompressionQuality = 0.4f;
 
 
 // -----------------------------------------------------------------------------
+// PopTip Configuration info.
+// -----------------------------------------------------------------------------
+const NSTimeInterval kGRVPopTipMaximumDuration = 10.0f;
+const NSTimeInterval kGRVPopTipMinimumDuration = 5.0f;
+
+
+// -----------------------------------------------------------------------------
 // Model Field Settings (Max Lengths)
 // -----------------------------------------------------------------------------
 const NSUInteger kGRVUserFullNameMaxLength  = 25;
@@ -163,7 +170,9 @@ NSString *const kGRVUnknownRegionCode           = @"ZZ";
 // -----------------------------------------------------------------------------
 // Application Settings
 // -----------------------------------------------------------------------------
-NSString *const kGRVSettingsSounds          = @"kGRVSettingsSounds";
+NSString *const kGRVSettingsSounds              = @"kGRVSettingsSounds";
+NSString *const kGRVSettingsVideoCreationTip    = @"kGRVSettingsVideoCreationTip";
+NSString *const kGRVSettingsClipAdditionTip     = @"kGRVSettingsClipAdditionTip";
 
 
 // -----------------------------------------------------------------------------

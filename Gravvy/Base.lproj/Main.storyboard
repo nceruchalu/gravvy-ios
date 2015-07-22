@@ -272,6 +272,7 @@
                         <outlet property="activitiesButton" destination="obv-sf-P5h" id="zI2-ao-REQ"/>
                         <outlet property="badgeView" destination="6Vt-KJ-G5c" id="foy-Zr-OSK"/>
                         <outlet property="containerView" destination="QDF-nW-e4j" id="Itl-TX-edp"/>
+                        <outlet property="createVideoButton" destination="a1m-7F-DL1" id="lPF-CR-4dV"/>
                         <outlet property="currentButtonIndicatorHorizontalCenterLayout" destination="jan-Ne-p3X" id="lba-y5-S3Y"/>
                         <outlet property="navigationButtonsContainerView" destination="BEK-NR-Bpm" id="16c-Hm-kiP"/>
                         <outlet property="topLayoutConstraint" destination="jek-sc-VVK" id="PrG-2h-IxH"/>

@@ -97,19 +97,12 @@ static NSString *const kProfileConfiguredKey = @"kGRVProfileConfiguredKey";
 #pragma mark NSUserDefault Settings
 - (BOOL)userSoundsSetting
 {
-    NSDictionary *userSettings = [[NSUserDefaults standardUserDefaults] dictionaryForKey:[self userSettingsKey]];
-    return [[userSettings objectForKey:kGRVSettingsSounds] boolValue];
+    return [self userSettingsBoolForKey:kGRVSettingsSounds];
 }
 
 - (void)setUserSoundsSetting:(BOOL)userSoundsSetting
 {
-    NSString *userKey = [self userSettingsKey];
-    NSMutableDictionary *mutableUserSettings = [[[NSUserDefaults standardUserDefaults] dictionaryForKey:userKey] mutableCopy];
-    
-    [mutableUserSettings setObject:@(userSoundsSetting) forKey:kGRVSettingsSounds];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:mutableUserSettings forKey:userKey];
-    [[NSUserDefaults standardUserDefaults] synchronize]; // never forget saving to disk
+    [self setUserSettingsBool:userSoundsSetting forKey:kGRVSettingsSounds];
 }
 
 - (BOOL)profileConfiguredPostActivation
@@ -121,6 +114,43 @@ static NSString *const kProfileConfiguredKey = @"kGRVProfileConfiguredKey";
 {
     [[NSUserDefaults standardUserDefaults] setBool:profileConfiguredPostActivation
                                             forKey:kProfileConfiguredKey];
+    [[NSUserDefaults standardUserDefaults] synchronize]; // never forget saving to disk
+}
+
+- (BOOL)acknowledgedVideoCreationTip
+{
+    return [self userSettingsBoolForKey:kGRVSettingsVideoCreationTip];
+}
+
+- (void)setAcknowledgedVideoCreationTip:(BOOL)acknowledgedVideoCreationTip
+{
+    [self setUserSettingsBool:acknowledgedVideoCreationTip forKey:kGRVSettingsVideoCreationTip];
+}
+
+- (BOOL)acknowledgedClipAdditionTip
+{
+    return [self userSettingsBoolForKey:kGRVSettingsClipAdditionTip];
+}
+
+- (void)setAcknowledgedClipAdditionTip:(BOOL)acknowledgedClipAdditionTip
+{
+    [self setUserSettingsBool:acknowledgedClipAdditionTip forKey:kGRVSettingsClipAdditionTip];
+}
+
+#pragma mark Helpers
+- (BOOL)userSettingsBoolForKey:(NSString *)settingsKey
+{
+    NSDictionary *userSettings = [[NSUserDefaults standardUserDefaults] dictionaryForKey:[self userSettingsKey]];
+    return [[userSettings objectForKey:settingsKey] boolValue];
+}
+
+- (void)setUserSettingsBool:(BOOL)boolean forKey:(NSString *)settingsKey
+{
+    NSString *userKey = [self userSettingsKey];
+    NSMutableDictionary *mutableUserSettings = [[[NSUserDefaults standardUserDefaults] dictionaryForKey:userKey] mutableCopy];
+    [mutableUserSettings setObject:@(boolean) forKey:settingsKey];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:mutableUserSettings forKey:userKey];
     [[NSUserDefaults standardUserDefaults] synchronize]; // never forget saving to disk
 }
 
@@ -339,7 +369,9 @@ static NSString *const kProfileConfiguredKey = @"kGRVProfileConfiguredKey";
     self.phoneNumber = phoneNumber; // cache phone number.
     
     // Create the preference defaults
-    NSDictionary *appDefaults = @{kGRVSettingsSounds: @(YES)};
+    NSDictionary *appDefaults = @{kGRVSettingsSounds: @(YES),
+                                  kGRVSettingsVideoCreationTip: @(NO),
+                                  kGRVSettingsClipAdditionTip: @(NO)};
     NSDictionary *userDefaults = @{[self userSettingsKey] : appDefaults,
                                    kProfileConfiguredKey : @(NO)};
     

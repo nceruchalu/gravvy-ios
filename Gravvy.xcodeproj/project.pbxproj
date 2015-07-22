@@ -155,6 +155,10 @@
 		407623E21AFF2CD700100550 /* GRVAlertBannerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 407623E11AFF2CD700100550 /* GRVAlertBannerManager.m */; };
 		407623E51AFF31D400100550 /* Gravvy.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 407623E31AFF31D400100550 /* Gravvy.xcdatamodeld */; };
 		407A16FE1B53561700F086B8 /* GRVRecorderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 407A16FD1B53561700F086B8 /* GRVRecorderManager.m */; };
+		408307061B5F69AF00A03323 /* AMPopTip+Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = 408306D81B5F69AF00A03323 /* AMPopTip+Animation.m */; };
+		408307071B5F69AF00A03323 /* AMPopTip+Draw.m in Sources */ = {isa = PBXBuildFile; fileRef = 408306DA1B5F69AF00A03323 /* AMPopTip+Draw.m */; };
+		408307081B5F69AF00A03323 /* AMPopTip+Entrance.m in Sources */ = {isa = PBXBuildFile; fileRef = 408306DC1B5F69AF00A03323 /* AMPopTip+Entrance.m */; };
+		408307091B5F69AF00A03323 /* AMPopTip.m in Sources */ = {isa = PBXBuildFile; fileRef = 408306DE1B5F69AF00A03323 /* AMPopTip.m */; };
 		4089BFEC1B03BC17003DF4AA /* CoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4089BFEB1B03BC17003DF4AA /* CoreDataTableViewController.m */; };
 		4089BFF11B03BC36003DF4AA /* ExtendedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4089BFEE1B03BC36003DF4AA /* ExtendedTableViewController.m */; };
 		4089BFF21B03BC36003DF4AA /* ExtendedCoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4089BFF01B03BC36003DF4AA /* ExtendedCoreDataTableViewController.m */; };
@@ -493,6 +497,15 @@
 		407623E41AFF31D400100550 /* Gravvy.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Gravvy.xcdatamodel; sourceTree = "<group>"; };
 		407A16FC1B53561700F086B8 /* GRVRecorderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVRecorderManager.h; sourceTree = "<group>"; };
 		407A16FD1B53561700F086B8 /* GRVRecorderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVRecorderManager.m; sourceTree = "<group>"; };
+		408306D71B5F69AF00A03323 /* AMPopTip+Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AMPopTip+Animation.h"; sourceTree = "<group>"; };
+		408306D81B5F69AF00A03323 /* AMPopTip+Animation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AMPopTip+Animation.m"; sourceTree = "<group>"; };
+		408306D91B5F69AF00A03323 /* AMPopTip+Draw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AMPopTip+Draw.h"; sourceTree = "<group>"; };
+		408306DA1B5F69AF00A03323 /* AMPopTip+Draw.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AMPopTip+Draw.m"; sourceTree = "<group>"; };
+		408306DB1B5F69AF00A03323 /* AMPopTip+Entrance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AMPopTip+Entrance.h"; sourceTree = "<group>"; };
+		408306DC1B5F69AF00A03323 /* AMPopTip+Entrance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AMPopTip+Entrance.m"; sourceTree = "<group>"; };
+		408306DD1B5F69AF00A03323 /* AMPopTip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPopTip.h; sourceTree = "<group>"; };
+		408306DE1B5F69AF00A03323 /* AMPopTip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AMPopTip.m; sourceTree = "<group>"; };
+		408306DF1B5F69AF00A03323 /* AMPopTipDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AMPopTipDefaults.h; sourceTree = "<group>"; };
 		4089BFEA1B03BC17003DF4AA /* CoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataTableViewController.h; sourceTree = "<group>"; };
 		4089BFEB1B03BC17003DF4AA /* CoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataTableViewController.m; sourceTree = "<group>"; };
 		4089BFED1B03BC36003DF4AA /* ExtendedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtendedTableViewController.h; sourceTree = "<group>"; };
@@ -992,6 +1005,7 @@
 		407620C81AFEEE8A00100550 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				4083069A1B5F69AF00A03323 /* AMPopTip */,
 				400881201B4E3A4C00F3868C /* MBProgressHUD */,
 				4076236D1AFEF13400100550 /* SDWebImage */,
 				407623311AFEF0E300100550 /* libPhoneNumber */,
@@ -1190,6 +1204,31 @@
 				407A16FD1B53561700F086B8 /* GRVRecorderManager.m */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		4083069A1B5F69AF00A03323 /* AMPopTip */ = {
+			isa = PBXGroup;
+			children = (
+				408306D61B5F69AF00A03323 /* Source */,
+			);
+			name = AMPopTip;
+			path = ThirdParty/AMPopTip;
+			sourceTree = SOURCE_ROOT;
+		};
+		408306D61B5F69AF00A03323 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				408306D71B5F69AF00A03323 /* AMPopTip+Animation.h */,
+				408306D81B5F69AF00A03323 /* AMPopTip+Animation.m */,
+				408306D91B5F69AF00A03323 /* AMPopTip+Draw.h */,
+				408306DA1B5F69AF00A03323 /* AMPopTip+Draw.m */,
+				408306DB1B5F69AF00A03323 /* AMPopTip+Entrance.h */,
+				408306DC1B5F69AF00A03323 /* AMPopTip+Entrance.m */,
+				408306DD1B5F69AF00A03323 /* AMPopTip.h */,
+				408306DE1B5F69AF00A03323 /* AMPopTip.m */,
+				408306DF1B5F69AF00A03323 /* AMPopTipDefaults.h */,
+			);
+			path = Source;
 			sourceTree = "<group>";
 		};
 		40D853AF1B0C5FAA001A206A /* Camera */ = {
@@ -1427,6 +1466,7 @@
 				40FAD4461B13D7BF0039B03A /* GRVFilteredContactPickerTableViewCell.m in Sources */,
 				403D34531B101528004FF19E /* GRVCameraSlideDownView.m in Sources */,
 				40DAD9AA1B44F63B0038B8CB /* GRVVideoSectionHeaderView.m in Sources */,
+				408307081B5F69AF00A03323 /* AMPopTip+Entrance.m in Sources */,
 				407623951AFEF13400100550 /* SDWebImageDownloaderOperation.m in Sources */,
 				40FFFEF71B4CD16C00AFC183 /* GRVAddClipCameraReviewVC.m in Sources */,
 				40F937C71B0C491F000F7BCB /* GRVFeedbackFormViewController.m in Sources */,
@@ -1442,6 +1482,7 @@
 				402875B01B047FFC00699F60 /* GRVVideosCDTVC.m in Sources */,
 				40F937BC1B0C46B0000F7BCB /* GRVSettingsTVC.m in Sources */,
 				407623C21AFF209C00100550 /* GRVAccountManager.m in Sources */,
+				408307071B5F69AF00A03323 /* AMPopTip+Draw.m in Sources */,
 				404CB2071B3CD0A400890D45 /* GRVVideoTableViewCell.m in Sources */,
 				403D34B81B11480E004FF19E /* SCAssetExportSession.m in Sources */,
 				407623901AFEF13400100550 /* NSData+ImageContentType.m in Sources */,
@@ -1508,6 +1549,7 @@
 				4076236C1AFEF0E300100550 /* NSArray+NBAdditions.m in Sources */,
 				403D34BC1B11480E004FF19E /* SCWeakSelectorTarget.m in Sources */,
 				400881771B4E3C0000F3868C /* SCProcessingQueue.m in Sources */,
+				408307061B5F69AF00A03323 /* AMPopTip+Animation.m in Sources */,
 				407623CB1AFF223D00100550 /* GRVHTTPSessionManager.m in Sources */,
 				4076230B1AFEF08E00100550 /* AFHTTPSessionManager.m in Sources */,
 				4076238F1AFEF13400100550 /* MKAnnotationView+WebCache.m in Sources */,
@@ -1517,6 +1559,7 @@
 				407623641AFEF0E300100550 /* NBMetadataHelper.m in Sources */,
 				403D34BA1B11480E004FF19E /* SCRecorderTools.m in Sources */,
 				407623691AFEF0E300100550 /* NBPhoneNumberDesc.m in Sources */,
+				408307091B5F69AF00A03323 /* AMPopTip.m in Sources */,
 				407623131AFEF08E00100550 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				407623931AFEF13400100550 /* SDWebImageDecoder.m in Sources */,
 				40FAD4451B13D7BF0039B03A /* GRVContactPickerTableViewCell.m in Sources */,

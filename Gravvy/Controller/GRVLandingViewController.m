@@ -16,6 +16,7 @@
 #import "GRVVideosCDTVC.h"
 #import "GRVBadgeView.h"
 #import "GRVModelManager.h"
+#import "AMPopTip.h"
 //#import "UIViewController+ScrollingNavbar.h"
 
 #pragma mark - Constants
@@ -61,6 +62,7 @@ static CGFloat const scrollingNavBarDelay = 480.0f;
 @property (weak, nonatomic) IBOutlet UIButton *videosButton;
 @property (weak, nonatomic) IBOutlet UIButton *activitiesButton;
 @property (weak, nonatomic) IBOutlet GRVBadgeView *badgeView;
+@property (weak, nonatomic) IBOutlet UIButton *createVideoButton;
 
 /**
  * Horizontal position of center of button indicator in the navigation buttons
@@ -78,6 +80,8 @@ static CGFloat const scrollingNavBarDelay = 480.0f;
 @property (nonatomic) CGFloat buttonIndicatorOffset;
 
 @property (strong, nonatomic) MBProgressHUD *successProgressHUD;
+
+@property (strong, nonatomic) AMPopTip *popTip;
 
 
 #pragma mark Notifications Badge
@@ -195,6 +199,16 @@ static CGFloat const scrollingNavBarDelay = 480.0f;
     }
 }
 
+- (AMPopTip *)popTip
+{
+    if (!_popTip) {
+        // lazy instantiation
+        _popTip = [AMPopTip popTip];
+        _popTip.shouldDismissOnTap = YES;
+    }
+    return _popTip;
+}
+
 
 #pragma mark - Initialization
 #pragma mark Concrete Helpers
@@ -286,6 +300,16 @@ static CGFloat const scrollingNavBarDelay = 480.0f;
     // To ensure button indicator is setup properly
     // Noticed invalid frame sizes in viewDidLoad when using simulator
     self.buttonIndicatorOffset = self.buttonIndicatorOffset;
+    
+    // Show video creation poptip
+    if (![GRVModelManager sharedManager].acknowledgedVideoCreationTip) {
+        [self.popTip showText:@"Tap button to create video"
+                    direction:AMPopTipDirectionUp
+                     maxWidth:100.0f
+                       inView:self.view
+                    fromFrame:self.createVideoButton.frame
+                     duration:kGRVPopTipMaximumDuration];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -307,12 +331,17 @@ static CGFloat const scrollingNavBarDelay = 480.0f;
 }
 
 
-#ifdef GRV_USE_SCROLLING_NAVBAR
+
 - (void)dealloc
 {
+#ifdef GRV_USE_SCROLLING_NAVBAR
     [self stopFollowingScrollView];
-}
 #endif
+    
+    [self.popTip hide];
+    self.popTip = nil;
+}
+
 
 
 #pragma mark - Instance Methods
@@ -356,6 +385,10 @@ static CGFloat const scrollingNavBarDelay = 480.0f;
 - (IBAction)recordVideo:(UIButton *)sender
 {
     [self startCameraController];
+    if (![GRVModelManager sharedManager].acknowledgedVideoCreationTip) {
+        [GRVModelManager sharedManager].acknowledgedVideoCreationTip = YES;
+        [self.popTip hide];
+    }
 }
 
 #pragma mark Video Recording Helpers

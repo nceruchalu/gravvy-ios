@@ -32,6 +32,11 @@
 #define kGRVThemeColor [UIColor colorWithRed:0.0/255.0 green:191.0/255.0 blue:143.0/255.0 alpha:1.0]
 
 /**
+ * Darkened version of Theme Color is RGB #008A67
+ */
+#define kGRVDarkThemeColor [UIColor colorWithRed:0.0/255.0 green:138.0/255.0 blue:103.0/255.0 alpha:1.0]
+
+/**
  * Avatar view background color
  */
 #define kGRVUserAvatarBackgroundColor [UIColor colorWithRed:182.0/255.0 green:182.0/255.0 blue:182.0/255.0 alpha:1.0]
@@ -105,6 +110,19 @@ extern const float kGRVVideoSizeHeight;
  */
 extern const float kGRVVideoPhotoCompressionQuality;
 
+
+// -----------------------------------------------------------------------------
+// PopTip Configuration info.
+// -----------------------------------------------------------------------------
+/**
+ * kGRVPopTipMaximumDuration is the maximum duration, in seconds, to show a poptip
+ */
+extern const NSTimeInterval kGRVPopTipMaximumDuration;
+
+/**
+ * kGRVPopTipMinimumDuration is the minimum duration, in seconds, to show a poptip
+ */
+extern const NSTimeInterval kGRVPopTipMinimumDuration;
 
 // -----------------------------------------------------------------------------
 // Model Field Settings (Max Lengths)
@@ -307,6 +325,18 @@ extern NSString *const kGRVUnknownRegionCode;
  * sounds or not
  */
 extern NSString *const kGRVSettingsSounds;
+
+/**
+ * kGRVSettingsVideoCreationTip is the key for NSUserDefaults setting
+ * on whether the user has acknowledged the tip on how to create videos
+ */
+extern NSString *const kGRVSettingsVideoCreationTip;
+
+/**
+ * kGRVSettingsClipAdditionTip is the key for NSUserDefaults setting
+ * on whether the user has acknowledged the tip on how to add clips
+ */
+extern NSString *const kGRVSettingsClipAdditionTip;
 
 
 // -----------------------------------------------------------------------------
