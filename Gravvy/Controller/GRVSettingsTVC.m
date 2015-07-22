@@ -22,8 +22,8 @@ static const NSUInteger kTellAFriendMessageButtonIndex = 1; // Message
  * Constants for messages used to Tell Friends about the app
  */
 static NSString *const kTellAFriendMailSubject = @"Gravvy iPhone App";
-static NSString *const kTellAFriendMailBody = @"Hey,\n\nI just downloaded Gravvy on my iPhone.\n\nIt lets us create videos together.\n\nGet it now from http://gravvy.nnoduka.com and 'share your world'.";
-static NSString *const kTellAFriendMessageBody = @"Check out Gravvy for your iPhone. Download it today from http://gravvy.nnoduka.com";
+static NSString *const kTellAFriendMailBody = @"Hey,\n\nI just downloaded Gravvy on my iPhone.\n\nIt lets us create videos together.\n\nGet it now from http://gravvy.co and 'share your world'.";
+static NSString *const kTellAFriendMessageBody = @"Check out Gravvy for your iPhone. Download it today from http://gravvy.co";
 
 /**
  * Tell a friend action sheet title

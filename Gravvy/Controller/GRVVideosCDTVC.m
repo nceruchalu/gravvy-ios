@@ -83,7 +83,7 @@ static const NSInteger kMoreActionsIndexCopyLink        = 3; // Copy link
 /**
  * Format string for creating a video's share URL
  */
-static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/v/%@/";
+static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
 
 
 @interface GRVVideosCDTVC () <UIActionSheetDelegate,
