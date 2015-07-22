@@ -339,6 +339,31 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
 }
 
 /**
+ * Clear pending notifications in active video then slowly hide the notification
+ * indicator view.
+ */
+- (void)clearPendingNotificationsInActiveCell
+{
+    if ([self.activeVideo hasPendingNotifications]) {
+        GRVVideoSectionHeaderView *headerView = [self.sectionHeaderViews objectForKey:self.activeVideo.hashKey];
+        
+        [self.activeVideo clearNotifications:^{
+            [self.activeVideo refreshVideo:nil];
+            
+            // delay the hiding of the notification indicator
+            [headerView.notificationIndicatorView stopPulsingAnimation];
+            [UIView animateWithDuration:kNotificationIndicatorAnimationInterval
+                             animations:^{
+                                 headerView.notificationIndicatorView.alpha = 0.0f;
+                             } completion:^(BOOL finished) {
+                                 headerView.notificationIndicatorView.hidden = YES;
+                             }];
+        }];
+    }
+}
+
+
+/**
  * Play video in the active video cell
  */
 - (void)playVideoInActiveCell
@@ -510,20 +535,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
         // Refresh video on first autoplay
         // If unread notifications as of the first play, clear those here
         if ([self.activeVideo hasPendingNotifications]) {
-            GRVVideoSectionHeaderView *headerView = self.sectionHeaderViews[self.activeVideo.hashKey];
-            
-            [self.activeVideo clearNotifications:^{
-                [self.activeVideo refreshVideo:nil];
-                
-                // delay the hiding of the notification indicator
-                [headerView.notificationIndicatorView stopPulsingAnimation];
-                [UIView animateWithDuration:kNotificationIndicatorAnimationInterval
-                                 animations:^{
-                                     headerView.notificationIndicatorView.alpha = 0.0f;
-                                 } completion:^(BOOL finished) {
-                                     headerView.notificationIndicatorView.hidden = YES;
-                                 }];
-            }];
+            [self clearPendingNotificationsInActiveCell];
         } else {
             [self.activeVideo refreshVideo:nil];
         }
@@ -531,7 +543,6 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
         self.performedAutoPlay = YES;
     }
 }
-
 
 /**
  * Determine the currently active video cell that should be played and if it
@@ -751,10 +762,15 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
 #pragma mark Helper
 /**
  * Scroll view done scrolling so autoplay the current displayed video if it
- * isn't already playing
+ * isn't already playing.
  */
 - (void)scrollViewDoneScrolling
 {
+    // before autoplaying currently displayed video, clear pending notifications
+    // in currently active cell if not refreshing
+    if (!self.suspendAutomaticTrackingOfChangesInManagedObjectContext) {
+        [self clearPendingNotificationsInActiveCell];
+    }
     [self autoPlayVideo];
 }
 
@@ -1112,47 +1128,26 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
 #pragma mark - NSFetchedResultsControllerDelegate
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
 {
-    // If this is the currently active row, then don't allow a reload
-    GRVVideo *video = (GRVVideo *)anObject;
-    if ([video.hashKey isEqualToString:self.activeVideo.hashKey]) {
-        // on active cell, so be careful to not reload entire cell.
-        // Update header and cell when object updates
-        indexPath = [self mapIndexPathFromFetchedResultsController:indexPath];
-        newIndexPath = [self mapIndexPathFromFetchedResultsController:newIndexPath];
+    // Override the logic on fetched video object's update to ensure section
+    // header view is refreshed, and active video cell isn't reloaded
+    if (!self.suspendAutomaticTrackingOfChangesInManagedObjectContext &&
+        type == NSFetchedResultsChangeUpdate) {
         
-        if (!self.suspendAutomaticTrackingOfChangesInManagedObjectContext) {
-            switch (type) {
-                case NSFetchedResultsChangeInsert:
-                    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
-                                          withRowAnimation:UITableViewRowAnimationFade];
-                    break;
-                    
-                case NSFetchedResultsChangeDelete:
-                    [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
-                                          withRowAnimation:UITableViewRowAnimationFade];
-                    break;
-                    
-                case NSFetchedResultsChangeUpdate:
-                {
-                    //GRVVideoSectionHeaderView *headerView = self.sectionHeaderViews[video.hashKey];
-                    //[self configureSectionHeaderView:headerView withVideo:video];
-                    [self configureCell:self.activeVideoCell withVideo:video];
-                }
-                    break;
-                    
-                case NSFetchedResultsChangeMove:
-                    [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
-                                          withRowAnimation:UITableViewRowAnimationFade];
-                    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath]
-                                          withRowAnimation:UITableViewRowAnimationFade];
-                    break;
-                    
-                default:
-                    break;
-            }
+        // Get the video and  refresh its corresponding section header view
+        GRVVideo *video = (GRVVideo *)anObject;
+        GRVVideoSectionHeaderView *headerView = [self.sectionHeaderViews objectForKey:video.hashKey];
+        [self configureSectionHeaderView:headerView withVideo:video];
+        
+        if ([video.hashKey isEqualToString:self.activeVideo.hashKey]) {
+            // on active cell, so be careful to not reload entire cell.
+            [self configureCell:self.activeVideoCell withVideo:video];
+        } else {
+            // Fallback to superclass implementation for cases not handled
+            [super controller:controller didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:newIndexPath];
         }
-
+        
     } else {
+        // Fallback to superclass implementation for cases not handled
         [super controller:controller didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:newIndexPath];
     }
 }

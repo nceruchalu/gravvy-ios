@@ -14,7 +14,7 @@ static CGFloat const kBadgeViewMinimumSize = 25.0;
 static CGFloat const kBadgeViewPadding = 12.0;
 static CGFloat const kBadgeViewDefaultFontSize = 12.0;
 
-static NSTimeInterval const kBadgeAnimationDuration = 0.2;
+static NSTimeInterval const kBadgeAnimationDuration = 0.2f;
 
 @interface GRVBadgeView ()
 
@@ -31,14 +31,14 @@ static NSTimeInterval const kBadgeAnimationDuration = 0.2;
     // No-op if we're given zero or less and our current badge value is zero,
     // meaning we're hidden anyway.
     //
-    if (badgeValue <= 0 && self.badgeValue == 0) {
+    if (badgeValue <= 0 && _badgeValue == 0) {
         return;
     }
     
     // If we're given a negative number and our badge value is a positive number,
     // treat this like we're setting it to zero.
     //
-    if (badgeValue < 0 && self.badgeValue > 0) {
+    if (badgeValue < 0 && _badgeValue > 0) {
         badgeValue = 0;
     }
     
@@ -187,9 +187,11 @@ static NSTimeInterval const kBadgeAnimationDuration = 0.2;
 - (void)hide
 {
     [UIView animateWithDuration:kBadgeAnimationDuration animations:^{
-        self.transform = CGAffineTransformMakeScale(0.001, 0.001);
+        self.alpha = 0.0f;
     } completion:^(BOOL finished) {
         self.hidden = YES;
+        self.alpha = 1.0f;
+        self.transform = CGAffineTransformMakeScale(0.001, 0.001);
     }];
 }
 
