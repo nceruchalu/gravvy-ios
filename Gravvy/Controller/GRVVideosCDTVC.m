@@ -388,15 +388,17 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     if (![GRVModelManager sharedManager].acknowledgedClipAdditionTip) {
         
         // Get the active video's section header
-        GRVVideoSectionHeaderView *headerView = [self.sectionHeaderViews objectForKey:self.activeVideo.hashKey];
-        if (headerView) {
-            if (!self.addClipPopTip.containerView || !self.addClipPopTip.isVisible) {
-                [self.addClipPopTip showText:@"Tap button to add video clip"
-                                   direction:AMPopTipDirectionDown
-                                    maxWidth:100.0f
-                                      inView:self.view
-                                   fromFrame:headerView.addClipButton.frame
-                                    duration:kGRVPopTipMinimumDuration];
+        if (self.activeVideo) {
+            GRVVideoSectionHeaderView *headerView = [self.sectionHeaderViews objectForKey:self.activeVideo.hashKey];
+            if (headerView) {
+                if (!self.addClipPopTip.containerView || !self.addClipPopTip.isVisible) {
+                    [self.addClipPopTip showText:@"Tap button to add video clip"
+                                       direction:AMPopTipDirectionDown
+                                        maxWidth:100.0f
+                                          inView:self.view
+                                       fromFrame:headerView.addClipButton.frame
+                                        duration:kGRVPopTipMinimumDuration];
+                }
             }
         }
     }
