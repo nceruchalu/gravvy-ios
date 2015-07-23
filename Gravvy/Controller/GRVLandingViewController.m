@@ -304,7 +304,7 @@ static CGFloat const scrollingNavBarDelay = 480.0f;
     // Show video creation poptip
     if (![GRVModelManager sharedManager].acknowledgedVideoCreationTip) {
         [self.popTip showText:@"Tap button to create video"
-                    direction:AMPopTipDirectionUp
+                    direction:AMPopTipDirectionLeft
                      maxWidth:100.0f
                        inView:self.view
                     fromFrame:self.createVideoButton.frame
