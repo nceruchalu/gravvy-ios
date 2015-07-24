@@ -18,6 +18,8 @@
 		4023299E1B09AA0200BFD2D5 /* GRVPrivateTransitionContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 4023299A1B09AA0200BFD2D5 /* GRVPrivateTransitionContext.m */; };
 		402875B01B047FFC00699F60 /* GRVVideosCDTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 402875AF1B047FFC00699F60 /* GRVVideosCDTVC.m */; };
 		402875B31B0483F300699F60 /* GRVLandingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 402875B21B0483F300699F60 /* GRVLandingViewController.m */; };
+		402E61151B61F28B00DDB56C /* GRVMuteSwitchDetector.m in Sources */ = {isa = PBXBuildFile; fileRef = 402E61141B61F28B00DDB56C /* GRVMuteSwitchDetector.m */; };
+		402E61171B62046A00DDB56C /* mute.caf in Resources */ = {isa = PBXBuildFile; fileRef = 402E61161B62046A00DDB56C /* mute.caf */; };
 		4034AD7C1B00047900162F2C /* GRVUserViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4034AD7B1B00047900162F2C /* GRVUserViewHelper.m */; };
 		4034AD7F1B000C4F00162F2C /* GRVRegistrationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4034AD7E1B000C4F00162F2C /* GRVRegistrationViewController.m */; };
 		4034AD821B000CA600162F2C /* GRVCountrySelectTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4034AD811B000CA600162F2C /* GRVCountrySelectTVC.m */; };
@@ -234,6 +236,9 @@
 		402875AF1B047FFC00699F60 /* GRVVideosCDTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVVideosCDTVC.m; sourceTree = "<group>"; };
 		402875B11B0483F200699F60 /* GRVLandingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVLandingViewController.h; sourceTree = "<group>"; };
 		402875B21B0483F300699F60 /* GRVLandingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVLandingViewController.m; sourceTree = "<group>"; };
+		402E61131B61F28B00DDB56C /* GRVMuteSwitchDetector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVMuteSwitchDetector.h; sourceTree = "<group>"; };
+		402E61141B61F28B00DDB56C /* GRVMuteSwitchDetector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVMuteSwitchDetector.m; sourceTree = "<group>"; };
+		402E61161B62046A00DDB56C /* mute.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = mute.caf; sourceTree = "<group>"; };
 		4034AD7A1B00047900162F2C /* GRVUserViewHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVUserViewHelper.h; sourceTree = "<group>"; };
 		4034AD7B1B00047900162F2C /* GRVUserViewHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVUserViewHelper.m; sourceTree = "<group>"; };
 		4034AD7D1B000C4F00162F2C /* GRVRegistrationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVRegistrationViewController.h; sourceTree = "<group>"; };
@@ -835,6 +840,8 @@
 				407623E11AFF2CD700100550 /* GRVAlertBannerManager.m */,
 				407623AE1AFF164500100550 /* GRVScrollViewContainer.h */,
 				407623AF1AFF164500100550 /* GRVScrollViewContainer.m */,
+				402E61131B61F28B00DDB56C /* GRVMuteSwitchDetector.h */,
+				402E61141B61F28B00DDB56C /* GRVMuteSwitchDetector.m */,
 				407623B11AFF16D800100550 /* GRVLaunchViewController.h */,
 				407623B21AFF16D800100550 /* GRVLaunchViewController.m */,
 				4034AD801B000CA600162F2C /* GRVCountrySelectTVC.h */,
@@ -998,6 +1005,7 @@
 			isa = PBXGroup;
 			children = (
 				407620C61AFEEE8A00100550 /* notification.caf */,
+				402E61161B62046A00DDB56C /* mute.caf */,
 			);
 			path = Sounds;
 			sourceTree = "<group>";
@@ -1395,6 +1403,7 @@
 				407620821AFEC41200100550 /* Main.storyboard in Resources */,
 				40FAD4441B13D7BF0039B03A /* GRVMultiContactPickerViewController.xib in Resources */,
 				40FAD4471B13D7BF0039B03A /* GRVFilteredContactPickerTableViewCell.xib in Resources */,
+				402E61171B62046A00DDB56C /* mute.caf in Resources */,
 				40FAD44D1B13D7BF0039B03A /* GRVSelectedContactPickerTableViewCell.xib in Resources */,
 				4076236A1AFEF0E300100550 /* NBPhoneNumberMetadata.plist in Resources */,
 				407620871AFEC41200100550 /* LaunchScreen.xib in Resources */,
@@ -1532,6 +1541,7 @@
 				4023299D1B09AA0200BFD2D5 /* GRVPrivateAnimatedTransition.m in Sources */,
 				407620CD1AFEEE8A00100550 /* NBPhoneNumberUtil+Shared.m in Sources */,
 				403D34BB1B11480E004FF19E /* SCSampleBufferHolder.m in Sources */,
+				402E61151B61F28B00DDB56C /* GRVMuteSwitchDetector.m in Sources */,
 				407623161AFEF08E00100550 /* UIImageView+AFNetworking.m in Sources */,
 				407A16FE1B53561700F086B8 /* GRVRecorderManager.m in Sources */,
 				4076239B1AFEF13400100550 /* UIImage+WebP.m in Sources */,

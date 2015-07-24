@@ -8,4 +8,4 @@ Brief description of directories. Add a brief description when adding a new
 directory. Keep list in alphabetical order.
 
 #### Sounds
-Custom sounds used by the app for Remote Notifications
+Custom sounds used by the app

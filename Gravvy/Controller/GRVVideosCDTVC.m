@@ -23,6 +23,7 @@
 #import "GRVModelManager.h"
 #import "MBProgressHUD.h"
 #import "AMPopTip.h"
+#import "GRVMuteSwitchDetector.h"
 
 #import <FBSDKShareKit/FBSDKShareKit.h>
 #import <FBSDKCoreKit/FBSDKConstants.h>
@@ -143,6 +144,11 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
 @property (strong, nonatomic) id playerObserver;
 
 /**
+ * Player volume
+ */
+@property (nonatomic) float playerVolume;
+
+/**
  * Action sheet shown on share button tap
  */
 @property (strong, nonatomic) UIActionSheet *shareActionSheet;
@@ -245,6 +251,18 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     _playerItems = [playerItems copy];
 }
 
+- (void)setPlayer:(AVQueuePlayer *)player
+{
+    _player = player;
+    _player.volume = self.playerVolume;
+}
+
+- (void)setPlayerVolume:(float)playerVolume
+{
+    _playerVolume = playerVolume;
+    self.player.volume = _playerVolume;
+}
+
 - (AMPopTip *)addClipPopTip
 {
     if (!_addClipPopTip) {
@@ -267,6 +285,13 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     
     // Hide separator insets
     self.tableView.separatorColor = [UIColor clearColor];
+    
+    // Don't capture self in the callback
+    GRVVideosCDTVC* __weak weakSelf = self;
+    [GRVMuteSwitchDetector sharedDetector].detectionHandler = ^(BOOL muted) {
+        weakSelf.playerVolume = muted ? 0.0f : 1.0f;
+    };
+    self.playerVolume = 0.0f;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -278,6 +303,8 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
         [self refresh];
     }
     self.skipRefreshOnNextAppearance = NO;
+    
+    [GRVMuteSwitchDetector sharedDetector].suspended = NO;
     
     // register observers
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -296,6 +323,8 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
+    
+    [GRVMuteSwitchDetector sharedDetector].suspended = YES;
     
     // remove observers
     [[NSNotificationCenter defaultCenter] removeObserver:self

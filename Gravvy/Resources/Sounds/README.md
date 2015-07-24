@@ -1,14 +1,17 @@
 # EventsApp/Resources/Sounds
 
-Custom sounds used by the app for Remote Notifications.
+Custom sounds used by the app
 
 ## Files
 
 Brief description of files. Add a bried description when adding a new file.
 Keep list in alphabetical order.
 
-#### [notification.caf] (http://www.freesound.org/people/FoolBoyMedia/sounds/234564/)
+#### [notification.caf](http://www.freesound.org/people/FoolBoyMedia/sounds/234564/)
 General remote notfication alert sound
+
+#### [muted.caf](http://sharkfood.com/content/Developers/content/Sound%20Switch/)
+Sound used for detecting the device's silent switch state
 
 
 ## Creating `.caf` files

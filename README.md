@@ -24,6 +24,7 @@
 * [ALAlertBanner](https://github.com/alobi/ALAlertBanner): Using modified version of this.
 * [Sheriff](https://github.com/gemr/sheriff): Using modified version of this.
 * [TGCameraViewController](https://github.com/tdginternet/TGCameraViewController): Camera View Controller is based on this.
+* [Sound Switch](http://sharkfood.com/content/Developers/content/Sound%20Switch/)
 
 ### Working with Git Submodules
 * All submodules can be found in the `ThirdParty/` directory

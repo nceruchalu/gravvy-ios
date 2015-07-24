@@ -26,6 +26,7 @@
 #import "GRVFormatterUtils.h"
 #import <AudioToolbox/AudioToolbox.h>
 #import "AMPopTip.h"
+#import "GRVMuteSwitchDetector.h"
 
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
@@ -138,6 +139,10 @@ static NSString *const kRemoteNotificationSoundFileExtension = @"caf";
     
     // Create a system sound object representing the sound file.
     AudioServicesCreateSystemSoundID(self.soundFileURLRef, &_soundFileObject);
+    
+    // Suspend the mute switch detector
+    GRVMuteSwitchDetector *muteSwitchDetector =  [GRVMuteSwitchDetector sharedDetector];
+    muteSwitchDetector.suspended = YES;
     
     // Handle Push Notifications
     NSDictionary *remoteNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
