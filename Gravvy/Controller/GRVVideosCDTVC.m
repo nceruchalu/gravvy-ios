@@ -59,6 +59,11 @@ static CGFloat const kActiveCellPlayerHeightCutoff = 0.1f;
 static NSTimeInterval const kNotificationIndicatorAnimationInterval = 2.00f;
 
 /**
+ * Minimum time interval between display of pop tips.
+ */
+static NSTimeInterval const kMinimumDelayBetweenPopTips = 60.0f;
+
+/**
  * Segue identifier for showing Members TVC
  */
 static NSString *const kSegueIdentifierShowMembers = @"showMembersVC";
@@ -174,6 +179,8 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
 
 @property (strong, nonatomic) AMPopTip *addClipPopTip;
 
+@property (strong, nonatomic) NSDate *addClipPopTipDismissTime;
+
 @end
 
 @implementation GRVVideosCDTVC
@@ -269,6 +276,11 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
         // lazy instantiation
         _addClipPopTip = [AMPopTip popTip];
         _addClipPopTip.shouldDismissOnTap = YES;
+        // Don't capture self in a block
+        GRVVideosCDTVC* __weak weakSelf = self;
+        _addClipPopTip.dismissHandler = ^{
+            weakSelf.addClipPopTipDismissTime = [NSDate date];
+        };
     }
     return _addClipPopTip;
 }
@@ -413,6 +425,13 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
  */
 - (void)showAddClipPopTip
 {
+    // if the minimum duration between display of pop tips hasnt passed then
+    // ignore this
+    if (self.addClipPopTipDismissTime &&
+        ([[NSDate date] timeIntervalSinceDate:self.addClipPopTipDismissTime] < kMinimumDelayBetweenPopTips)) {
+        return;
+    }
+    
     // Show video creation poptip
     if (![GRVModelManager sharedManager].acknowledgedClipAdditionTip) {
         
@@ -426,7 +445,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
                                         maxWidth:100.0f
                                           inView:self.view
                                        fromFrame:headerView.addClipButton.frame
-                                        duration:kGRVPopTipMinimumDuration];
+                                        duration:kGRVPopTipMaximumDuration];
                 }
             }
         }
