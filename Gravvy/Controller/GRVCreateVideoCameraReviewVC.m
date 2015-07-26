@@ -81,6 +81,13 @@ static NSString *const kSegueIdentifierShowContactPicker = @"showInvitePeopleVC"
     [self beginTitleEntry:nil];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    // ensure text field is indeed first responder
+    [self beginTitleEntry:nil];
+}
+
 #pragma mark - Instance Methods
 #pragma mark Concrete
 - (void)recordingValidated

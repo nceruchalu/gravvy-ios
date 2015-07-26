@@ -113,9 +113,11 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
 @property (nonatomic) BOOL skipRefreshOnNextAppearance;
 
 /**
- * Currently active video and video cell which might or might not be playing
+ * Currently active video, and associated clips and cell cell which might or
+ * might not be playing
  */
 @property (strong, nonatomic) GRVVideo *activeVideo;
+@property (copy, nonatomic) NSArray *activeVideoClips;
 @property (strong, nonatomic) GRVVideoTableViewCell *activeVideoCell;
 
 /**
@@ -470,11 +472,12 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     // and creating an animated display
     NSSortDescriptor *orderSd = [NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES];
     NSArray *clips = [self.activeVideo.clips sortedArrayUsingDescriptors:@[orderSd]];
+    NSMutableArray *playerItemClips = [NSMutableArray array];
     
     // Setup player items
     NSMutableArray *playerItems = [NSMutableArray array];
     for (GRVClip *clip in clips) {
-        if (clip.mp4URL) {
+        if ([clip.mp4URL length]) {
             NSURL *url = [NSURL URLWithString:clip.mp4URL];
             AVPlayerItem *playerItem = [AVPlayerItem playerItemWithURL:url];
             // ensure that observing the status property is done before the
@@ -493,11 +496,13 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
                                                        object:playerItem];
             
             [playerItems addObject:playerItem];
+            [playerItemClips addObject:clip];
         }
     }
     // Cache new player items while removing observers for old player items
     // and old player
     self.playerItems = [playerItems copy];
+    self.activeVideoClips = [playerItemClips copy];
     
     // Associate the player items with the player, so they start to become
     // ready to play
@@ -595,9 +600,9 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
         currentClipIndex =  [self.playerItems indexOfObject:self.player.currentItem];
     }
     if (currentClipIndex != NSNotFound) {
-        [self configureCell:self.activeVideoCell withCurrentClip:(currentClipIndex+1) andClipsCount:[self.playerItems count]];
+        [self configureCell:self.activeVideoCell withCurrentClip:currentClipIndex totalClipsCount:[self.playerItems count] andVideo:self.activeVideo];
     } else {
-        [self configureCell:self.activeVideoCell withCurrentClip:1 andClipsCount:[self.activeVideo.clips count]];
+        [self configureCell:self.activeVideoCell withCurrentClip:0 totalClipsCount:[self.activeVideo.clips count] andVideo:self.activeVideo];
     }
     
 }
@@ -731,16 +736,33 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
         // video playing in reused cells
         cell.previewImageView.hidden = NO;
         // Since preview image is showing, we must be on first clip
-        [self configureCell:cell withCurrentClip:1 andClipsCount:[video.clips count]];
+        [self configureCell:cell withCurrentClip:0 totalClipsCount:[video.clips count] andVideo:video];
     }
     
 }
 
+/**
+ * Configure a cell which is playing a clip at the given 0-based index of clips
+ */
 - (void)configureCell:(GRVVideoTableViewCell *)cell
       withCurrentClip:(NSUInteger)currentClipIndex
-        andClipsCount:(NSUInteger)clipsCount
+        totalClipsCount:(NSUInteger)clipsCount
+             andVideo:(GRVVideo *)video
 {
-    cell.currentClipIndexLabel.text = [NSString stringWithFormat:@"%lu/%lu", (unsigned long)currentClipIndex, (unsigned long)clipsCount];
+    cell.currentClipIndexLabel.text = [NSString stringWithFormat:@"%lu/%lu", (unsigned long)(currentClipIndex+1), (unsigned long)clipsCount];
+    
+    // Get current clip
+    GRVClip *currentClip = nil;
+    if ([video.hashKey isEqualToString:self.activeVideo.hashKey]) {
+        currentClip = [self.activeVideoClips objectAtIndex:currentClipIndex];
+    } else {
+        NSSortDescriptor *orderSd = [NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES];
+        NSArray *clips = [self.activeVideo.clips sortedArrayUsingDescriptors:@[orderSd]];
+        currentClip = [clips objectAtIndex:currentClipIndex];
+    }
+    
+    GRVUser *owner = currentClip.owner ? currentClip.owner : video.owner;
+    cell.currentClipOwnerLabel.text = [GRVUserViewHelper userFullNameOrPhoneNumber:owner];
 }
 
 
@@ -972,7 +994,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     if ([video isVideoOwner]) {
         destructiveButtonTitle = @"Delete Video";
     } else {
-        destructiveButtonTitle = @"Remove Video";
+        destructiveButtonTitle = @"Exit Video";
     }
     
     self.moreActionsActionSheet = [[UIActionSheet alloc] initWithTitle:nil
@@ -1024,7 +1046,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
             if ([video isVideoOwner]) {
                 destructiveButtonTitle = @"Delete Video";
             } else {
-                destructiveButtonTitle = @"Remove Video";
+                destructiveButtonTitle = @"Exit Video";
             }
             
             self.removeConfirmationActionSheet = [[UIActionSheet alloc] initWithTitle:@"Confirm Deletion"

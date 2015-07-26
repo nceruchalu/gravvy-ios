@@ -2145,33 +2145,51 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xRZ-zA-bB8" userLabel="Current Clip Details">
                                                             <rect key="frame" x="0.0" y="0.0" width="320" height="25"/>
                                                             <subviews>
-                                                                <view alpha="0.25" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ySY-Kb-sE1" userLabel="Background Layer">
+                                                                <view alpha="0.34999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ySY-Kb-sE1" userLabel="Background Layer">
                                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="25"/>
                                                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                                 </view>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="uploader" translatesAutoresizingMaskIntoConstraints="NO" id="a8Z-kF-Q2X">
+                                                                    <rect key="frame" x="10" y="7.5" width="10" height="10"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" secondItem="a8Z-kF-Q2X" secondAttribute="height" multiplier="1:1" id="jHT-Of-v52"/>
+                                                                        <constraint firstAttribute="height" constant="10" id="p48-22-vqU"/>
+                                                                    </constraints>
+                                                                </imageView>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Nnoduka Eruchalu" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xuV-Oq-tIR" userLabel="Current Clip Owner Label">
+                                                                    <rect key="frame" x="24" y="5" width="216" height="14.5"/>
+                                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="record" translatesAutoresizingMaskIntoConstraints="NO" id="p37-q4-vfH">
-                                                                    <rect key="frame" x="262.5" y="7.5" width="16.5" height="10"/>
+                                                                    <rect key="frame" x="260" y="7" width="16.5" height="10"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="10" id="20T-Wp-el3"/>
                                                                         <constraint firstAttribute="width" secondItem="p37-q4-vfH" secondAttribute="height" multiplier="28:17" id="4g4-pB-TEx"/>
                                                                     </constraints>
                                                                 </imageView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="7/12" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PnT-9J-ojh" userLabel="Current Clip Index Label">
-                                                                    <rect key="frame" x="287" y="5.5" width="25" height="14.5"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="7/12" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PnT-9J-ojh" userLabel="Current Clip Index Label">
+                                                                    <rect key="frame" x="285" y="5" width="25" height="14.5"/>
+                                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="25" id="5gS-uM-6RR"/>
+                                                                <constraint firstItem="xuV-Oq-tIR" firstAttribute="centerY" secondItem="p37-q4-vfH" secondAttribute="centerY" id="9jC-tu-Rgd"/>
                                                                 <constraint firstAttribute="trailing" secondItem="ySY-Kb-sE1" secondAttribute="trailing" id="IDI-QO-Pyy"/>
+                                                                <constraint firstItem="a8Z-kF-Q2X" firstAttribute="leading" secondItem="xRZ-zA-bB8" secondAttribute="leading" constant="10" id="JYh-Zd-aqT"/>
                                                                 <constraint firstItem="ySY-Kb-sE1" firstAttribute="top" secondItem="xRZ-zA-bB8" secondAttribute="top" id="T15-aY-lxt"/>
+                                                                <constraint firstItem="xuV-Oq-tIR" firstAttribute="leading" secondItem="a8Z-kF-Q2X" secondAttribute="trailing" constant="4" id="UWw-wZ-6bT"/>
                                                                 <constraint firstAttribute="bottom" secondItem="ySY-Kb-sE1" secondAttribute="bottom" id="bWE-Oz-5a4"/>
                                                                 <constraint firstItem="PnT-9J-ojh" firstAttribute="centerY" secondItem="p37-q4-vfH" secondAttribute="centerY" id="dXz-EZ-tPL"/>
                                                                 <constraint firstItem="ySY-Kb-sE1" firstAttribute="leading" secondItem="xRZ-zA-bB8" secondAttribute="leading" id="eT9-iY-4nO"/>
+                                                                <constraint firstItem="a8Z-kF-Q2X" firstAttribute="centerY" secondItem="xuV-Oq-tIR" secondAttribute="centerY" id="enH-w1-P4z"/>
+                                                                <constraint firstItem="p37-q4-vfH" firstAttribute="leading" secondItem="xuV-Oq-tIR" secondAttribute="trailing" constant="20" id="sHF-sN-ozb"/>
                                                                 <constraint firstItem="PnT-9J-ojh" firstAttribute="leading" secondItem="p37-q4-vfH" secondAttribute="trailing" constant="8" symbolic="YES" id="uDv-tg-4Ft"/>
-                                                                <constraint firstAttribute="trailing" secondItem="PnT-9J-ojh" secondAttribute="trailing" constant="8" id="uvD-Ml-wvs"/>
+                                                                <constraint firstAttribute="trailing" secondItem="PnT-9J-ojh" secondAttribute="trailing" constant="10" id="uvD-Ml-wvs"/>
                                                                 <constraint firstAttribute="centerY" secondItem="p37-q4-vfH" secondAttribute="centerY" id="ym2-UU-ZK0"/>
                                                             </constraints>
                                                         </view>
@@ -2339,6 +2357,7 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="currentClipIndexLabel" destination="PnT-9J-ojh" id="BrU-by-TVn"/>
+                                            <outlet property="currentClipOwnerLabel" destination="xuV-Oq-tIR" id="HBa-Ol-kzX"/>
                                             <outlet property="likeButton" destination="eQa-dJ-d3K" id="Zo4-Xi-ZCb"/>
                                             <outlet property="likesCountLabel" destination="muR-fl-h8w" id="mxe-ip-1xu"/>
                                             <outlet property="playerView" destination="b5D-eb-U7h" id="jCb-zj-NVB"/>
@@ -2681,6 +2700,7 @@
         <image name="settingsProfile" width="29" height="29"/>
         <image name="settingsTell" width="29" height="29"/>
         <image name="share" width="23" height="23"/>
+        <image name="uploader" width="15" height="15"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Zm6-vw-LFG"/>
