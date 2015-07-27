@@ -26,6 +26,12 @@ static const NSString *PlayerRateContext;
 @property (strong, nonatomic) AVPlayerItem *playerItem;
 
 /**
+ * The recording validation event seems to happen multiple times so watch out
+ * for that.
+ */
+@property (nonatomic) BOOL handledRecordingIsValidated;
+
+/**
  * Is player now ready to play?
  */
 @property (nonatomic) BOOL playerReadyToPlay;
@@ -40,7 +46,8 @@ static const NSString *PlayerRateContext;
     
     // If player started, and an mp4 has been extracted then this recording
     // has been validated
-    if (_playerReadyToPlay && self.mp4) {
+    if (_playerReadyToPlay && self.mp4 && !self.handledRecordingIsValidated) {
+        self.handledRecordingIsValidated = YES;
         [self recordingValidated];
     }
 }
@@ -51,7 +58,8 @@ static const NSString *PlayerRateContext;
     
     // If player started, and an mp4 has been extracted then this recording
     // has been validated
-    if (self.playerReadyToPlay && _mp4) {
+    if (self.playerReadyToPlay && _mp4 && !self.handledRecordingIsValidated) {
+        self.handledRecordingIsValidated = YES;
         [self recordingValidated];
     }
 }
@@ -62,6 +70,7 @@ static const NSString *PlayerRateContext;
     [super viewDidLoad];
     
     self.playerReadyToPlay = NO;
+    self.handledRecordingIsValidated = NO;
     [self syncPlayerWithControls];
     [self loadVideoFromRecordSession];
     

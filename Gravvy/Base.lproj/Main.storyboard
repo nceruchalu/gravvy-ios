@@ -2718,6 +2718,8 @@
                         <outlet property="emptyStateView" destination="nKU-4G-lHw" id="lIZ-7l-d4y"/>
                         <outlet property="spinner" destination="f82-pe-qtX" id="dno-oC-YCh"/>
                         <outlet property="tableView" destination="u72-Qo-35U" id="xcH-5X-0xG"/>
+                        <segue destination="STl-Xc-1vC" kind="show" identifier="showMembersVC" id="eqM-Gx-VSs"/>
+                        <segue destination="yYf-5g-aIm" kind="presentation" identifier="showAddClipCameraVC" id="oT8-nQ-hcV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sLa-8s-ruB" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3051,6 +3053,8 @@
         <image name="uploader" width="15" height="15"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="eqM-Gx-VSs"/>
+        <segue reference="oT8-nQ-hcV"/>
         <segue reference="Zm6-vw-LFG"/>
         <segue reference="FIh-LZ-TjA"/>
     </inferredMetricsTieBreakers>

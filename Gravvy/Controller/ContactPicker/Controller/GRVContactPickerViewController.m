@@ -253,6 +253,19 @@ static NSString *const kFilteredContactCellNibName    = @"GRVFilteredContactPick
     return ([selectedContactsMatchingUser count] > 0);
 }
 
+/**
+ * Check if a given user has been excluded
+ *
+ * @param user GRVUser of interest
+ *
+ * @return boolean indicating if user is excluded
+ */
+- (BOOL)userIsExcluded:(GRVUser *)user
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF == %@", user.phoneNumber];
+    NSArray *excludedContactsMatchingUser = [self.excludedContactPhoneNumbers filteredArrayUsingPredicate:predicate];
+    return ([excludedContactsMatchingUser count] > 0);
+}
 
 /**
  * Done selecting contacts either from the search results, multi-contact picker
@@ -306,7 +319,7 @@ static NSString *const kFilteredContactCellNibName    = @"GRVFilteredContactPick
 {
     NSMutableArray *unselectedFavorites = [NSMutableArray array];
     for (GRVUser *user in self.favoriteContacts) {
-        if (![self userIsSelected:user]) {
+        if (![self userIsSelected:user] && ![self userIsExcluded:user]) {
             [unselectedFavorites addObject:user];
         }
     }

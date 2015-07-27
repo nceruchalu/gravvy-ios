@@ -7,7 +7,7 @@
 //
 
 #import "GRVVideoDetailsViewController.h"
-#import "GRVVideo.h"
+#import "GRVVideo+HTTP.h"
 
 @interface GRVVideoDetailsViewController ()
 
@@ -47,6 +47,13 @@
 - (CGFloat)tableViewFooterHeight
 {
     return 0.0f;
+}
+
+- (void)deleteVideo:(GRVVideo *)video
+{
+    [video revokeMembershipWithCompletion:^{
+         [self.navigationController popViewControllerAnimated:YES];
+    }];
 }
 
 @end

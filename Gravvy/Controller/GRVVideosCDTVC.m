@@ -682,6 +682,14 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     [self showOrHideEmptyStateView];
 }
 
+- (void)deleteVideo:(GRVVideo *)video
+{
+    [video revokeMembershipWithCompletion:^{
+        [self.spinner stopAnimating];
+        [self refresh];
+    }];
+}
+
 #pragma mark Public: AudioVisual Player
 - (void)stop
 {
@@ -1063,12 +1071,10 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
         // check if user confirmed desire to leave/delete a video
         if (buttonIndex == actionSheet.destructiveButtonIndex) {
             // user indeed wants to leave/delete a video
-            
             [self.spinner startAnimating];
-            [video revokeMembershipWithCompletion:^{
-                [self.spinner stopAnimating];
-                [self refresh];
-            }];
+            
+            [self deleteVideo:video];
+            
         }
     }
 }

@@ -44,4 +44,9 @@
  */
 - (void)refreshAndShowSpinner;
 
+/**
+ * User has confirmed deletion of a particular video so handle it
+ */
+- (void)deleteVideo:(GRVVideo *)video;
+
 @end
