@@ -57,6 +57,8 @@
 		403D34BC1B11480E004FF19E /* SCWeakSelectorTarget.m in Sources */ = {isa = PBXBuildFile; fileRef = 403D34B61B11480E004FF19E /* SCWeakSelectorTarget.m */; };
 		403D34C21B114848004FF19E /* SCFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 403D34BF1B114848004FF19E /* SCFilter.m */; };
 		403D34C31B114848004FF19E /* SCFilterAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 403D34C11B114848004FF19E /* SCFilterAnimation.m */; };
+		403D378D1B6607B800AE8AC4 /* GRVFavoriteContactPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 403D378C1B6607B800AE8AC4 /* GRVFavoriteContactPickerTableViewCell.m */; };
+		403D378F1B6607F200AE8AC4 /* GRVFavoriteContactPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 403D378E1B6607F200AE8AC4 /* GRVFavoriteContactPickerTableViewCell.xib */; };
 		404C2D371B4BA27D00839B95 /* GRVMembersCDTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 404C2D361B4BA27D00839B95 /* GRVMembersCDTVC.m */; };
 		404C2D3A1B4BA4D600839B95 /* GRVMemberTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 404C2D391B4BA4D600839B95 /* GRVMemberTableViewCell.m */; };
 		404C2D3D1B4BC79500839B95 /* GRVMembersContactPickerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 404C2D3C1B4BC79500839B95 /* GRVMembersContactPickerVC.m */; };
@@ -311,6 +313,10 @@
 		403D34BF1B114848004FF19E /* SCFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCFilter.m; path = ThirdParty/SCRecorder/Library/Sources/SCFilter.m; sourceTree = SOURCE_ROOT; };
 		403D34C01B114848004FF19E /* SCFilterAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCFilterAnimation.h; path = ThirdParty/SCRecorder/Library/Sources/SCFilterAnimation.h; sourceTree = SOURCE_ROOT; };
 		403D34C11B114848004FF19E /* SCFilterAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCFilterAnimation.m; path = ThirdParty/SCRecorder/Library/Sources/SCFilterAnimation.m; sourceTree = SOURCE_ROOT; };
+		403D378A1B65F19B00AE8AC4 /* Gravvy 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Gravvy 2.xcdatamodel"; sourceTree = "<group>"; };
+		403D378B1B6607B800AE8AC4 /* GRVFavoriteContactPickerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVFavoriteContactPickerTableViewCell.h; sourceTree = "<group>"; };
+		403D378C1B6607B800AE8AC4 /* GRVFavoriteContactPickerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVFavoriteContactPickerTableViewCell.m; sourceTree = "<group>"; };
+		403D378E1B6607F200AE8AC4 /* GRVFavoriteContactPickerTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GRVFavoriteContactPickerTableViewCell.xib; sourceTree = "<group>"; };
 		404C2D351B4BA27D00839B95 /* GRVMembersCDTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVMembersCDTVC.h; sourceTree = "<group>"; };
 		404C2D361B4BA27D00839B95 /* GRVMembersCDTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVMembersCDTVC.m; sourceTree = "<group>"; };
 		404C2D381B4BA4D600839B95 /* GRVMemberTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVMemberTableViewCell.h; sourceTree = "<group>"; };
@@ -1313,6 +1319,9 @@
 				40FAD43D1B13D7BF0039B03A /* GRVSelectedContactPickerTableViewCell.h */,
 				40FAD43E1B13D7BF0039B03A /* GRVSelectedContactPickerTableViewCell.m */,
 				40FAD43F1B13D7BF0039B03A /* GRVSelectedContactPickerTableViewCell.xib */,
+				403D378B1B6607B800AE8AC4 /* GRVFavoriteContactPickerTableViewCell.h */,
+				403D378C1B6607B800AE8AC4 /* GRVFavoriteContactPickerTableViewCell.m */,
+				403D378E1B6607F200AE8AC4 /* GRVFavoriteContactPickerTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1406,6 +1415,7 @@
 				402E61171B62046A00DDB56C /* mute.caf in Resources */,
 				40FAD44D1B13D7BF0039B03A /* GRVSelectedContactPickerTableViewCell.xib in Resources */,
 				4076236A1AFEF0E300100550 /* NBPhoneNumberMetadata.plist in Resources */,
+				403D378F1B6607F200AE8AC4 /* GRVFavoriteContactPickerTableViewCell.xib in Resources */,
 				407620871AFEC41200100550 /* LaunchScreen.xib in Resources */,
 				407620841AFEC41200100550 /* Images.xcassets in Resources */,
 				40FAD4411B13D7BF0039B03A /* GRVContactPickerViewController.xib in Resources */,
@@ -1576,6 +1586,7 @@
 				403BC9521AFF4366009BBD2B /* GRVUser+AddressBook.m in Sources */,
 				407623121AFEF08E00100550 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				4076239C1AFEF13400100550 /* UIImageView+HighlightedWebCache.m in Sources */,
+				403D378D1B6607B800AE8AC4 /* GRVFavoriteContactPickerTableViewCell.m in Sources */,
 				4089BFEC1B03BC17003DF4AA /* CoreDataTableViewController.m in Sources */,
 				407620CA1AFEEE8A00100550 /* ImageToDataTransformer.m in Sources */,
 				403D34B91B11480E004FF19E /* SCAudioTools.m in Sources */,
@@ -1840,9 +1851,10 @@
 		407623E31AFF31D400100550 /* Gravvy.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				403D378A1B65F19B00AE8AC4 /* Gravvy 2.xcdatamodel */,
 				407623E41AFF31D400100550 /* Gravvy.xcdatamodel */,
 			);
-			currentVersion = 407623E41AFF31D400100550 /* Gravvy.xcdatamodel */;
+			currentVersion = 403D378A1B65F19B00AE8AC4 /* Gravvy 2.xcdatamodel */;
 			path = Gravvy.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

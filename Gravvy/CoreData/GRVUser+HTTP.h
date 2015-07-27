@@ -14,6 +14,7 @@
  *
  * Property             Purpose
  * avatarThumbnailURL   URL where thumbnail image can be downloaded
+ * favorited            Is user a recent contact of app user?
  * fullName             User's full name
  * phoneNumber          User's unique identifier, an E.164 formatted phone number.
  * relationshipType     App user's relationship to user, self, contact or other.
@@ -71,6 +72,17 @@
 + (instancetype)findUserWithPhoneNumber:(NSString *)phoneNumber
                  inManagedObjectContext:(NSManagedObjectContext *)context;
 
+/**
+ * Refresh the collection of favorite contacts of the app user.
+ * This refresh is done on a background thread context so as to not block the
+ * main thread.
+ *
+ * @warning Only call this method when the managedObjectContext is setup
+ *
+ * @param favoritesAreRefreshed    block to be called after refreshing favorite
+ *      contacts. This is run on the main queue.
+ */
++ (void)refreshFavorites:(void (^)())favoritesAreRefreshed;
 
 #pragma mark - Instance Methods
 /**

@@ -88,6 +88,7 @@ NSString *const kGRVRESTPushRegister            = @"push/apns/";
 NSString *const kGRVRESTFeedbacks               = @"feedbacks/";
 NSString *const kGRVRESTUserActivities          = @"user/activities/";
 NSString *const kGRVRESTUserVideos              = @"user/videos/";
+NSString *const kGRVRESTUserRecentContacts      = @"user/recentcontacts/";
 NSString *const kGRVRESTVideos                  = @"videos/";
 NSString *const kGRVRESTVideoMembers            = @"users/";
 NSString *const kGRVRESTVideoClips              = @"clips/";

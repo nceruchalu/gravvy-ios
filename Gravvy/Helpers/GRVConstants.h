@@ -197,7 +197,7 @@ extern NSString *const kGRVRESTPushRegister;
 extern NSString *const kGRVRESTFeedbacks;
 
 /**
- * kGRVRESTUserActivities: URL for activiies of interest to authenticated user
+ * kGRVRESTUserActivities: URL for activities of interest to authenticated user
  */
 extern NSString *const kGRVRESTUserActivities;
 
@@ -205,6 +205,11 @@ extern NSString *const kGRVRESTUserActivities;
  * kGRVRESTUserVideos: URL for videos that authenticated user is a member of
  */
 extern NSString *const kGRVRESTUserVideos;
+
+/**
+ * kGRVRESTUserRecentContacts: URL for favorite contacts of authenticated user
+ */
+extern NSString *const kGRVRESTUserRecentContacts;
 
 /**
  * kGRVRESTVideos: URL for creating a new video.

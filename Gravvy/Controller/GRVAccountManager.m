@@ -13,6 +13,7 @@
 #import "GRVConstants.h"
 #import "GRVContact+AddressBook.h"
 #import "GRVActivity+HTTP.h"
+#import "GRVUser+HTTP.h"
 #import "NBPhoneNumberUtil+Shared.h"
 #import "NBPhoneNumber.h"
 #import <Crashlytics/Crashlytics.h>
@@ -302,6 +303,7 @@
                          // and activities
                          [GRVContact refreshContacts:nil];
                          [GRVActivity refreshActivities:nil];
+                         [GRVUser refreshFavorites:nil];
                      }];
                      
                      // finally execute callback;

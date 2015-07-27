@@ -250,6 +250,7 @@ static NSString *const kRemoteNotificationSoundFileExtension = @"caf";
             } else {
                 // Already authenticated so refresh content
                 [GRVActivity refreshActivities:nil];
+                [GRVUser refreshFavorites:nil];
             }
             
         }

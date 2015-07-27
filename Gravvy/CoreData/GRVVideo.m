@@ -16,6 +16,7 @@
 @implementation GRVVideo
 
 @dynamic createdAt;
+@dynamic currentClipIndex;
 @dynamic hashKey;
 @dynamic liked;
 @dynamic likesCount;

@@ -59,6 +59,21 @@ So the idea here is to separate unlike things hence the two NSManagedObjects:
 * In these cases prefetch to avoid faulting individually
   ** so for videos TVC use `[request setRelationshipKeypathsForPrefetching: @["owner"]]`
 
+#### Core Data Migration
+[Lightweight migrations][lightweight-migrations-ref] are relatively easy and 
+can be peformed with some simple [steps][migrations-how-to]
+
+* Select **Gravvy.xcdatamodeld** in Xcode
+* From the menu select **Editor > Add Model Version...**
+* Leave the version name as is and then click **Finish**.
+* Select **Gravvy.xcdatamodeld** again (not _Gravvy.xcdatamodel_, that's the old
+  version) and this time in the File inspector (**View > Utilities > Show File Inspector**)
+* In the **Model Version** section, select the new version name for _Current_.
+* You should now see a little green circle with a white checkmark badge on
+  the new model version in the Project Navigator (**View > Navigators > Show Project Navigator**).
+
+[lightweight-migrations-ref]: https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/CoreDataVersioning/Articles/vmLightweightMigration.html#//apple_ref/doc/uid/TP40004399-CH4-SW1
+[migrations-how-to]: http://www.raywenderlich.com/27657/how-to-perform-a-lightweight-core-data-migration
 
 ### Compiling
 #### KeychainItemWrapper

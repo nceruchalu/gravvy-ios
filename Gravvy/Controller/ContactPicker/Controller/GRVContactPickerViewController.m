@@ -12,6 +12,7 @@
 #import "GRVUser.h"
 #import "GRVContactPickerTableViewCell.h"
 #import "GRVSelectedContactPickerTableViewCell.h"
+#import "GRVFavoriteContactPickerTableViewCell.h"
 #import "GRVContact+AddressBook.h"
 #import "GRVAddressBookManager.h"
 #import "GRVUserViewHelper.h"
@@ -26,6 +27,13 @@
  */
 static NSString *const kSelectedContactCellIdentifier = @"Selected Contact Cell";
 static NSString *const kSelectedContactCellNibName    = @"GRVSelectedContactPickerTableViewCell";
+
+/**
+ * TableViewCell Identifier and nib name for contact cell of an unselected favorite
+ * user
+ */
+static NSString *const kFavoriteContactCellIdentifier = @"Favorite Contact Cell";
+static NSString *const kFavoriteContactCellNibName    = @"GRVFavoriteContactPickerTableViewCell";
 
 /**
  * TableViewCell Identifier and nib name for contact cell when user is presented in search
@@ -44,6 +52,16 @@ static NSString *const kFilteredContactCellNibName    = @"GRVFilteredContactPick
 @property (strong, nonatomic) NSMutableArray *privateSelectedContacts;
 
 /**
+ * Collection of the favorite contacts of the app user
+ */
+@property (strong, nonatomic) NSArray *favoriteContacts;
+
+/**
+ * Collection of unselected favorite contacts of the app user
+ */
+@property (copy, nonatomic) NSArray *unselectedFavoriteContacts;
+
+/**
  * Filtered contacts derived by filtering contacts based on user full names.
  */
 @property (strong, nonatomic) NSArray *filteredContacts;
@@ -53,6 +71,10 @@ static NSString *const kFilteredContactCellNibName    = @"GRVFilteredContactPick
  */
 @property (nonatomic) BOOL showFilteredContacts;
 
+/**
+ * need this property to get a handle to the database
+ */
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 #pragma mark Outlets
 @property (weak, nonatomic) IBOutlet UIView *topBorderView;
@@ -94,6 +116,23 @@ static NSString *const kFilteredContactCellNibName    = @"GRVFilteredContactPick
     return _excludedContactPhoneNumbers;
 }
 
+- (void)setFavoriteContacts:(NSArray *)favoriteContacts
+{
+    _favoriteContacts = [favoriteContacts copy];
+    [self refreshUnselectedFavoriteContacts];
+    [self refreshTableView];
+}
+
+/**
+ * This view controller cannot function until the managed object context is set
+ */
+- (void)setManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
+{
+    _managedObjectContext = managedObjectContext;
+    [self refreshFavoriteContacts];
+}
+
+
 #pragma mark - Class Methods
 + (UINib *)nib
 {
@@ -112,12 +151,20 @@ static NSString *const kFilteredContactCellNibName    = @"GRVFilteredContactPick
     // load the cell nib files and register.
     UINib *selectedCellNib = [UINib nibWithNibName:kSelectedContactCellNibName bundle:nil];
     [self.tableView registerNib:selectedCellNib forCellReuseIdentifier:kSelectedContactCellIdentifier];
+
+    UINib *favoriteCellNib = [UINib nibWithNibName:kFavoriteContactCellNibName bundle:nil];
+    [self.tableView registerNib:favoriteCellNib forCellReuseIdentifier:kFavoriteContactCellIdentifier];
     
     UINib *filteredCellNib = [UINib nibWithNibName:kFilteredContactCellNibName bundle:nil];
     [self.tableView registerNib:filteredCellNib forCellReuseIdentifier:kFilteredContactCellIdentifier];
     
     // Setup table view to dismiss keyboard when it is scrolled.
     self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
+    
+    // Hide 1.0f because the tableView headerView needs a height of 1.0f to be
+    // well-hidden.
+    // See `tableView:heightForHeaderInSection:` for why we hide an extra 1.0f
+    self.tableView.contentInset = UIEdgeInsetsMake(-2.0f, 0.0f, 0.0f, 0.0f);
     
     [self refreshTableView];
 }
@@ -128,13 +175,33 @@ static NSString *const kFilteredContactCellNibName    = @"GRVFilteredContactPick
     
     // Confirm address book access and show a warning view if access not granted
     self.noAddressBookAccessView.hidden = [GRVAddressBookManager authorized];
+    
+    // setup the managedObjectContext @property
+    self.managedObjectContext = [GRVModelManager sharedManager].managedObjectContext;
+    
+    // register observers
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(managedObjectContextReady:)
+                                                 name:kGRVMOCAvailableNotification
+                                               object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self updateTopConstraints];
+    //[self updateTopConstraints];
 }
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    // remove observers
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:kGRVMOCAvailableNotification
+                                                  object:nil];
+}
+
 
 #pragma mark - Instance Methods
 #pragma mark Private
@@ -157,13 +224,15 @@ static NSString *const kFilteredContactCellNibName    = @"GRVFilteredContactPick
 
 /**
  * Refresh table view with the following logic
- * - hide the table view if no filtered nor selected contacts
- * - only show filtered contacts if there are any and only then can you select tableview rows
+ * - hide the table view if no filtered nor selected contacts nor unselected
+ *   favorite contacts
+ * - only show filtered contacts if there are any and only then can you select 
+ *   tableview rows
  * - reloadData
  */
 - (void)refreshTableView
 {
-    self.tableView.hidden = ![self.filteredContacts count] && ![self.privateSelectedContacts count];
+    self.tableView.hidden = ![self.filteredContacts count] && ![self.privateSelectedContacts count] && ![self.unselectedFavoriteContacts count];
     
     self.showFilteredContacts = [self.filteredContacts count] > 0;
     self.tableView.allowsSelection = self.showFilteredContacts;
@@ -186,8 +255,8 @@ static NSString *const kFilteredContactCellNibName    = @"GRVFilteredContactPick
 
 
 /**
- * Done selecting contacts either from the search results, multi-contact picker 
- * or group picker.
+ * Done selecting contacts either from the search results, multi-contact picker
+ * or favorites section.
  *
  * So undo any search in progress, hide search results table view and show the
  * selected contacts data. Show selected contacts by clearing out filtered data 
@@ -197,9 +266,53 @@ static NSString *const kFilteredContactCellNibName    = @"GRVFilteredContactPick
 {
     self.searchTextField.text = nil;
     self.filteredContacts = nil;
+    [self refreshUnselectedFavoriteContacts];
     [self refreshTableView];
     [self selectedContactsChanged];
 }
+
+/**
+ * Refresh collection of recent/favorite contacts
+ */
+- (void)refreshFavoriteContacts
+{
+    if (self.managedObjectContext) {
+        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"GRVUser"];
+        
+        // prefetch to avoid faulting relationships individually
+        request.relationshipKeyPathsForPrefetching = @[@"contact"];
+        
+        // Don't forget that we are in a View Controller where we only show users
+        // that have an associated address book contact and have been favorited
+        request.predicate = [NSPredicate predicateWithFormat:@"(contact != nil) AND (favorited == YES)"];
+        
+        NSSortDescriptor *firstNameSort = [NSSortDescriptor sortDescriptorWithKey:@"contact.firstName" ascending:YES];
+        NSSortDescriptor *lastNameSort = [NSSortDescriptor sortDescriptorWithKey:@"contact.lastName" ascending:YES];
+        request.sortDescriptors = @[firstNameSort, lastNameSort];
+        
+        NSError *error;
+        self.favoriteContacts = [self.managedObjectContext executeFetchRequest:request error:&error];
+        
+    } else {
+        self.favoriteContacts = nil;
+    }
+}
+
+/**
+ * Refresh collection of unselected favorite contacts based off of the collection
+ * of favorite contacts
+ */
+- (void)refreshUnselectedFavoriteContacts
+{
+    NSMutableArray *unselectedFavorites = [NSMutableArray array];
+    for (GRVUser *user in self.favoriteContacts) {
+        if (![self userIsSelected:user]) {
+            [unselectedFavorites addObject:user];
+        }
+    }
+    self.unselectedFavoriteContacts = [unselectedFavorites copy];
+}
+
 
 
 #pragma mark Search Content Filtering
@@ -279,12 +392,42 @@ static NSString *const kFilteredContactCellNibName    = @"GRVFilteredContactPick
 
 
 #pragma mark - UITableViewDataSource
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    // The model depends on whether we are showing filtered contacts. If there
+    // aren't then the model is simply the selected contacts
+    NSUInteger numberOfSections = 1;
+    if (!self.showFilteredContacts && [self.unselectedFavoriteContacts count]) {
+        numberOfSections = 2;
+    }
+    return numberOfSections;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSString *headerTitle = nil;
+    if (section == 1) {
+        headerTitle = @"Favorites";
+    }
+    return headerTitle;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
     // The model depends on whether we are showing filtered contacts. If there
     // aren't then the model is simply the selected contacts
-    return (self.showFilteredContacts) ? [self.filteredContacts count] : [self.privateSelectedContacts count];
+    NSUInteger numberOfRows = 0;
+    if (self.showFilteredContacts) {
+        numberOfRows = [self.filteredContacts count];
+    } else {
+        if (section == 0) {
+            numberOfRows = [self.privateSelectedContacts count];
+        } else if (section == 1) {
+            numberOfRows = [self.unselectedFavoriteContacts count];
+        }
+    }
+    return numberOfRows;
 }
 
 
@@ -298,11 +441,20 @@ static NSString *const kFilteredContactCellNibName    = @"GRVFilteredContactPick
     if (self.showFilteredContacts) {
         cell = [tableView dequeueReusableCellWithIdentifier:kFilteredContactCellIdentifier forIndexPath:indexPath];
         user = [self.filteredContacts objectAtIndex:indexPath.row];
+        
     } else {
-        cell = [tableView dequeueReusableCellWithIdentifier:kSelectedContactCellIdentifier forIndexPath:indexPath];
-        user = [self.privateSelectedContacts objectAtIndex:indexPath.row];
-        // Add target/action method for deselect/remove button
-        [self configureSelectedCellRemoveButton:(GRVSelectedContactPickerTableViewCell *)cell forIndexPath:indexPath];
+        if (indexPath.section == 0) {
+            cell = [tableView dequeueReusableCellWithIdentifier:kSelectedContactCellIdentifier forIndexPath:indexPath];
+            user = [self.privateSelectedContacts objectAtIndex:indexPath.row];
+            // Add target/action method for deselect/remove button
+            [self configureSelectedCellRemoveButton:(GRVSelectedContactPickerTableViewCell *)cell forIndexPath:indexPath];
+            
+        } else if (indexPath.section == 1) {
+            cell = [tableView dequeueReusableCellWithIdentifier:kFavoriteContactCellIdentifier forIndexPath:indexPath];
+            user = [self.unselectedFavoriteContacts objectAtIndex:indexPath.row];
+            // Add target/action method for deselect/remove button
+            [self configureFavoriteCellAddButton:(GRVFavoriteContactPickerTableViewCell *)cell forIndexPath:indexPath];
+        }
     }
     
     // Configure the cell...
@@ -320,24 +472,56 @@ static NSString *const kFilteredContactCellNibName    = @"GRVFilteredContactPick
     return cell;
 }
 
-#pragma mark - Helper
+#pragma mark - Helpers
 - (void)configureSelectedCellRemoveButton:(GRVSelectedContactPickerTableViewCell *)cell forIndexPath:(NSIndexPath *)indexPath
 {
     cell.removeButton.tag = indexPath.row;
+    // add target-action method but first remove previously added ones
+    [cell.removeButton removeTarget:nil action:NULL forControlEvents:UIControlEventTouchUpInside];
     [cell.removeButton addTarget:self action:@selector(deselectContact:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)configureFavoriteCellAddButton:(GRVFavoriteContactPickerTableViewCell *)cell forIndexPath:(NSIndexPath *)indexPath
+{
+    cell.addButton.tag = indexPath.row;
+    // add target-action method but first remove previously added ones
+    [cell.addButton removeTarget:nil action:NULL forControlEvents:UIControlEventTouchUpInside];
+    [cell.addButton addTarget:self action:@selector(selectFavoriteContact:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    GRVUser *selectedUser = [self.filteredContacts objectAtIndex:indexPath.row];
-
-    // Add selectedUser if it doesnt already exist in private Selected Contacts
-    if (![self userIsSelected:selectedUser]) {
-        [self.privateSelectedContacts addObject:selectedUser];
+    if (self.showFilteredContacts) {
+        // Showing filtered contacts
+        GRVUser *selectedUser = [self.filteredContacts objectAtIndex:indexPath.row];
+        
+        // Add selectedUser if it doesnt already exist in private Selected Contacts
+        if (![self userIsSelected:selectedUser]) {
+            [self.privateSelectedContacts addObject:selectedUser];
+        }
+        
+        [self contactsHaveBeenSelected];
     }
-    
-    [self contactsHaveBeenSelected];
+}
+
+#pragma mark Sections
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    // Simple trick to hide section header of first section.
+    //
+    // 0.0f as the first section header's height doesnt work, so return the
+    // smallest acceptable multiple of a pixel's size, 1.0f.
+    // To compensate for this 1.0f, in viewDidLoad use the contentInset to hide
+    // this 1px height underneath the navigation bar
+    //
+    // To return the default header height for other sections return -1
+    CGFloat height = 1.0f;
+    if (section == 1) {
+        // We only want a section header for favorite contacts;
+        height = -1.0f;
+    }
+    return height;
 }
 
 
@@ -365,14 +549,35 @@ static NSString *const kFilteredContactCellNibName    = @"GRVFilteredContactPick
         // Get appropriate contact and remove it being sure to not exceed
         // bounds of array
         if (indexPath.row < [self.privateSelectedContacts count]) {
-            [self.tableView beginUpdates];
             [self.privateSelectedContacts removeObjectAtIndex:indexPath.row];
-            [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-            [self.tableView endUpdates];
-            
-            // hide table view if there's nothing left in selected contacts
-            self.tableView.hidden = ([self.privateSelectedContacts count] == 0);
+            [self refreshUnselectedFavoriteContacts];
+            [self refreshTableView];
             [self selectedContactsChanged];
+        }
+    }
+}
+
+/**
+ * Add contact from array of unselected favorite contacts
+ */
+- (IBAction)selectFavoriteContact:(UIButton *)sender
+{
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero
+                                           toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    
+    // to ensure the button indeed is in a cell: I know this is overkill...
+    if (indexPath) {
+        // Get appropriate contact and remove it being sure to not exceed
+        // bounds of array
+        if (indexPath.row < [self.unselectedFavoriteContacts count]) {
+            GRVUser *selectedUser = [self.unselectedFavoriteContacts objectAtIndex:indexPath.row];
+            
+            // Add selectedUser if it doesnt already exist in private Selected Contacts
+            if (![self userIsSelected:selectedUser]) {
+                [self.privateSelectedContacts addObject:selectedUser];
+            }
+            [self contactsHaveBeenSelected];
         }
     }
 }
@@ -402,6 +607,16 @@ static NSString *const kFilteredContactCellNibName    = @"GRVFilteredContactPick
     self.privateSelectedContacts = [selectedContacts mutableCopy];
     
     [self contactsHaveBeenSelected];
+}
+
+
+#pragma mark - Notification Observer Methods
+/**
+ * ManagedObjectContext now available from GRVModelManager so update local copy
+ */
+- (void)managedObjectContextReady:(NSNotification *)aNotification
+{
+    self.managedObjectContext = [GRVModelManager sharedManager].managedObjectContext;
 }
 
 

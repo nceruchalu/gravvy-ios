@@ -14,6 +14,7 @@
 @interface GRVVideo : NSManagedObject
 
 @property (nonatomic, retain) NSDate * createdAt;
+@property (nonatomic, retain) NSNumber * currentClipIndex;
 @property (nonatomic, retain) NSString * hashKey;
 @property (nonatomic, retain) NSNumber * liked;
 @property (nonatomic, retain) NSNumber * likesCount;

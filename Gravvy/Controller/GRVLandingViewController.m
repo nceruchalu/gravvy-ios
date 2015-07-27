@@ -16,6 +16,7 @@
 #import "GRVVideosCDTVC.h"
 #import "GRVBadgeView.h"
 #import "GRVModelManager.h"
+#import "GRVUser+HTTP.h"
 #import "AMPopTip.h"
 //#import "UIViewController+ScrollingNavbar.h"
 
@@ -452,6 +453,9 @@ static CGFloat const scrollingNavBarDelay = 480.0f;
         
         
         [self showProgressHUDSuccessMessage:@"Created Video"];
+        
+        // Refresh favorited contacts as that might have changed
+        [GRVUser refreshFavorites:nil];
     }
 }
 

@@ -9,7 +9,7 @@
 #import "GRVVideosCDTVC.h"
 #import "GRVVideo+HTTP.h"
 #import "GRVClip.h"
-#import "GRVUser.h"
+#import "GRVUser+HTTP.h"
 #import "GRVVideoTableViewCell.h"
 #import "GRVVideoSectionHeaderView.h"
 #import "GRVUserViewHelper.h"
@@ -1418,6 +1418,9 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
         [self.tableView setContentOffset:CGPointMake(0.0, 0.0 - self.tableView.contentInset.top)
                                 animated:YES];
         [self showProgressHUDSuccessMessage:@"Clip Added"];
+        
+        // Refresh recent contacts as that might have changed
+        [GRVUser refreshFavorites:nil];
     }
 }
 

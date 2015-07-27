@@ -18,6 +18,7 @@
 @implementation GRVUser
 
 @dynamic avatarThumbnailURL;
+@dynamic favorited;
 @dynamic fullName;
 @dynamic phoneNumber;
 @dynamic relationshipType;

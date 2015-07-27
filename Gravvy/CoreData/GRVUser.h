@@ -14,6 +14,7 @@
 @interface GRVUser : NSManagedObject
 
 @property (nonatomic, retain) NSString * avatarThumbnailURL;
+@property (nonatomic, retain) NSNumber * favorited;
 @property (nonatomic, retain) NSString * fullName;
 @property (nonatomic, retain) NSString * phoneNumber;
 @property (nonatomic, retain) NSNumber * relationshipType;

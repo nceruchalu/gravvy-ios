@@ -14,6 +14,8 @@
  *
  * Property                 Purpose
  * createdAt                Video creation date
+ * currentClipIndex         Index of current clip being played in collection of
+ *                          associated ordered clips.
  * hashKey                  Video's unique identifier
  * likesCount               Number of likes
  * membership               Is user a member/invited to this video.

@@ -14,6 +14,7 @@
 #import "GRVHTTPManager.h"
 #import "GRVContact.h"
 #import "GRVAccountManager.h"
+#import "GRVModelManager.h"
 
 @implementation GRVUser (HTTP)
 
@@ -98,6 +99,40 @@
     }
 }
 
+/**
+ * Unmark GRVUsers as favorited if not in a provided array of user JSON
+ * objects.
+ *
+ * @param userDicts     Array of userDictionary objects, where each contains
+ *                      JSON data as expected from server.
+ * @param context       handle to database
+ */
++ (void)unmarkFavoritedUsersNotInUserInfoArray:(NSArray *)userDicts
+                        inManagedObjectContext:(NSManagedObjectContext *)context
+
+{
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"GRVUser"];
+    if ([userDicts count]) {
+        // Get all unique identifier values from the object dictionaries.
+        NSMutableArray *phoneNumbers = [[NSMutableArray alloc] init];
+        for (NSDictionary *userDictionary in userDicts) {
+            NSString *phoneNumber = [[userDictionary valueForKeyPath:kGRVRESTUserPhoneNumberKey] description];
+            [phoneNumbers addObject:phoneNumber];
+        }
+        
+        NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"GRVUser"];
+        fetchRequest.predicate = [NSPredicate predicateWithFormat:@"(favorited == YES) AND (NOT (phoneNumber IN[c] %@))", phoneNumbers];
+    } else {
+        fetchRequest.predicate = [NSPredicate predicateWithFormat:@"favorited == YES"];
+    }
+    
+    NSError *error;
+    NSArray *outdatedUsers = [context executeFetchRequest:fetchRequest error:&error];
+    for (GRVUser *user in outdatedUsers) {
+        user.favorited = @(NO);
+    }
+}
+
 
 #pragma mark Public
 + (instancetype)userWithUserInfo:(NSDictionary *)userDictionary
@@ -152,6 +187,61 @@
                                         syncObject:nil];
 }
 
++ (void)refreshFavorites:(void (^)())favoritesAreRefreshed
+{
+    // don't proceed if managedObjectContext isn't setup or user isn't authenticated
+    if (![GRVModelManager sharedManager].managedObjectContext || ![GRVAccountManager sharedManager].isAuthenticated) {
+        // execute the callback block
+        if (favoritesAreRefreshed) favoritesAreRefreshed();
+        return;
+    }
+    
+    GRVHTTPManager *httpManager = [GRVHTTPManager sharedManager];
+    [httpManager request:GRVHTTPMethodGET
+                  forURL:kGRVRESTUserRecentContacts
+              parameters:nil
+                 success:^(NSURLSessionDataTask *task, id responseObject) {
+                     
+                     // get array of user dictionaries in response
+                     NSArray *usersJSON = [responseObject objectForKey:kGRVRESTListResultsKey];
+                     
+                     // Use worker context for background execution
+                     NSManagedObjectContext *workerContext = [GRVModelManager sharedManager].workerContext;
+                     if (workerContext) {
+                         [workerContext performBlock:^{
+                             
+                             // Update users that are no longer recent contacts
+                             [GRVUser unmarkFavoritedUsersNotInUserInfoArray:usersJSON inManagedObjectContext:workerContext];
+                             
+                             // Refresh the corresponding users
+                             NSArray *favoritedUsers = [GRVUser usersWithUserInfoArray:usersJSON inManagedObjectContext:workerContext];
+                             for (GRVUser *user in favoritedUsers) {
+                                 user.favorited = @(YES);
+                             }
+                            
+                             // Push changes up to main thread context. Alternatively,
+                             // could turn all objects into faults but this is easier.
+                             [workerContext save:NULL];
+                             
+                             // ensure context is cleaned up for next use.
+                             [workerContext reset];
+                             
+                             // finally execute the callback block on main queue
+                             dispatch_async(dispatch_get_main_queue(), ^{
+                                 if (favoritesAreRefreshed) favoritesAreRefreshed();
+                             });
+                         }];
+                         
+                     } else {
+                         // No worker context available so execute callback block
+                         if (favoritesAreRefreshed) favoritesAreRefreshed();
+                     }
+                 }
+                 failure:^(NSURLSessionDataTask *task, NSError *error, id responseObject) {
+                     // do nothing but execute the callback block
+                     if (favoritesAreRefreshed) favoritesAreRefreshed();
+                 }];
+}
 
 #pragma mark - Instance Methods
 #pragma mark Public
