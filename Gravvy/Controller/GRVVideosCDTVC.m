@@ -356,38 +356,13 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     // remove observers
     self.playerItems = nil;
     
-    [self.addClipPopTip hide];
-    self.addClipPopTip = nil;
+    [_addClipPopTip hide];
+    _addClipPopTip = nil;
 }
 
 
 #pragma mark - Instance Methods
 #pragma mark Private
-- (void)setupFetchedResultsController
-{
-    if (self.managedObjectContext) {
-        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"GRVVideo"];
-        
-        // prefetch to avoid faulting relationships individually
-        request.relationshipKeyPathsForPrefetching = @[@"owner", @"clips"];
-        
-        // fetch all ordered videos with clips
-        request.predicate = [NSPredicate predicateWithFormat:@"(order > %d) AND (clips.@count > 0)", kGRVVideoOrderNew];
-        
-        // Show latest videos first (updatedAt storted descending)
-        NSSortDescriptor *orderSort = [NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES];
-        request.sortDescriptors = @[orderSort];
-        request.fetchBatchSize = 20;
-        
-        self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"order" cacheName:nil];
-        
-    } else {
-        self.fetchedResultsController = nil;
-    }
-    
-    [self showOrHideEmptyStateView];
-}
-
 /**
  * Reload contents of tableview, but first cancel all downloads before doing so
  * to prevent hanging
@@ -681,6 +656,32 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     if (self.isPlaying) [self playOrPause];
 }
 
+#pragma mark Public: Core Data
+- (void)setupFetchedResultsController
+{
+    if (self.managedObjectContext) {
+        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"GRVVideo"];
+        
+        // prefetch to avoid faulting relationships individually
+        request.relationshipKeyPathsForPrefetching = @[@"owner", @"clips"];
+        
+        // fetch all ordered videos with clips
+        request.predicate = [NSPredicate predicateWithFormat:@"(order > %d) AND (clips.@count > 0)", kGRVVideoOrderNew];
+        
+        // Show latest videos first (updatedAt storted descending)
+        NSSortDescriptor *orderSort = [NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES];
+        request.sortDescriptors = @[orderSort];
+        request.fetchBatchSize = 20;
+        
+        self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"order" cacheName:nil];
+        
+    } else {
+        self.fetchedResultsController = nil;
+    }
+    
+    [self showOrHideEmptyStateView];
+}
+
 #pragma mark Public: AudioVisual Player
 - (void)stop
 {
@@ -757,7 +758,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
         currentClip = [self.activeVideoClips objectAtIndex:currentClipIndex];
     } else {
         NSSortDescriptor *orderSd = [NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES];
-        NSArray *clips = [self.activeVideo.clips sortedArrayUsingDescriptors:@[orderSd]];
+        NSArray *clips = [video.clips sortedArrayUsingDescriptors:@[orderSd]];
         currentClip = [clips objectAtIndex:currentClipIndex];
     }
     

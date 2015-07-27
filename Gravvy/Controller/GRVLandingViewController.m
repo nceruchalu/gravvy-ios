@@ -339,8 +339,8 @@ static CGFloat const scrollingNavBarDelay = 480.0f;
     [self stopFollowingScrollView];
 #endif
     
-    [self.popTip hide];
-    self.popTip = nil;
+    [_popTip hide];
+    _popTip = nil;
 }
 
 

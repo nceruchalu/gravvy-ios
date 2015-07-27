@@ -135,7 +135,7 @@ static CGFloat const kTableViewFooterHeight = 80.0f;
     self.tableView.tableHeaderView.frame = tableHeaderViewFrame;
     self.tableView.tableHeaderView = self.tableView.tableHeaderView;
     
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, kTableViewFooterHeight)];
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, [self tableViewFooterHeight])];
 }
 
 - (void)showOrHideEmptyStateView
@@ -147,6 +147,11 @@ static CGFloat const kTableViewFooterHeight = 80.0f;
         // Nothing to dispaly, so show user something informative
         [self showEmptyStateView];
     }
+}
+
+- (CGFloat)tableViewFooterHeight
+{
+    return kTableViewFooterHeight;
 }
 
 

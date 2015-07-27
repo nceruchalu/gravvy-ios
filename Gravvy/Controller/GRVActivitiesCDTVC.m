@@ -16,8 +16,14 @@
 #import "GRVAccountManager.h"
 #import "GRVFormatterUtils.h"
 #import "GRVConstants.h"
+#import "GRVVideoDetailsViewController.h"
 
 #pragma mark - Constants
+/**
+ * Segue identifier for showing Video Details VC
+ */
+static NSString *const kSegueIdentifierShowVideoDetails = @"showVideoDetailsVC";
+
 /**
  * Attributed string properties of Activity Table View Cells
  */
@@ -267,7 +273,6 @@ static NSUInteger const kMaxDisplayedVideoTitleLength = 30;
     return representation;
 }
 
-
 #pragma mark - Notification Observer Methods
 /**
  * Core Data contacts are now synced with address book.
@@ -277,6 +282,55 @@ static NSUInteger const kMaxDisplayedVideoTitleLength = 30;
     // Reload tableview
     [self setupFetchedResultsController];
 }
+
+#pragma mark - Navigation
+- (void)prepareViewController:(id)vc
+                     forSegue:(NSString *)segueIdentifier
+                fromIndexPath:(NSIndexPath *)indexPath
+{
+    GRVActivity *activity = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    if ([vc isKindOfClass:[GRVVideoDetailsViewController class]]) {
+        if (![segueIdentifier length] || [segueIdentifier isEqualToString:kSegueIdentifierShowVideoDetails]) {
+            // prepare vc
+            GRVVideoDetailsViewController *videoDetailsVC = (GRVVideoDetailsViewController *)vc;
+            GRVVideo *video = activity.targetVideo ? activity.targetVideo : activity.objectVideo;
+            videoDetailsVC.video = video;
+        }
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSIndexPath *indexPath = nil;
+    if ([sender isKindOfClass:[UITableViewCell class]]) {
+        indexPath = [self.tableView indexPathForCell:sender];
+    }
+    
+    // Grab the destination View Controller
+    id destinationVC = segue.destinationViewController;
+    
+    // Account for the destination VC being embedded in a UINavigationController
+    // which happens when this is a modal presentation segue
+    if ([destinationVC isKindOfClass:[UINavigationController class]]) {
+        destinationVC = [((UINavigationController *)destinationVC).viewControllers firstObject];
+    }
+    
+    [self prepareViewController:destinationVC
+                       forSegue:segue.identifier
+                  fromIndexPath:indexPath];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    id detailVC = [self.splitViewController.viewControllers lastObject];
+    if ([detailVC isKindOfClass:[UINavigationController class]]) {
+        detailVC = [((UINavigationController *)detailVC).viewControllers firstObject];
+        [self prepareViewController:detailVC
+                           forSegue:nil
+                      fromIndexPath:indexPath];
+    }
+}
+
 
 
 @end

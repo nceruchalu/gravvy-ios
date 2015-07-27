@@ -36,6 +36,11 @@
  */
 - (void)showOrHideEmptyStateView;
 
+/**
+ * Height of table view footer when tableview is displayed
+ */
+- (CGFloat)tableViewFooterHeight;
+
 #pragma mark Abstract
 /**
  * Hook up fetchedResultsController property to a Core Data request

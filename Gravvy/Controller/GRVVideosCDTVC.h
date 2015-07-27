@@ -24,6 +24,11 @@
 
 #pragma mark - Instance Methods
 /**
+ * Setup the fetchedResultsController @property of the VC
+ */
+- (void)setupFetchedResultsController;
+
+/**
  * Stop the player and discard all player resources. Do this to prevent the
  * existence of multiple player instances when about to present the camera VC.
  *
