@@ -273,7 +273,7 @@
     }
 }
 
-+ (void)refreshVideos:(void (^)())videosAreRefreshed
++ (void)refreshVideos:(BOOL)reorder withCompletion:(void (^)())videosAreRefreshed
 {
     // don't proceed if managedObjectContext isn't setup or user isn't authenticated
     if (![GRVModelManager sharedManager].managedObjectContext || ![GRVAccountManager sharedManager].isAuthenticated) {
@@ -301,24 +301,26 @@
                              // Now refresh the videos
                              NSArray *refreshedVideos = [GRVVideo videosWithVideoInfoArray:videosJSON inManagedObjectContext:workerContext];
                              
-                             // Order refreshed videos by :
-                             // - participation DESC: new and unseen videos first
-                             // - unseen clips count DESC: unseen clips next
-                             // - unseen likes count DESC: unseen likes
-                             // - score DESC: rank indicator
-                             // - updatedAt DESC: in the unlikely event the score
-                             //     isn't unique, video with recent update wins
-                             NSSortDescriptor *participationSort = [NSSortDescriptor sortDescriptorWithKey:@"participation" ascending:NO];
-                             NSSortDescriptor *unseenClipsCountSort = [NSSortDescriptor sortDescriptorWithKey:@"unseenClipsCount" ascending:NO];
-                             NSSortDescriptor *unseenLikesCountSort = [NSSortDescriptor sortDescriptorWithKey:@"unseenLikesCount" ascending:NO];
-                             NSSortDescriptor *scoreSort = [NSSortDescriptor sortDescriptorWithKey:@"score" ascending:NO];
-                             NSSortDescriptor *updatedAtSort = [NSSortDescriptor sortDescriptorWithKey:@"updatedAt" ascending:NO];
-                             
-                             refreshedVideos = [refreshedVideos sortedArrayUsingDescriptors:@[participationSort, unseenClipsCountSort, unseenLikesCountSort, scoreSort, updatedAtSort]];
-                             NSUInteger idx = 0;
-                             for (GRVVideo *video in refreshedVideos) {
-                                 video.order = @(idx);
-                                 idx++;
+                             if (reorder) {
+                                 // Order refreshed videos by :
+                                 // - participation DESC: new and unseen videos first
+                                 // - unseen clips count DESC: unseen clips next
+                                 // - unseen likes count DESC: unseen likes
+                                 // - score DESC: rank indicator
+                                 // - updatedAt DESC: in the unlikely event the score
+                                 //     isn't unique, video with recent update wins
+                                 NSSortDescriptor *participationSort = [NSSortDescriptor sortDescriptorWithKey:@"participation" ascending:NO];
+                                 NSSortDescriptor *unseenClipsCountSort = [NSSortDescriptor sortDescriptorWithKey:@"unseenClipsCount" ascending:NO];
+                                 NSSortDescriptor *unseenLikesCountSort = [NSSortDescriptor sortDescriptorWithKey:@"unseenLikesCount" ascending:NO];
+                                 NSSortDescriptor *scoreSort = [NSSortDescriptor sortDescriptorWithKey:@"score" ascending:NO];
+                                 NSSortDescriptor *updatedAtSort = [NSSortDescriptor sortDescriptorWithKey:@"updatedAt" ascending:NO];
+                                 
+                                 refreshedVideos = [refreshedVideos sortedArrayUsingDescriptors:@[participationSort, unseenClipsCountSort, unseenLikesCountSort, scoreSort, updatedAtSort]];
+                                 NSUInteger idx = 0;
+                                 for (GRVVideo *video in refreshedVideos) {
+                                     video.order = @(idx);
+                                     idx++;
+                                 }
                              }
                              
                              // Push changes up to main thread context. Alternatively,

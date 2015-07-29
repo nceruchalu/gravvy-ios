@@ -314,7 +314,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     
     // Silently refresh to pull in recent video updates
     if (!self.skipRefreshOnNextAppearance) {
-        [self refresh];
+        [self refreshWithoutReorder];
     }
     self.skipRefreshOnNextAppearance = NO;
     
@@ -912,11 +912,15 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
 }
 
 #pragma mark - Refresh
+/**
+ * Do a complete refresh and re-ordering of the table
+ */
 - (IBAction)refresh
 {
+    // During refresh don't modify table for changes in managed object contexxt
     self.suspendAutomaticTrackingOfChangesInManagedObjectContext = YES;
     // Refresh videos from server
-    [GRVVideo refreshVideos:^{
+    [GRVVideo refreshVideos:YES withCompletion:^{
         dispatch_async(dispatch_get_main_queue(), ^{
             // run in main queue UIKit only runs there
             [self.refreshControl endRefreshing];
@@ -935,6 +939,23 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     [self.refreshControl beginRefreshing];
     [self.tableView setContentOffset:CGPointMake(0, 0.0 - self.tableView.contentInset.top - self.refreshControl.frame.size.height) animated:YES];
     [self refresh];
+}
+
+/**
+ * Refresh without reordering
+ */
+- (void)refreshWithoutReorder
+{
+    // During refresh don't modify table for changes in managed object contexxt
+    self.suspendAutomaticTrackingOfChangesInManagedObjectContext = YES;
+    // Refresh videos from server
+    [GRVVideo refreshVideos:NO withCompletion:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            // run in main queue UIKit only runs there
+            self.suspendAutomaticTrackingOfChangesInManagedObjectContext = NO;
+            [self.tableView reloadData];
+        });
+    }];
 }
 
 
@@ -1373,11 +1394,11 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
 }
 
 /**
- * App entering foreground
+ * App entering foreground, so refresh content but don't reorder
  */
 - (void)appWillEnterForeground
 {
-    // Nothing to do here
+    [self refreshWithoutReorder];
 }
 
 

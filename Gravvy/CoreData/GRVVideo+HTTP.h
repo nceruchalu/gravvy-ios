@@ -107,10 +107,11 @@
  *
  * @warning Only call this method when the managedObjectContext is setup
  *
+ * @param reorder               Should the videos be re-ordered after refresh?
  * @param videosAreRefreshed    block to be called after refreshing videos. This
  *      is run on the main queue.
  */
-+ (void)refreshVideos:(void (^)())videosAreRefreshed;
++ (void)refreshVideos:(BOOL)reorder withCompletion:(void (^)())videosAreRefreshed;
 
 
 #pragma mark - Instance Methods
