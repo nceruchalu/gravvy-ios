@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -205,10 +205,10 @@
                     <rect key="frame" x="0.0" y="437" width="320" height="131"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KJG-cZ-Sig" userLabel="Left Half Container">
-                            <rect key="frame" x="0.0" y="0.0" width="125" height="131"/>
+                            <rect key="frame" x="0.0" y="0.0" width="119" height="131"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LPL-Gr-a1K" userLabel="Retake Button">
-                                    <rect key="frame" x="35" y="49" width="54" height="33"/>
+                                    <rect key="frame" x="32" y="49" width="54" height="33"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="LPL-Gr-a1K" secondAttribute="height" multiplier="18:11" id="09n-Zv-fzl"/>
                                         <constraint firstAttribute="height" constant="33" id="GiE-I3-P9j"/>
@@ -228,10 +228,10 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ig8-LZ-9Pr" userLabel="Bottom Half Container">
-                            <rect key="frame" x="0.0" y="100" width="320" height="31"/>
+                            <rect key="frame" x="0.0" y="106" width="320" height="25"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hold to record" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lYj-fP-6ja">
-                                    <rect key="frame" x="125" y="8.5" width="71" height="13"/>
+                                    <rect key="frame" x="125" y="5.5" width="71" height="13"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
@@ -243,7 +243,7 @@
                             </constraints>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="odN-6b-yFY" userLabel="Shoot Button">
-                            <rect key="frame" x="125" y="31" width="69" height="69"/>
+                            <rect key="frame" x="119" y="25" width="81" height="81"/>
                             <state key="normal" image="startRecording">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -296,6 +296,6 @@
         <image name="cameraFlip" width="27" height="27"/>
         <image name="cameraRetake" width="54" height="33"/>
         <image name="flashOff" width="27" height="27"/>
-        <image name="startRecording" width="69" height="69"/>
+        <image name="startRecording" width="81" height="81"/>
     </resources>
 </document>

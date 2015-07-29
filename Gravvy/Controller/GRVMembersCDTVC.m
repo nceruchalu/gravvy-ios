@@ -179,14 +179,28 @@ static const NSInteger kMemberButtonIndexCall       = 0; // Call user
     cell.avatarView.userInitials = avatarView.userInitials;
     
     // Display name
-    if ([member.user.phoneNumber isEqualToString:[GRVAccountManager sharedManager].phoneNumber]) {
+    BOOL memberIsMe = [member.user.phoneNumber isEqualToString:[GRVAccountManager sharedManager].phoneNumber];
+    if (memberIsMe) {
         cell.displayNameLabel.text = kMemberDisplayNameMe;
     } else {
         cell.displayNameLabel.text = [GRVUserViewHelper userFullName:member.user];
     }
     
-    // Phone number
-    cell.phoneNumberLabel.text = [GRVUserViewHelper userPhoneNumber:member.user];
+    // Phone number only displayed if in the address book
+    if (member.user.contact || memberIsMe) {
+        cell.phoneNumberLabel.text = [GRVUserViewHelper userPhoneNumber:member.user];
+    } else {
+        cell.phoneNumberLabel.text = @"";
+    }
+    
+    // Cell can only be selected if in address book, or I'm the video owner
+    // but not me
+    if (([self isVideoOwner] || member.user.contact) && !memberIsMe) {
+        cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+    } else {
+        cell.selectionStyle = UITableViewCellEditingStyleNone;
+    }
+   
 }
 
 #pragma mark - Navigation
@@ -242,16 +256,26 @@ static const NSInteger kMemberButtonIndexCall       = 0; // Call user
         NSString *callMemberTitle = [NSString stringWithFormat:@"Call %@", memberShortName];
         NSString *destructiveButtonTitle = [NSString stringWithFormat:@"Remove %@", memberShortName];
         
+        // Can only show call member if in address book
         // Video owner gets a different view of the members action sheet
+        self.memberActionSheet = nil;
         if ([self isVideoOwner]) {
-            self.memberActionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                                 delegate:self
-                                                        cancelButtonTitle:@"Cancel"
-                                                   destructiveButtonTitle:nil
-                                                        otherButtonTitles:callMemberTitle, destructiveButtonTitle, nil];
+            if (videoMember.user.contact) {
+                self.memberActionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                                     delegate:self
+                                                            cancelButtonTitle:@"Cancel"
+                                                       destructiveButtonTitle:nil
+                                                            otherButtonTitles:callMemberTitle, destructiveButtonTitle, nil];
+            } else {
+                self.memberActionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                                     delegate:self
+                                                            cancelButtonTitle:@"Cancel"
+                                                       destructiveButtonTitle:nil
+                                                            otherButtonTitles:destructiveButtonTitle, nil];
+            }
             self.memberActionSheet.destructiveButtonIndex = (self.memberActionSheet.numberOfButtons-2);
             
-        } else {
+        } else if (videoMember.user.contact) {
             self.memberActionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                                  delegate:self
                                                         cancelButtonTitle:@"Cancel"
@@ -260,9 +284,9 @@ static const NSInteger kMemberButtonIndexCall       = 0; // Call user
         }
         
         
-        
         // Only show this action sheet if I didnt click on myself
-        if (![[GRVAccountManager sharedManager].phoneNumber isEqualToString:videoMember.user.phoneNumber]) {
+        BOOL videoMemberIsMe = [[GRVAccountManager sharedManager].phoneNumber isEqualToString:videoMember.user.phoneNumber];
+        if (!videoMemberIsMe) {
             [self.memberActionSheet showInView:self.view];
         }
     }

@@ -25,6 +25,8 @@
  *
  * @param userDictionary    User object with all attributes from server
  * @param context           handle to database
+ *
+ * @return GRVUser instance
  */
 + (instancetype)newUserWithUserInfo:(NSDictionary *)userDictionary
              inManagedObjectContext:(NSManagedObjectContext *)context

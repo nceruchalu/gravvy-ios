@@ -325,6 +325,14 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
                                              selector:@selector(mediaServicesWereReset:)
                                                  name:AVAudioSessionMediaServicesWereResetNotification
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(appDidEnterBackground)
+                                                 name:UIApplicationDidEnterBackgroundNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(appWillEnterForeground)
+                                                 name:UIApplicationWillEnterForegroundNotification
+                                               object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -343,6 +351,12 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     // remove observers
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:AVAudioSessionMediaServicesWereResetNotification
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIApplicationDidEnterBackgroundNotification
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIApplicationWillEnterForegroundNotification
                                                   object:nil];
 }
 
@@ -927,6 +941,9 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
 #pragma mark - Target/Action Methods
 - (IBAction)playOrPause
 {
+    // Adjust the volume
+    self.playerVolume = [GRVMuteSwitchDetector sharedDetector].muted ? 0.0f : 1.0f;
+    
     if (self.isPlaying) {
         [self.player pause];
     } else {
@@ -1346,6 +1363,23 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     
     return;
 }
+
+/**
+ * App entering background, so pause the player
+ */
+- (void)appDidEnterBackground
+{
+    [self pause];
+}
+
+/**
+ * App entering foreground
+ */
+- (void)appWillEnterForeground
+{
+    // Nothing to do here
+}
+
 
 #pragma mark - Navigation
 - (void)prepareViewController:(id)vc

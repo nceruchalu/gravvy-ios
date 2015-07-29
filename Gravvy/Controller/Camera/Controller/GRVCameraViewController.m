@@ -217,6 +217,14 @@ static const CGFloat kCountdownContainerCornerRadius = 5.0f;
 }
 
 
+#pragma mark - View Layout
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    [self.recorder previewViewFrameChanged];
+}
+
+
 #pragma mark - Instance Methods
 #pragma mark Abstract
 - (void)processCompletedSession:(SCRecordSession *)recordSession
