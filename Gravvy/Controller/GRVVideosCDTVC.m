@@ -724,6 +724,11 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     [self.player removeAllItems];
     self.player = [AVQueuePlayer playerWithURL:[NSURL URLWithString:@""]];
     self.player = nil;
+    
+    // Now that nothing is playing, release all trackers of the active video
+    self.activeVideo = nil;
+    self.activeVideoClips = nil;
+    self.activeVideoCell = nil;
 }
 
 #pragma mark - UITableViewDataSource
@@ -934,6 +939,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
             [self.tableView reloadData];
             
             self.activeVideo = nil;
+            self.activeVideoClips = nil;
             self.activeVideoCell = nil;
             [self autoPlayVideo];
         });
@@ -960,6 +966,9 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
             // run in main queue UIKit only runs there
             self.suspendAutomaticTrackingOfChangesInManagedObjectContext = NO;
             [self.tableView reloadData];
+            
+            // We dont reset the active video and force an autoplay here so
+            // that users can continue playing from where they left off.
         });
     }];
 }
