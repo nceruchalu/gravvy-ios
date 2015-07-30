@@ -460,8 +460,15 @@ static CGFloat const scrollingNavBarDelay = 480.0f;
         //GRVCreateVideoContactPickerVC *contactPickerVC = (GRVCreateVideoContactPickerVC *)segue.sourceViewController;
 
         // Updated video is now at the top of the video TVC, so scroll to top
+        // and refresh and show spinner
         [self.videosVC.tableView setContentOffset:CGPointMake(0.0, 0.0 - self.videosVC.tableView.contentInset.top)
                                          animated:YES];
+        [self.videosVC refreshAndShowSpinner];
+        // Prevent a double refresh event by skipping the refresh event
+        // if videosVC is currently selected
+        if (self.selectedViewController == self.videosVC) {
+            self.videosVC.skipRefreshOnNextAppearance = YES;
+        }
         
         
         [self showProgressHUDSuccessMessage:@"Created Video"];

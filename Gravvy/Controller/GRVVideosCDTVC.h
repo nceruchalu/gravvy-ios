@@ -22,6 +22,11 @@
  */
 @property (strong, nonatomic, readonly) GRVVideo *activeVideo;
 
+/**
+ * Skip refresh table view next time Table View appears
+ */
+@property (nonatomic) BOOL skipRefreshOnNextAppearance;
+
 #pragma mark - Instance Methods
 /**
  * Setup the fetchedResultsController @property of the VC

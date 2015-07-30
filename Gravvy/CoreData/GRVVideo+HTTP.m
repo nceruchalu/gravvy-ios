@@ -47,6 +47,7 @@
     newVideo.hashKey = [[videoDictionary objectForKey:kGRVRESTVideoHashKeyKey] description];
     newVideo.title = [[videoDictionary objectForKey:kGRVRESTVideoTitleKey] description];
     newVideo.photoSmallThumbnailURL = [[videoDictionary objectForKey:kGRVRESTVideoPhotoSmallThumbnailKey] description];
+    newVideo.currentClipIndex = @(0);
     
     newVideo.order = @(kGRVVideoOrderNew);
     

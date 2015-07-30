@@ -114,9 +114,10 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
 @property (strong, nonatomic) NSMutableDictionary *sectionHeaderViews;
 
 /**
- * Skip refresh table view next time Table View appears
+ * Skip the next play reporting event. This means the play has already been
+ * recorded earlier in this loop
  */
-@property (nonatomic) BOOL skipRefreshOnNextAppearance;
+@property (nonatomic) BOOL skipNextPlayReporting;
 
 /**
  * Currently active video, and associated clips and cell cell which might or
@@ -628,6 +629,14 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
             [self clearPendingNotificationsInActiveCell];
         } else {
             [self.activeVideo refreshVideo:nil];
+        }
+        
+        // If you're the video owner then you need to have at least 1 play so
+        // make that happen right now, so you don't end up with 0 plays if you
+        // don't make it to the end of the first clip
+        if ([self.activeVideo isVideoOwner] && ([self.activeVideo.playsCount integerValue] == 0)) {
+            [self.activeVideo play:nil];
+            self.skipNextPlayReporting = YES;
         }
         
         self.performedAutoPlay = YES;
@@ -1363,7 +1372,10 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     [self.player insertItem:playedItem afterItem:nil];
     
     if (playedItem == [self.playerItems firstObject]) {
-        [self.activeVideo play:nil];
+        if (!self.skipNextPlayReporting) {
+            [self.activeVideo play:nil];
+        }
+        self.skipNextPlayReporting = NO;
     }
 }
 
