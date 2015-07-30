@@ -15,6 +15,7 @@
         <attribute name="identifier" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="mp4URL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="order" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="photoThumbnailURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="activitiesUsingAsObject" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="GRVActivity" inverseName="objectClip" inverseEntity="GRVActivity" syncable="YES"/>
         <relationship name="owner" maxCount="1" deletionRule="Nullify" destinationEntity="GRVUser" inverseName="uploadedClips" inverseEntity="GRVUser" syncable="YES"/>
@@ -83,7 +84,7 @@
     </entity>
     <elements>
         <element name="GRVActivity" positionX="178" positionY="180" width="128" height="163"/>
-        <element name="GRVClip" positionX="547" positionY="53" width="128" height="163"/>
+        <element name="GRVClip" positionX="547" positionY="53" width="128" height="178"/>
         <element name="GRVContact" positionX="-189" positionY="32" width="128" height="148"/>
         <element name="GRVMember" positionX="196" positionY="-36" width="128" height="120"/>
         <element name="GRVUser" positionX="-9" positionY="-63" width="128" height="253"/>

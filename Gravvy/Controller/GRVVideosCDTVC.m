@@ -777,8 +777,19 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
 #pragma mark Helper
 - (void)configureCell:(GRVVideoTableViewCell *)cell withVideo:(GRVVideo *)video
 {
-    // Video details
-    [cell.previewImageView sd_setImageWithURL:[NSURL URLWithString:video.photoThumbnailURL]];
+    // Video preview image is set to that of the current clip
+    NSSortDescriptor *orderSd = [NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES];
+    NSArray *clips = [video.clips sortedArrayUsingDescriptors:@[orderSd]];
+    NSUInteger clipsCount = [clips count];
+    NSUInteger clipIndex = [video.currentClipIndex integerValue];
+    if (clipIndex >= clipsCount) {
+        clipIndex = MAX(0, (clipsCount-1));
+    }
+    GRVClip *currentClip = [clips objectAtIndex:clipIndex];
+    NSString *photoThumbnailURL = currentClip.photoThumbnailURL ? currentClip.photoThumbnailURL : video.photoThumbnailURL;
+    [cell.previewImageView sd_setImageWithURL:[NSURL URLWithString:photoThumbnailURL]];
+    
+    // video title
     cell.titleLabel.text = video.title;
     
     NSString *likesCount = [GRVFormatterUtils numToString:video.likesCount];
@@ -801,7 +812,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
         // video playing in reused cells
         cell.previewImageView.hidden = NO;
         // Since preview image is showing, we must be on first clip
-        [self configureCell:cell withCurrentClip:0 totalClipsCount:[video.clips count] andVideo:video];
+        [self configureCell:cell withCurrentClip:[video.currentClipIndex integerValue] totalClipsCount:[video.clips count] andVideo:video];
     }
     
 }
@@ -814,31 +825,30 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
         totalClipsCount:(NSUInteger)clipsCount
              andVideo:(GRVVideo *)video
 {
-    // Current clip index is actually based on the video's anchor index so
-    // get appropriate anchor index
-    NSUInteger anchorIndex;
-    
-    // Get current clip
-    GRVClip *currentClip = nil;
+    // Determine actual clip index based off of video's anchor index
+    // for video's currently playing
+    NSUInteger actualClipIndex;
+   
+    // The collection of clips associated with current video
+    NSArray *clips;
+
     if ([video.hashKey isEqualToString:self.activeVideo.hashKey]) {
-        currentClip = [self.activeVideoClips objectAtIndex:currentClipIndex];
-        anchorIndex = self.activeVideoAnchorIndex;
+        clips = self.activeVideoClips;
+        actualClipIndex = (self.activeVideoAnchorIndex + currentClipIndex) % clipsCount;
+    
     } else {
         NSSortDescriptor *orderSd = [NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES];
-        NSArray *clips = [video.clips sortedArrayUsingDescriptors:@[orderSd]];
-        currentClip = [clips objectAtIndex:currentClipIndex];
-        anchorIndex = [video.currentClipIndex integerValue];
-        if (anchorIndex >= clipsCount) {
-            anchorIndex = MAX(0, (clipsCount-1));
-        }
+        clips = [video.clips sortedArrayUsingDescriptors:@[orderSd]];
+        actualClipIndex = currentClipIndex;
     }
     
-    // Determine actual clip index based off of video's anchor index
-    NSUInteger actualClipIndex = (anchorIndex + currentClipIndex) % clipsCount;
+    // Display actual clip index
     cell.currentClipIndexLabel.text = [NSString stringWithFormat:@"%lu/%lu", (unsigned long)(actualClipIndex+1), (unsigned long)clipsCount];
     
+    // Get current clip and display its owner
+    GRVClip *currentClip = [clips objectAtIndex:currentClipIndex];
     GRVUser *owner = currentClip.owner ? currentClip.owner : video.owner;
-    cell.currentClipOwnerLabel.text = [GRVUserViewHelper userFullNameOrPhoneNumber:owner];
+    cell.currentClipOwnerLabel.text = [GRVUserViewHelper userFullName:owner];
 }
 
 

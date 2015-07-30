@@ -41,6 +41,7 @@
     newClip.identifier = [clipDictionary objectForKey:kGRVRESTClipIdentifierKey];
     newClip.mp4URL = [[clipDictionary objectForKey:kGRVRESTClipMp4Key] description];
     newClip.order = [clipDictionary objectForKey:kGRVRESTClipOrderKey];
+    newClip.photoThumbnailURL = [[clipDictionary objectForKey:kGRVRESTClipPhotoThumbnailKey] description];
     newClip.updatedAt = updatedAt;
     
     // Setup required relationships
@@ -65,16 +66,24 @@
     NSString *rfc3339UpdatedAt = [[clipDictionary objectForKey:kGRVRESTClipUpdatedAtKey] description];
     NSDate *updatedAt = [rfc3339DateFormatter dateFromString:rfc3339UpdatedAt];
     
+    // Even though clip might might not have changed but video owner might have been updated
+    GRVUser *owner = [GRVUser userWithUserInfo:[clipDictionary objectForKey:kGRVRESTClipOwnerKey]
+       inManagedObjectContext:existingClip.managedObjectContext];
+    
     // only perform a sync if there are any changes
     if (![updatedAt isEqualToDate:existingClip.updatedAt]) {
         existingClip.mp4URL = [[clipDictionary objectForKey:kGRVRESTClipMp4Key] description];
         existingClip.order = [clipDictionary objectForKey:kGRVRESTClipOrderKey];
+        existingClip.photoThumbnailURL = [[clipDictionary objectForKey:kGRVRESTClipPhotoThumbnailKey] description];
         existingClip.updatedAt = updatedAt;
+        existingClip.owner = owner;
     }
     
-    // Even though clip might might not have changed but video owner might have been updated
-    [GRVUser userWithUserInfo:[clipDictionary objectForKey:kGRVRESTClipOwnerKey]
-       inManagedObjectContext:existingClip.managedObjectContext];
+    if (!existingClip.photoThumbnailURL) {
+        // Photo thumbnail wasn't always present in the model, so if it's missing
+        // add that now
+        existingClip.photoThumbnailURL = [[clipDictionary objectForKey:kGRVRESTClipPhotoThumbnailKey] description];
+    }
 }
 
 /**

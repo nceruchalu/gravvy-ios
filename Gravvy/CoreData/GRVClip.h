@@ -17,6 +17,7 @@
 @property (nonatomic, retain) NSNumber * identifier;
 @property (nonatomic, retain) NSString * mp4URL;
 @property (nonatomic, retain) NSNumber * order;
+@property (nonatomic, retain) NSString * photoThumbnailURL;
 @property (nonatomic, retain) NSDate * updatedAt;
 @property (nonatomic, retain) GRVUser *owner;
 @property (nonatomic, retain) GRVVideo *video;

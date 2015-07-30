@@ -295,6 +295,7 @@ extern NSString *const kGRVRESTClipMp4Key;
 extern NSString *const kGRVRESTClipOrderKey;
 extern NSString *const kGRVRESTClipOwnerKey;
 extern NSString *const kGRVRESTClipPhotoKey;
+extern NSString *const kGRVRESTClipPhotoThumbnailKey;
 extern NSString *const kGRVRESTClipUpdatedAtKey;
 
 // Video Member object

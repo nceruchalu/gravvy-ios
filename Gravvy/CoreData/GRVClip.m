@@ -18,6 +18,7 @@
 @dynamic identifier;
 @dynamic mp4URL;
 @dynamic order;
+@dynamic photoThumbnailURL;
 @dynamic updatedAt;
 @dynamic owner;
 @dynamic video;

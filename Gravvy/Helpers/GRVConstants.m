@@ -145,6 +145,7 @@ NSString *const kGRVRESTClipMp4Key                  = @"mp4";
 NSString *const kGRVRESTClipOrderKey                = @"order";
 NSString *const kGRVRESTClipOwnerKey                = @"owner";
 NSString *const kGRVRESTClipPhotoKey                = @"photo";
+NSString *const kGRVRESTClipPhotoThumbnailKey       = @"photo_thumbnail";
 NSString *const kGRVRESTClipUpdatedAtKey            = @"updated_at";
 
 // Video Member object
