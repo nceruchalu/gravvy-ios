@@ -1003,6 +1003,16 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     }
 }
 
+- (IBAction)showMembers:(UIButton *)sender
+{
+    [self performSegueWithIdentifier:kSegueIdentifierShowMembers sender:sender];
+}
+
+- (IBAction)showLikers:(UIButton *)sender
+{
+    [self performSegueWithIdentifier:kSegueIdentifierShowLikers sender:sender];
+}
+
 - (IBAction)addClip:(UIButton *)sender
 {
     // quit if camera is not available for recording videos
