@@ -128,6 +128,11 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
 @property (strong, nonatomic) GRVVideoTableViewCell *activeVideoCell;
 
 /**
+ * activeVideo's currentClipIndex when it first started being played.
+ */
+@property (nonatomic) NSUInteger activeVideoAnchorIndex;
+
+/**
  * Are we currently playing a video?
  */
 @property (nonatomic, getter=isPlaying) BOOL playing;
@@ -464,36 +469,53 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     self.playing = NO;
     self.performedAutoPlay = NO;
     
-    // Get ordered clips of video
-    // and creating an animated display
+    // Get ordered clips of video for creating an animated display
     NSSortDescriptor *orderSd = [NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES];
     NSArray *clips = [self.activeVideo.clips sortedArrayUsingDescriptors:@[orderSd]];
-    NSMutableArray *playerItemClips = [NSMutableArray array];
+    NSUInteger clipsCount = [clips count];
+    // Setup the anchor index, and make sure it doesn't overrun. If too large,
+    // set it to the last index, and of course make sure it isn't below zero
+    self.activeVideoAnchorIndex = [self.activeVideo.currentClipIndex integerValue];
+    if (self.activeVideoAnchorIndex >= clipsCount) {
+        self.activeVideoAnchorIndex = MAX(0, (clipsCount - 1));
+    }
+    
+    // We want the clips to be ordered from anchor index and continue in
+    // ASC order, wrapping around at 0. So if the anchor index is 3 and
+    // there are 5 clips, we expect the ordering of clips to be [3,4,0,1,2]
+    NSMutableArray *clipsStartingAtAnchorIndex = [NSMutableArray array];
+    
+    for (NSUInteger i=0; i<clipsCount; i++) {
+        NSUInteger offsetClipIndex = (i + self.activeVideoAnchorIndex) % clipsCount;
+        GRVClip *offsetClip = [clips objectAtIndex:offsetClipIndex];
+        [clipsStartingAtAnchorIndex addObject:offsetClip];
+    }
+    clips = [clipsStartingAtAnchorIndex copy];
+    
     
     // Setup player items
     NSMutableArray *playerItems = [NSMutableArray array];
+    NSMutableArray *playerItemClips = [NSMutableArray array];
     for (GRVClip *clip in clips) {
-        if ([clip.mp4URL length]) {
-            NSURL *url = [NSURL URLWithString:clip.mp4URL];
-            AVPlayerItem *playerItem = [AVPlayerItem playerItemWithURL:url];
-            // ensure that observing the status property is done before the
-            // playerItem is associated with the player
-            [playerItem addObserver:self forKeyPath:@"status" options:0 context:&PlayerItemStatusContext];
-            
-            // The item is played only once. After playback, the player's head is set to
-            // the end of the item, and further invocations of the play method will have
-            // no effect. To position the playhead back at the beginning of the item, we
-            // register to receive an AVPlayerItemDidPlayToEndTimeNotification from the
-            // item. In the notification's callback method, we will invoke
-            // seekToTime: with the argument kCMTimeZero
-            [[NSNotificationCenter defaultCenter] addObserver:self
-                                                     selector:@selector(playerItemDidReachEnd:)
-                                                         name:AVPlayerItemDidPlayToEndTimeNotification
-                                                       object:playerItem];
-            
-            [playerItems addObject:playerItem];
-            [playerItemClips addObject:clip];
-        }
+        NSURL *url = [NSURL URLWithString:clip.mp4URL];
+        AVPlayerItem *playerItem = [AVPlayerItem playerItemWithURL:url];
+        // ensure that observing the status property is done before the
+        // playerItem is associated with the player
+        [playerItem addObserver:self forKeyPath:@"status" options:0 context:&PlayerItemStatusContext];
+        
+        // The item is played only once. After playback, the player's head is set to
+        // the end of the item, and further invocations of the play method will have
+        // no effect. To position the playhead back at the beginning of the item, we
+        // register to receive an AVPlayerItemDidPlayToEndTimeNotification from the
+        // item. In the notification's callback method, we will invoke
+        // seekToTime: with the argument kCMTimeZero
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(playerItemDidReachEnd:)
+                                                     name:AVPlayerItemDidPlayToEndTimeNotification
+                                                   object:playerItem];
+        
+        [playerItems addObject:playerItem];
+        [playerItemClips addObject:clip];
     }
     // Cache new player items while removing observers for old player items
     // and old player
@@ -792,17 +814,28 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
         totalClipsCount:(NSUInteger)clipsCount
              andVideo:(GRVVideo *)video
 {
-    cell.currentClipIndexLabel.text = [NSString stringWithFormat:@"%lu/%lu", (unsigned long)(currentClipIndex+1), (unsigned long)clipsCount];
+    // Current clip index is actually based on the video's anchor index so
+    // get appropriate anchor index
+    NSUInteger anchorIndex;
     
     // Get current clip
     GRVClip *currentClip = nil;
     if ([video.hashKey isEqualToString:self.activeVideo.hashKey]) {
         currentClip = [self.activeVideoClips objectAtIndex:currentClipIndex];
+        anchorIndex = self.activeVideoAnchorIndex;
     } else {
         NSSortDescriptor *orderSd = [NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES];
         NSArray *clips = [video.clips sortedArrayUsingDescriptors:@[orderSd]];
         currentClip = [clips objectAtIndex:currentClipIndex];
+        anchorIndex = [video.currentClipIndex integerValue];
+        if (anchorIndex >= clipsCount) {
+            anchorIndex = MAX(0, (clipsCount-1));
+        }
     }
+    
+    // Determine actual clip index based off of video's anchor index
+    NSUInteger actualClipIndex = (anchorIndex + currentClipIndex) % clipsCount;
+    cell.currentClipIndexLabel.text = [NSString stringWithFormat:@"%lu/%lu", (unsigned long)(actualClipIndex+1), (unsigned long)clipsCount];
     
     GRVUser *owner = currentClip.owner ? currentClip.owner : video.owner;
     cell.currentClipOwnerLabel.text = [GRVUserViewHelper userFullNameOrPhoneNumber:owner];
@@ -1371,6 +1404,11 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     [self.player advanceToNextItem];
     [self.player insertItem:playedItem afterItem:nil];
     
+    NSUInteger indexOfPlayedItem = [self.playerItems indexOfObject:playedItem];
+    indexOfPlayedItem = (indexOfPlayedItem + self.activeVideoAnchorIndex) % [self.playerItems count];
+    NSUInteger indexOfNextItem = (indexOfPlayedItem + 1) % [self.playerItems count];
+    self.activeVideo.currentClipIndex = @(indexOfNextItem);
+    
     if (playedItem == [self.playerItems firstObject]) {
         if (!self.skipNextPlayReporting) {
             [self.activeVideo play:nil];
@@ -1518,11 +1556,26 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
 - (IBAction)addedClip:(UIStoryboardSegue *)segue
 {
     if ([segue.sourceViewController isKindOfClass:[GRVAddClipCameraReviewVC class]]) {
-        //GRVAddClipCameraReviewVC *cameraReviewVC = (GRVAddClipCameraReviewVC *)segue.sourceViewController;
+         GRVAddClipCameraReviewVC *cameraReviewVC = (GRVAddClipCameraReviewVC *)segue.sourceViewController;
         // Updated video is now at the top of the tableview, so scroll to top
         [self.tableView setContentOffset:CGPointMake(0.0, 0.0 - self.tableView.contentInset.top)
                                 animated:YES];
         [self showProgressHUDSuccessMessage:@"Clip Added"];
+        
+        // Set video's current index to start at the newly added clip
+        GRVVideo *video = cameraReviewVC.video;
+        GRVClip *addedClip = cameraReviewVC.addedClip;
+        NSSortDescriptor *orderSd = [NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES];
+        NSArray *clips = [video.clips sortedArrayUsingDescriptors:@[orderSd]];
+        NSUInteger newClipIndex = 0;
+        for (GRVClip *clip in clips) {
+            if ([clip.identifier integerValue] == [addedClip.identifier integerValue]) {
+                // Have found current clip
+                break;
+            }
+            newClipIndex++;
+        }
+        video.currentClipIndex = @(newClipIndex);
         
         // Refresh recent contacts as that might have changed
         [GRVUser refreshFavorites:nil];

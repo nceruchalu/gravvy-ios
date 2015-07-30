@@ -28,6 +28,9 @@ static NSString *const kUnwindSegueIdentifier = @"addedClip";
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
+#pragma mark Private
+@property (strong, nonatomic, readwrite) GRVClip *addedClip;
+
 @end
 
 @implementation GRVAddClipCameraReviewVC
@@ -90,9 +93,9 @@ static NSString *const kUnwindSegueIdentifier = @"addedClip";
                                              success:^(AFHTTPRequestOperation *operation, id responseObject)
     {
         // Sync new clip
-        [GRVClip clipWithClipInfo:responseObject
-                  associatedVideo:self.video
-           inManagedObjectContext:[GRVModelManager sharedManager].managedObjectContext];
+        self.addedClip = [GRVClip clipWithClipInfo:responseObject
+                                   associatedVideo:self.video
+                            inManagedObjectContext:[GRVModelManager sharedManager].managedObjectContext];
         
         // No need to enable buttons or
         // stop spinner as we unwind VC

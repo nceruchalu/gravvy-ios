@@ -9,6 +9,7 @@
 #import "GRVCameraReviewViewController.h"
 
 @class GRVVideo;
+@class GRVClip;
 
 /**
  * GRVAddClipCameraReviewVC is the VC used to review a clip to be added to a
@@ -22,5 +23,10 @@
  * This property should be set before seguing to this VC.
  */
 @property (strong, nonatomic) GRVVideo *video;
+
+/**
+ * The newly added clip
+ */
+@property (strong, nonatomic, readonly) GRVClip *addedClip;
 
 @end
