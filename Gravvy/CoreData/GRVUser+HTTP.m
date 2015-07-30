@@ -101,6 +101,22 @@
         // finally update updatedAt
         existingUser.updatedAt = updatedAt;
     }
+    
+    // Ensure relationship type is right
+    if ([existingUser.phoneNumber isEqualToString:[GRVAccountManager sharedManager].phoneNumber] &&
+        ([existingUser.relationshipType integerValue] != GRVUserRelationshipTypeMe)) {
+        existingUser.relationshipType = @(GRVUserRelationshipTypeMe);
+    }
+    
+    if ([existingUser.relationshipType integerValue] != GRVUserRelationshipTypeMe) {
+        if (existingUser.contact && [existingUser.relationshipType integerValue] != GRVUserRelationshipTypeContact) {
+            existingUser.relationshipType = @(GRVUserRelationshipTypeContact);
+        }
+        
+        if (!existingUser.contact && [existingUser.relationshipType integerValue] != GRVUserRelationshipTypeUnknown) {
+            existingUser.relationshipType = @(GRVUserRelationshipTypeUnknown);
+        }
+    }
 }
 
 /**

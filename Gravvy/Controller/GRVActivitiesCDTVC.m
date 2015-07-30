@@ -89,8 +89,7 @@ static NSUInteger const kMaxDisplayedVideoTitleLength = 30;
         request.relationshipKeyPathsForPrefetching = @[@"actor", @"objectClip", @"objectUser", @"objectVideo", @"targetVideo"];
         
         // fetch activies involving only users in our address book
-        // actor is in address book
-        NSPredicate *actorsInAddressBookPredicate = [NSPredicate predicateWithFormat:@"actor.contact != nil"];
+        NSPredicate *actorsInAddressBookPredicate = [NSPredicate predicateWithFormat:@"(actor.contact != nil) OR (actor.relationshipType == %d)", GRVUserRelationshipTypeMe];
         // object is a user and in our address book
         NSPredicate *objectUsersInAddressBookPredicate = [NSPredicate predicateWithFormat:@"(objectUser != nil) && (objectUser.contact != nil)"];
         NSCompoundPredicate *activitiesCompountPredicate = (NSCompoundPredicate *)[NSCompoundPredicate orPredicateWithSubpredicates:@[actorsInAddressBookPredicate, objectUsersInAddressBookPredicate]];

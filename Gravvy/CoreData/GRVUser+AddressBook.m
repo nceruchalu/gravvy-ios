@@ -60,8 +60,11 @@ static NSString *const kGRVAddressBookUserPhoneNumberKey = @"phoneNumber";
 + (instancetype)userWithPhoneNumber:(NSString *)phoneNumber
              inManagedObjectContext:(NSManagedObjectContext *)context
 {
+    // clean up the phone number object
+    NSString *cleanedPhoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@"\u00a0" withString:@""];
+    
     // Get the E.164 formatted phone number
-    NSString *e164PhoneNumber = [GRVUser e164PhoneNumber:phoneNumber];
+    NSString *e164PhoneNumber = [GRVUser e164PhoneNumber:cleanedPhoneNumber];
     
     // Don't proceed if we couldnt get a valid e164 phone number
     if (![e164PhoneNumber length]) return nil;
@@ -93,7 +96,9 @@ static NSString *const kGRVAddressBookUserPhoneNumberKey = @"phoneNumber";
     NSMutableArray *userDicts = [NSMutableArray array];
     
     for (NSString *phoneNumber in phoneNumbers) {
-        NSString *e164PhoneNumber = [GRVUser e164PhoneNumber:phoneNumber];
+        // clean up the phone number object
+        NSString *cleanedPhoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@"\u00a0" withString:@""];
+        NSString *e164PhoneNumber = [GRVUser e164PhoneNumber:cleanedPhoneNumber];
         
         if ([e164PhoneNumber length]) {
             NSDictionary *userDictionary = @{kGRVAddressBookUserPhoneNumberKey : e164PhoneNumber};
