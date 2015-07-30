@@ -53,6 +53,16 @@
 @property (strong, nonatomic, readonly) NSManagedObjectContext *workerContext;
 
 /**
+ * Another database handle for background operations pertaining to video refresh.
+ * This becomes important given that we rely heavily on the refresh logic of the
+ * for updating the notification badges. This doesn't work effectively when
+ * another model (like Activity) refreshes and resets the worker context.
+ * I might be wrong on this theory if all the `performBlock:` calls on a context
+ * run on the same thread, but better safe than sorry
+ */
+@property (strong, nonatomic, readonly) NSManagedObjectContext *workerContextVideo;
+
+/**
  * Another database handle for background operations.
  * This exists for really long running background operations, such as syncing
  * Address Book Contacts

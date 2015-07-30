@@ -72,7 +72,7 @@
 {
     NSDateFormatter *rfc3339DateFormatter = [GRVFormatterUtils generateRFC3339DateFormatter];
     
-    // get lastModified date which is used for sync
+    // get updatedAt date which is used for sync
     NSString *rfc3339UpdatedAt = [[userDictionary objectForKey:kGRVRESTUserUpdatedAtKey] description];
     NSDate *updatedAt = [rfc3339DateFormatter dateFromString:rfc3339UpdatedAt];
     

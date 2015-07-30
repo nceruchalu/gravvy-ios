@@ -33,6 +33,7 @@ static NSString *const kProfileConfiguredKey = @"kGRVProfileConfiguredKey";
 // want all properties to be readwrite internally
 @property (strong, nonatomic, readwrite) NSManagedObjectContext *managedObjectContext;
 @property (strong, nonatomic, readwrite) NSManagedObjectContext *workerContext;
+@property (strong, nonatomic, readwrite) NSManagedObjectContext *workerContextVideo;
 @property (strong, nonatomic, readwrite) NSManagedObjectContext *workerContextLongRunning;
 
 @property (strong, nonatomic) NSString *phoneNumber; // cache phone number being used.
@@ -61,6 +62,7 @@ static NSString *const kProfileConfiguredKey = @"kGRVProfileConfiguredKey";
     // be reset.
     _managedObjectContext = managedObjectContext;
     self.workerContext = nil;
+    self.workerContextVideo = nil;
     self.workerContextLongRunning = nil;
 }
 
@@ -81,6 +83,16 @@ static NSString *const kProfileConfiguredKey = @"kGRVProfileConfiguredKey";
         _workerContext.stalenessInterval = 0.0; // no staleness acceptable
     }
     return _workerContext;
+}
+
+- (NSManagedObjectContext *)workerContextVideo
+{
+    if (!_workerContextVideo && self.managedObjectContext) {
+        _workerContextVideo = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+        _workerContextVideo.parentContext = self.managedObjectContext;
+        _workerContextVideo.stalenessInterval = 0.0; // no staleness acceptable
+    }
+    return _workerContextVideo;
 }
 
 - (NSManagedObjectContext *)workerContextLongRunning

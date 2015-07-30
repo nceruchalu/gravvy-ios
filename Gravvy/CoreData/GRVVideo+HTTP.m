@@ -292,7 +292,7 @@
                      NSArray *videosJSON = [responseObject objectForKey:kGRVRESTListResultsKey];
                      
                      // Use worker context for background execution
-                     NSManagedObjectContext *workerContext = [GRVModelManager sharedManager].workerContext;
+                     NSManagedObjectContext *workerContext = [GRVModelManager sharedManager].workerContextVideo;
                      if (workerContext) {
                          [workerContext performBlock:^{
                              // Delete videos that you aren't still a member of

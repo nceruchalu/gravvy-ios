@@ -392,6 +392,18 @@ static CGFloat const scrollingNavBarDelay = 480.0f;
     }
 }
 
+#pragma mark Overrides
+- (void)navigationButtonTapped:(UIButton *)button
+{
+    if (button == self.videosButton) {
+        // tapped on videos button, there's a badge
+        if (self.badgeValue > 0) {
+            [self.videosVC refreshAndShowSpinner];
+        }
+    }
+    [super navigationButtonTapped:button];
+}
+
 #pragma mark Video Recording Helpers
 
 /**
