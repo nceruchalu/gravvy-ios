@@ -2,7 +2,7 @@
 //  GRVVideo.h
 //  Gravvy
 //
-//  Created by Nnoduka Eruchalu on 7/20/15.
+//  Created by Nnoduka Eruchalu on 7/29/15.
 //  Copyright (c) 2015 Nnoduka Eruchalu. All rights reserved.
 //
 
@@ -34,6 +34,7 @@
 @property (nonatomic, retain) NSSet *clips;
 @property (nonatomic, retain) NSSet *members;
 @property (nonatomic, retain) GRVUser *owner;
+@property (nonatomic, retain) NSSet *likers;
 @end
 
 @interface GRVVideo (CoreDataGeneratedAccessors)
@@ -57,5 +58,10 @@
 - (void)removeMembersObject:(GRVMember *)value;
 - (void)addMembers:(NSSet *)values;
 - (void)removeMembers:(NSSet *)values;
+
+- (void)addLikersObject:(GRVUser *)value;
+- (void)removeLikersObject:(GRVUser *)value;
+- (void)addLikers:(NSSet *)values;
+- (void)removeLikers:(NSSet *)values;
 
 @end

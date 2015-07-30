@@ -52,4 +52,16 @@
     return [NSString stringWithFormat:@"%@%@", videoDetailURL, kGRVRESTVideoClips];
 }
 
++ (NSString *)videoClipDetailURL:(NSString *)videoHashKey clip:(NSNumber *)identifier
+{
+    NSString *videoClipListURL = [GRVRestUtils videoClipListURL:videoHashKey];
+    return [NSString stringWithFormat:@"%@%@/", videoClipListURL, identifier];
+}
+
++ (NSString *)videoLikerListURL:(NSString *)videoHashKey
+{
+    NSString *videoDetailURL = [GRVRestUtils videoDetailURL:videoHashKey];
+    return [NSString stringWithFormat:@"%@%@", videoDetailURL, kGRVRESTVideoLikes];
+}
+
 @end

@@ -93,6 +93,7 @@ NSString *const kGRVRESTUserRecentContacts      = @"user/recentcontacts/";
 NSString *const kGRVRESTVideos                  = @"videos/";
 NSString *const kGRVRESTVideoMembers            = @"users/";
 NSString *const kGRVRESTVideoClips              = @"clips/";
+NSString *const kGRVRESTVideoLikes              = @"likes/";
 NSString *const kGRVRESTVideoPlay               = @"play/";
 NSString *const kGRVRESTVideoLike               = @"like/";
 NSString *const kGRVRESTVideoClearNotifications = @"clearnotifications/";

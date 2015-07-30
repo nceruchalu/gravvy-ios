@@ -15,6 +15,8 @@
 #import "GRVContact.h"
 #import "GRVAccountManager.h"
 #import "GRVModelManager.h"
+#import "GRVRestUtils.h"
+#import "GRVVideo+HTTP.h"
 
 @implementation GRVUser (HTTP)
 
@@ -242,6 +244,59 @@
                  failure:^(NSURLSessionDataTask *task, NSError *error, id responseObject) {
                      // do nothing but execute the callback block
                      if (favoritesAreRefreshed) favoritesAreRefreshed();
+                 }];
+}
+
++ (void)refreshLikersOfVideo:(GRVVideo *)video withCompletion:(void (^)())likersAreRefreshed
+{
+    // don't proceed if there's no video, managedObjectContext isn't setup or
+    // user isn't authenticated
+    if (!video || ![GRVModelManager sharedManager].managedObjectContext ||
+        ![GRVAccountManager sharedManager].isAuthenticated) {
+        // execute the callback block
+        if (likersAreRefreshed) likersAreRefreshed();
+        return;
+    }
+    
+    NSString *videoLikerListURL = [GRVRestUtils videoLikerListURL:video.hashKey];
+    
+    GRVHTTPManager *httpManager = [GRVHTTPManager sharedManager];
+    [httpManager request:GRVHTTPMethodGET
+                  forURL:videoLikerListURL
+              parameters:nil
+                 success:^(NSURLSessionDataTask *task, id responseObject) {
+                     
+                     // get array of user dictionaries in response
+                     NSArray *usersJSON = [responseObject objectForKey:kGRVRESTListResultsKey];
+                     
+                     // Use main thread context as this won't be too many objects
+                     NSManagedObjectContext *workerContext = [GRVModelManager sharedManager].managedObjectContext;
+                     if (workerContext) {
+                         [workerContext performBlock:^{
+                             // get a video object in the workerContext
+                             GRVVideo *workerContextVideo = [GRVVideo videoWithVideoHashKey:video.hashKey inManagedObjectContext:workerContext];
+                             
+                             // Now refresh video's likers
+                             NSArray *likers = [GRVUser usersWithUserInfoArray:usersJSON inManagedObjectContext:workerContext];
+                             workerContextVideo.likers = [NSSet setWithArray:likers];
+                             
+                             // No need to push changes to another context as
+                             // the worker context is the main thread context
+                             
+                             // finally execute the callback block on main queue
+                             dispatch_async(dispatch_get_main_queue(), ^{
+                                 if (likersAreRefreshed) likersAreRefreshed();
+                             });
+                         }];
+                         
+                     } else {
+                         // No worker context available so execute callback block
+                         if (likersAreRefreshed) likersAreRefreshed();
+                     }
+                 }
+                 failure:^(NSURLSessionDataTask *task, NSError *error, id responseObject) {
+                     // do nothing but execute the callback block
+                     if (likersAreRefreshed) likersAreRefreshed();
                  }];
 }
 

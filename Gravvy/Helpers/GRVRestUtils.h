@@ -78,4 +78,23 @@
  */
 + (NSString *)videoClipListURL:(NSString *)videoHashKey;
 
+/**
+ * Generate the relative URL for a REST API's Video Clip Detail
+ *
+ * @param videoHashKey  hashKey of video of interest
+ * @param clip          identifier of clip of interest
+ *
+ * @return relative URL
+ */
++ (NSString *)videoClipDetailURL:(NSString *)videoHashKey clip:(NSNumber *)identifier;
+
+/**
+ * Generate the relative URL for a REST API's Video Like List
+ *
+ * @param videoHashKey      hashKey of video of interest
+ *
+ * @return relative URL
+ */
++ (NSString *)videoLikerListURL:(NSString *)videoHashKey;
+
 @end

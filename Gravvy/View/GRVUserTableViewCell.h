@@ -1,8 +1,8 @@
 //
-//  GRVMemberTableViewCell.h
+//  GRVUserTableViewCell.h
 //  Gravvy
 //
-//  Created by Nnoduka Eruchalu on 7/6/15.
+//  Created by Nnoduka Eruchalu on 7/29/15.
 //  Copyright (c) 2015 Nnoduka Eruchalu. All rights reserved.
 //
 
@@ -10,10 +10,10 @@
 #import "GRVUserAvatarView.h"
 
 /**
- * GRVMemberTableViewCell represents a row in a table view controller used
- * to display a video's member.
+ * GRVUserTableViewCell represents a row in a table view controller used
+ * to display a collection of users.
  */
-@interface GRVMemberTableViewCell : UITableViewCell
+@interface GRVUserTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet GRVUserAvatarView *avatarView;
 @property (weak, nonatomic) IBOutlet UILabel *displayNameLabel;

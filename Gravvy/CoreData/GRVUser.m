@@ -2,7 +2,7 @@
 //  GRVUser.m
 //  Gravvy
 //
-//  Created by Nnoduka Eruchalu on 6/9/15.
+//  Created by Nnoduka Eruchalu on 7/29/15.
 //  Copyright (c) 2015 Nnoduka Eruchalu. All rights reserved.
 //
 
@@ -23,12 +23,13 @@
 @dynamic phoneNumber;
 @dynamic relationshipType;
 @dynamic updatedAt;
+@dynamic activitiesUsingAsActor;
+@dynamic activitiesUsingAsObject;
 @dynamic avatarThumbnail;
 @dynamic contact;
 @dynamic ownedVideos;
 @dynamic uploadedClips;
 @dynamic videoMemberships;
-@dynamic activitiesUsingAsActor;
-@dynamic activitiesUsingAsObject;
+@dynamic likedVideos;
 
 @end

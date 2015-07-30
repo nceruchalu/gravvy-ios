@@ -2,7 +2,7 @@
 //  GRVVideo.m
 //  Gravvy
 //
-//  Created by Nnoduka Eruchalu on 7/20/15.
+//  Created by Nnoduka Eruchalu on 7/29/15.
 //  Copyright (c) 2015 Nnoduka Eruchalu. All rights reserved.
 //
 
@@ -36,5 +36,6 @@
 @dynamic clips;
 @dynamic members;
 @dynamic owner;
+@dynamic likers;
 
 @end

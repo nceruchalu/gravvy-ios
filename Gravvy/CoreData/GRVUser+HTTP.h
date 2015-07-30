@@ -28,6 +28,7 @@
  * activitiesUsingAsActor   Activity objects that have this user as an actor
  * activitiesUsingAsObject  Activity objects that have this user as an object
  * avatarThumbnail          cached thumbnail image data
+ * likedVideos              Videos liked by this user
  * ownedVideos              Videos owned by this user
  * uploadedClips            Clips uploaded by this user
  * videoMemberships         Video Member objects this user is associated with.
@@ -83,6 +84,21 @@
  *      contacts. This is run on the main queue.
  */
 + (void)refreshFavorites:(void (^)())favoritesAreRefreshed;
+
+/**
+ * Refresh a video's likers.
+ * Get this data from the server and sync this with what's in the local
+ * Core Data storage.
+ * This refresh is done on a background thread context so as to not block the
+ * main thread.
+ *
+ * @warning Only call this method when the managedObjectContext is setup
+ *
+ * @param video                 GRVVideo object whose members are to be refreshed.
+ * @param membersAreRefreshed   block to be called after refreshing likers. This
+ *      is run on the main queue.
+ */
++ (void)refreshLikersOfVideo:(GRVVideo *)video withCompletion:(void (^)())likersAreRefreshed;
 
 #pragma mark - Instance Methods
 /**

@@ -227,6 +227,11 @@ extern NSString *const kGRVRESTVideoMembers;
 extern NSString *const kGRVRESTVideoClips;
 
 /**
+ * kGRVRESTVideoLikes: URL for likes sub-list of a specific video
+ */
+extern NSString *const kGRVRESTVideoLikes;
+
+/**
  * kGRVRESTVideoPlay: URL for play endpoint of a specific video
  */
 extern NSString *const kGRVRESTVideoPlay;

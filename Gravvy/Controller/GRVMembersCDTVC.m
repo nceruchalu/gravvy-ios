@@ -10,7 +10,7 @@
 #import "GRVVideo+HTTP.h"
 #import "GRVMember+HTTP.h"
 #import "GRVUserViewHelper.h"
-#import "GRVMemberTableViewCell.h"
+#import "GRVUserTableViewCell.h"
 #import "GRVAccountManager.h"
 #import "GRVUser.h"
 #import "GRVMembersContactPickerVC.h"
@@ -93,7 +93,7 @@ static const NSInteger kMemberButtonIndexCall       = 0; // Call user
 {
     [super viewWillAppear:animated];
     
-    // Silently refresh to pull in recent activities
+    // Silently refresh to pull in members
     [self refresh];
 }
 
@@ -145,7 +145,7 @@ static const NSInteger kMemberButtonIndexCall       = 0; // Call user
         dispatch_async(dispatch_get_main_queue(), ^{
             // run in main queue UIKit only runs there
             [self.refreshControl endRefreshing];
-            // Reload table to reflect changes in the activities' related objects
+            // Reload table to reflect changes in the members' related objects
             [self.tableView reloadData];
         });
     }];
@@ -156,7 +156,7 @@ static const NSInteger kMemberButtonIndexCall       = 0; // Call user
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *cellIdentifier = @"Member Cell"; // get the cell
-    GRVMemberTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+    GRVUserTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     
     // Configure the cell with data from the managed object
     GRVMember *member = [self.fetchedResultsController objectAtIndexPath:indexPath];
@@ -171,7 +171,7 @@ static const NSInteger kMemberButtonIndexCall       = 0; // Call user
 /**
  * Configure member cell using an EVTMember object
  */
-- (void)configureMemberCell:(GRVMemberTableViewCell *)cell usingMember:(GRVMember *)member
+- (void)configureMemberCell:(GRVUserTableViewCell *)cell usingMember:(GRVMember *)member
 {
     // Avatar first
     GRVUserAvatarView *avatarView = [GRVUserViewHelper userAvatarView:member.user];

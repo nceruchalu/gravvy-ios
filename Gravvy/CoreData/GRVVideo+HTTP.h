@@ -41,6 +41,7 @@
  * activitiesUsingAsObject  Activity objects where this video is the object
  * activitiesUsingAsTarget  Activity objects where this video is the target
  * clips                    Video's associated clips
+ * likers                   Video's associated likers
  * members                  Video's invited members
  * owner                    Video's owner
  */

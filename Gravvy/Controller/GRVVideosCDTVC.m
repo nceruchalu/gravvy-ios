@@ -17,6 +17,7 @@
 #import "UIImageView+WebCache.h"
 #import "GRVConstants.h"
 #import "GRVMembersCDTVC.h"
+#import "GRVLikersCDTVC.h"
 #import "GRVAddClipCameraReviewVC.h"
 #import "GRVAddClipCameraVC.h"
 #import "GRVAccountManager.h"
@@ -35,7 +36,7 @@
  * Height of table view cell rows excluding the player view
  * Including 8 pts for the content view's bottom padding
  */
-static CGFloat const kTableViewCellHeightNoPlayer = 107.0f;
+static CGFloat const kTableViewCellHeightNoPlayer = 112.0f;
 
 /**
  * Table section header view's height
@@ -72,6 +73,11 @@ static NSString *const kSegueIdentifierShowMembers = @"showMembersVC";
  * Segue identifier for showing Add Clip Camera VC
  */
 static NSString *const kSegueIdentifierAddClip = @"showAddClipCameraVC";
+
+/**
+ * Segue identifier for showing Likers TVC
+ */
+static NSString *const kSegueIdentifierShowLikers = @"showLikersVC";
 
 /** 
  * Constants for the key-value observation context.
@@ -988,11 +994,6 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     }
 }
 
-- (IBAction)showMembers:(UIButton *)sender
-{
-    [self performSegueWithIdentifier:kSegueIdentifierShowMembers sender:sender];
-}
-
 - (IBAction)addClip:(UIButton *)sender
 {
     // quit if camera is not available for recording videos
@@ -1417,6 +1418,17 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
             // Don't refresh next time this vc appears
             self.skipRefreshOnNextAppearance = YES;
         }
+        
+    } else if ([vc isKindOfClass:[GRVLikersCDTVC class]]) {
+        if (![segueIdentifier length] || [segueIdentifier isEqualToString:kSegueIdentifierShowLikers]) {
+            // prepare vc
+            GRVLikersCDTVC *likersVC = (GRVLikersCDTVC *)vc;
+            likersVC.video = video;
+            
+            // Don't refresh next time this vc appears
+            self.skipRefreshOnNextAppearance = YES;
+        }
+        
     } else if ([vc isKindOfClass:[GRVAddClipCameraVC class]]) {
         if (![segueIdentifier length] || [segueIdentifier isEqualToString:kSegueIdentifierAddClip]) {
             // prepare vc
