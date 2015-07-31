@@ -1647,7 +1647,7 @@
                             <constraint firstItem="LtQ-oH-9vP" firstAttribute="top" secondItem="Shh-r6-LIv" secondAttribute="top" id="tgi-Tl-o7x"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="LIkers" id="V8S-eM-lni"/>
+                    <navigationItem key="navigationItem" title="Likers" id="V8S-eM-lni"/>
                     <connections>
                         <outlet property="emptyStateView" destination="aTR-uh-DRG" id="oSA-69-dNf"/>
                         <outlet property="spinner" destination="B7s-pu-af9" id="uW6-gg-77T"/>
