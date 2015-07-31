@@ -45,11 +45,20 @@ Scrollable UINavigationBar that follows the scrolling of a UIScrollView
 Drop-in replacement for UIPercentDrivenInteractiveTransition for use in custom
 container view controllers
 
-#### [libPhoneNumber-iOS](http://github.com/iziz/libPhoneNumber-iOS)
-iOS port from libphonenumber (Google's phone number handling library)
+#### [DACircularProgress](https://github.com/danielamitay/DACircularProgress)
+UIView subclass with circular UIProgressView properties.
+
+#### [MBProgressHUD](https://github.com/jdg/MBProgressHUD)
+MBProgressHUD + Customizations
+
+#### [MWPhotoBrowser](https://github.com/mwaterfall/MWPhotoBrowser)
+A simple iOS photo and video browser with grid view, captions and selections
 
 #### [SCRecorder](https://github.com/rFlex/SCRecorder)
 iOS camera engine with tap to record functionality
 
 #### [SDWebImage](https://github.com/rs/SDWebImage)
 Asynchronous image downloader with cache support with an UIImageView category
+
+#### [libPhoneNumber-iOS](http://github.com/iziz/libPhoneNumber-iOS)
+iOS port from libphonenumber (Google's phone number handling library)

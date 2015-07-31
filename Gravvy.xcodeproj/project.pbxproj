@@ -60,6 +60,18 @@
 		403D378D1B6607B800AE8AC4 /* GRVFavoriteContactPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 403D378C1B6607B800AE8AC4 /* GRVFavoriteContactPickerTableViewCell.m */; };
 		403D378F1B6607F200AE8AC4 /* GRVFavoriteContactPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 403D378E1B6607F200AE8AC4 /* GRVFavoriteContactPickerTableViewCell.xib */; };
 		403D37921B661F2F00AE8AC4 /* GRVVideoDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 403D37911B661F2F00AE8AC4 /* GRVVideoDetailsViewController.m */; };
+		404A254F1B6B3F5800363403 /* MWCaptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 404A253A1B6B3F5800363403 /* MWCaptionView.m */; };
+		404A25501B6B3F5800363403 /* MWGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 404A253D1B6B3F5800363403 /* MWGridCell.m */; };
+		404A25511B6B3F5800363403 /* MWGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 404A253F1B6B3F5800363403 /* MWGridViewController.m */; };
+		404A25521B6B3F5800363403 /* MWPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 404A25411B6B3F5800363403 /* MWPhoto.m */; };
+		404A25531B6B3F5800363403 /* MWPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 404A25431B6B3F5800363403 /* MWPhotoBrowser.m */; };
+		404A25541B6B3F5800363403 /* MWTapDetectingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 404A25471B6B3F5800363403 /* MWTapDetectingImageView.m */; };
+		404A25551B6B3F5800363403 /* MWTapDetectingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 404A25491B6B3F5800363403 /* MWTapDetectingView.m */; };
+		404A25561B6B3F5800363403 /* MWZoomingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 404A254B1B6B3F5800363403 /* MWZoomingScrollView.m */; };
+		404A25571B6B3F5800363403 /* UIImage+MWPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 404A254D1B6B3F5800363403 /* UIImage+MWPhotoBrowser.m */; };
+		404A255D1B6B3FD800363403 /* DACircularProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 404A255A1B6B3FD800363403 /* DACircularProgressView.m */; };
+		404A25631B6B508500363403 /* GRVClipBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 404A25621B6B508500363403 /* GRVClipBrowser.m */; };
+		404A256D1B6C197E00363403 /* MWPhotoBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 404A256C1B6C197E00363403 /* MWPhotoBrowser.bundle */; };
 		404C2D371B4BA27D00839B95 /* GRVMembersCDTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 404C2D361B4BA27D00839B95 /* GRVMembersCDTVC.m */; };
 		404C2D3D1B4BC79500839B95 /* GRVMembersContactPickerVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 404C2D3C1B4BC79500839B95 /* GRVMembersContactPickerVC.m */; };
 		404CB2071B3CD0A400890D45 /* GRVVideoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 404CB2061B3CD0A400890D45 /* GRVVideoTableViewCell.m */; };
@@ -321,6 +333,33 @@
 		403D378E1B6607F200AE8AC4 /* GRVFavoriteContactPickerTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GRVFavoriteContactPickerTableViewCell.xib; sourceTree = "<group>"; };
 		403D37901B661F2F00AE8AC4 /* GRVVideoDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVVideoDetailsViewController.h; sourceTree = "<group>"; };
 		403D37911B661F2F00AE8AC4 /* GRVVideoDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVVideoDetailsViewController.m; sourceTree = "<group>"; };
+		404A25391B6B3F5800363403 /* MWCaptionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWCaptionView.h; sourceTree = "<group>"; };
+		404A253A1B6B3F5800363403 /* MWCaptionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWCaptionView.m; sourceTree = "<group>"; };
+		404A253B1B6B3F5800363403 /* MWCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWCommon.h; sourceTree = "<group>"; };
+		404A253C1B6B3F5800363403 /* MWGridCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWGridCell.h; sourceTree = "<group>"; };
+		404A253D1B6B3F5800363403 /* MWGridCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWGridCell.m; sourceTree = "<group>"; };
+		404A253E1B6B3F5800363403 /* MWGridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWGridViewController.h; sourceTree = "<group>"; };
+		404A253F1B6B3F5800363403 /* MWGridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWGridViewController.m; sourceTree = "<group>"; };
+		404A25401B6B3F5800363403 /* MWPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWPhoto.h; sourceTree = "<group>"; };
+		404A25411B6B3F5800363403 /* MWPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWPhoto.m; sourceTree = "<group>"; };
+		404A25421B6B3F5800363403 /* MWPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWPhotoBrowser.h; sourceTree = "<group>"; };
+		404A25431B6B3F5800363403 /* MWPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWPhotoBrowser.m; sourceTree = "<group>"; };
+		404A25441B6B3F5800363403 /* MWPhotoBrowserPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWPhotoBrowserPrivate.h; sourceTree = "<group>"; };
+		404A25451B6B3F5800363403 /* MWPhotoProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWPhotoProtocol.h; sourceTree = "<group>"; };
+		404A25461B6B3F5800363403 /* MWTapDetectingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWTapDetectingImageView.h; sourceTree = "<group>"; };
+		404A25471B6B3F5800363403 /* MWTapDetectingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWTapDetectingImageView.m; sourceTree = "<group>"; };
+		404A25481B6B3F5800363403 /* MWTapDetectingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWTapDetectingView.h; sourceTree = "<group>"; };
+		404A25491B6B3F5800363403 /* MWTapDetectingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWTapDetectingView.m; sourceTree = "<group>"; };
+		404A254A1B6B3F5800363403 /* MWZoomingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWZoomingScrollView.h; sourceTree = "<group>"; };
+		404A254B1B6B3F5800363403 /* MWZoomingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWZoomingScrollView.m; sourceTree = "<group>"; };
+		404A254C1B6B3F5800363403 /* UIImage+MWPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MWPhotoBrowser.h"; sourceTree = "<group>"; };
+		404A254D1B6B3F5800363403 /* UIImage+MWPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+MWPhotoBrowser.m"; sourceTree = "<group>"; };
+		404A25591B6B3FD800363403 /* DACircularProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DACircularProgressView.h; sourceTree = "<group>"; };
+		404A255A1B6B3FD800363403 /* DACircularProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DACircularProgressView.m; sourceTree = "<group>"; };
+		404A25601B6B460B00363403 /* Gravvy-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Gravvy-Prefix.pch"; sourceTree = "<group>"; };
+		404A25611B6B508500363403 /* GRVClipBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVClipBrowser.h; sourceTree = "<group>"; };
+		404A25621B6B508500363403 /* GRVClipBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVClipBrowser.m; sourceTree = "<group>"; };
+		404A256C1B6C197E00363403 /* MWPhotoBrowser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = MWPhotoBrowser.bundle; path = Gravvy/Vendor/MWPhotoBrowser/MWPhotoBrowser.bundle; sourceTree = SOURCE_ROOT; };
 		404C2D351B4BA27D00839B95 /* GRVMembersCDTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVMembersCDTVC.h; sourceTree = "<group>"; };
 		404C2D361B4BA27D00839B95 /* GRVMembersCDTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVMembersCDTVC.m; sourceTree = "<group>"; };
 		404C2D3B1B4BC79500839B95 /* GRVMembersContactPickerVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVMembersContactPickerVC.h; sourceTree = "<group>"; };
@@ -741,6 +780,55 @@
 			name = Filters;
 			sourceTree = "<group>";
 		};
+		404A21311B6B3EEB00363403 /* MWPhotoBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				404A256C1B6C197E00363403 /* MWPhotoBrowser.bundle */,
+				404A25371B6B3F5800363403 /* Classes */,
+			);
+			name = MWPhotoBrowser;
+			path = ThirdParty/MWPhotoBrowser;
+			sourceTree = SOURCE_ROOT;
+		};
+		404A25371B6B3F5800363403 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				404A25391B6B3F5800363403 /* MWCaptionView.h */,
+				404A253A1B6B3F5800363403 /* MWCaptionView.m */,
+				404A253B1B6B3F5800363403 /* MWCommon.h */,
+				404A253C1B6B3F5800363403 /* MWGridCell.h */,
+				404A253D1B6B3F5800363403 /* MWGridCell.m */,
+				404A253E1B6B3F5800363403 /* MWGridViewController.h */,
+				404A253F1B6B3F5800363403 /* MWGridViewController.m */,
+				404A25401B6B3F5800363403 /* MWPhoto.h */,
+				404A25411B6B3F5800363403 /* MWPhoto.m */,
+				404A25421B6B3F5800363403 /* MWPhotoBrowser.h */,
+				404A25431B6B3F5800363403 /* MWPhotoBrowser.m */,
+				404A25441B6B3F5800363403 /* MWPhotoBrowserPrivate.h */,
+				404A25451B6B3F5800363403 /* MWPhotoProtocol.h */,
+				404A25461B6B3F5800363403 /* MWTapDetectingImageView.h */,
+				404A25471B6B3F5800363403 /* MWTapDetectingImageView.m */,
+				404A25481B6B3F5800363403 /* MWTapDetectingView.h */,
+				404A25491B6B3F5800363403 /* MWTapDetectingView.m */,
+				404A254A1B6B3F5800363403 /* MWZoomingScrollView.h */,
+				404A254B1B6B3F5800363403 /* MWZoomingScrollView.m */,
+				404A254C1B6B3F5800363403 /* UIImage+MWPhotoBrowser.h */,
+				404A254D1B6B3F5800363403 /* UIImage+MWPhotoBrowser.m */,
+			);
+			name = Classes;
+			path = Pod/Classes;
+			sourceTree = "<group>";
+		};
+		404A25581B6B3FD800363403 /* DACircularProgress */ = {
+			isa = PBXGroup;
+			children = (
+				404A25591B6B3FD800363403 /* DACircularProgressView.h */,
+				404A255A1B6B3FD800363403 /* DACircularProgressView.m */,
+			);
+			name = DACircularProgress;
+			path = ThirdParty/DACircularProgress/DACircularProgress;
+			sourceTree = SOURCE_ROOT;
+		};
 		404CB20F1B3CF4B200890D45 /* AMScrollingNavbar */ = {
 			isa = PBXGroup;
 			children = (
@@ -798,6 +886,7 @@
 			children = (
 				407620771AFEC41200100550 /* Info.plist */,
 				407620781AFEC41200100550 /* main.m */,
+				404A25601B6B460B00363403 /* Gravvy-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -911,6 +1000,8 @@
 				40F937C61B0C491F000F7BCB /* GRVFeedbackFormViewController.m */,
 				40F937C81B0C4A81000F7BCB /* GRVAboutViewController.h */,
 				40F937C91B0C4A81000F7BCB /* GRVAboutViewController.m */,
+				404A25611B6B508500363403 /* GRVClipBrowser.h */,
+				404A25621B6B508500363403 /* GRVClipBrowser.m */,
 				40FAD4251B13D7BF0039B03A /* ContactPicker */,
 				40D853AF1B0C5FAA001A206A /* Camera */,
 				402329911B09AA0200BFD2D5 /* ContainerTransitions */,
@@ -1030,6 +1121,8 @@
 		407620C81AFEEE8A00100550 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				404A25581B6B3FD800363403 /* DACircularProgress */,
+				404A21311B6B3EEB00363403 /* MWPhotoBrowser */,
 				4083069A1B5F69AF00A03323 /* AMPopTip */,
 				400881201B4E3A4C00F3868C /* MBProgressHUD */,
 				4076236D1AFEF13400100550 /* SDWebImage */,
@@ -1426,6 +1519,7 @@
 				402E61171B62046A00DDB56C /* mute.caf in Resources */,
 				40FAD44D1B13D7BF0039B03A /* GRVSelectedContactPickerTableViewCell.xib in Resources */,
 				4076236A1AFEF0E300100550 /* NBPhoneNumberMetadata.plist in Resources */,
+				404A256D1B6C197E00363403 /* MWPhotoBrowser.bundle in Resources */,
 				403D378F1B6607F200AE8AC4 /* GRVFavoriteContactPickerTableViewCell.xib in Resources */,
 				407620871AFEC41200100550 /* LaunchScreen.xib in Resources */,
 				407620841AFEC41200100550 /* Images.xcassets in Resources */,
@@ -1474,6 +1568,8 @@
 				403D349D1B114768004FF19E /* SCVideoConfiguration.m in Sources */,
 				40FAD4431B13D7BF0039B03A /* GRVMultiContactPickerViewController.m in Sources */,
 				407623D61AFF280500100550 /* GRVRegionStore.m in Sources */,
+				404A25561B6B3F5800363403 /* MWZoomingScrollView.m in Sources */,
+				404A25531B6B3F5800363403 /* MWPhotoBrowser.m in Sources */,
 				403BC9371AFF3DFA009BBD2B /* GRVContact.m in Sources */,
 				4034AD851B000E1900162F2C /* GRVVerificationViewController.m in Sources */,
 				4034AD7C1B00047900162F2C /* GRVUserViewHelper.m in Sources */,
@@ -1484,12 +1580,15 @@
 				407623BF1AFF1FDE00100550 /* GRVCoreDataImport.m in Sources */,
 				404CB2151B3CF4B200890D45 /* UIViewController+ScrollingNavbar.m in Sources */,
 				407623671AFEF0E300100550 /* NBPhoneMetaDataGenerator.m in Sources */,
+				404A25501B6B3F5800363403 /* MWGridCell.m in Sources */,
 				407623601AFEF0E300100550 /* NBMetadataCore.m in Sources */,
+				404A255D1B6B3FD800363403 /* DACircularProgressView.m in Sources */,
 				40F937C11B0C4849000F7BCB /* GRVSettingsProfileSettingsTVC.m in Sources */,
 				402875B31B0483F300699F60 /* GRVLandingViewController.m in Sources */,
 				407623991AFEF13400100550 /* UIImage+GIF.m in Sources */,
 				405BD0591B1ABF5100EDA8F6 /* GRVRestUtils.m in Sources */,
 				40FFFEF41B4CCEF000AFC183 /* GRVAddClipCameraVC.m in Sources */,
+				404A25551B6B3F5800363403 /* MWTapDetectingView.m in Sources */,
 				407623181AFEF08E00100550 /* UIRefreshControl+AFNetworking.m in Sources */,
 				40F900CD1B5E0A5100328BCF /* GRVNotificationIndicatorView.m in Sources */,
 				40CA14751B69F1FB005A5CAE /* GRVUser.m in Sources */,
@@ -1505,9 +1604,12 @@
 				407623D31AFF275000100550 /* GRVRegion.m in Sources */,
 				407623171AFEF08E00100550 /* UIProgressView+AFNetworking.m in Sources */,
 				4076232A1AFEF0B900100550 /* AWPercentDrivenInteractiveTransition.m in Sources */,
+				404A25541B6B3F5800363403 /* MWTapDetectingImageView.m in Sources */,
+				404A25631B6B508500363403 /* GRVClipBrowser.m in Sources */,
 				407623091AFEF08E00100550 /* AFHTTPRequestOperation.m in Sources */,
 				403D34B71B11480E004FF19E /* CIImageRendererUtils.m in Sources */,
 				403D349C1B114768004FF19E /* SCPhotoConfiguration.m in Sources */,
+				404A254F1B6B3F5800363403 /* MWCaptionView.m in Sources */,
 				403D34C31B114848004FF19E /* SCFilterAnimation.m in Sources */,
 				402875B01B047FFC00699F60 /* GRVVideosCDTVC.m in Sources */,
 				40F937BC1B0C46B0000F7BCB /* GRVSettingsTVC.m in Sources */,
@@ -1556,6 +1658,7 @@
 				40D853BC1B0C69D1001A206A /* GRVCameraViewController.m in Sources */,
 				407623921AFEF13400100550 /* SDWebImageCompat.m in Sources */,
 				403D34A71B1147A9004FF19E /* SCRecorder.m in Sources */,
+				404A25511B6B3F5800363403 /* MWGridViewController.m in Sources */,
 				4076239A1AFEF13400100550 /* UIImage+MultiFormat.m in Sources */,
 				403BC9491AFF3F1D009BBD2B /* GRVUser+HTTP.m in Sources */,
 				407623B61AFF17C100100550 /* GRVManagedDocument.m in Sources */,
@@ -1573,6 +1676,7 @@
 				4089BFF21B03BC36003DF4AA /* ExtendedCoreDataTableViewController.m in Sources */,
 				4064A1931B12AD0900E9C4CB /* GRVCameraReviewViewController.m in Sources */,
 				4076235F1AFEF0E300100550 /* NBAsYouTypeFormatter.m in Sources */,
+				404A25571B6B3F5800363403 /* UIImage+MWPhotoBrowser.m in Sources */,
 				403D34A81B1147A9004FF19E /* SCRecordSession.m in Sources */,
 				40CA14681B69E37D005A5CAE /* GRVUserTableViewCell.m in Sources */,
 				407623E21AFF2CD700100550 /* GRVAlertBannerManager.m in Sources */,
@@ -1596,6 +1700,7 @@
 				407623931AFEF13400100550 /* SDWebImageDecoder.m in Sources */,
 				40FAD4451B13D7BF0039B03A /* GRVContactPickerTableViewCell.m in Sources */,
 				403BC9521AFF4366009BBD2B /* GRVUser+AddressBook.m in Sources */,
+				404A25521B6B3F5800363403 /* MWPhoto.m in Sources */,
 				407623121AFEF08E00100550 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				4076239C1AFEF13400100550 /* UIImageView+HighlightedWebCache.m in Sources */,
 				403D378D1B6607B800AE8AC4 /* GRVFavoriteContactPickerTableViewCell.m in Sources */,
@@ -1767,6 +1872,14 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Gravvy/Vendor",
 				);
+				GCC_PREFIX_HEADER = "Gravvy/Gravvy-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/ThirdParty/",
+					"$(SRCROOT)/ThirdParty/DACircularProgress/",
+					"$(SRCROOT)/ThirdParty/SDWebImage/",
+				);
 				INFOPLIST_FILE = Gravvy/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1785,6 +1898,14 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Gravvy/Vendor",
+				);
+				GCC_PREFIX_HEADER = "Gravvy/Gravvy-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"$(SRCROOT)/ThirdParty/",
+					"$(SRCROOT)/ThirdParty/DACircularProgress/",
+					"$(SRCROOT)/ThirdParty/SDWebImage/",
 				);
 				INFOPLIST_FILE = Gravvy/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;

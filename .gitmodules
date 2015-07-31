@@ -22,3 +22,9 @@
 [submodule "ThirdParty/AMPopTip"]
 	path = ThirdParty/AMPopTip
 	url = https://github.com/andreamazz/AMPopTip.git
+[submodule "ThirdParty/MWPhotoBrowser"]
+	path = ThirdParty/MWPhotoBrowser
+	url = https://github.com/mwaterfall/MWPhotoBrowser.git
+[submodule "ThirdParty/DACircularProgress"]
+	path = ThirdParty/DACircularProgress
+	url = https://github.com/danielamitay/DACircularProgress.git

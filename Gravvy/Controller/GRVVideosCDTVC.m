@@ -25,6 +25,7 @@
 #import "MBProgressHUD.h"
 #import "AMPopTip.h"
 #import "GRVMuteSwitchDetector.h"
+#import "GRVClipBrowser.h"
 
 #import <FBSDKShareKit/FBSDKShareKit.h>
 #import <FBSDKCoreKit/FBSDKConstants.h>
@@ -87,12 +88,17 @@ static const NSString *PlayerRateContext;
 static const NSString *PlayerCurrentItemContext;
 
 /**
+ * button indices in share actions action sheet
+ */
+static const NSInteger kShareActionsIndexShareFacebook  = 0; // Share on facebook
+static const NSInteger kShareActionsIndexShareTwitter   = 1; // Share on twitter
+static const NSInteger kShareActionsIndexShareSMS       = 2; // Share via SMS
+static const NSInteger kShareActionsIndexCopyLink       = 3; // Copy link
+
+/**
  * button indices in more actions action sheet
  */
-static const NSInteger kMoreActionsIndexShareFacebook   = 0; // Share on facebook
-static const NSInteger kMoreActionsIndexShareTwitter    = 1; // Share on twitter
-static const NSInteger kMoreActionsIndexShareSMS        = 2; // Share via SMS
-static const NSInteger kMoreActionsIndexCopyLink        = 3; // Copy link
+static const NSInteger kMoreActionsIndexEditClips       = 0; // Edit clips
 
 /**
  * Format string for creating a video's share URL
@@ -309,8 +315,9 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     CGFloat playerViewHeight = self.view.frame.size.width;
     self.tableView.rowHeight = kTableViewCellHeightNoPlayer + playerViewHeight;
     
-    // Hide separator insets
-    self.tableView.separatorColor = [UIColor clearColor];
+    // Hide separator insets and table view's bottom white line
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.separatorColor = [UIColor groupTableViewBackgroundColor];
     
     // Don't capture self in the callback
     GRVVideosCDTVC* __weak weakSelf = self;
@@ -707,6 +714,15 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     if (self.isPlaying) [self playOrPause];
 }
 
+#pragma mark Public
+- (void)showOrHideEmptyStateView
+{
+    [super showOrHideEmptyStateView];
+    // TableView background color depends on if empty state is showing
+    BOOL empty = [self.fetchedResultsController.fetchedObjects count] == 0;
+    self.tableView.backgroundColor = empty ? [UIColor whiteColor] : [UIColor groupTableViewBackgroundColor];
+}
+
 #pragma mark Public: Core Data
 - (void)setupFetchedResultsController
 {
@@ -1069,6 +1085,10 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
 {
     // quit if camera is not available for recording videos
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        if (![GRVModelManager sharedManager].acknowledgedClipAdditionTip) {
+            [GRVModelManager sharedManager].acknowledgedClipAdditionTip = YES;
+            [self.addClipPopTip hide];
+        }
         return;
     }
     
@@ -1084,6 +1104,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
         [self.addClipPopTip hide];
     }
 }
+
 
 - (IBAction)showShareActions:(UIButton *)sender
 {
@@ -1112,15 +1133,20 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     NSString *destructiveButtonTitle;
     if ([video isVideoOwner]) {
         destructiveButtonTitle = @"Delete Video";
+        self.moreActionsActionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                                  delegate:self
+                                                         cancelButtonTitle:@"Cancel"
+                                                    destructiveButtonTitle:nil
+                                                         otherButtonTitles:@"Edit Clips", destructiveButtonTitle, nil];
     } else {
         destructiveButtonTitle = @"Exit Video";
+        self.moreActionsActionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                                  delegate:self
+                                                         cancelButtonTitle:@"Cancel"
+                                                    destructiveButtonTitle:nil
+                                                         otherButtonTitles:destructiveButtonTitle, nil];
     }
     
-    self.moreActionsActionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                              delegate:self
-                                                     cancelButtonTitle:@"Cancel"
-                                                destructiveButtonTitle:nil
-                                                     otherButtonTitles:destructiveButtonTitle, nil];
     self.moreActionsActionSheet.destructiveButtonIndex = (self.moreActionsActionSheet.numberOfButtons-2);
     [self.moreActionsActionSheet showInView:self.view];
 }
@@ -1136,19 +1162,19 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
         // Is this a request to share content
         if (buttonIndex != actionSheet.cancelButtonIndex) {
             switch (buttonIndex-actionSheet.firstOtherButtonIndex) {
-                case kMoreActionsIndexShareFacebook:
+                case kShareActionsIndexShareFacebook:
                     [self shareOnFacebook:video];
                     break;
                     
-                case kMoreActionsIndexShareTwitter:
+                case kShareActionsIndexShareTwitter:
                     [self shareOnTwitter:video];
                     break;
                     
-                case kMoreActionsIndexShareSMS:
+                case kShareActionsIndexShareSMS:
                     [self shareViaSMS:video];
                     break;
                     
-                case kMoreActionsIndexCopyLink:
+                case kShareActionsIndexCopyLink:
                     [self copyShareLink:video];
                     break;
                     
@@ -1174,6 +1200,16 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
                                                                destructiveButtonTitle:destructiveButtonTitle
                                                                     otherButtonTitles:nil];
             [self.removeConfirmationActionSheet showInView:self.view];
+            
+        } else if (buttonIndex != actionSheet.cancelButtonIndex) {
+            switch (buttonIndex-actionSheet.firstOtherButtonIndex) {
+                case kMoreActionsIndexEditClips:
+                    [self showClipEditor:video];
+                    break;
+                    
+                default:
+                    break;
+            }
         }
         
     } else if (actionSheet == self.removeConfirmationActionSheet) {
@@ -1315,6 +1351,27 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     NSString *webURL = [self videoShareURL:video];
     [UIPasteboard generalPasteboard].string = webURL;
     [self showProgressHUDSuccessMessage:@"Copied Link"];
+}
+
+/**
+ * Show clip editor for a given video
+ *
+ * @param video Video to be edited
+ */
+- (void)showClipEditor:(GRVVideo *)video
+{
+    GRVClipBrowser *browser = [[GRVClipBrowser alloc] initWithDelegate:nil];
+    browser.video = video;
+    
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:browser];
+    nvc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    
+    // Stop player before continuing
+    [self stop];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // Give the avplayer cleanup some time to occur before presenting clip browser
+        [self presentViewController:nvc animated:YES completion:nil];
+    });
 }
 
 
