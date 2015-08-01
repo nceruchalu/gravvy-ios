@@ -862,7 +862,14 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     cell.currentClipIndexLabel.text = [NSString stringWithFormat:@"%lu/%lu", (unsigned long)(actualClipIndex+1), (unsigned long)clipsCount];
     
     // Get current clip and display its owner
-    GRVClip *currentClip = [clips objectAtIndex:currentClipIndex];
+    clipsCount = [clips count];
+    if (currentClipIndex >= clipsCount) {
+        currentClipIndex = MAX(0, (clipsCount-1));
+    }
+    GRVClip *currentClip = nil;
+    if (clipsCount) {
+        currentClip = [clips objectAtIndex:currentClipIndex];
+    }
     GRVUser *owner = currentClip.owner ? currentClip.owner : video.owner;
     cell.currentClipOwnerLabel.text = [GRVUserViewHelper userFullName:owner];
 }
@@ -1364,7 +1371,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     browser.video = video;
     
     UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:browser];
-    nvc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    nvc.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     
     // Stop player before continuing
     [self stop];

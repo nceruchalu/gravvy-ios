@@ -166,6 +166,24 @@
 - (void)revokeMembership:(GRVMember *)member withCompletion:(void (^)())membershipIsRevoked;
 
 /**
+ * Delete a given clip from this video locally and on the server.
+ *
+ * @param clip              Clip object to be deleted
+ * @param clipIsDeleted     block to be called after deleting clip. It takes two
+ *      arguments, the error object and the response object
+ */
+- (void)deleteClip:(GRVClip *)clip withCompletion:(void (^)(NSError *error, id responseObject))clipIsDeleted;
+
+/**
+ * Delete a given collection of clips from this video locally and on the server.
+ *
+ * @param clips             Array of clip objects to be deleted
+ * @param clipsAreDeleted   block to be called after deleting clips. It takes two
+ *      arguments, the error object and the response object
+ */
+- (void)deleteClips:(NSArray *)clips withCompletion:(void (^)(NSError *error, id responseObject))clipsAreDeleted;
+
+/**
  * Refresh this video.
  * Get this data from the server and sync this with what's in the local
  * Core Data storage.

@@ -9,9 +9,24 @@
 #import "GRVClipBrowser.h"
 #import "MWPhotoBrowserPrivate.h"
 #import "MWPhoto.h"
-#import "GRVVideo.h"
+#import "MWGridViewController.h"
+#import "GRVVideo+HTTP.h"
 #import "GRVClip.h"
 #import "GRVUserViewHelper.h"
+#import "UIImage+GRVUtilities.h"
+#import "GRVConstants.h"
+#import "GRVHTTPManager.h"
+#import "NSManagedObject+GRVUtilities.h"
+#import "MBProgressHUD.h"
+
+#pragma mark - Constants
+/**
+ * Titles for delete clip button
+ */
+static NSString *const kDeleteClipsButtonTitleMultipleSelection = @"Delete Selected Clips";
+static NSString *const kDeleteClipsButtonTitleSingleSelection = @"Delete Selected Clip";
+static NSString *const kDeleteClipsButtonTitleDeleting = @"Deleting... Please Wait";
+
 
 @interface GRVClipBrowser () <MWPhotoBrowserDelegate>
 
@@ -20,7 +35,7 @@
 /**
  * Array of GRVClip objects
  */
-@property (copy, nonatomic) NSArray *clips;
+@property (copy, nonatomic) NSMutableArray *clips;
 
 /**
  * Array tracking selection state for all clips
@@ -34,9 +49,12 @@
 @property (strong, nonatomic) NSMutableArray *clipThumbnails;
 
 /**
- * Grid view toolbar
+ * Grid view toolbar and buttons
  */
 @property (strong, nonatomic) UIToolbar *gridToolbar;
+@property (strong, nonatomic) UIBarButtonItem *deleteClipsButton;
+
+@property (strong, nonatomic) MBProgressHUD *successProgressHUD;
 
 @end
 
@@ -44,6 +62,12 @@
 
 #pragma mark - Properties
 #pragma mark Private
+- (NSMutableArray *)clips
+{
+    // Lazy instantiation
+    if (!_clips) _clips = [NSMutableArray array];
+    return _clips;
+}
 - (NSMutableArray *)clipSelections
 {
     // Lazy instantiation
@@ -64,6 +88,24 @@
     if (!_clipThumbnails) _clipThumbnails = [NSMutableArray array];
     return _clipThumbnails;
 }
+
+- (MBProgressHUD *)successProgressHUD
+{
+    if (!_successProgressHUD) {
+        // Lazy instantiation
+        _successProgressHUD = [[MBProgressHUD alloc] initWithView:self.view];
+        [self.view addSubview:_successProgressHUD];
+        
+        _successProgressHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkmark"]];
+        // Set custom view mode
+        _successProgressHUD.mode = MBProgressHUDModeCustomView;
+        
+        _successProgressHUD.minSize = CGSizeMake(120, 120);
+        _successProgressHUD.minShowTime = 1;
+    }
+    return _successProgressHUD;
+}
+
 
 #pragma mark - View Lifecycle
 - (void)viewDidLoad
@@ -119,10 +161,17 @@
     self.gridToolbar = [[UIToolbar alloc] initWithFrame:[self frameForToolbarAtOrientation:self.interfaceOrientation]];
     self.gridToolbar.tintColor = [UIColor whiteColor];
     self.gridToolbar.barTintColor = nil;
-    [self.gridToolbar setBackgroundImage:nil forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
-    [self.gridToolbar setBackgroundImage:nil forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsLandscapePhone];
+    [self.gridToolbar setBackgroundImage:[UIImage imageWithColor:kGRVRedColor] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
+    [self.gridToolbar setBackgroundImage:[UIImage imageWithColor:kGRVRedColor] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsLandscapePhone];
     self.gridToolbar.barStyle = UIBarStyleBlackTranslucent;
     self.gridToolbar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth;
+    
+    // Configure delete clips button
+    self.deleteClipsButton = [[UIBarButtonItem alloc] initWithTitle:kDeleteClipsButtonTitleMultipleSelection style:UIBarButtonItemStyleBordered target:self action:@selector(deleteSelectedClips:)];
+    
+    // configure toolbar items
+    UIBarButtonItem *flexSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    self.gridToolbar.items = @[flexSpace, self.deleteClipsButton, flexSpace];
     
     [self configureUsingVideo];
 }
@@ -157,11 +206,23 @@
     [self.clipSelections removeAllObjects];
     [self.clipVideos removeAllObjects];
     [self.clipThumbnails removeAllObjects];
+    [self.clips removeAllObjects];
+    
+    // Configure deleteClipsButton
+    self.deleteClipsButton.enabled = NO;
     
     NSSortDescriptor *orderSd = [NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES];
-    self.clips = [self.video.clips sortedArrayUsingDescriptors:@[orderSd]];
+    NSArray *clips = [self.video.clips sortedArrayUsingDescriptors:@[orderSd]];
     
-    for (GRVClip *clip in self.clips) {
+    for (GRVClip *clip in clips) {
+        
+        // Confirm that clip hasn't been deleted
+        if ([clip hasBeenDeleted]) {
+            // clip has been deleted so skip
+            continue;
+        }
+        
+        [self.clips addObject:clip];
         
         // Setup clip Videos
         MWPhoto *clipVideo = [MWPhoto photoWithURL:[[NSURL alloc] initWithString:clip.photoThumbnailURL]];
@@ -184,6 +245,16 @@
 }
 
 /**
+ * Configure delete clips button based on selection state
+ */
+- (void)configureDeleteClipsButton
+{
+    NSUInteger clipsToDelete = [[self.clipSelections filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF == YES"]] count];
+    self.deleteClipsButton.title = clipsToDelete == 1 ? kDeleteClipsButtonTitleSingleSelection : kDeleteClipsButtonTitleMultipleSelection;
+    self.deleteClipsButton.enabled = clipsToDelete > 0;
+}
+
+/**
  * Re-enable grid and reload its data
  */
 - (void)resetAndReloadGrid
@@ -192,6 +263,53 @@
     self.enableGrid = YES;
     [self reloadData];
     [self showGrid:YES];
+    
+    MWGridViewController *gridVC = [self gridViewController];
+    [gridVC.collectionView reloadData];
+}
+
+/**
+ * Get the grid VC
+ */
+- (MWGridViewController *)gridViewController
+{
+    MWGridViewController *gridVC = nil;
+    for (UIViewController *vc in self.childViewControllers) {
+        if ([vc isKindOfClass:[MWGridViewController class]]) {
+            gridVC = (MWGridViewController *)vc;
+            break;
+        }
+    }
+    return gridVC;
+}
+
+
+#pragma mark Grid Toolbar
+- (void)showGrid:(BOOL)animated
+{
+    [super showGrid:animated];
+    [self.view addSubview:self.gridToolbar];
+}
+
+- (void)hideGrid
+{
+    [super hideGrid];
+    [self.gridToolbar removeFromSuperview];
+}
+
+- (void)setControlsHidden:(BOOL)hidden animated:(BOOL)animated permanent:(BOOL)permanent {
+    [super setControlsHidden:hidden animated:animated permanent:permanent];
+    if (!hidden) {
+        [self.gridToolbar removeFromSuperview];
+    }
+}
+
+#pragma mark Action Progress
+- (void)showProgressHUDSuccessMessage:(NSString *)message
+{
+    self.successProgressHUD.labelText = message;
+    [self.successProgressHUD show:YES];
+    [self.successProgressHUD hide:YES afterDelay:1.5];
 }
 
 
@@ -200,6 +318,38 @@
 {
     // Dismiss view controller
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)deleteSelectedClips:(id)sender
+{
+    NSMutableArray *clipsToDelete = [NSMutableArray array];
+    for (NSUInteger i=0; i<[self.clipSelections count]; i++) {
+        if ([self.clipSelections[i] boolValue]) {
+            [clipsToDelete addObject:self.clips[i]];
+        }
+    }
+    
+    if ([clipsToDelete count]) {
+        self.deleteClipsButton.enabled = NO;
+        self.deleteClipsButton.title = kDeleteClipsButtonTitleDeleting;
+        self.view.userInteractionEnabled = NO;
+        
+        [self.video deleteClips:clipsToDelete withCompletion:^(NSError *error, id responseObject) {
+            self.view.userInteractionEnabled = YES;
+            if (error) {
+                [GRVHTTPManager alertWithFailedResponse:responseObject withAlternateTitle:@"Something went wrong" andMessage:@"Please try that again."];
+            } else {
+                [self showProgressHUDSuccessMessage:@"Deleted clips"];
+            }
+            [self.video refreshVideo:nil];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self configureUsingVideo];
+                [self configureDeleteClipsButton];
+            });
+        }];
+    } else {
+        [self configureUsingVideo];
+    }
 }
 
 
@@ -244,10 +394,25 @@
 
 - (void)photoBrowser:(MWPhotoBrowser *)photoBrowser photoAtIndex:(NSUInteger)index selectedChanged:(BOOL)selected
 {
-    if (index < [self.clipSelections count]) {
+    if (index == 0) {
+        // Can't select the very first clip so force an unselection
+        if (self.gridToolbar.superview) {
+            // If showing gridToolBar then simply reload grid so as not to force
+            // a redownload of cached images
+            MWGridViewController *gridVC = [self gridViewController];
+            [gridVC.collectionView reloadData];
+        } else {
+            // If showing details page, then reload all data
+            [self reloadData];
+        }
+        
+    } else if (index < [self.clipSelections count]) {
         // Change the selection state of the given clip
         [self.clipSelections replaceObjectAtIndex:index withObject:@(selected)];
     }
+    
+    // Configure the delete section button based on the selection state
+    [self configureDeleteClipsButton];
 }
 
 @end

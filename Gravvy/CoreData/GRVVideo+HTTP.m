@@ -291,7 +291,6 @@
                      
                      // get array of video dictionaries in response
                      NSArray *videosJSON = [responseObject objectForKey:kGRVRESTListResultsKey];
-                     
                      // Use worker context for background execution
                      NSManagedObjectContext *workerContext = [GRVModelManager sharedManager].workerContextVideo;
                      if (workerContext) {
@@ -492,6 +491,52 @@
     } failure:^(NSURLSessionDataTask *task, NSError *error, id responseObject) {
         if (membershipIsRevoked) membershipIsRevoked();
     }];
+}
+
+- (void)deleteClip:(GRVClip *)clip withCompletion:(void (^)(NSError *error, id responseObject))clipIsDeleted
+{
+    // first get the URL to delete clip
+    
+    NSString *videoClipDetailURL = [GRVRestUtils videoClipDetailURL:self.hashKey clip:clip.identifier];
+    
+    [[GRVHTTPManager sharedManager] request:GRVHTTPMethodDELETE forURL:videoClipDetailURL parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        // Perform a local hard-delete as the clip is gone on the server
+        [clip.managedObjectContext deleteObject:clip];
+        if (clipIsDeleted) clipIsDeleted(nil, responseObject);
+        
+    } failure:^(NSURLSessionDataTask *task, NSError *error, id responseObject) {
+        if (clipIsDeleted) clipIsDeleted(error, responseObject);
+    }];
+}
+
+- (void)deleteClips:(NSArray *)clips withCompletion:(void (^)(NSError *error, id responseObject))clipsAreDeleted
+{
+    NSUInteger clipsCount = [clips count];
+    if (!clipsCount) {
+        if (clipsAreDeleted) clipsAreDeleted(nil, nil);
+    }
+    
+    __block NSUInteger deletedClipsCount = 0;
+    __block NSError *deleteError = nil;
+    __block id deleteResponseObject = nil;
+    
+    for (GRVClip *clip in clips) {
+        [self deleteClip:clip withCompletion:^(NSError *error, id responseObject) {
+            // One more clip deleted (or at least we tried to)
+            deletedClipsCount++;
+            
+            if (error) {
+                // if there's an error log it here
+                deleteError = error;
+                deleteResponseObject = responseObject;
+            }
+            
+            if (deletedClipsCount >= clipsCount) {
+                // Finally done with all the clips so execute callback
+                if (clipsAreDeleted) clipsAreDeleted(deleteError, deleteResponseObject);
+            }
+        }];
+    }
 }
 
 - (void)refreshVideo:(void (^)())videoIsRefreshed
