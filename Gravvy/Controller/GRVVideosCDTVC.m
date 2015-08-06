@@ -319,12 +319,13 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.separatorColor = [UIColor groupTableViewBackgroundColor];
     
+    // Start by assuming mute until proven otherwise
+    self.playerVolume = 0.0f;
     // Don't capture self in the callback
     GRVVideosCDTVC* __weak weakSelf = self;
     [GRVMuteSwitchDetector sharedDetector].detectionHandler = ^(BOOL muted) {
-        weakSelf.playerVolume = muted ? 0.0f : 1.0f;
+        [weakSelf configurePlayerVolumeWithMute:muted];
     };
-    self.playerVolume = 0.0f;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -343,6 +344,10 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(mediaServicesWereReset:)
                                                  name:AVAudioSessionMediaServicesWereResetNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(audioRouteChange:)
+                                                 name:AVAudioSessionRouteChangeNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(appDidEnterBackground)
@@ -370,6 +375,9 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     // remove observers
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:AVAudioSessionMediaServicesWereResetNotification
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:AVAudioSessionRouteChangeNotification
                                                   object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:UIApplicationDidEnterBackgroundNotification
@@ -714,6 +722,71 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     if (self.isPlaying) [self playOrPause];
 }
 
+/**
+ * Set player volume based on mute switch detector and current audio route
+ */
+- (void)configurePlayerVolume
+{
+    [self configurePlayerVolumeWithMute:[GRVMuteSwitchDetector sharedDetector].muted];
+}
+
+/**
+ * Set player volume based on given mute state and current audio route
+ *
+ * @param muted mute switch detector's current state
+ */
+- (void)configurePlayerVolumeWithMute:(BOOL)muted
+{
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    BOOL deviceIsPluggedIn = [self isDevicePluggedIn:[audioSession currentRoute]];
+    self.playerVolume = (muted && !deviceIsPluggedIn) ? 0.0f : 1.0f;
+}
+
+#pragma mark AudioSession
+/**
+ * Check if a given route indicates headset or bluetooth is plugged in
+ *
+ * @param route Audio Route to use in determining if a device is plugged in
+ *
+ * @return BOOL indicator of if a headset is plugged in
+ */
+- (BOOL)isDevicePluggedIn:(AVAudioSessionRouteDescription *)route
+{
+    BOOL headsetIsPluggedIn = NO;
+    BOOL bluetoothIsPluggedIn = NO;
+    for (AVAudioSessionPortDescription *desc in route.outputs) {
+        if ([[desc portType] isEqualToString:AVAudioSessionPortHeadphones]) {
+            headsetIsPluggedIn = YES;
+            break;
+        } else if ([self isBluetoothDevice:[desc portType]]) {
+            bluetoothIsPluggedIn = YES;
+            break;
+        }
+    }
+    
+    // In case both headphones and bluetooth are connected, detect bluetooth by
+    // inputs
+    // Condition: iOS7 and Bluetooth input available
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    if (!bluetoothIsPluggedIn && !headsetIsPluggedIn &&
+        [audioSession respondsToSelector:@selector(availableInputs)]) {
+        for (AVAudioSessionPortDescription *input in [audioSession availableInputs]){
+            if ([self isBluetoothDevice:[input portType]]){
+                bluetoothIsPluggedIn = YES;
+                break;
+            }
+        }
+    }
+    
+    return (headsetIsPluggedIn || bluetoothIsPluggedIn);
+}
+
+- (BOOL)isBluetoothDevice:(NSString*)portType {
+    
+    return ([portType isEqualToString:AVAudioSessionPortBluetoothA2DP] ||
+            [portType isEqualToString:AVAudioSessionPortBluetoothHFP]);
+}
+
 #pragma mark Public
 - (void)showOrHideEmptyStateView
 {
@@ -1053,7 +1126,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
 - (IBAction)playOrPause
 {
     // Adjust the volume
-    self.playerVolume = [GRVMuteSwitchDetector sharedDetector].muted ? 0.0f : 1.0f;
+    [self configurePlayerVolume];
     
     if (self.isPlaying) {
         [self.player pause];
@@ -1543,6 +1616,20 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
 - (void)appWillEnterForeground
 {
     [self refreshWithoutReorder];
+}
+
+
+#pragma mark - AVAudioSession Notification Observer Methods
+/**
+ * System's audio route changed
+ *
+ * Pause player (if playing) when headset is unplugged.
+ */
+- (void)audioRouteChange:(NSNotification *)notification
+{
+    // Reconfigure player volume to account for audio route changes
+    [self configurePlayerVolume];
+    
 }
 
 

@@ -15,6 +15,7 @@
 #import "GRVUser.h"
 #import "GRVMembersContactPickerVC.h"
 #import "MBProgressHUD.h"
+#import <MessageUI/MessageUI.h>
 
 #pragma mark - Constants
 /**
@@ -30,10 +31,11 @@ static NSString *const kSegueIdentifierShowContactPicker = @"showInvitePeopleVC"
 /**
  * button indices in member action sheet
  */
-static const NSInteger kMemberButtonIndexCall       = 0; // Call user
+static const NSInteger kMemberButtonIndexMessage = 0; // SMS user
 
 
-@interface GRVMembersCDTVC () <UIActionSheetDelegate>
+@interface GRVMembersCDTVC () <UIActionSheetDelegate,
+                                MFMessageComposeViewControllerDelegate>
 
 #pragma mark - Properties
 
@@ -58,6 +60,7 @@ static const NSInteger kMemberButtonIndexCall       = 0; // Call user
 @property (strong, nonatomic) UIActionSheet *removeConfirmationActionSheet;
 
 @property (strong, nonatomic) MBProgressHUD *successProgressHUD;
+@property (strong, nonatomic) MBProgressHUD *failureProgressHUD;
 
 @end
 
@@ -87,6 +90,24 @@ static const NSInteger kMemberButtonIndexCall       = 0; // Call user
     }
     return _successProgressHUD;
 }
+
+- (MBProgressHUD *)failureProgressHUD
+{
+    if (!_failureProgressHUD) {
+        // Lazy instantiation
+        _failureProgressHUD = [[MBProgressHUD alloc] initWithView:self.view];
+        [self.view addSubview:_failureProgressHUD];
+        
+        _failureProgressHUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"errorCross"]];
+        // Set custom view mode
+        _failureProgressHUD.mode = MBProgressHUDModeCustomView;
+        _failureProgressHUD.color = [kGRVRedColor colorWithAlphaComponent:_failureProgressHUD.opacity];
+        _failureProgressHUD.minSize = CGSizeMake(120, 120);
+        _failureProgressHUD.minShowTime = 1;
+    }
+    return _failureProgressHUD;
+}
+
 
 #pragma mark - View Lifecycle
 - (void)viewWillAppear:(BOOL)animated
@@ -135,6 +156,13 @@ static const NSInteger kMemberButtonIndexCall       = 0; // Call user
     self.successProgressHUD.labelText = message;
     [self.successProgressHUD show:YES];
     [self.successProgressHUD hide:YES afterDelay:1.5];
+}
+
+- (void)showProgressHUDFailureMessage:(NSString *)message
+{
+    self.failureProgressHUD.labelText = message;
+    [self.failureProgressHUD show:YES];
+    [self.failureProgressHUD hide:YES afterDelay:1.5];
 }
 
 #pragma mark - Refresh
@@ -253,10 +281,10 @@ static const NSInteger kMemberButtonIndexCall       = 0; // Call user
         GRVMember *videoMember = [self.fetchedResultsController objectAtIndexPath:indexPath];
         NSString *memberShortName = [GRVUserViewHelper userFirstNameOrPhoneNumber:videoMember.user];
         
-        NSString *callMemberTitle = [NSString stringWithFormat:@"Call %@", memberShortName];
+        NSString *messageMemberTitle = [NSString stringWithFormat:@"Message %@", memberShortName];
         NSString *destructiveButtonTitle = [NSString stringWithFormat:@"Remove %@", memberShortName];
         
-        // Can only show call member if in address book
+        // Can only show message member if in address book
         // Video owner gets a different view of the members action sheet
         self.memberActionSheet = nil;
         if ([self isVideoOwner]) {
@@ -265,7 +293,7 @@ static const NSInteger kMemberButtonIndexCall       = 0; // Call user
                                                                      delegate:self
                                                             cancelButtonTitle:@"Cancel"
                                                        destructiveButtonTitle:nil
-                                                            otherButtonTitles:callMemberTitle, destructiveButtonTitle, nil];
+                                                            otherButtonTitles:messageMemberTitle, destructiveButtonTitle, nil];
             } else {
                 self.memberActionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                                      delegate:self
@@ -280,7 +308,7 @@ static const NSInteger kMemberButtonIndexCall       = 0; // Call user
                                                                  delegate:self
                                                         cancelButtonTitle:@"Cancel"
                                                    destructiveButtonTitle:nil
-                                                        otherButtonTitles:callMemberTitle, nil];
+                                                        otherButtonTitles:messageMemberTitle, nil];
         }
         
         
@@ -336,8 +364,8 @@ static const NSInteger kMemberButtonIndexCall       = 0; // Call user
             
         } else if (buttonIndex != actionSheet.cancelButtonIndex) {
             switch (buttonIndex-actionSheet.firstOtherButtonIndex) {
-                case kMemberButtonIndexCall:
-                    [self callMember:videoMember];
+                case kMemberButtonIndexMessage:
+                    [self messageMember:videoMember];
                     break;
                     
                 default:
@@ -368,13 +396,54 @@ static const NSInteger kMemberButtonIndexCall       = 0; // Call user
 }
 
 /**
- * Call video member
+ * Message video member
  */
-- (void)callMember:(GRVMember *)videoMember
+- (void)messageMember:(GRVMember *)videoMember
 {
-    NSString *phoneNumber = [NSString stringWithFormat:@"tel:%@", videoMember.user.phoneNumber];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
+    // You must check that the current device can send SMS messages before you
+    // attempt to create an instance of MFMessageComposeViewController.  If the
+    // device can not send SMS messages,
+    // [[MFMessageComposeViewController alloc] init] will return nil.  Your app
+    // will crash when it calls -presentViewController:animated:completion: with
+    // a nil view controller.
+    if ([MFMessageComposeViewController canSendText]) {
+        // The device can send SMS.
+        MFMessageComposeViewController *picker = [[MFMessageComposeViewController alloc] init];
+        picker.messageComposeDelegate = self;
+        [picker.navigationBar setTintColor:[UIColor whiteColor]];
+        
+        // You can specify one or more preconfigured recipients.  The user has
+        // the option to remove or add recipients from the message composer view
+        // controller.
+        picker.recipients = @[videoMember.user.phoneNumber];
+        
+        [self presentViewController:picker animated:YES completion:NULL];
+        
+    } else {
+        // The device can not send SMS.
+        [self showProgressHUDFailureMessage:@"Device can't send SMS"];
+    }
 }
+
+
+#pragma mark - MFMessageComposeViewControllerDelegate
+// -------------------------------------------------------------------------------
+//  messageComposeViewController:didFinishWithResult:
+//  Dismisses the message composition interface when users tap Cancel or Send.
+//  Proceeds to update the feedback message field with the result of the
+//  operation.
+// -------------------------------------------------------------------------------
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller
+                 didFinishWithResult:(MessageComposeResult)result
+{
+    // A good place to notify users about errors associated with the interface
+    [self dismissViewControllerAnimated:YES completion:^{
+        if (result == MessageComposeResultFailed) {
+            [self showProgressHUDFailureMessage:@"SMS failed to send"];
+        }
+    }];
+}
+
 
 
 @end
