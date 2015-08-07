@@ -23,16 +23,18 @@
 @property (strong, nonatomic, readonly) GRVVideo *activeVideo;
 
 /**
+ * The View Controller's model that should be set when this VC is being used
+ * as a `Details VC` that will only display a specific video.
+ * If using this property then it should be set before seguing to this VC.
+ */
+@property (strong, nonatomic) GRVVideo *detailsVideo;
+
+/**
  * Skip refresh table view next time Table View appears
  */
 @property (nonatomic) BOOL skipRefreshOnNextAppearance;
 
 #pragma mark - Instance Methods
-/**
- * Setup the fetchedResultsController @property of the VC
- */
-- (void)setupFetchedResultsController;
-
 /**
  * Stop the player and discard all player resources. Do this to prevent the
  * existence of multiple player instances when about to present the camera VC.
@@ -48,10 +50,5 @@
  * Refresh and show spinner after scrolling to the top
  */
 - (void)refreshAndShowSpinner;
-
-/**
- * User has confirmed deletion of a particular video so handle it
- */
-- (void)deleteVideo:(GRVVideo *)video;
 
 @end

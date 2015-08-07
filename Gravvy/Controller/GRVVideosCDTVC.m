@@ -311,6 +311,11 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    // Set page title if serving as Video Details VC
+    if (self.detailsVideo) {
+        self.navigationItem.title = @"Video";
+    }
+    
     // Setup height of each tableview row
     CGFloat playerViewHeight = self.view.frame.size.width;
     self.tableView.rowHeight = kTableViewCellHeightNoPlayer + playerViewHeight;
@@ -787,16 +792,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
             [portType isEqualToString:AVAudioSessionPortBluetoothHFP]);
 }
 
-#pragma mark Public
-- (void)showOrHideEmptyStateView
-{
-    [super showOrHideEmptyStateView];
-    // TableView background color depends on if empty state is showing
-    BOOL empty = [self.fetchedResultsController.fetchedObjects count] == 0;
-    self.tableView.backgroundColor = empty ? [UIColor whiteColor] : [UIColor groupTableViewBackgroundColor];
-}
-
-#pragma mark Public: Core Data
+#pragma mark Core Data
 - (void)setupFetchedResultsController
 {
     if (self.managedObjectContext) {
@@ -805,8 +801,13 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
         // prefetch to avoid faulting relationships individually
         request.relationshipKeyPathsForPrefetching = @[@"owner", @"clips"];
         
-        // fetch all ordered videos with clips
-        request.predicate = [NSPredicate predicateWithFormat:@"(order > %d) AND (clips.@count > 0)", kGRVVideoOrderNew];
+        if (self.detailsVideo) {
+            // fetch specific video
+            request.predicate = [NSPredicate predicateWithFormat:@"hashKey == %@", self.detailsVideo.hashKey];
+        } else {
+            // fetch all ordered videos with clips
+            request.predicate = [NSPredicate predicateWithFormat:@"(order > %d) AND (clips.@count > 0)", kGRVVideoOrderNew];
+        }
         
         // Show latest videos first (updatedAt storted descending)
         NSSortDescriptor *orderSort = [NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES];
@@ -822,12 +823,42 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     [self showOrHideEmptyStateView];
 }
 
+/**
+ * User has confirmed deletion of a particular video so handle it
+ */
 - (void)deleteVideo:(GRVVideo *)video
 {
     [video revokeMembershipWithCompletion:^{
-        [self.spinner stopAnimating];
-        [self refresh];
+        if (self.detailsVideo) {
+            // If operating as a details VC exit the VC
+            [self.navigationController popViewControllerAnimated:YES];
+            
+        } else {
+            [self.spinner stopAnimating];
+            [self refresh];
+        }
     }];
+}
+
+#pragma mark Public
+- (void)showOrHideEmptyStateView
+{
+    [super showOrHideEmptyStateView];
+    // TableView background color depends on if empty state is showing
+    BOOL empty = [self.fetchedResultsController.fetchedObjects count] == 0;
+    self.tableView.backgroundColor = empty ? [UIColor whiteColor] : [UIColor groupTableViewBackgroundColor];
+}
+
+- (CGFloat)tableViewFooterHeight
+{
+    // When serving as a details VC, there's no need for a footer as there's no
+    // obstructed Create Video button
+    if (self.detailsVideo) {
+        return 0.0f;
+    } else {
+        return [super tableViewFooterHeight];
+    }
+    
 }
 
 #pragma mark Public: AudioVisual Player

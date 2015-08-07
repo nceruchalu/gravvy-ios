@@ -16,7 +16,7 @@
 #import "GRVAccountManager.h"
 #import "GRVFormatterUtils.h"
 #import "GRVConstants.h"
-#import "GRVVideoDetailsViewController.h"
+#import "GRVVideosCDTVC.h"
 
 #pragma mark - Constants
 /**
@@ -288,12 +288,12 @@ static NSUInteger const kMaxDisplayedVideoTitleLength = 30;
                 fromIndexPath:(NSIndexPath *)indexPath
 {
     GRVActivity *activity = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    if ([vc isKindOfClass:[GRVVideoDetailsViewController class]]) {
+    if ([vc isKindOfClass:[GRVVideosCDTVC class]]) {
         if (![segueIdentifier length] || [segueIdentifier isEqualToString:kSegueIdentifierShowVideoDetails]) {
             // prepare vc
-            GRVVideoDetailsViewController *videoDetailsVC = (GRVVideoDetailsViewController *)vc;
+            GRVVideosCDTVC *videoDetailsVC = (GRVVideosCDTVC *)vc;
             GRVVideo *video = activity.targetVideo ? activity.targetVideo : activity.objectVideo;
-            videoDetailsVC.video = video;
+            videoDetailsVC.detailsVideo = video;
         }
     }
 }
