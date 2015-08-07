@@ -114,6 +114,18 @@
  */
 + (void)refreshVideos:(BOOL)reorder withCompletion:(void (^)())videosAreRefreshed;
 
+/**
+ * Set the order @property of the given collection of videos using the following
+ * logic
+ * - participation DESC: new and unseen videos first
+ * - unseen clips count DESC: unseen clips next
+ * - unseen likes count DESC: unseen likes
+ * - score DESC: rank indicator
+ * - updatedAt DESC: in the unlikely event the score isn't unique, video with 
+ *   recent update wins
+ */
++ (void)reorderVideos:(NSArray *)videos;
+
 
 #pragma mark - Instance Methods
 /**

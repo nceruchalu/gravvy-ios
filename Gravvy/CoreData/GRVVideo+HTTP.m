@@ -302,25 +302,7 @@
                              NSArray *refreshedVideos = [GRVVideo videosWithVideoInfoArray:videosJSON inManagedObjectContext:workerContext];
                              
                              if (reorder) {
-                                 // Order refreshed videos by :
-                                 // - participation DESC: new and unseen videos first
-                                 // - unseen clips count DESC: unseen clips next
-                                 // - unseen likes count DESC: unseen likes
-                                 // - score DESC: rank indicator
-                                 // - updatedAt DESC: in the unlikely event the score
-                                 //     isn't unique, video with recent update wins
-                                 NSSortDescriptor *participationSort = [NSSortDescriptor sortDescriptorWithKey:@"participation" ascending:NO];
-                                 NSSortDescriptor *unseenClipsCountSort = [NSSortDescriptor sortDescriptorWithKey:@"unseenClipsCount" ascending:NO];
-                                 NSSortDescriptor *unseenLikesCountSort = [NSSortDescriptor sortDescriptorWithKey:@"unseenLikesCount" ascending:NO];
-                                 NSSortDescriptor *scoreSort = [NSSortDescriptor sortDescriptorWithKey:@"score" ascending:NO];
-                                 NSSortDescriptor *updatedAtSort = [NSSortDescriptor sortDescriptorWithKey:@"updatedAt" ascending:NO];
-                                 
-                                 refreshedVideos = [refreshedVideos sortedArrayUsingDescriptors:@[participationSort, unseenClipsCountSort, unseenLikesCountSort, scoreSort, updatedAtSort]];
-                                 NSUInteger idx = 0;
-                                 for (GRVVideo *video in refreshedVideos) {
-                                     video.order = @(idx);
-                                     idx++;
-                                 }
+                                 [GRVVideo reorderVideos:refreshedVideos];
                              }
                              
                              // Push changes up to main thread context. Alternatively,
@@ -345,6 +327,22 @@
                      // do nothing but execute the callback block
                      if (videosAreRefreshed) videosAreRefreshed();
                  }];
+}
+
++ (void)reorderVideos:(NSArray *)videos
+{
+    NSSortDescriptor *participationSort = [NSSortDescriptor sortDescriptorWithKey:@"participation" ascending:NO];
+    NSSortDescriptor *unseenClipsCountSort = [NSSortDescriptor sortDescriptorWithKey:@"unseenClipsCount" ascending:NO];
+    NSSortDescriptor *unseenLikesCountSort = [NSSortDescriptor sortDescriptorWithKey:@"unseenLikesCount" ascending:NO];
+    NSSortDescriptor *scoreSort = [NSSortDescriptor sortDescriptorWithKey:@"score" ascending:NO];
+    NSSortDescriptor *updatedAtSort = [NSSortDescriptor sortDescriptorWithKey:@"updatedAt" ascending:NO];
+    
+    videos = [videos sortedArrayUsingDescriptors:@[participationSort, unseenClipsCountSort, unseenLikesCountSort, scoreSort, updatedAtSort]];
+    NSUInteger idx = 0;
+    for (GRVVideo *video in videos) {
+        video.order = @(idx);
+        idx++;
+    }
 }
 
 

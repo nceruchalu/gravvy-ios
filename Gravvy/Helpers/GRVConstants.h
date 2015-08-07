@@ -147,6 +147,12 @@ extern const NSUInteger kGRVVideoTitleMaxLength;
  */
 extern const NSInteger kGRVVideoOrderNew;
 
+/**
+ * Order that indicates a video has a new clip and we want to force this video
+ * to have a minimal order before it's refreshed
+ */
+extern const NSInteger kGRVVideoOrderAddedClip;
+
 
 // -----------------------------------------------------------------------------
 // HTTP Connection info.

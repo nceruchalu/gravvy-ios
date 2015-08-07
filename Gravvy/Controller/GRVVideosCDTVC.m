@@ -1749,10 +1749,6 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
 {
     if ([segue.sourceViewController isKindOfClass:[GRVAddClipCameraReviewVC class]]) {
          GRVAddClipCameraReviewVC *cameraReviewVC = (GRVAddClipCameraReviewVC *)segue.sourceViewController;
-        // Updated video is now at the top of the tableview, so scroll to top
-        [self.tableView setContentOffset:CGPointMake(0.0, 0.0 - self.tableView.contentInset.top)
-                                animated:YES];
-        [self showProgressHUDSuccessMessage:@"Clip Added"];
         
         // Set video's current index to start at the newly added clip
         GRVVideo *video = cameraReviewVC.video;
@@ -1768,6 +1764,20 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
             newClipIndex++;
         }
         video.currentClipIndex = @(newClipIndex);
+        
+        // Updated video is now at the top of the tableview, so scroll to top
+        [self.tableView setContentOffset:CGPointMake(0.0, 0.0 - self.tableView.contentInset.top)
+                                animated:YES];
+        [self showProgressHUDSuccessMessage:@"Clip Added"];
+        
+        // Give video an order that ensures it appears at the top of the tableview
+        // This works because when the viewWillAppear: method is called, a
+        // video refresh is done without re-ordering the videos
+        // However we need to ensure no two videos have this same special order,
+        // So first re-order all videos loaded by the fetched results controller
+        // then set a special video order for this
+        [GRVVideo reorderVideos:self.fetchedResultsController.fetchedObjects];
+        video.order = @(kGRVVideoOrderAddedClip);
         
         // Refresh recent contacts as that might have changed
         [GRVUser refreshFavorites:nil];

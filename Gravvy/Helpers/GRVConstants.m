@@ -57,7 +57,7 @@ const NSUInteger kGRVVideoTitleMaxLength    = 100;
 // Model Field Constants
 // -----------------------------------------------------------------------------
 const NSInteger kGRVVideoOrderNew           = -2;
-
+const NSInteger kGRVVideoOrderAddedClip     = -1;
 
 // -----------------------------------------------------------------------------
 // HTTP Connection info.
