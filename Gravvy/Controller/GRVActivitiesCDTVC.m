@@ -48,17 +48,40 @@ static NSUInteger const kMaxDisplayedVideoTitleLength = 30;
 
 @interface GRVActivitiesCDTVC ()
 
+/**
+ * Have you performed the initial refresh (with reorder of videos) on view load?
+ *
+ * @discussion
+ *      We could do this on app authentication but this consumes network bandwidth
+ *      that should go to rapidly playing videos.
+ */
+@property (nonatomic) BOOL performedInitialRefresh;
+
 @end
 
 @implementation GRVActivitiesCDTVC
 
 #pragma mark - View Lifecycle
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.performedInitialRefresh = NO;
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
-    // Silently refresh to pull in recent activities
-    [self refresh];
+    if (self.performedInitialRefresh) {
+        // Silently refresh to pull in recent activities if already performed
+        // initial refresh
+        [self refresh];
+        
+    } else {
+        // Perform initial refresh if not already done so
+        [self refreshAndShowSpinner];
+    }
+    self.performedInitialRefresh = YES;
     
     // register observers
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -132,6 +155,13 @@ static NSUInteger const kMaxDisplayedVideoTitleLength = 30;
             [self refreshTableView];
         });
     }];
+}
+
+- (void)refreshAndShowSpinner
+{
+    [self.refreshControl beginRefreshing];
+    [self.tableView setContentOffset:CGPointMake(0, 0.0 - self.tableView.contentInset.top - self.refreshControl.frame.size.height) animated:YES];
+    [self refresh];
 }
 
 #pragma mark - UITableViewDataSource

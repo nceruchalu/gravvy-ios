@@ -869,14 +869,6 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
 }
 
 #pragma mark Public
-- (void)showOrHideEmptyStateView
-{
-    [super showOrHideEmptyStateView];
-    // TableView background color depends on if empty state is showing
-    BOOL empty = [self.fetchedResultsController.fetchedObjects count] == 0;
-    self.tableView.backgroundColor = empty ? [UIColor whiteColor] : [UIColor groupTableViewBackgroundColor];
-}
-
 - (CGFloat)tableViewFooterHeight
 {
     // When serving as a details VC, there's no need for a footer as there's no

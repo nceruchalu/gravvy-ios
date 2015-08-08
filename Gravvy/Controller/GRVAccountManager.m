@@ -12,7 +12,6 @@
 #import "KeychainItemWrapper.h"
 #import "GRVConstants.h"
 #import "GRVContact+AddressBook.h"
-#import "GRVActivity+HTTP.h"
 #import "GRVUser+HTTP.h"
 #import "NBPhoneNumberUtil+Shared.h"
 #import "NBPhoneNumber.h"
@@ -299,10 +298,9 @@
                         
                          
                          // Now that we have a context and are authenticated
-                         // we can sync the top level objects, contacts,
-                         // activities, favorites
+                         // we can sync the top level objects, contacts and
+                         // favorites
                          [GRVContact refreshContacts:nil];
-                         [GRVActivity refreshActivities:nil];
                          [GRVUser refreshFavorites:nil];
                      }];
                      
