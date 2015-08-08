@@ -15,7 +15,6 @@
 #import "GRVConstants.h"
 #import "GRVUser+HTTP.h"
 #import "GRVVideo+HTTP.h"
-#import "GRVActivity+HTTP.h"
 #import "GRVAlertBannerView.h"
 #import "GRVAlertBannerManager.h"
 #import "GRVUserViewHelper.h"
@@ -248,9 +247,9 @@ static NSString *const kRemoteNotificationSoundFileExtension = @"caf";
                     [rootNVC popToRootViewControllerAnimated:NO];
                 }];
             } else {
-                // Already authenticated so refresh content
-                [GRVActivity refreshActivities:nil];
-                [GRVUser refreshFavorites:nil];
+                // Already authenticated so it would be nice to refresh content
+                // (activities and favorites) but results in unnecessary network
+                // calls. Save that bandwidth for video playing
             }
             
         }

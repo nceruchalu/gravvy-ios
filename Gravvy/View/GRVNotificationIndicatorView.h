@@ -14,6 +14,8 @@
 @interface GRVNotificationIndicatorView : UIView
 
 #pragma mark - Instance Methods
+- (void)startPulsingAnimation;
+
 - (void)stopPulsingAnimation;
 
 @end

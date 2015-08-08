@@ -493,8 +493,10 @@ static CGFloat const scrollingNavBarDelay = 480.0f;
 {
     if (self.managedObjectContext) {
         NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"GRVVideo"];
-        // fetch all new videos or videos with unseen notifications
-        request.predicate = [NSPredicate predicateWithFormat:@"(unseenClipsCount > 0) OR (unseenLikesCount > 0) OR (membership <= %d) OR (order <= %d)", GRVVideoMembershipInvited, kGRVVideoOrderNew];
+        
+        // fetch all new videos or videos with unseen notifications that actually
+        // have clips
+        request.predicate = [NSPredicate predicateWithFormat:@"((unseenClipsCount > 0) OR (unseenLikesCount > 0) OR (membership <= %d) OR (order <= %d)) AND (clips.@count > 0)", GRVVideoMembershipInvited, kGRVVideoOrderNew];
         
         // Sort videos because an instance of NSFetchedResultsController requires
         // a fetch request with sort descriptors

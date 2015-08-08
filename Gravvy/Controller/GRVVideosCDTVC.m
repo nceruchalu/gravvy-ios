@@ -1055,6 +1055,9 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     
     // Indicate if video has a notification
     headerView.notificationIndicatorView.hidden = ![video hasPendingNotifications];
+    if ([video hasPendingNotifications]) {
+        [headerView.notificationIndicatorView startPulsingAnimation];
+    }
 }
 
 #pragma mark Custom Section Footers

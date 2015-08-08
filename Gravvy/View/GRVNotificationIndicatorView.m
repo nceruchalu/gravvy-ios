@@ -32,16 +32,7 @@ static CGFloat const kDefaultAlpha = 1.0f;
     // want to redraw whenever bound change
     self.contentMode = UIViewContentModeRedraw;
     
-    // Pulsing Animation
-    // @ref http://stackoverflow.com/a/8083199
-    // @ref https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/CoreAnimation_guide/CreatingBasicAnimations/CreatingBasicAnimations.html#//apple_ref/doc/uid/TP40004514-CH3-SW17
-    CABasicAnimation *pulsingAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
-    pulsingAnimation.repeatCount=HUGE_VALF; // repeat animation forever
-    pulsingAnimation.autoreverses=YES;
-    pulsingAnimation.fromValue = @(kDefaultAlpha);
-    pulsingAnimation.toValue = @(0.0);
-    pulsingAnimation.duration=1.0;
-    [self.layer addAnimation:pulsingAnimation forKey:kPulsingAnimationKey];
+    [self startPulsingAnimation];
 }
 
 - (void)awakeFromNib
@@ -71,6 +62,23 @@ static CGFloat const kDefaultAlpha = 1.0f;
 
 #pragma mark - Instance Methods
 #pragma mark Public
+- (void)startPulsingAnimation
+{
+    // First ensure pulsing animation is stopped
+    [self stopPulsingAnimation];
+    
+    // Pulsing Animation
+    // @ref http://stackoverflow.com/a/8083199
+    // @ref https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/CoreAnimation_guide/CreatingBasicAnimations/CreatingBasicAnimations.html#//apple_ref/doc/uid/TP40004514-CH3-SW17
+    CABasicAnimation *pulsingAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    pulsingAnimation.repeatCount=HUGE_VALF; // repeat animation forever
+    pulsingAnimation.autoreverses=YES;
+    pulsingAnimation.fromValue = @(kDefaultAlpha);
+    pulsingAnimation.toValue = @(0.0);
+    pulsingAnimation.duration=1.0;
+    [self.layer addAnimation:pulsingAnimation forKey:kPulsingAnimationKey];
+}
+
 - (void)stopPulsingAnimation
 {
     [self.layer removeAnimationForKey:kPulsingAnimationKey];
