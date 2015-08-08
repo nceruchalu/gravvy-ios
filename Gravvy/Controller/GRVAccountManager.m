@@ -14,7 +14,6 @@
 #import "GRVContact+AddressBook.h"
 #import "GRVActivity+HTTP.h"
 #import "GRVUser+HTTP.h"
-#import "GRVVideo+HTTP.h"
 #import "NBPhoneNumberUtil+Shared.h"
 #import "NBPhoneNumber.h"
 #import <Crashlytics/Crashlytics.h>
@@ -301,9 +300,8 @@
                          
                          // Now that we have a context and are authenticated
                          // we can sync the top level objects, contacts,
-                         // videos, activities, favorites
+                         // activities, favorites
                          [GRVContact refreshContacts:nil];
-                         [GRVVideo refreshVideos:YES withCompletion:nil];
                          [GRVActivity refreshActivities:nil];
                          [GRVUser refreshFavorites:nil];
                      }];

@@ -120,6 +120,20 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
 @property (strong, nonatomic) NSMutableDictionary *sectionHeaderViews;
 
 /**
+ * Have you performed the initial refresh (with reorder of videos) on view load?
+ *
+ * @discussion
+ *      We could do this on app authentication or in viewDidLoad, but if this
+ *      happens the tableView won't be aware and will be tracking changes to the
+ *      managedObjectContext. This creates a situation where the app starts up
+ *      and after some time (when refresh with reorder completes) a new video is 
+ *      added and has a mismatched section header, as the tableView isn't reloaded.
+ *      With this variable, we only perform this reload (once) on view appearance
+ *      and have the ability to do a proper refresh.
+ */
+@property (nonatomic) BOOL performedInitialRefresh;
+
+/**
  * Skip the next play reporting event. This means the play has already been
  * recorded earlier in this loop
  */
@@ -316,6 +330,8 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
         self.navigationItem.title = @"Video";
     }
     
+    self.performedInitialRefresh = NO;
+    
     // Setup height of each tableview row
     CGFloat playerViewHeight = self.view.frame.size.width;
     self.tableView.rowHeight = kTableViewCellHeightNoPlayer + playerViewHeight;
@@ -337,11 +353,18 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
 {
     [super viewWillAppear:animated];
     
-    // Silently refresh to pull in recent video updates
-    if (!self.skipRefreshOnNextAppearance) {
+    // Silently refresh to pull in recent video updates if already performed
+    // initial refresh
+    if (self.performedInitialRefresh && !self.skipRefreshOnNextAppearance) {
         [self refreshWithoutReorder];
     }
     self.skipRefreshOnNextAppearance = NO;
+    
+    // Perform initial refresh if not already done so
+    if (!self.performedInitialRefresh) {
+        [self refreshAndShowSpinner];
+    }
+    self.performedInitialRefresh = YES;
     
     [GRVMuteSwitchDetector sharedDetector].suspended = NO;
     
