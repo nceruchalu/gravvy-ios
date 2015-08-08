@@ -319,6 +319,22 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     return _addClipPopTip;
 }
 
+- (void)setManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
+{
+    [super setManagedObjectContext:managedObjectContext];
+    
+    // Perform initial refresh if not already done so
+    if (managedObjectContext && !self.performedInitialRefresh) {
+        // Initial refresh for video Details VC doesn't need to reorder
+        if (self.detailsVideo) {
+            [self refreshWithoutReorder];
+        } else {
+            [self refreshAndShowSpinner];
+        }
+        self.performedInitialRefresh = YES;
+    }
+}
+
 #pragma mark - View Lifecycle
 - (void)viewDidLoad
 {
@@ -360,16 +376,6 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     }
     self.skipRefreshOnNextAppearance = NO;
     
-    // Perform initial refresh if not already done so
-    if (!self.performedInitialRefresh) {
-        // Initial refresh for video Details VC doesn't need to reorder
-        if (self.detailsVideo) {
-            [self refreshWithoutReorder];
-        } else {
-            [self refreshAndShowSpinner];
-        }
-    }
-    self.performedInitialRefresh = YES;
     
     [GRVMuteSwitchDetector sharedDetector].suspended = NO;
     

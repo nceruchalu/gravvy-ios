@@ -159,6 +159,19 @@
         
         [existingVideo updateParticipation];
     }
+    
+    // Account for CDN changes on URLs
+    NSString *photoSmallThumbnailURL = [[videoDictionary objectForKey:kGRVRESTVideoPhotoSmallThumbnailKey] description];
+    NSString *photoThumbnailURL = [[videoDictionary objectForKey:kGRVRESTVideoPhotoThumbnailKey] description];
+    
+    if ([photoThumbnailURL length] && ![existingVideo.photoThumbnailURL isEqualToString:photoThumbnailURL]) {
+        // We of course check that this is also a full JSON representation when
+        // checking for URL changes
+        existingVideo.photoThumbnailURL = photoThumbnailURL;
+    }
+    if (![existingVideo.photoSmallThumbnailURL isEqualToString:photoSmallThumbnailURL] ) {
+        existingVideo.photoSmallThumbnailURL = photoSmallThumbnailURL;
+    }
 }
 
 

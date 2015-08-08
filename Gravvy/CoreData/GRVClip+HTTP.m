@@ -70,19 +70,22 @@
     GRVUser *owner = [GRVUser userWithUserInfo:[clipDictionary objectForKey:kGRVRESTClipOwnerKey]
        inManagedObjectContext:existingClip.managedObjectContext];
     
-    // only perform a sync if there are any changes
-    if (![updatedAt isEqualToDate:existingClip.updatedAt]) {
-        existingClip.mp4URL = [[clipDictionary objectForKey:kGRVRESTClipMp4Key] description];
+    // Get URL strings
+    NSString *photoThumbnailURL = [[clipDictionary objectForKey:kGRVRESTClipPhotoThumbnailKey] description];
+    NSString *mp4URL = [[clipDictionary objectForKey:kGRVRESTClipMp4Key] description];
+    
+    // only perform a sync if there are any changes which is indicated by a change
+    // in updatedAt, or changes in URLs (possibly from CDN changes)
+    // This also coverts the case that photo thumbnail wasn't always present in
+    // in the model, so if it's missing it gets added in now.
+    if (![updatedAt isEqualToDate:existingClip.updatedAt] ||
+        ![photoThumbnailURL isEqualToString:existingClip.photoThumbnailURL] ||
+        ![mp4URL isEqualToString:existingClip.mp4URL]) {
+        existingClip.mp4URL = mp4URL;
         existingClip.order = [clipDictionary objectForKey:kGRVRESTClipOrderKey];
-        existingClip.photoThumbnailURL = [[clipDictionary objectForKey:kGRVRESTClipPhotoThumbnailKey] description];
+        existingClip.photoThumbnailURL = photoThumbnailURL;
         existingClip.updatedAt = updatedAt;
         existingClip.owner = owner;
-    }
-    
-    if (!existingClip.photoThumbnailURL) {
-        // Photo thumbnail wasn't always present in the model, so if it's missing
-        // add that now
-        existingClip.photoThumbnailURL = [[clipDictionary objectForKey:kGRVRESTClipPhotoThumbnailKey] description];
     }
 }
 

@@ -78,12 +78,15 @@
     NSString *rfc3339UpdatedAt = [[userDictionary objectForKey:kGRVRESTUserUpdatedAtKey] description];
     NSDate *updatedAt = [rfc3339DateFormatter dateFromString:rfc3339UpdatedAt];
     
-    // only perform a sync if there are any changes
-    if (![updatedAt isEqualToDate:existingUser.updatedAt]) {
+    // Get avatarThumbnailURL to be used for syncing in the event of CDN changes
+    NSString *avatarThumbnailURL = [userDictionary[kGRVRESTUserAvatarThumbnailKey] description];
+    
+    // only perform a sync if there are any changes and also account for CDN changes
+    if (![updatedAt isEqualToDate:existingUser.updatedAt] ||
+        ![avatarThumbnailURL isEqualToString:existingUser.avatarThumbnailURL]) {
         
         // get properties that will be sync'd
         NSString *fullName = [userDictionary[kGRVRESTUserFullNameKey] description];
-        NSString *avatarThumbnailURL = [userDictionary[kGRVRESTUserAvatarThumbnailKey] description];
         
         // only update fullName if it changed
         if (![fullName isEqualToString:existingUser.fullName]) {

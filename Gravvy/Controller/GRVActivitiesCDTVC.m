@@ -61,6 +61,18 @@ static NSUInteger const kMaxDisplayedVideoTitleLength = 30;
 
 @implementation GRVActivitiesCDTVC
 
+#pragma mark - Properties
+- (void)setManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
+{
+    [super setManagedObjectContext:managedObjectContext];
+    
+    if (managedObjectContext && !self.performedInitialRefresh) {
+        // Perform initial refresh if not already done so
+        [self refreshAndShowSpinner];
+        self.performedInitialRefresh = YES;
+    }
+}
+
 #pragma mark - View Lifecycle
 - (void)viewDidLoad
 {
@@ -76,12 +88,7 @@ static NSUInteger const kMaxDisplayedVideoTitleLength = 30;
         // Silently refresh to pull in recent activities if already performed
         // initial refresh
         [self refresh];
-        
-    } else {
-        // Perform initial refresh if not already done so
-        [self refreshAndShowSpinner];
     }
-    self.performedInitialRefresh = YES;
     
     // register observers
     [[NSNotificationCenter defaultCenter] addObserver:self
