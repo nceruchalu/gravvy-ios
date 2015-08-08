@@ -362,7 +362,12 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     
     // Perform initial refresh if not already done so
     if (!self.performedInitialRefresh) {
-        [self refreshAndShowSpinner];
+        // Initial refresh for video Details VC doesn't need to reorder
+        if (self.detailsVideo) {
+            [self refreshWithoutReorder];
+        } else {
+            [self refreshAndShowSpinner];
+        }
     }
     self.performedInitialRefresh = YES;
     
