@@ -1413,7 +1413,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" id="F0l-yL-die">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="qjp-3L-GYj">
+                        <barButtonItem key="leftBarButtonItem" systemItem="stop" id="qjp-3L-GYj">
                             <connections>
                                 <action selector="cancel:" destination="h3q-AD-4KY" id="PJk-Jk-1jH"/>
                             </connections>
