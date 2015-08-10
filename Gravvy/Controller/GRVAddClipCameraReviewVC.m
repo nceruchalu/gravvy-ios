@@ -14,6 +14,7 @@
 #import "GRVVideo.h"
 #import "GRVClip+HTTP.h"
 #import "GRVModelManager.h"
+#import "GRVUserViewHelper.h"
 
 #pragma mark - Constants
 /**
@@ -27,6 +28,7 @@ static NSString *const kUnwindSegueIdentifier = @"addedClip";
 #pragma mark - Properties
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *addButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
+@property (weak, nonatomic) IBOutlet UILabel *videoTitleLabel;
 
 #pragma mark Private
 @property (strong, nonatomic, readwrite) GRVClip *addedClip;
@@ -42,6 +44,8 @@ static NSString *const kUnwindSegueIdentifier = @"addedClip";
     self.addButton.enabled = NO;
     
     [super viewDidLoad];
+    
+    [self configureVideoTitle];
 }
 
 #pragma mark - Instance Methods
@@ -49,6 +53,16 @@ static NSString *const kUnwindSegueIdentifier = @"addedClip";
 - (void)recordingValidated
 {
     self.addButton.enabled = YES;
+}
+
+#pragma mark Private
+- (void)configureVideoTitle
+{
+    if ([self.video.title length]) {
+        self.videoTitleLabel.text = [NSString stringWithFormat:@"Video: %@", self.video.title];
+    } else {
+        self.videoTitleLabel.text = [NSString stringWithFormat:@"Video by: %@", [GRVUserViewHelper userFullName:self.video.owner]];
+    }
 }
 
 #pragma mark - Target/Action Methods
@@ -61,11 +75,9 @@ static NSString *const kUnwindSegueIdentifier = @"addedClip";
     // temporarily disable add buttons
     self.addButton.enabled = NO;
     
-    // Hide keyboard if showing
-    [self.view endEditing:YES];
-    
     // inform user of server activity.
     [self.spinner startAnimating];
+    self.videoTitleLabel.hidden = YES;
     
     // Upload video to the server
     NSString *videoClipListURL = [GRVRestUtils videoClipListURL:self.video.hashKey];
@@ -97,8 +109,7 @@ static NSString *const kUnwindSegueIdentifier = @"addedClip";
                                    associatedVideo:self.video
                             inManagedObjectContext:[GRVModelManager sharedManager].managedObjectContext];
         
-        // No need to enable buttons or
-        // stop spinner as we unwind VC
+        // No need to enable buttons or stop spinner as we unwind VC
         [self performSegueWithIdentifier:kUnwindSegueIdentifier sender:self];
         
     }
@@ -108,10 +119,11 @@ static NSString *const kUnwindSegueIdentifier = @"addedClip";
                              withAlternateTitle:@"Can't add clip to video."
                                      andMessage:@"Something went wrong. Please try again."];
         // enable button
-        self.addButton.enabled = NO;
+        self.addButton.enabled = YES;
         
         // inform user server activity is done
         [self.spinner stopAnimating];
+        self.videoTitleLabel.hidden = NO;
     }
                                  operationDependency:nil];
 }

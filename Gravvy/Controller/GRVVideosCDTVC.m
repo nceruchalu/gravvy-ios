@@ -325,13 +325,19 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     
     // Perform initial refresh if not already done so
     if (managedObjectContext && !self.performedInitialRefresh) {
-        // Initial refresh for video Details VC doesn't need to reorder
         if (self.detailsVideo) {
+            // Initial refresh for video Details VC doesn't need to reorder
+            self.performedInitialRefresh = YES;
             [self refreshWithoutReorder];
         } else {
-            [self refreshAndShowSpinner];
+            // Refresh and reorder while showing spinner for a collection of videos
+            // Don't capture self in a block
+            GRVVideosCDTVC* __weak weakSelf = self;
+            [self refreshAndShowSpinnerWithCompletion:^{
+                weakSelf.performedInitialRefresh = YES;
+                [weakSelf autoPlayVideo];
+            }];
         }
-        self.performedInitialRefresh = YES;
     }
 }
 
@@ -730,6 +736,11 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
  */
 - (void)autoPlayVideo
 {
+    // If the VC hasn't peformed initial refresh yet don't bother
+    if (!self.performedInitialRefresh) {
+        return;
+    }
+    
     // Don't bother and pause if the view is not visible
     if(!self.view.window) {
         [self pause];
@@ -1136,6 +1147,18 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
  */
 - (IBAction)refresh
 {
+    [self refreshWithCompletion:nil];
+}
+
+/**
+ * Do a complete refresh and re-ordering of the table with a callback block
+ *
+ * @param refreshIsCompleted     block to be called after refreshing videos. This
+ *      is run on the main queue. If this isn't provided the default callback
+ *      will call [self autoPlayVideo]
+ */
+- (void)refreshWithCompletion:(void (^)())refreshIsCompleted
+{
     // During refresh don't modify table for changes in managed object contexxt
     self.suspendAutomaticTrackingOfChangesInManagedObjectContext = YES;
     // Refresh videos from server
@@ -1149,16 +1172,38 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
             self.activeVideo = nil;
             self.activeVideoClips = nil;
             self.activeVideoCell = nil;
-            [self autoPlayVideo];
+            
+            if (refreshIsCompleted) {
+                refreshIsCompleted();
+            } else {
+                [self autoPlayVideo];
+            }
         });
     }];
 }
 
+/**
+ * Do a complete refresh and re-ordering of the table while programmatically
+ * showing the refresh control spinner
+ */
 - (void)refreshAndShowSpinner
+{
+    [self refreshAndShowSpinnerWithCompletion:nil];
+}
+
+/**
+ * Do a complete refresh and re-ordering of the table while programmatically
+ * showing the refresh control spinner
+ *
+ * @param refreshIsCompleted     block to be called after refreshing videos. This
+ *      is run on the main queue. If this isn't provided the default callback
+ *      will call [self autoPlayVideo]
+ */
+- (void)refreshAndShowSpinnerWithCompletion:(void (^)())refreshIsCompleted
 {
     [self.refreshControl beginRefreshing];
     [self.tableView setContentOffset:CGPointMake(0, 0.0 - self.tableView.contentInset.top - self.refreshControl.frame.size.height) animated:YES];
-    [self refresh];
+    [self refreshWithCompletion:refreshIsCompleted];
 }
 
 /**

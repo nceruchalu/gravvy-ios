@@ -2776,15 +2776,24 @@
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="8ke-uk-nJm">
                                         <rect key="frame" x="141.5" y="4" width="37" height="37"/>
                                     </activityIndicatorView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Video: Family guy character talking boxing." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3bz-7j-wmf" userLabel="Video Title Label">
+                                        <rect key="frame" x="10" y="15" width="300" height="15.5"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstAttribute="centerY" secondItem="3bz-7j-wmf" secondAttribute="centerY" id="Kr1-65-PQP"/>
                                     <constraint firstAttribute="height" constant="45" id="PO5-v4-8Lb"/>
                                     <constraint firstAttribute="centerY" secondItem="8ke-uk-nJm" secondAttribute="centerY" id="PXA-n9-vza"/>
+                                    <constraint firstItem="3bz-7j-wmf" firstAttribute="leading" secondItem="BuB-mo-ml4" secondAttribute="leading" constant="10" id="Swh-uN-R2C"/>
                                     <constraint firstAttribute="centerX" secondItem="8ke-uk-nJm" secondAttribute="centerX" id="VBe-da-fQh"/>
                                     <constraint firstAttribute="trailing" secondItem="vHl-N7-eD8" secondAttribute="trailing" id="XL4-PJ-fGb"/>
                                     <constraint firstItem="vHl-N7-eD8" firstAttribute="leading" secondItem="BuB-mo-ml4" secondAttribute="leading" id="bXm-Xt-ESk"/>
                                     <constraint firstAttribute="bottom" secondItem="vHl-N7-eD8" secondAttribute="bottom" id="hoK-TJ-A93"/>
                                     <constraint firstItem="vHl-N7-eD8" firstAttribute="top" secondItem="BuB-mo-ml4" secondAttribute="top" id="r76-bF-Gse"/>
+                                    <constraint firstAttribute="trailing" secondItem="3bz-7j-wmf" secondAttribute="trailing" constant="10" id="xrN-z5-n5z"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -2814,6 +2823,7 @@
                         <outlet property="addButton" destination="kp1-UU-4fx" id="6S8-T8-pIr"/>
                         <outlet property="playerView" destination="p4j-U8-D6O" id="kLg-Uu-EdI"/>
                         <outlet property="spinner" destination="8ke-uk-nJm" id="yw3-mo-jOM"/>
+                        <outlet property="videoTitleLabel" destination="3bz-7j-wmf" id="gjI-tp-0CR"/>
                         <segue destination="5cV-oT-EB3" kind="unwind" identifier="addedClip" unwindAction="addedClip:" id="6mI-yK-hCp"/>
                     </connections>
                 </viewController>
