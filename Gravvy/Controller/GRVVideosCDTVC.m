@@ -26,6 +26,9 @@
 #import "AMPopTip.h"
 #import "GRVMuteSwitchDetector.h"
 #import "GRVClipBrowser.h"
+#import "GRVHTTPManager.h"
+#import "AFHTTPRequestOperation.h"
+#import <MobileCoreServices/MobileCoreServices.h>
 
 #import <FBSDKShareKit/FBSDKShareKit.h>
 #import <FBSDKCoreKit/FBSDKConstants.h>
@@ -80,6 +83,18 @@ static NSString *const kSegueIdentifierAddClip = @"showAddClipCameraVC";
  */
 static NSString *const kSegueIdentifierShowLikers = @"showLikersVC";
 
+/**
+ * HTTP and HTTPS scheme identifiers
+ */
+static NSString *kHttpScheme = @"http://";
+static NSString *kHttpsScheme = @"https://";
+
+/**
+ * Custom HTTP and HTTPS scheme identifiers
+ */
+static NSString *const kCustomHttpScheme = @"gravvy://";
+static NSString *const kCustomHttpsScheme = @"gravvys://";
+
 /** 
  * Constants for the key-value observation context.
  */
@@ -108,7 +123,8 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
 
 @interface GRVVideosCDTVC () <UIActionSheetDelegate,
                                 FBSDKSharingDelegate,
-                                MFMessageComposeViewControllerDelegate>
+                                MFMessageComposeViewControllerDelegate,
+                                AVAssetResourceLoaderDelegate>
 
 #pragma mark - Properties
 /**
@@ -215,11 +231,42 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
 
 @property (strong, nonatomic) NSDate *addClipPopTipDismissTime;
 
+/**
+ * Tracks all pending AVAssetResourceLoadingRequest objects we have not loaded
+ * yet. This is necessary as we load resources asynchronously, and must store
+ * strong references to the loadingRequests while loading.
+ */
+@property (strong, nonatomic) NSMutableArray *pendingLoadingRequests;
+
 @end
 
 @implementation GRVVideosCDTVC
 
 #pragma mark - Properties
+#pragma mark Overrides
+- (void)setManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
+{
+    [super setManagedObjectContext:managedObjectContext];
+    
+    // Perform initial refresh if not already done so
+    if (managedObjectContext && !self.performedInitialRefresh) {
+        if (self.detailsVideo) {
+            // Initial refresh for video Details VC doesn't need to reorder
+            self.performedInitialRefresh = YES;
+            [self refreshWithoutReorder];
+        } else {
+            // Refresh and reorder while showing spinner for a collection of videos
+            // Don't capture self in a block
+            GRVVideosCDTVC* __weak weakSelf = self;
+            [self refreshAndShowSpinnerWithCompletion:^{
+                weakSelf.performedInitialRefresh = YES;
+                [weakSelf autoPlayVideo];
+            }];
+        }
+    }
+}
+
+#pragma mark Private
 - (NSMutableDictionary *)sectionHeaderViews
 {
     // lazy instantiation
@@ -319,27 +366,15 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     return _addClipPopTip;
 }
 
-- (void)setManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
+- (NSMutableArray *)pendingLoadingRequests
 {
-    [super setManagedObjectContext:managedObjectContext];
-    
-    // Perform initial refresh if not already done so
-    if (managedObjectContext && !self.performedInitialRefresh) {
-        if (self.detailsVideo) {
-            // Initial refresh for video Details VC doesn't need to reorder
-            self.performedInitialRefresh = YES;
-            [self refreshWithoutReorder];
-        } else {
-            // Refresh and reorder while showing spinner for a collection of videos
-            // Don't capture self in a block
-            GRVVideosCDTVC* __weak weakSelf = self;
-            [self refreshAndShowSpinnerWithCompletion:^{
-                weakSelf.performedInitialRefresh = YES;
-                [weakSelf autoPlayVideo];
-            }];
-        }
+    if (!_pendingLoadingRequests) {
+        // lazy instantiation
+        _pendingLoadingRequests = [NSMutableArray array];
     }
+    return _pendingLoadingRequests;
 }
+
 
 #pragma mark - View Lifecycle
 - (void)viewDidLoad
@@ -552,13 +587,25 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     }
     clips = [clipsStartingAtAnchorIndex copy];
     
+    // Reset the collection of unfulfilled AVAssetResourceLoadingRequest objects
+    self.pendingLoadingRequests = nil;
     
     // Setup player items
     NSMutableArray *playerItems = [NSMutableArray array];
     NSMutableArray *playerItemClips = [NSMutableArray array];
     for (GRVClip *clip in clips) {
-        NSURL *url = [NSURL URLWithString:clip.mp4URL];
-        AVPlayerItem *playerItem = [AVPlayerItem playerItemWithURL:url];
+        // Change protocol to the custom one from http(s)
+        NSString *customURL = [clip.mp4URL stringByReplacingOccurrencesOfString:kHttpsScheme withString:kCustomHttpsScheme];
+        customURL = [customURL stringByReplacingOccurrencesOfString:kHttpScheme withString:kCustomHttpScheme];
+        
+        // Create associated asset and  setup resource loader on the asset so
+        // that we can control the loading process
+        NSURL *url = [NSURL URLWithString:customURL];
+        AVURLAsset *asset = [AVURLAsset URLAssetWithURL:url options:nil];
+        [asset.resourceLoader setDelegate:self queue:dispatch_get_main_queue()];
+       
+        // Create playerItem from the asset
+        AVPlayerItem *playerItem = [AVPlayerItem playerItemWithAsset:asset];
         // ensure that observing the status property is done before the
         // playerItem is associated with the player
         [playerItem addObserver:self forKeyPath:@"status" options:0 context:&PlayerItemStatusContext];
@@ -1628,6 +1675,132 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
         // Fallback to superclass implementation for cases not handled
         [super controller:controller didChangeObject:anObject atIndexPath:indexPath forChangeType:type newIndexPath:newIndexPath];
     }
+}
+
+
+#pragma mark - AVAssetResourceLoaderDelegate
+- (BOOL)resourceLoader:(AVAssetResourceLoader *)resourceLoader shouldWaitForLoadingOfRequestedResource:(AVAssetResourceLoadingRequest *)loadingRequest
+{
+    [self.pendingLoadingRequests addObject:loadingRequest];
+    
+    // Start fetching the video file
+    NSURL *customURL = loadingRequest.request.URL;
+    NSString *actualURL = [[[customURL absoluteString] stringByReplacingOccurrencesOfString:kCustomHttpScheme withString:kHttpScheme] stringByReplacingOccurrencesOfString:kCustomHttpsScheme withString:kHttpsScheme];
+    
+    // Don't capture strong reference to loadingRequest so that if it's cancelled
+    // we don't try writing to it
+    AVAssetResourceLoadingRequest* __weak weakLoadingRequest = loadingRequest;
+    GRVHTTPManager *manager = [GRVHTTPManager sharedManager];
+    [manager videoFromURL:actualURL
+                  success:^(AFHTTPRequestOperation *operation, id video) {
+                      [self completedVideoDownload:video withResponse:operation.response forLoadingRequest:weakLoadingRequest];
+                  }
+                  failure:^(NSError *error) {
+                      [self failedVideoDownload:error forLoadingRequest:weakLoadingRequest];
+                  }];
+    
+    return YES;
+}
+
+- (void)resourceLoader:(AVAssetResourceLoader *)resourceLoader didCancelLoadingRequest:(AVAssetResourceLoadingRequest *)loadingRequest
+{
+    [self.pendingLoadingRequests removeObject:loadingRequest];
+}
+
+#pragma mark Helpers
+/**
+ * Handle completion of the request to download an MP4 video.
+ *
+ * @discussion
+ *      An AVAssetResourceLoadingRequest has two parts to it -
+ *      contentInformationRequest, and dataRequest. A contentInformationRequest
+ *      is a request to identify the content length, content type, and whether
+ *      the resource supports byte range requests. With byte range requests,
+ *      AVPlayer can get fancy and apply various optimizations.
+ *
+ * @ref http://vombat.tumblr.com/post/86294492874/caching-audio-streamed-using-avplayer
+ * @ref https://gist.github.com/anonymous/83a93746d1ea52e9d23f
+ *
+ * @param video             Downloaded mp4 data
+ * @param response          Download response object
+ * @param loadingRequest    Loading Request that triggered the video download
+ */
+- (void)completedVideoDownload:(id)video
+                  withResponse:(NSHTTPURLResponse *)response
+             forLoadingRequest:(AVAssetResourceLoadingRequest *)loadingRequest
+{
+    // If loading request has been canceled then do nothing
+    if (!loadingRequest.cancelled) {
+        [self fillInContentInformation:loadingRequest.contentInformationRequest withResponse:response];
+        BOOL didRespondCompletely = [self respondWithData:(NSData *)video
+                                               forRequest:loadingRequest.dataRequest];
+        if (didRespondCompletely) {
+            // treat the processing of the request as complete
+            [loadingRequest finishLoading];
+        }
+    }
+}
+
+/**
+ * Handle the failure to download mp4 video for which the resource loader’s
+ * delegate took responsibility.
+ *
+ * @param error             Network error that occurred during mp4 download
+ * @param loadingRequest    Loading Request that triggered the video download
+ */
+- (void)failedVideoDownload:(NSError *)error
+          forLoadingRequest:(AVAssetResourceLoadingRequest *)loadingRequest
+{
+    // If loading request has been canceled then do nothing
+    if (!loadingRequest.cancelled) {
+        [loadingRequest finishLoadingWithError:error];
+    }
+}
+
+
+- (void)fillInContentInformation:(AVAssetResourceLoadingContentInformationRequest *)contentInformationRequest withResponse:(NSHTTPURLResponse *)response
+{
+    if (!contentInformationRequest) {
+        // If a loading request's contentInformationRequest property is nil
+        // there's nothing to do.
+        return;
+    }
+    
+    NSString *mimeType = [response MIMEType];
+    CFStringRef contentType = UTTypeCreatePreferredIdentifierForTag(kUTTagClassMIMEType, (__bridge CFStringRef)(mimeType), NULL);
+    
+    contentInformationRequest.byteRangeAccessSupported = YES;
+    contentInformationRequest.contentType = CFBridgingRelease(contentType);
+    contentInformationRequest.contentLength = [response expectedContentLength];
+}
+
+- (BOOL)respondWithData:(NSData *)videoData
+             forRequest:(AVAssetResourceLoadingDataRequest *)dataRequest
+{
+    long long startOffset = dataRequest.requestedOffset;
+    if (dataRequest.currentOffset != 0) {
+        startOffset = dataRequest.currentOffset;
+    }
+    
+    // Don't have any data at all for this request
+    if (videoData.length < startOffset) {
+        return NO;
+    }
+    
+    // This is the total data we have from startOffset to whatever has been
+    // downloaded so far
+    NSUInteger unreadBytes = videoData.length - (NSUInteger)startOffset;
+    
+    // Respond with whatever is available if we can't satisfy the request
+    // fully yet
+    NSUInteger numberOfBytesToRespondWith = MIN((NSUInteger)dataRequest.requestedLength, unreadBytes);
+    
+    [dataRequest respondWithData:[videoData subdataWithRange:NSMakeRange((NSUInteger)startOffset, numberOfBytesToRespondWith)]];
+    
+    long long endOffset = startOffset + dataRequest.requestedLength;
+    BOOL didRespondFully = videoData.length >= endOffset;
+    
+    return didRespondFully;
 }
 
 

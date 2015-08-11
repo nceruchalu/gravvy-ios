@@ -87,6 +87,20 @@ extern const BOOL kGRVReachabilityRequired;
 
 
 // -----------------------------------------------------------------------------
+// Model Configuration info.
+// -----------------------------------------------------------------------------
+/**
+ * kGRVCacheMemoryCapacity is memory capacity of the shared NSURLCache, in bytes.
+ */
+extern const NSUInteger kGRVCacheMemoryCapacity;
+
+/**
+ * kGRVCacheDiskCapacity is disk capacity of the shared NSURLCache, in bytes.
+ */
+extern const NSUInteger kGRVCacheDiskCapacity;
+
+
+// -----------------------------------------------------------------------------
 // Video Configuration info.
 // -----------------------------------------------------------------------------
 /**
@@ -123,6 +137,7 @@ extern const NSTimeInterval kGRVPopTipMaximumDuration;
  * kGRVPopTipMinimumDuration is the minimum duration, in seconds, to show a poptip
  */
 extern const NSTimeInterval kGRVPopTipMinimumDuration;
+
 
 // -----------------------------------------------------------------------------
 // Model Field Settings (Max Lengths)

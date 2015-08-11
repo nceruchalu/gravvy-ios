@@ -30,6 +30,12 @@ const BOOL kGRVReachabilityRequired     = YES;
 
 
 // -----------------------------------------------------------------------------
+// Model Configuration info.
+// -----------------------------------------------------------------------------
+const NSUInteger kGRVCacheMemoryCapacity    = 2 * 1024 * 1024;      // 2mb
+const NSUInteger kGRVCacheDiskCapacity      = 100 * 1024 * 1024;    // 100mb
+
+// -----------------------------------------------------------------------------
 // Video Configuration info.
 // -----------------------------------------------------------------------------
 const NSTimeInterval kGRVClipMaximumDuration = 5.0f;

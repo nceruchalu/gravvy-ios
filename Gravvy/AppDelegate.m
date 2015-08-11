@@ -170,9 +170,20 @@ static NSString *const kRemoteNotificationSoundFileExtension = @"caf";
     }
     [sharedApp cancelAllLocalNotifications];
     
+    // Declare a shared NSURLCache with 2mb of memory and 100mb of disk space
+    NSURLCache *sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:kGRVCacheMemoryCapacity
+                                                            diskCapacity:kGRVCacheDiskCapacity
+                                                                diskPath:@"gravvy.cache.db"];
+    [NSURLCache setSharedURLCache:sharedCache];
+    
     // Connect app delegate to FBSDKCoreKit
     [[FBSDKApplicationDelegate sharedInstance] application:application
                              didFinishLaunchingWithOptions:launchOptions];
+    
+#if DEBUG
+    // Log application folder so it can be used for debugging
+    NSLog(@"Application Folder: %@",[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory  inDomains:NSUserDomainMask] lastObject]);
+#endif
     
     return YES;
 }

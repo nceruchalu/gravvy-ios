@@ -206,4 +206,23 @@
              failure:(void (^)(NSError *error))failure;
 
 
+/**
+ * Asynchronously downloads a video from the specified URL.
+ * This does have caching.
+ *
+ * @param URLString
+ *      The absolute URL location of the video.
+ * @param success
+ *      A block object to be executed when the task finishes successfully. This
+ *      block has no return value and takes one argument: the request
+ *      operation and the downloaded mp4
+ * @param failure
+ *      A block object to be executed when the task finishes unsuccessfull.
+ *      This block has no return value and takes one argument: the error
+ *      describing the network or parsing error that occured.
+ */
+- (void)videoFromURL:(NSString *)URLString
+             success:(void (^)(AFHTTPRequestOperation *operation, id video))success
+             failure:(void (^)(NSError *error))failure;
+
 @end

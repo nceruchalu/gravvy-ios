@@ -274,6 +274,32 @@
                              }];
 }
 
+- (void)videoFromURL:(NSString *)URLString
+             success:(void (^)(AFHTTPRequestOperation *operation, id video))success
+             failure:(void (^)(NSError *error))failure
+{
+    // Would have used a shared manager object but that results in memory warnings
+    // Have to use NSURLConnection to ensure caching works
+    // @ref http://stackoverflow.com/a/25967174
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+
+    AFHTTPRequestSerializer *requestSerializer = [AFHTTPRequestSerializer serializer];
+    requestSerializer.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
+    manager.requestSerializer = requestSerializer;
+    
+    AFHTTPResponseSerializer *responseSerializer =  [AFHTTPResponseSerializer serializer];
+    manager.responseSerializer = responseSerializer;
+    
+    [manager GET:URLString
+      parameters:nil
+         success:^(AFHTTPRequestOperation *operation, id responseObject) {
+             if (success) success(operation, responseObject);
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             if (failure) failure(error);
+         }];
+}
+
 
 #pragma mark - Private
 /**
