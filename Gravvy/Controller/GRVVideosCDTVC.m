@@ -932,7 +932,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     }];
 }
 
-#pragma mark Public
+#pragma mark Public: Overrides
 - (CGFloat)tableViewFooterHeight
 {
     // When serving as a details VC, there's no need for a footer as there's no
@@ -965,6 +965,203 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     self.activeVideoClips = nil;
     self.activeVideoCell = nil;
 }
+
+
+#pragma mark - Refresh
+/**
+ * Do a complete refresh and re-ordering of the table
+ */
+- (IBAction)refresh
+{
+    [self refreshWithCompletion:nil];
+}
+
+/**
+ * Do a complete refresh and re-ordering of the table with a callback block
+ *
+ * @param refreshIsCompleted     block to be called after refreshing videos. This
+ *      is run on the main queue. If this isn't provided the default callback
+ *      will call [self autoPlayVideo]
+ */
+- (void)refreshWithCompletion:(void (^)())refreshIsCompleted
+{
+    // During refresh don't modify table for changes in managed object contexxt
+    self.suspendAutomaticTrackingOfChangesInManagedObjectContext = YES;
+    // Refresh videos from server
+    [GRVVideo refreshVideos:YES withCompletion:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            // run in main queue UIKit only runs there
+            [self.refreshControl endRefreshing];
+            self.suspendAutomaticTrackingOfChangesInManagedObjectContext = NO;
+            [self.tableView reloadData];
+            
+            self.activeVideo = nil;
+            self.activeVideoClips = nil;
+            self.activeVideoCell = nil;
+            
+            if (refreshIsCompleted) {
+                refreshIsCompleted();
+            } else {
+                [self autoPlayVideo];
+            }
+        });
+    }];
+}
+
+/**
+ * Do a complete refresh and re-ordering of the table while programmatically
+ * showing the refresh control spinner
+ */
+- (void)refreshAndShowSpinner
+{
+    [self refreshAndShowSpinnerWithCompletion:nil];
+}
+
+/**
+ * Do a complete refresh and re-ordering of the table while programmatically
+ * showing the refresh control spinner
+ *
+ * @param refreshIsCompleted     block to be called after refreshing videos. This
+ *      is run on the main queue. If this isn't provided the default callback
+ *      will call [self autoPlayVideo]
+ */
+- (void)refreshAndShowSpinnerWithCompletion:(void (^)())refreshIsCompleted
+{
+    [self.refreshControl beginRefreshing];
+    [self.tableView setContentOffset:CGPointMake(0, 0.0 - self.tableView.contentInset.top - self.refreshControl.frame.size.height) animated:YES];
+    [self refreshWithCompletion:refreshIsCompleted];
+}
+
+/**
+ * Refresh without reordering
+ */
+- (void)refreshWithoutReorder
+{
+    // During refresh don't modify table for changes in managed object contexxt
+    self.suspendAutomaticTrackingOfChangesInManagedObjectContext = YES;
+    // Refresh videos from server
+    [GRVVideo refreshVideos:NO withCompletion:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            // run in main queue UIKit only runs there
+            self.suspendAutomaticTrackingOfChangesInManagedObjectContext = NO;
+            [self.tableView reloadData];
+            
+            // We dont reset the active video and force an autoplay here so
+            // that users can continue playing from where they left off.
+        });
+    }];
+}
+
+
+#pragma mark - Target/Action Methods
+- (IBAction)playOrPause
+{
+    // Adjust the volume
+    [self configurePlayerVolume];
+    
+    if (self.isPlaying) {
+        [self.player pause];
+    } else {
+        [self.player play];
+    }
+    self.playing = !self.isPlaying;
+}
+
+- (IBAction)toggleLike:(UIButton *)sender
+{
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    
+    // to ensure the button indeed is in a cell: I know this is overkill...
+    if (indexPath) {
+        GRVVideo *video = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        sender.enabled = NO;
+        [video toggleLike:^{
+            sender.enabled = YES;
+        }];
+    }
+}
+
+- (IBAction)showMembers:(UIButton *)sender
+{
+    [self performSegueWithIdentifier:kSegueIdentifierShowMembers sender:sender];
+}
+
+- (IBAction)showLikers:(UIButton *)sender
+{
+    [self performSegueWithIdentifier:kSegueIdentifierShowLikers sender:sender];
+}
+
+- (IBAction)addClip:(UIButton *)sender
+{
+    // quit if camera is not available for recording videos
+    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        if (![GRVModelManager sharedManager].acknowledgedClipAdditionTip) {
+            [GRVModelManager sharedManager].acknowledgedClipAdditionTip = YES;
+            [self.addClipPopTip hide];
+        }
+        return;
+    }
+    
+    // Stop player before continuing
+    [self stop];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // Give the avplayer cleanup some time to occur before presenting camera VC
+        [self performSegueWithIdentifier:kSegueIdentifierAddClip sender:sender];
+    });
+    
+    if (![GRVModelManager sharedManager].acknowledgedClipAdditionTip) {
+        [GRVModelManager sharedManager].acknowledgedClipAdditionTip = YES;
+        [self.addClipPopTip hide];
+    }
+}
+
+
+- (IBAction)showShareActions:(UIButton *)sender
+{
+    if ([sender isKindOfClass:[UIButton class]]) {
+        CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+        self.actionSheetIndexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    }
+    
+    self.shareActionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                        delegate:self
+                                               cancelButtonTitle:@"Cancel"
+                                          destructiveButtonTitle:nil
+                                               otherButtonTitles:@"Share on Facebook", @"Share on Twitter", @"Share via SMS", @"Copy Link", nil];
+    [self.shareActionSheet showInView:self.view];
+}
+
+
+- (IBAction)showMoreActions:(UIButton *)sender
+{
+    if ([sender isKindOfClass:[UIButton class]]) {
+        CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+        self.actionSheetIndexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    }
+    
+    GRVVideo *video = [self.fetchedResultsController objectAtIndexPath:self.actionSheetIndexPath];
+    NSString *destructiveButtonTitle;
+    if ([video isVideoOwner]) {
+        destructiveButtonTitle = @"Delete Video";
+        self.moreActionsActionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                                  delegate:self
+                                                         cancelButtonTitle:@"Cancel"
+                                                    destructiveButtonTitle:nil
+                                                         otherButtonTitles:@"Edit Clips", destructiveButtonTitle, nil];
+    } else {
+        destructiveButtonTitle = @"Exit Video";
+        self.moreActionsActionSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                                  delegate:self
+                                                         cancelButtonTitle:@"Cancel"
+                                                    destructiveButtonTitle:nil
+                                                         otherButtonTitles:destructiveButtonTitle, nil];
+    }
+    
+    self.moreActionsActionSheet.destructiveButtonIndex = (self.moreActionsActionSheet.numberOfButtons-2);
+    [self.moreActionsActionSheet showInView:self.view];
+}
+
 
 #pragma mark - UITableViewDataSource
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -1186,201 +1383,6 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     }
     [self autoPlayVideo];
     [self showAddClipPopTip];
-}
-
-#pragma mark - Refresh
-/**
- * Do a complete refresh and re-ordering of the table
- */
-- (IBAction)refresh
-{
-    [self refreshWithCompletion:nil];
-}
-
-/**
- * Do a complete refresh and re-ordering of the table with a callback block
- *
- * @param refreshIsCompleted     block to be called after refreshing videos. This
- *      is run on the main queue. If this isn't provided the default callback
- *      will call [self autoPlayVideo]
- */
-- (void)refreshWithCompletion:(void (^)())refreshIsCompleted
-{
-    // During refresh don't modify table for changes in managed object contexxt
-    self.suspendAutomaticTrackingOfChangesInManagedObjectContext = YES;
-    // Refresh videos from server
-    [GRVVideo refreshVideos:YES withCompletion:^{
-        dispatch_async(dispatch_get_main_queue(), ^{
-            // run in main queue UIKit only runs there
-            [self.refreshControl endRefreshing];
-            self.suspendAutomaticTrackingOfChangesInManagedObjectContext = NO;
-            [self.tableView reloadData];
-            
-            self.activeVideo = nil;
-            self.activeVideoClips = nil;
-            self.activeVideoCell = nil;
-            
-            if (refreshIsCompleted) {
-                refreshIsCompleted();
-            } else {
-                [self autoPlayVideo];
-            }
-        });
-    }];
-}
-
-/**
- * Do a complete refresh and re-ordering of the table while programmatically
- * showing the refresh control spinner
- */
-- (void)refreshAndShowSpinner
-{
-    [self refreshAndShowSpinnerWithCompletion:nil];
-}
-
-/**
- * Do a complete refresh and re-ordering of the table while programmatically
- * showing the refresh control spinner
- *
- * @param refreshIsCompleted     block to be called after refreshing videos. This
- *      is run on the main queue. If this isn't provided the default callback
- *      will call [self autoPlayVideo]
- */
-- (void)refreshAndShowSpinnerWithCompletion:(void (^)())refreshIsCompleted
-{
-    [self.refreshControl beginRefreshing];
-    [self.tableView setContentOffset:CGPointMake(0, 0.0 - self.tableView.contentInset.top - self.refreshControl.frame.size.height) animated:YES];
-    [self refreshWithCompletion:refreshIsCompleted];
-}
-
-/**
- * Refresh without reordering
- */
-- (void)refreshWithoutReorder
-{
-    // During refresh don't modify table for changes in managed object contexxt
-    self.suspendAutomaticTrackingOfChangesInManagedObjectContext = YES;
-    // Refresh videos from server
-    [GRVVideo refreshVideos:NO withCompletion:^{
-        dispatch_async(dispatch_get_main_queue(), ^{
-            // run in main queue UIKit only runs there
-            self.suspendAutomaticTrackingOfChangesInManagedObjectContext = NO;
-            [self.tableView reloadData];
-            
-            // We dont reset the active video and force an autoplay here so
-            // that users can continue playing from where they left off.
-        });
-    }];
-}
-
-
-#pragma mark - Target/Action Methods
-- (IBAction)playOrPause
-{
-    // Adjust the volume
-    [self configurePlayerVolume];
-    
-    if (self.isPlaying) {
-        [self.player pause];
-    } else {
-        [self.player play];
-    }
-    self.playing = !self.isPlaying;
-}
-
-- (IBAction)toggleLike:(UIButton *)sender
-{
-    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
-    
-    // to ensure the button indeed is in a cell: I know this is overkill...
-    if (indexPath) {
-        GRVVideo *video = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        sender.enabled = NO;
-        [video toggleLike:^{
-            sender.enabled = YES;
-        }];
-    }
-}
-
-- (IBAction)showMembers:(UIButton *)sender
-{
-    [self performSegueWithIdentifier:kSegueIdentifierShowMembers sender:sender];
-}
-
-- (IBAction)showLikers:(UIButton *)sender
-{
-    [self performSegueWithIdentifier:kSegueIdentifierShowLikers sender:sender];
-}
-
-- (IBAction)addClip:(UIButton *)sender
-{
-    // quit if camera is not available for recording videos
-    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        if (![GRVModelManager sharedManager].acknowledgedClipAdditionTip) {
-            [GRVModelManager sharedManager].acknowledgedClipAdditionTip = YES;
-            [self.addClipPopTip hide];
-        }
-        return;
-    }
-    
-    // Stop player before continuing
-    [self stop];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        // Give the avplayer cleanup some time to occur before presenting camera VC
-        [self performSegueWithIdentifier:kSegueIdentifierAddClip sender:sender];
-    });
-    
-    if (![GRVModelManager sharedManager].acknowledgedClipAdditionTip) {
-        [GRVModelManager sharedManager].acknowledgedClipAdditionTip = YES;
-        [self.addClipPopTip hide];
-    }
-}
-
-
-- (IBAction)showShareActions:(UIButton *)sender
-{
-    if ([sender isKindOfClass:[UIButton class]]) {
-        CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
-        self.actionSheetIndexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
-    }
-    
-    self.shareActionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                        delegate:self
-                                               cancelButtonTitle:@"Cancel"
-                                          destructiveButtonTitle:nil
-                                               otherButtonTitles:@"Share on Facebook", @"Share on Twitter", @"Share via SMS", @"Copy Link", nil];
-    [self.shareActionSheet showInView:self.view];
-}
-
-
-- (IBAction)showMoreActions:(UIButton *)sender
-{
-    if ([sender isKindOfClass:[UIButton class]]) {
-        CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
-        self.actionSheetIndexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
-    }
-    
-    GRVVideo *video = [self.fetchedResultsController objectAtIndexPath:self.actionSheetIndexPath];
-    NSString *destructiveButtonTitle;
-    if ([video isVideoOwner]) {
-        destructiveButtonTitle = @"Delete Video";
-        self.moreActionsActionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                                  delegate:self
-                                                         cancelButtonTitle:@"Cancel"
-                                                    destructiveButtonTitle:nil
-                                                         otherButtonTitles:@"Edit Clips", destructiveButtonTitle, nil];
-    } else {
-        destructiveButtonTitle = @"Exit Video";
-        self.moreActionsActionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                                  delegate:self
-                                                         cancelButtonTitle:@"Cancel"
-                                                    destructiveButtonTitle:nil
-                                                         otherButtonTitles:destructiveButtonTitle, nil];
-    }
-    
-    self.moreActionsActionSheet.destructiveButtonIndex = (self.moreActionsActionSheet.numberOfButtons-2);
-    [self.moreActionsActionSheet showInView:self.view];
 }
 
 
@@ -1805,6 +1807,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
 
 
 #pragma mark - Notification Observer Methods
+#pragma mark AVPlayer Notification Observer Methods
 /**
  * Media services were reset so reinitialize player
  */
@@ -1880,6 +1883,8 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     return;
 }
 
+
+#pragma mark UIApplication Notification Observer Methods
 /**
  * App entering background, so pause the player
  */
@@ -1897,7 +1902,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
 }
 
 
-#pragma mark - AVAudioSession Notification Observer Methods
+#pragma mark AVAudioSession Notification Observer Methods
 /**
  * System's audio route changed
  *
