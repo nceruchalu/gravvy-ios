@@ -56,7 +56,7 @@ const NSTimeInterval kGRVPopTipMinimumDuration = 5.0f;
 // Model Field Settings (Max Lengths)
 // -----------------------------------------------------------------------------
 const NSUInteger kGRVUserFullNameMaxLength  = 25;
-const NSUInteger kGRVVideoTitleMaxLength    = 100;
+const NSUInteger kGRVVideoTitleMaxLength    = 65;
 
 
 // -----------------------------------------------------------------------------
