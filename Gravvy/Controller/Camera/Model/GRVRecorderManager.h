@@ -42,6 +42,13 @@
 + (SCRecorder *)recorderWithDelegate:(id<SCRecorderDelegate>)delegate
                       andPreviewView:(UIView *)previewView;
 
+/**
+ * Is app authorized to access camera?
+ *
+ * @return boolean indicating if app is authorized for camera access
+ */
++ (BOOL)authorized;
+
 
 #pragma mark - Initalizers
 

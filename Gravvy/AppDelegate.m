@@ -276,8 +276,9 @@ static NSString *const kRemoteNotificationSoundFileExtension = @"caf";
         if ([GRVAddressBookManager authorized]) [GRVContact refreshContacts:nil];
     });
     
-    // Run AVCaptureSession once so that future launches of camera VC are snappy
-    [[GRVRecorderManager sharedManager] configureCaptureSession];
+    // If authorized for acess to camera, run AVCaptureSession once so that
+    // future launches of the camera VC are snappy.
+    if ([GRVRecorderManager authorized]) [[GRVRecorderManager sharedManager] configureCaptureSession];
     
     // Connect app delegate to FBSDKCoreKit
     [FBSDKAppEvents activateApp];

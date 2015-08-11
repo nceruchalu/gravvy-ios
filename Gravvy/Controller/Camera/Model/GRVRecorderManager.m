@@ -87,6 +87,12 @@
     return recorder;
 }
 
++ (BOOL)authorized
+{
+    AVAuthorizationStatus authorizationStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    return authorizationStatus == AVAuthorizationStatusAuthorized;
+}
+
 
 #pragma mark - Initializers
 /*
