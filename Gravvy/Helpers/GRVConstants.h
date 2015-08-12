@@ -96,6 +96,7 @@ extern const NSUInteger kGRVCacheMemoryCapacity;
 
 /**
  * kGRVCacheDiskCapacity is disk capacity of the shared NSURLCache, in bytes.
+ * Probably reasonable to keep this <= 512mb.
  */
 extern const NSUInteger kGRVCacheDiskCapacity;
 
