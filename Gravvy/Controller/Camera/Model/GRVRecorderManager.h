@@ -45,7 +45,9 @@
 /**
  * Is app authorized to access camera?
  *
- * @return boolean indicating if app is authorized for video and microphone access
+ * @return boolean indicating if app is authorized for video access and has made
+ *      a choice regarding microphone access. Recording doesn't need audio
+ *      access to work.
  */
 + (BOOL)authorized;
 

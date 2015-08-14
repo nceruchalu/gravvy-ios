@@ -92,7 +92,7 @@
     AVAuthorizationStatus videoAuthorizationStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
     AVAuthorizationStatus audioAuthorizationStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio];
     return ((videoAuthorizationStatus == AVAuthorizationStatusAuthorized) &&
-            (audioAuthorizationStatus == AVAuthorizationStatusAuthorized));
+            (audioAuthorizationStatus != AVAuthorizationStatusNotDetermined));
 }
 
 
