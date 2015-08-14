@@ -275,6 +275,7 @@
 }
 
 - (void)videoFromURL:(NSString *)URLString
+            progress:(void (^)(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead, AFHTTPRequestOperation *operation, NSData* video))progress
              success:(void (^)(AFHTTPRequestOperation *operation, id video))success
              failure:(void (^)(NSError *error))failure
 {
@@ -290,14 +291,41 @@
     AFHTTPResponseSerializer *responseSerializer =  [AFHTTPResponseSerializer serializer];
     manager.responseSerializer = responseSerializer;
     
-    [manager GET:URLString
+    // Stream the downloaded data to a temporary file
+    NSString *tempFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:[[NSUUID UUID] UUIDString]];
+    NSOutputStream *outputStream =  [NSOutputStream outputStreamToFileAtPath:tempFilePath append:NO];
+    
+    AFHTTPRequestOperation *operation = [manager GET:URLString
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-             if (success) success(operation, responseObject);
+             // responseObject will be nil at this point since we modified the
+             // outputStream to write to a file
+             NSData *responseData = [[NSFileManager defaultManager] contentsAtPath:tempFilePath];
+             id videoResponseObject = [operation.responseSerializer responseObjectForResponse:operation.response data:responseData error:NULL];
+             if (success) success(operation, videoResponseObject);
+
+             // Done with temporary file
+             [[NSFileManager defaultManager] removeItemAtPath:tempFilePath error:NULL];
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              if (failure) failure(error);
+             
+             // Done with temporary file
+             [[NSFileManager defaultManager] removeItemAtPath:tempFilePath error:NULL];
          }];
+    
+    // Setup the operation's output stream
+    operation.outputStream = outputStream;
+    
+    // Don't capture a strong reference to the operation in its progress block
+    AFHTTPRequestOperation* __weak weakOperation = operation;
+    
+    [operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+        if (progress) {
+            NSData *videoData = [[NSFileManager defaultManager] contentsAtPath:tempFilePath];
+            progress(bytesRead, totalBytesRead, totalBytesExpectedToRead, weakOperation, videoData);
+        }
+    }];
 }
 
 

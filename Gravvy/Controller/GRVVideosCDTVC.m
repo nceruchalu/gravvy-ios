@@ -1694,6 +1694,9 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     AVAssetResourceLoadingRequest* __weak weakLoadingRequest = loadingRequest;
     GRVHTTPManager *manager = [GRVHTTPManager sharedManager];
     [manager videoFromURL:actualURL
+                 progress:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead, AFHTTPRequestOperation *operation, NSData *video) {
+                     [self processVideoDownload:video withResponse:operation.response forLoadingRequest:weakLoadingRequest];
+                 }
                   success:^(AFHTTPRequestOperation *operation, id video) {
                       [self processVideoDownload:video withResponse:operation.response forLoadingRequest:weakLoadingRequest];
                   }
@@ -1731,8 +1734,8 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
                 withResponse:(NSHTTPURLResponse *)response
            forLoadingRequest:(AVAssetResourceLoadingRequest *)loadingRequest
 {
-    // If loading request has been canceled then do nothing
-    if (!loadingRequest.cancelled) {
+    // If loading request has been canceled or finished then do nothing
+    if (!loadingRequest.cancelled  && !loadingRequest.finished) {
         [self fillInContentInformation:loadingRequest.contentInformationRequest withResponse:response];
         BOOL didRespondCompletely = [self respondWithData:(NSData *)video
                                                forRequest:loadingRequest.dataRequest];
@@ -1754,8 +1757,8 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
 - (void)failedVideoDownload:(NSError *)error
           forLoadingRequest:(AVAssetResourceLoadingRequest *)loadingRequest
 {
-    // If loading request has been canceled then do nothing
-    if (!loadingRequest.cancelled) {
+    // If loading request has been canceled or finished then do nothing
+    if (!loadingRequest.cancelled && !loadingRequest.finished) {
         [loadingRequest finishLoadingWithError:error];
         [self.pendingLoadingRequests removeObject:loadingRequest];
     }

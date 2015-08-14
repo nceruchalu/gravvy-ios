@@ -212,6 +212,15 @@
  *
  * @param URLString
  *      The absolute URL location of the video.
+ * @param progress
+ *      A block object to be called when an undetermined number of bytes have
+ *      been downloaded from the server. This block has no return value and 
+ *      takes five arguments: the number of bytes read since the last time the
+ *      download progress block was called, the total bytes read, the total 
+ *      bytes expected to be read during the request, as initially determined by
+ *      the expected content size of the `NSHTTPURLResponse` object, the request
+ *      operation and the video data downloaded thus far. This block may be 
+ *      called multiple times, and will execute on the main thread.
  * @param success
  *      A block object to be executed when the task finishes successfully. This
  *      block has no return value and takes one argument: the request
@@ -222,6 +231,7 @@
  *      describing the network or parsing error that occured.
  */
 - (void)videoFromURL:(NSString *)URLString
+            progress:(void (^)(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead, AFHTTPRequestOperation *operation, NSData* video))progress
              success:(void (^)(AFHTTPRequestOperation *operation, id video))success
              failure:(void (^)(NSError *error))failure;
 
