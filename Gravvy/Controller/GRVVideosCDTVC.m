@@ -1695,7 +1695,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     GRVHTTPManager *manager = [GRVHTTPManager sharedManager];
     [manager videoFromURL:actualURL
                   success:^(AFHTTPRequestOperation *operation, id video) {
-                      [self completedVideoDownload:video withResponse:operation.response forLoadingRequest:weakLoadingRequest];
+                      [self processVideoDownload:video withResponse:operation.response forLoadingRequest:weakLoadingRequest];
                   }
                   failure:^(NSError *error) {
                       [self failedVideoDownload:error forLoadingRequest:weakLoadingRequest];
@@ -1711,7 +1711,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
 
 #pragma mark Helpers
 /**
- * Handle completion of the request to download an MP4 video.
+ * Handle progress in the the request to download an MP4 video.
  *
  * @discussion
  *      An AVAssetResourceLoadingRequest has two parts to it -
@@ -1727,9 +1727,9 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
  * @param response          Download response object
  * @param loadingRequest    Loading Request that triggered the video download
  */
-- (void)completedVideoDownload:(id)video
-                  withResponse:(NSHTTPURLResponse *)response
-             forLoadingRequest:(AVAssetResourceLoadingRequest *)loadingRequest
+- (void)processVideoDownload:(id)video
+                withResponse:(NSHTTPURLResponse *)response
+           forLoadingRequest:(AVAssetResourceLoadingRequest *)loadingRequest
 {
     // If loading request has been canceled then do nothing
     if (!loadingRequest.cancelled) {
@@ -1739,6 +1739,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
         if (didRespondCompletely) {
             // treat the processing of the request as complete
             [loadingRequest finishLoading];
+            [self.pendingLoadingRequests removeObject:loadingRequest];
         }
     }
 }
@@ -1756,6 +1757,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     // If loading request has been canceled then do nothing
     if (!loadingRequest.cancelled) {
         [loadingRequest finishLoadingWithError:error];
+        [self.pendingLoadingRequests removeObject:loadingRequest];
     }
 }
 
