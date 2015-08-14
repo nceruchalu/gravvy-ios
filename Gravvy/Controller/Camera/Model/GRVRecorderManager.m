@@ -89,8 +89,10 @@
 
 + (BOOL)authorized
 {
-    AVAuthorizationStatus authorizationStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
-    return authorizationStatus == AVAuthorizationStatusAuthorized;
+    AVAuthorizationStatus videoAuthorizationStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    AVAuthorizationStatus audioAuthorizationStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio];
+    return ((videoAuthorizationStatus == AVAuthorizationStatusAuthorized) &&
+            (audioAuthorizationStatus == AVAuthorizationStatusAuthorized));
 }
 
 

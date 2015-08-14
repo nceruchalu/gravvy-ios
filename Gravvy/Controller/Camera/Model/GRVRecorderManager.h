@@ -45,7 +45,7 @@
 /**
  * Is app authorized to access camera?
  *
- * @return boolean indicating if app is authorized for camera access
+ * @return boolean indicating if app is authorized for video and microphone access
  */
 + (BOOL)authorized;
 
