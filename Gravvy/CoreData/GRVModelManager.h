@@ -76,6 +76,11 @@
 @property (nonatomic) BOOL userSoundsSetting;
 
 /**
+ * User's cached full name
+ */
+@property (strong, nonatomic) NSString *userFullNameSetting;
+
+/**
  * Has the user setup profile after registration and verification?
  */
 @property (nonatomic) BOOL profileConfiguredPostActivation;

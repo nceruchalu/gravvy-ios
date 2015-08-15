@@ -181,6 +181,7 @@ NSString *const kGRVUnknownRegionCode           = @"ZZ";
 // Application Settings
 // -----------------------------------------------------------------------------
 NSString *const kGRVSettingsSounds              = @"kGRVSettingsSounds";
+NSString *const kGRVSettingsFullName            = @"kGRVSettingsFullName";
 NSString *const kGRVSettingsVideoCreationTip    = @"kGRVSettingsVideoCreationTip";
 NSString *const kGRVSettingsClipAdditionTip     = @"kGRVSettingsClipAdditionTip";
 

@@ -12,7 +12,8 @@
  * GRVProfileSettingsTVC provides an interface for modifying display name and
  * avatar.
  */
-@interface GRVProfileSettingsTVC : UITableViewController <UITextFieldDelegate>
+@interface GRVProfileSettingsTVC : UITableViewController <UIActionSheetDelegate,
+                                                            UITextFieldDelegate>
 
 #pragma mark - Properties
 @property (strong, nonatomic) NSString *displayName;

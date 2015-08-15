@@ -30,14 +30,12 @@ static NSString *const kTellAFriendMessageBody = @"Check out Gravvy for your iPh
  */
 static NSString *const kTellAFriendActionSheetTitle = @"Tell a friend about Gravvy via...";
 
-@interface GRVSettingsTVC () <UIActionSheetDelegate,
-                                MFMailComposeViewControllerDelegate,
+@interface GRVSettingsTVC () <MFMailComposeViewControllerDelegate,
                                 MFMessageComposeViewControllerDelegate>
 
 #pragma mark - Properties
 #pragma mark Outlets
 // keep outlets to all cells in static table view so we know which is clicked.
-@property (weak, nonatomic) IBOutlet UITableViewCell *profileCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *contactSupportCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *aboutCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *tellAFriendCell;
@@ -49,6 +47,13 @@ static NSString *const kTellAFriendActionSheetTitle = @"Tell a friend about Grav
 #pragma mark Private
 // keep track of the multiple actionsheets so we know which we are handling
 @property (strong, nonatomic) UIActionSheet *tellAFriendActionSheet;
+
+// Bar button items to be used when editing the display name
+@property (strong, nonatomic) UIBarButtonItem *cancelEditingButton;
+@property (strong, nonatomic) UIBarButtonItem *doneButton;
+
+// Bar button item to close the VC
+@property (strong, nonatomic) UIBarButtonItem *cancelButton;
 
 @end
 
@@ -68,8 +73,35 @@ static NSString *const kTellAFriendActionSheetTitle = @"Tell a friend about Grav
     return _tellAFriendActionSheet;
 }
 
+- (UIBarButtonItem *)cancelEditingButton
+{
+    // lazy instantiation
+    if (!_cancelEditingButton) {
+        _cancelEditingButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelEditing)];
+    }
+    return _cancelEditingButton;
+}
+
+- (UIBarButtonItem *)doneButton
+{
+    // lazy instantiation
+    if (!_doneButton) {
+        _doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(updateUserDisplayName)];
+    }
+    return _doneButton;
+}
+
 
 #pragma mark - View Lifecycle
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.doneButton.enabled = NO;
+    
+    // Save a reference to the cancel button
+    self.cancelButton = self.navigationItem.leftBarButtonItem;
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -79,6 +111,31 @@ static NSString *const kTellAFriendActionSheetTitle = @"Tell a friend about Grav
 }
 
 #pragma mark - Instance Methods
+#pragma mark Concrete
+
+
+#pragma mark Private
+- (void)showEditingButtons
+{
+    // replace cancel button with a Cancel Editing button
+    self.navigationItem.leftBarButtonItem = self.cancelEditingButton;
+    
+    // show Done button
+    self.navigationItem.rightBarButtonItem = self.doneButton;
+}
+
+- (void)hideEditingButtons
+{
+    // replace Cancel Editing button with the cancel button
+    self.navigationItem.leftBarButtonItem = self.cancelButton;
+    
+    // hide Done button
+    self.navigationItem.rightBarButtonItem = nil;
+    
+    // hide keyboard
+    [self.view endEditing:YES];
+}
+
 
 #pragma mark - Target/Action Methods
 - (IBAction)cancel:(UIBarButtonItem *)sender
@@ -89,6 +146,27 @@ static NSString *const kTellAFriendActionSheetTitle = @"Tell a friend about Grav
 - (IBAction)toggleSoundsSetting:(UISwitch *)sender
 {
     [GRVModelManager sharedManager].userSoundsSetting = sender.isOn;
+}
+
+/**
+ * Cancel the editing of user's profile
+ */
+- (void)cancelEditing
+{
+    [self hideEditingButtons];
+    [self undoProfileChanges];
+}
+
+- (IBAction)textFieldDidChange:(UITextField *)sender
+{
+    self.doneButton.enabled = ([sender.text length] > 0);
+}
+
+#pragma mark - Overrides
+- (void)updateUserDisplayName
+{
+    [self hideEditingButtons];
+    [super updateUserDisplayName];
 }
 
 
@@ -238,10 +316,20 @@ static NSString *const kTellAFriendActionSheetTitle = @"Tell a friend about Grav
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+#pragma mark Sections
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    // To return the default header height for other sections return -1
+    return -1.0f;
+}
+
+
 
 #pragma mark - UIActionSheetDelegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    [super actionSheet:actionSheet clickedButtonAtIndex:buttonIndex];
+    
     if (actionSheet == self.tellAFriendActionSheet) {
         // tell a friend about Gravvy either via Mail or SMS.
         switch (buttonIndex-actionSheet.firstOtherButtonIndex) {
@@ -258,5 +346,12 @@ static NSString *const kTellAFriendActionSheetTitle = @"Tell a friend about Grav
         }
     }
 }
+
+#pragma mark - UITextFieldDelegate
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    [self showEditingButtons];
+}
+
 
 @end

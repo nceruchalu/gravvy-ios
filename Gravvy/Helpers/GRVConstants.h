@@ -360,6 +360,12 @@ extern NSString *const kGRVUnknownRegionCode;
 extern NSString *const kGRVSettingsSounds;
 
 /**
+ * kGRVSettingsFullName is the key for NSUserDefaults setting on the current 
+ * user's display name
+ */
+extern NSString *const kGRVSettingsFullName;
+
+/**
  * kGRVSettingsVideoCreationTip is the key for NSUserDefaults setting
  * on whether the user has acknowledged the tip on how to create videos
  */

@@ -199,7 +199,6 @@
 		40F900CD1B5E0A5100328BCF /* GRVNotificationIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 40F900CC1B5E0A5100328BCF /* GRVNotificationIndicatorView.m */; };
 		40F937BC1B0C46B0000F7BCB /* GRVSettingsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 40F937BB1B0C46B0000F7BCB /* GRVSettingsTVC.m */; };
 		40F937BE1B0C46F2000F7BCB /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40F937BD1B0C46F2000F7BCB /* MessageUI.framework */; };
-		40F937C11B0C4849000F7BCB /* GRVSettingsProfileSettingsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 40F937C01B0C4849000F7BCB /* GRVSettingsProfileSettingsTVC.m */; };
 		40F937C41B0C48CE000F7BCB /* GRVTextViewContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 40F937C31B0C48CE000F7BCB /* GRVTextViewContainer.m */; };
 		40F937C71B0C491F000F7BCB /* GRVFeedbackFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40F937C61B0C491F000F7BCB /* GRVFeedbackFormViewController.m */; };
 		40F937CA1B0C4A81000F7BCB /* GRVAboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40F937C91B0C4A81000F7BCB /* GRVAboutViewController.m */; };
@@ -603,8 +602,6 @@
 		40F937BA1B0C46B0000F7BCB /* GRVSettingsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVSettingsTVC.h; sourceTree = "<group>"; };
 		40F937BB1B0C46B0000F7BCB /* GRVSettingsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVSettingsTVC.m; sourceTree = "<group>"; };
 		40F937BD1B0C46F2000F7BCB /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		40F937BF1B0C4849000F7BCB /* GRVSettingsProfileSettingsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVSettingsProfileSettingsTVC.h; sourceTree = "<group>"; };
-		40F937C01B0C4849000F7BCB /* GRVSettingsProfileSettingsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVSettingsProfileSettingsTVC.m; sourceTree = "<group>"; };
 		40F937C21B0C48CE000F7BCB /* GRVTextViewContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVTextViewContainer.h; sourceTree = "<group>"; };
 		40F937C31B0C48CE000F7BCB /* GRVTextViewContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVTextViewContainer.m; sourceTree = "<group>"; };
 		40F937C51B0C491F000F7BCB /* GRVFeedbackFormViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVFeedbackFormViewController.h; sourceTree = "<group>"; };
@@ -993,8 +990,6 @@
 				40FFFEF61B4CD16C00AFC183 /* GRVAddClipCameraReviewVC.m */,
 				40F937BA1B0C46B0000F7BCB /* GRVSettingsTVC.h */,
 				40F937BB1B0C46B0000F7BCB /* GRVSettingsTVC.m */,
-				40F937BF1B0C4849000F7BCB /* GRVSettingsProfileSettingsTVC.h */,
-				40F937C01B0C4849000F7BCB /* GRVSettingsProfileSettingsTVC.m */,
 				40F937C21B0C48CE000F7BCB /* GRVTextViewContainer.h */,
 				40F937C31B0C48CE000F7BCB /* GRVTextViewContainer.m */,
 				40F937C51B0C491F000F7BCB /* GRVFeedbackFormViewController.h */,
@@ -1588,7 +1583,6 @@
 				404A25501B6B3F5800363403 /* MWGridCell.m in Sources */,
 				407623601AFEF0E300100550 /* NBMetadataCore.m in Sources */,
 				404A255D1B6B3FD800363403 /* DACircularProgressView.m in Sources */,
-				40F937C11B0C4849000F7BCB /* GRVSettingsProfileSettingsTVC.m in Sources */,
 				402875B31B0483F300699F60 /* GRVLandingViewController.m in Sources */,
 				407623991AFEF13400100550 /* UIImage+GIF.m in Sources */,
 				405BD0591B1ABF5100EDA8F6 /* GRVRestUtils.m in Sources */,

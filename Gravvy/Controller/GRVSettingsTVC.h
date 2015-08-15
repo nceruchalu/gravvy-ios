@@ -6,12 +6,12 @@
 //  Copyright (c) 2015 Nnoduka Eruchalu. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "GRVProfileSettingsTVC.h"
 
 /**
- * GRVSettingsTVC provides the user with a means to modify app settings, share
- * or get information about the app.
+ * GRVSettingsTVC provides the user with a means to modify display name, avatar,
+ * app settings, and share or get information about the app.
  */
-@interface GRVSettingsTVC : UITableViewController
+@interface GRVSettingsTVC : GRVProfileSettingsTVC
 
 @end

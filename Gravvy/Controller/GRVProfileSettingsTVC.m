@@ -36,8 +36,7 @@ const CGFloat kAvatarButtonCornerRadius     = 29.5f;
 static const NSInteger kAddPhotoTakeButtonIndex     = 0; // Take Photo
 static const NSInteger kAddPhotoChooseButtonIndex   = 1; // Choose Existing
 
-@interface GRVProfileSettingsTVC () <UIActionSheetDelegate,
-                                        UINavigationControllerDelegate,
+@interface GRVProfileSettingsTVC () <UINavigationControllerDelegate,
                                         UIImagePickerControllerDelegate,
                                         UITextFieldDelegate>
 
@@ -64,6 +63,14 @@ static const NSInteger kAddPhotoChooseButtonIndex   = 1; // Choose Existing
 @end
 
 @implementation GRVProfileSettingsTVC
+
+#pragma mark - Properties
+- (void)setDisplayName:(NSString *)displayName
+{
+    _displayName = displayName;
+    // Cache display name in NSUserDefaults
+    [GRVModelManager sharedManager].userFullNameSetting = displayName;
+}
 
 #pragma mark - View Lifecycle
 - (void)viewDidLoad
@@ -111,6 +118,8 @@ static const NSInteger kAddPhotoChooseButtonIndex   = 1; // Choose Existing
                                                                 error:NULL];
     
     self.displayNameTextField.enabled = NO;
+    // Start by using cached display name
+    self.displayNameTextField.text = [GRVModelManager sharedManager].userFullNameSetting;
     
     // get personal data (i.e. email from server)
     [self.spinner startAnimating];
@@ -127,7 +136,9 @@ static const NSInteger kAddPhotoChooseButtonIndex   = 1; // Choose Existing
                                         [self.spinner stopAnimating];
                                     }
                                     failure:^(NSURLSessionDataTask *task, NSError *error, id responseObject) {
-                                        // do nothing
+                                        // Unable to get data so just enable text
+                                        // field and hope for the best
+                                        self.displayNameTextField.enabled = YES;
                                         [self.spinner stopAnimating];
                                     }];
 }
@@ -198,7 +209,7 @@ static const NSInteger kAddPhotoChooseButtonIndex   = 1; // Choose Existing
                                     }
                                     failure:^(NSURLSessionDataTask *task, NSError *error, id responseObject) {
                                         [self.spinner stopAnimating];
-                                        [GRVHTTPManager alertWithFailedResponse:responseObject withAlternateTitle:@"Couldn't update profile" andMessage:@"That name didn't seem to work."];
+                                        [GRVHTTPManager alertWithFailedResponse:responseObject withAlternateTitle:@"Couldn't update profile" andMessage:@"That name change didn't seem to work."];
                                     }];
 }
 

@@ -117,6 +117,16 @@ static NSString *const kProfileConfiguredKey = @"kGRVProfileConfiguredKey";
     [self setUserSettingsBool:userSoundsSetting forKey:kGRVSettingsSounds];
 }
 
+- (NSString *)userFullNameSetting
+{
+    return [self userSettingsObjectForKey:kGRVSettingsFullName];
+}
+
+- (void)setUserFullNameSetting:(NSString *)userFullNameSetting
+{
+    [self setUserSettingsObject:userFullNameSetting forKey:kGRVSettingsFullName];
+}
+
 - (BOOL)profileConfiguredPostActivation
 {
     return [[NSUserDefaults standardUserDefaults] boolForKey:kProfileConfiguredKey];
@@ -152,15 +162,30 @@ static NSString *const kProfileConfiguredKey = @"kGRVProfileConfiguredKey";
 #pragma mark Helpers
 - (BOOL)userSettingsBoolForKey:(NSString *)settingsKey
 {
-    NSDictionary *userSettings = [[NSUserDefaults standardUserDefaults] dictionaryForKey:[self userSettingsKey]];
-    return [[userSettings objectForKey:settingsKey] boolValue];
+    return [[self userSettingsObjectForKey:settingsKey] boolValue];
 }
 
 - (void)setUserSettingsBool:(BOOL)boolean forKey:(NSString *)settingsKey
 {
+    [self setUserSettingsObject:@(boolean) forKey:settingsKey];
+}
+
+- (id)userSettingsObjectForKey:(NSString *)settingsKey
+{
+    NSDictionary *userSettings = [[NSUserDefaults standardUserDefaults] dictionaryForKey:[self userSettingsKey]];
+    return [userSettings objectForKey:settingsKey];
+}
+
+- (void)setUserSettingsObject:(id)object forKey:(NSString *)settingsKey
+{
     NSString *userKey = [self userSettingsKey];
     NSMutableDictionary *mutableUserSettings = [[[NSUserDefaults standardUserDefaults] dictionaryForKey:userKey] mutableCopy];
-    [mutableUserSettings setObject:@(boolean) forKey:settingsKey];
+    
+    if (!object) {
+        [mutableUserSettings removeObjectForKey:settingsKey];
+    } else {
+        [mutableUserSettings setObject:object forKey:settingsKey];
+    }
     
     [[NSUserDefaults standardUserDefaults] setObject:mutableUserSettings forKey:userKey];
     [[NSUserDefaults standardUserDefaults] synchronize]; // never forget saving to disk
@@ -395,7 +420,7 @@ static NSString *const kProfileConfiguredKey = @"kGRVProfileConfiguredKey";
 /**
  * Get key for a user's settings dictionary in NSUserDefaults
  *
- * @warning Don't callt this before phoneNumber @property is setup.
+ * @warning Don't call this before phoneNumber @property is setup.
  */
 - (NSString *)userSettingsKey
 {
