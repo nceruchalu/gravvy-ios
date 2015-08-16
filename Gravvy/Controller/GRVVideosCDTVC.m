@@ -1191,6 +1191,8 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     }
     GRVClip *currentClip = [clips objectAtIndex:clipIndex];
     NSString *photoThumbnailURL = currentClip.photoThumbnailURL ? currentClip.photoThumbnailURL : video.photoThumbnailURL;
+    [cell.previewImageView setShowActivityIndicatorView:YES];
+    [cell.previewImageView setIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
     [cell.previewImageView sd_setImageWithURL:[NSURL URLWithString:photoThumbnailURL]];
     
     // video title
