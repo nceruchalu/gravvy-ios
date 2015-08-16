@@ -10,6 +10,7 @@
 #import "GRVActivity+HTTP.h"
 #import "GRVVideo.h"
 #import "GRVUser.h"
+#import "GRVClip.h"
 #import "GRVActivityTableViewCell.h"
 #import "GRVUserViewHelper.h"
 #import "UIImageView+WebCache.h"
@@ -327,9 +328,34 @@ static NSUInteger const kMaxDisplayedVideoTitleLength = 30;
     GRVActivity *activity = [self.fetchedResultsController objectAtIndexPath:indexPath];
     if ([vc isKindOfClass:[GRVVideosCDTVC class]]) {
         if (![segueIdentifier length] || [segueIdentifier isEqualToString:kSegueIdentifierShowVideoDetails]) {
+            
+            GRVVideo *video = activity.targetVideo ? activity.targetVideo : activity.objectVideo;
+            
+            // If activity was about a clip, set video's currentClipIndex to
+            // clip's index
+            if (activity.objectClip) {
+                // First set clip index to video's current clip index value in
+                // the event we can't find a matching clip in the video's clips
+                NSUInteger clipIndex = [video.currentClipIndex integerValue];
+                
+                // Use the video's ordered clips and update clipIndex appropriately
+                NSSortDescriptor *orderSd = [NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES];
+                NSArray *clips = [video.clips sortedArrayUsingDescriptors:@[orderSd]];
+                NSUInteger i = 0;
+                for (GRVClip *clip in clips) {
+                    if ([clip.identifier integerValue] ==
+                        [activity.objectClip.identifier integerValue]) {
+                        clipIndex = i;
+                        break;
+                    }
+                    i++;
+                }
+                
+                video.currentClipIndex = @(clipIndex);
+            }
+            
             // prepare vc
             GRVVideosCDTVC *videoDetailsVC = (GRVVideosCDTVC *)vc;
-            GRVVideo *video = activity.targetVideo ? activity.targetVideo : activity.objectVideo;
             videoDetailsVC.detailsVideo = video;
         }
     }
