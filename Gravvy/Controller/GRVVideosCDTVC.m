@@ -556,13 +556,13 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
  */
 - (void)playVideoInActiveCell
 {
-    // Show preview image in current cell while we wait to start playing
-    self.activeVideoCell.previewImageView.hidden = NO;
-    
     // Prepare to play video
     [self.player pause];
     self.playing = NO;
     self.performedAutoPlay = NO;
+    
+    // Show spinner as load up clips
+    [self.activeVideoCell.spinner startAnimating];
     
     // Get ordered clips of video for creating an animated display
     NSSortDescriptor *orderSd = [NSSortDescriptor sortDescriptorWithKey:@"order" ascending:YES];
@@ -746,6 +746,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     
     // Hide preview image of video cell
     self.activeVideoCell.previewImageView.hidden = YES;
+    [self.activeVideoCell.spinner stopAnimating];
     
     if (!self.performedAutoPlay) {
         if (!self.isPlaying) {
@@ -807,7 +808,9 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     } else {
         // Continue playing already active video by revealing the player which
         // might have gotten hidden by the preview image as the cell was re-used
-        self.activeVideoCell.previewImageView.hidden = YES;
+        if (self.performedAutoPlay) {
+            self.activeVideoCell.previewImageView.hidden = YES;
+        }
     }
 }
 
@@ -1206,12 +1209,17 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     
     if ([self.activeVideo.hashKey isEqualToString:video.hashKey]) {
         // if on the active video's cell, don't block player with preview image
-        cell.previewImageView.hidden = YES;
+        // if already performed autoplay
+        if (self.performedAutoPlay) {
+            cell.previewImageView.hidden = YES;
+        }
         
     } else {
         // if not on the active video's cell, show preview image so we don't see
         // video playing in reused cells
         cell.previewImageView.hidden = NO;
+        // Ensure the spinner isn't displayed
+        [cell.spinner stopAnimating];
         // Since preview image is showing, we must be on first clip
         [self configureCell:cell withCurrentClip:[video.currentClipIndex integerValue] totalClipsCount:[video.clips count] andVideo:video];
     }
@@ -1852,13 +1860,22 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
 
 
 /**
- * When the player item's status changes, the view controller receives a key-value
- * observing change notification. AV Foundation does not specify what thread the
- * notification is sent on. Since we want to update the user interface, we must
- * make sure that any relevant code is invoked on the main thread.
+ * When the player and player item properties change, the view controller 
+ * receives key-value observing change notification. AV Foundation does not 
+ * specify what thread the notifications are sent on. Since we want to update 
+ * the user interface, we must make sure that any relevant code is invoked on 
+ * the main thread.
  *
  * In this method we use dispatch_async to queue a message on the main thread
  * to synchronize the user interface.
+ *
+ * @note 
+ *      We  wait until the current clip can actually be played before attempting
+ *      autoplay. For this reason we observe the player item's status which
+ *      indicates the associated clip is ready to play. It's important to
+ *      remember that the player item can only be ready to play AFTER the parent
+ *      player is ready to play. For this reason, there's no added value in
+ *      observing the player's status.
  */
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
@@ -1875,7 +1892,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
         dispatch_async(dispatch_get_main_queue(), ^{
             [self syncPlayerWithUI];
         });
-        
+    
     } else if (context == &PlayerCurrentItemContext) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self syncPlayerWithUI];

@@ -17,6 +17,7 @@
 
 @property (weak, nonatomic) IBOutlet GRVPlayerView *playerView;
 @property (weak, nonatomic) IBOutlet UIImageView *previewImageView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *likesCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *playsCountLabel;

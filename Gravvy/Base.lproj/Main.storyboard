@@ -1978,7 +1978,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ys0-x6-TjW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5860" y="1951"/>
+            <point key="canvasLocation" x="5147" y="1951"/>
         </scene>
         <!--About-->
         <scene sceneID="hSW-vw-Uw1">
@@ -2141,7 +2141,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lq6-Da-d8o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6560" y="1951"/>
+            <point key="canvasLocation" x="5847" y="1951"/>
         </scene>
         <!--Navigation Controller: Settings-->
         <scene sceneID="d7m-Qk-Pje">
@@ -2217,6 +2217,9 @@
                                                         <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2Fb-Gg-Dw3" userLabel="Preview Image View">
                                                             <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
                                                         </imageView>
+                                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="l7E-lm-coV">
+                                                            <rect key="frame" x="141.5" y="141.5" width="37" height="37"/>
+                                                        </activityIndicatorView>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xRZ-zA-bB8" userLabel="Current Clip Details">
                                                             <rect key="frame" x="0.0" y="0.0" width="320" height="25"/>
                                                             <subviews>
@@ -2280,7 +2283,9 @@
                                                         <constraint firstItem="b5D-eb-U7h" firstAttribute="top" secondItem="byK-qD-wkb" secondAttribute="top" id="J08-gg-7cf"/>
                                                         <constraint firstAttribute="bottom" secondItem="b5D-eb-U7h" secondAttribute="bottom" id="NZk-tD-7ik"/>
                                                         <constraint firstItem="b5D-eb-U7h" firstAttribute="top" secondItem="NGv-z2-ys3" secondAttribute="top" id="Pbr-3E-8se"/>
+                                                        <constraint firstAttribute="centerX" secondItem="l7E-lm-coV" secondAttribute="centerX" id="Q2R-Hy-Uaf"/>
                                                         <constraint firstAttribute="width" secondItem="byK-qD-wkb" secondAttribute="height" multiplier="1:1" priority="999" id="Qc5-X4-aQa"/>
+                                                        <constraint firstAttribute="centerY" secondItem="l7E-lm-coV" secondAttribute="centerY" id="RYU-4A-aRz"/>
                                                         <constraint firstItem="b5D-eb-U7h" firstAttribute="leading" secondItem="NGv-z2-ys3" secondAttribute="leading" id="Vhi-mN-eUq"/>
                                                         <constraint firstItem="2Fb-Gg-Dw3" firstAttribute="top" secondItem="byK-qD-wkb" secondAttribute="top" id="bAT-ql-0Ql"/>
                                                         <constraint firstAttribute="trailing" secondItem="xRZ-zA-bB8" secondAttribute="trailing" id="dj8-yp-uNe"/>
@@ -2316,13 +2321,13 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="●" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nmd-uI-bqx" userLabel="Counts Separator Label">
-                                                            <rect key="frame" x="71.5" y="35.5" width="7" height="13"/>
+                                                            <rect key="frame" x="71" y="35" width="7" height="13"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="11"/>
                                                             <color key="textColor" red="0.58823529409999997" green="0.58823529409999997" blue="0.58823529409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5,678 plays" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jd7-Lr-4hG" userLabel="Plays Count Label">
-                                                            <rect key="frame" x="82.5" y="35" width="62" height="14"/>
+                                                            <rect key="frame" x="82" y="35" width="62" height="14"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                                                             <color key="textColor" red="0.58823529409999997" green="0.58823529409999997" blue="0.58823529409999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -2453,6 +2458,7 @@
                                             <outlet property="playerView" destination="b5D-eb-U7h" id="jCb-zj-NVB"/>
                                             <outlet property="playsCountLabel" destination="Jd7-Lr-4hG" id="wbN-M6-8ou"/>
                                             <outlet property="previewImageView" destination="2Fb-Gg-Dw3" id="1Cv-Le-aj8"/>
+                                            <outlet property="spinner" destination="l7E-lm-coV" id="UC6-od-aqm"/>
                                             <outlet property="titleLabel" destination="Bc1-ag-zL0" id="26M-8U-8Yh"/>
                                         </connections>
                                     </tableViewCell>
