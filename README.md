@@ -5,7 +5,7 @@
 | ------- | ------------------------------------------------------ |
 | Author  | Nnoduka Eruchalu                                       |
 | Date    | 05/09/2014                                             |
-| Website | [http://gravvy.nnoduka.com](http://gravvy.nnoduka.com) |
+| Website | [http://gravvy.co](http://gravvy.co)                   |
 
 
 ## Software Description

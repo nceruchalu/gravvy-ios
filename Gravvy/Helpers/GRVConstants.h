@@ -377,6 +377,12 @@ extern NSString *const kGRVSettingsVideoCreationTip;
  */
 extern NSString *const kGRVSettingsClipAdditionTip;
 
+/**
+ * kGRVSettingsVideoFastForwardTip is the key for NSUserDefaults setting on
+ * whether the user has acknowledged the tip on how to fastforward clips
+ */
+extern NSString *const kGRVSettingsVideoFastForwardTip;
+
 
 // -----------------------------------------------------------------------------
 // Notifications

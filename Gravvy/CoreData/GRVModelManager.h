@@ -95,6 +95,11 @@
  */
 @property (nonatomic) BOOL acknowledgedClipAdditionTip;
 
+/**
+ * Has the user acknowledged the video fast forward tip?
+ */
+@property (nonatomic) BOOL acknowledgedVideoFastForwardTip;
+
 #pragma mark - Class Methods
 /**
  * Single instance manager.

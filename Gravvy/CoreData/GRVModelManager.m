@@ -159,6 +159,16 @@ static NSString *const kProfileConfiguredKey = @"kGRVProfileConfiguredKey";
     [self setUserSettingsBool:acknowledgedClipAdditionTip forKey:kGRVSettingsClipAdditionTip];
 }
 
+- (BOOL)acknowledgedVideoFastForwardTip
+{
+    return [self userSettingsBoolForKey:kGRVSettingsVideoFastForwardTip];
+}
+
+- (void)setAcknowledgedVideoFastForwardTip:(BOOL)acknowledgedVideoFastForwardTip
+{
+    [self setUserSettingsBool:acknowledgedVideoFastForwardTip forKey:kGRVSettingsVideoFastForwardTip];
+}
+
 #pragma mark Helpers
 - (BOOL)userSettingsBoolForKey:(NSString *)settingsKey
 {
@@ -408,9 +418,10 @@ static NSString *const kProfileConfiguredKey = @"kGRVProfileConfiguredKey";
     // Create the preference defaults
     NSDictionary *appDefaults = @{kGRVSettingsSounds: @(YES),
                                   kGRVSettingsVideoCreationTip: @(NO),
-                                  kGRVSettingsClipAdditionTip: @(NO)};
-    NSDictionary *userDefaults = @{[self userSettingsKey] : appDefaults,
-                                   kProfileConfiguredKey : @(NO)};
+                                  kGRVSettingsClipAdditionTip: @(NO),
+                                  kGRVSettingsVideoFastForwardTip: @(NO)};
+    NSDictionary *userDefaults = @{[self userSettingsKey]: appDefaults,
+                                   kProfileConfiguredKey: @(NO)};
     
     // Register the preference defaults
     [[NSUserDefaults standardUserDefaults] registerDefaults:userDefaults];

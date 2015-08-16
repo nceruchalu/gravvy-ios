@@ -228,8 +228,10 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
 @property (strong, nonatomic) MBProgressHUD *failureProgressHUD;
 
 @property (strong, nonatomic) AMPopTip *addClipPopTip;
-
 @property (strong, nonatomic) NSDate *addClipPopTipDismissTime;
+
+@property (strong, nonatomic) AMPopTip *fastForwardPopTip;
+@property (strong, nonatomic) NSDate *fastForwardPopTipDismissTime;
 
 /**
  * Tracks all pending AVAssetResourceLoadingRequest objects we have not loaded
@@ -357,6 +359,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
         // lazy instantiation
         _addClipPopTip = [AMPopTip popTip];
         _addClipPopTip.shouldDismissOnTap = YES;
+        
         // Don't capture self in a block
         GRVVideosCDTVC* __weak weakSelf = self;
         _addClipPopTip.dismissHandler = ^{
@@ -364,6 +367,22 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
         };
     }
     return _addClipPopTip;
+}
+
+- (AMPopTip *)fastForwardPopTip
+{
+    if (!_fastForwardPopTip) {
+        // lazy instantiation
+        _fastForwardPopTip = [AMPopTip popTip];
+        _fastForwardPopTip.shouldDismissOnTap = YES;
+        
+        // Don't caputre self in a block
+        GRVVideosCDTVC* __weak weakSelf = self;
+        _fastForwardPopTip.dismissHandler = ^{
+            weakSelf.fastForwardPopTipDismissTime = [NSDate date];
+        };
+    }
+    return _fastForwardPopTip;
 }
 
 - (NSMutableArray *)pendingLoadingRequests
@@ -479,6 +498,9 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     
     [_addClipPopTip hide];
     _addClipPopTip = nil;
+    
+    [_fastForwardPopTip hide];
+    _fastForwardPopTip = nil;
 }
 
 
@@ -530,7 +552,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
         return;
     }
     
-    // Show video creation poptip
+    // Show add clip poptip
     if (![GRVModelManager sharedManager].acknowledgedClipAdditionTip) {
         
         // Get the active video's section header
@@ -545,6 +567,38 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
                                        fromFrame:headerView.addClipButton.frame
                                         duration:kGRVPopTipMaximumDuration];
                 }
+            }
+        }
+    }
+}
+
+
+/**
+ * Possibly show a pop tip that shows users how to fast forward videos
+ */
+- (void)showFastForwardPopTip
+{
+    // if the minimum duration between display of pop tips hasnt passed then
+    // ignore this
+    if (self.fastForwardPopTipDismissTime &&
+        ([[NSDate date] timeIntervalSinceDate:self.fastForwardPopTipDismissTime] < kMinimumDelayBetweenPopTips)) {
+        return;
+    }
+    
+    // Show video fast forward poptip if video creation pop tip has been
+    // acknowledged so there won't be too much going on.
+    if (![GRVModelManager sharedManager].acknowledgedVideoFastForwardTip &&
+        [GRVModelManager sharedManager].acknowledgedVideoCreationTip) {
+        
+        // Use the active video cell
+        if (self.activeVideoCell) {
+            if (!self.fastForwardPopTip.containerView || !self.fastForwardPopTip.isVisible) {
+                [self.fastForwardPopTip showText:@"Double tap video to fast forward"
+                                       direction:AMPopTipDirectionNone
+                                        maxWidth:130.0f
+                                          inView:self.activeVideoCell
+                                       fromFrame:self.activeVideoCell.frame
+                                        duration:kGRVPopTipMaximumDuration];
             }
         }
     }
@@ -1084,6 +1138,11 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     if (self.player.currentItem) {
         [self playerItemDonePlaying:self.player.currentItem];
     }
+    
+    if (![GRVModelManager sharedManager].acknowledgedVideoFastForwardTip) {
+        [GRVModelManager sharedManager].acknowledgedVideoFastForwardTip = YES;
+        [self.fastForwardPopTip hide];
+    }
 }
 
 /**
@@ -1336,6 +1395,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
         dispatch_async(dispatch_get_main_queue(), ^{
             [self autoPlayVideo];
             [self showAddClipPopTip];
+            [self showFastForwardPopTip];
         });
     }
 }
@@ -1432,6 +1492,7 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     }
     [self autoPlayVideo];
     [self showAddClipPopTip];
+    [self showFastForwardPopTip];
 }
 
 
