@@ -22,8 +22,20 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    NSString * version = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
-    self.versionLabel.text = [NSString stringWithFormat:@"VERSION: %@", version];
+    self.versionLabel.text = [NSString stringWithFormat:@"VERSION: %@", [self versionAndBuild]];
 }
+
+#pragma mark - Instance Methods
+#pragma mark Private
+/**
+ * Compose app version and build number string
+ */
+- (NSString *)versionAndBuild
+{
+    NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
+    NSString *build = [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleVersionKey];
+    return [NSString stringWithFormat:@"%@ (%@)",version, build];
+}
+
 
 @end
