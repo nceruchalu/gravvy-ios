@@ -1057,6 +1057,9 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
 
 
 #pragma mark - Target/Action Methods
+/**
+ * If player is playing, pause, otherwise play.
+ */
 - (IBAction)playOrPause
 {
     // Adjust the volume
@@ -1070,6 +1073,22 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     self.playing = !self.isPlaying;
 }
 
+/**
+ * Move on to the beginning of the next player item.
+ */
+- (IBAction)fastForward
+{
+    // Revert the effect of a single tap happening before a double tap by
+    // toggling playing state again
+    [self playOrPause];
+    if (self.player.currentItem) {
+        [self playerItemDonePlaying:self.player.currentItem];
+    }
+}
+
+/**
+ * Toggle user's like state of the given video
+ */
 - (IBAction)toggleLike:(UIButton *)sender
 {
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
@@ -1208,6 +1227,26 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
     
     NSString *likeButtonImageName = [video.liked boolValue] ? @"likeActive" : @"likeInactive";
     [cell.likeButton setImage:[UIImage imageNamed:likeButtonImageName] forState:UIControlStateNormal];
+    
+    // Configure gesture recognizers by first removing all previously setup ones.
+    for (UIGestureRecognizer *gestureRecognizer in cell.playerView.gestureRecognizers) {
+        [cell.playerView removeGestureRecognizer:gestureRecognizer];
+    }
+    
+    UITapGestureRecognizer *doubleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fastForward)];
+    doubleTapRecognizer.numberOfTapsRequired = 2;
+    
+    UITapGestureRecognizer *singleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(playOrPause)];
+    singleTapRecognizer.numberOfTapsRequired = 1;
+    // No need to have the singleTap recognizer require the double tap
+    // recognizer to fail because a fastForward will account for this. This cuts
+    // out the unnecessary delay in the signleTapRecognizer
+    //[singleTapRecognizer requireGestureRecognizerToFail:doubleTapRecognizer];
+    
+    [cell.playerView addGestureRecognizer:doubleTapRecognizer];
+    [cell.playerView addGestureRecognizer:singleTapRecognizer];
+    
+    
     
     if ([self.activeVideo.hashKey isEqualToString:video.hashKey]) {
         // if on the active video's cell, don't block player with preview image
@@ -1842,6 +1881,16 @@ static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
 - (void)playerItemDidReachEnd:(NSNotification *)notification
 {
     AVPlayerItem *playedItem = [notification object];
+    [self playerItemDonePlaying:playedItem];
+}
+
+/**
+ * Helper method to be used when done playing a given player item
+ *
+ * @param playedItem    Player item that has just been played. Must not be nil.
+ */
+- (void)playerItemDonePlaying:(AVPlayerItem *)playedItem;
+{
     [playedItem seekToTime:kCMTimeZero];
     
     [self.player advanceToNextItem];

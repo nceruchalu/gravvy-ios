@@ -2164,7 +2164,7 @@
         <!--Dummy NVC to fix iOS7 segue bug http://stackoverflow.com/q/24184003-->
         <scene sceneID="zjl-q1-JOY">
             <objects>
-                <navigationController id="4n8-br-Y1m" userLabel="Dummy NVC to fix iOS7 segue bug http://stackoverflow.com/q/24184003" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NVCVideos" id="4n8-br-Y1m" userLabel="Dummy NVC to fix iOS7 segue bug http://stackoverflow.com/q/24184003" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="SEu-sz-Joz">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -2205,15 +2205,6 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
                                                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                         </view>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NGv-z2-ys3" userLabel="Player Overlay Button">
-                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
-                                                            <state key="normal">
-                                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                            </state>
-                                                            <connections>
-                                                                <action selector="playOrPause" destination="c3W-gi-yhK" eventType="touchUpInside" id="Y74-Mw-uai"/>
-                                                            </connections>
-                                                        </button>
                                                         <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2Fb-Gg-Dw3" userLabel="Preview Image View">
                                                             <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
                                                         </imageView>
@@ -2274,19 +2265,15 @@
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstItem="b5D-eb-U7h" firstAttribute="bottom" secondItem="NGv-z2-ys3" secondAttribute="bottom" id="6Rt-tV-7me"/>
                                                         <constraint firstAttribute="trailing" secondItem="b5D-eb-U7h" secondAttribute="trailing" id="8Ic-of-zZ3"/>
                                                         <constraint firstItem="xRZ-zA-bB8" firstAttribute="leading" secondItem="byK-qD-wkb" secondAttribute="leading" id="99W-dp-acC"/>
                                                         <constraint firstItem="b5D-eb-U7h" firstAttribute="leading" secondItem="byK-qD-wkb" secondAttribute="leading" id="DRZ-cK-bIK"/>
-                                                        <constraint firstItem="b5D-eb-U7h" firstAttribute="trailing" secondItem="NGv-z2-ys3" secondAttribute="trailing" id="Ed9-nk-X3b"/>
                                                         <constraint firstItem="xRZ-zA-bB8" firstAttribute="top" secondItem="byK-qD-wkb" secondAttribute="top" id="INe-VG-E13"/>
                                                         <constraint firstItem="b5D-eb-U7h" firstAttribute="top" secondItem="byK-qD-wkb" secondAttribute="top" id="J08-gg-7cf"/>
                                                         <constraint firstAttribute="bottom" secondItem="b5D-eb-U7h" secondAttribute="bottom" id="NZk-tD-7ik"/>
-                                                        <constraint firstItem="b5D-eb-U7h" firstAttribute="top" secondItem="NGv-z2-ys3" secondAttribute="top" id="Pbr-3E-8se"/>
                                                         <constraint firstAttribute="centerX" secondItem="l7E-lm-coV" secondAttribute="centerX" id="Q2R-Hy-Uaf"/>
                                                         <constraint firstAttribute="width" secondItem="byK-qD-wkb" secondAttribute="height" multiplier="1:1" priority="999" id="Qc5-X4-aQa"/>
                                                         <constraint firstAttribute="centerY" secondItem="l7E-lm-coV" secondAttribute="centerY" id="RYU-4A-aRz"/>
-                                                        <constraint firstItem="b5D-eb-U7h" firstAttribute="leading" secondItem="NGv-z2-ys3" secondAttribute="leading" id="Vhi-mN-eUq"/>
                                                         <constraint firstItem="2Fb-Gg-Dw3" firstAttribute="top" secondItem="byK-qD-wkb" secondAttribute="top" id="bAT-ql-0Ql"/>
                                                         <constraint firstAttribute="trailing" secondItem="xRZ-zA-bB8" secondAttribute="trailing" id="dj8-yp-uNe"/>
                                                         <constraint firstItem="2Fb-Gg-Dw3" firstAttribute="leading" secondItem="byK-qD-wkb" secondAttribute="leading" id="pkV-SU-7gH"/>
@@ -2792,7 +2779,7 @@
         <!--Dummy NVC to fix iOS7 segue bug http://stackoverflow.com/q/24184003-->
         <scene sceneID="sgU-2z-TBj">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="akW-7Y-0oP" userLabel="Dummy NVC to fix iOS7 segue bug http://stackoverflow.com/q/24184003" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NVCActivities" automaticallyAdjustsScrollViewInsets="NO" id="akW-7Y-0oP" userLabel="Dummy NVC to fix iOS7 segue bug http://stackoverflow.com/q/24184003" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="mmp-Ev-lKs">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -2831,9 +2818,9 @@
         <image name="uploader" width="15" height="15"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="Mhk-lR-nXt"/>
         <segue reference="FIh-LZ-TjA"/>
         <segue reference="Zm6-vw-LFG"/>
-        <segue reference="168-EM-TDG"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.74901960784313726" blue="0.5607843137254902" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
