@@ -16,8 +16,8 @@
  * createdAt            Member's invite date
  * status               Member's status in video
  * updatedAt            this attribute will automatically be updated with the
- *                        current date and time by the server whenever anything
- *                        changes on a Clip record. It is used for sync purposes
+ *                      current date and time by the server whenever anything
+ *                      changes on a Member record. It is used for sync purposes
  *
  * @see http://stackoverflow.com/a/5052208 for more on updatedAt
  *

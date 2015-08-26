@@ -117,7 +117,7 @@ static NSString *const kMemberDisplayNameMe = @"You";
     if (user.contact || memberIsMe) {
         cell.phoneNumberLabel.text = [GRVUserViewHelper userPhoneNumber:user];
     } else {
-        cell.phoneNumberLabel.text = @"";
+        cell.phoneNumberLabel.text = @"[Hidden]";
     }
 }
 

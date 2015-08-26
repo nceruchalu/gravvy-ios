@@ -218,7 +218,7 @@ static const NSInteger kMemberButtonIndexMessage = 0; // SMS user
     if (member.user.contact || memberIsMe) {
         cell.phoneNumberLabel.text = [GRVUserViewHelper userPhoneNumber:member.user];
     } else {
-        cell.phoneNumberLabel.text = @"";
+        cell.phoneNumberLabel.text = @"[Hidden]";
     }
     
     // Cell can only be selected if in address book, or I'm the video owner
