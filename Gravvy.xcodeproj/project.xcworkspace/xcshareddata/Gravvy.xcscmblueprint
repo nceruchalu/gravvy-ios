@@ -1,0 +1,93 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "3F85E72021AF4A1C7C953E62AD8ACA48496258E7",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "5B3EB95C027941551540D502D20BCE33FBFABC81" : 0,
+    "07A4ED5BF5B0598EB85FE4753A83CA1B945694A3" : 0,
+    "3F85E72021AF4A1C7C953E62AD8ACA48496258E7" : 0,
+    "8327FD6E64E35CBF72750B528279929D406CAD43" : 0,
+    "4182765C525509B305166AB949D5935FD5C85212" : 0,
+    "26D894C87E8DCD553D75B4D2D14369ECA0967C2A" : 0,
+    "52A24398B96ECA98EF0E72469CA9225C49AA7C9D" : 0,
+    "9F9B14DA276794D9192F387F0CC62561009373D0" : 0,
+    "E28E36D423EC87798E52E2BF482E9F7A1E6479D6" : 0,
+    "DD20A1A48C66B5213E0FEBB87A95EF51D6C6F3E8" : 0,
+    "C0B0F3CE62E75E3B736FD7644B9DE96E4CA26C6F" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "52AAA46E-957E-4133-A9D9-7173D91BB669",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "5B3EB95C027941551540D502D20BCE33FBFABC81" : "GravvyThirdParty\/libPhoneNumber-iOS",
+    "07A4ED5BF5B0598EB85FE4753A83CA1B945694A3" : "GravvyThirdParty\/AMScrollingNavbar",
+    "3F85E72021AF4A1C7C953E62AD8ACA48496258E7" : "Gravvy",
+    "8327FD6E64E35CBF72750B528279929D406CAD43" : "GravvyThirdParty\/AWPercentDrivenInteractiveTransition",
+    "4182765C525509B305166AB949D5935FD5C85212" : "GravvyThirdParty\/MBProgressHUD",
+    "26D894C87E8DCD553D75B4D2D14369ECA0967C2A" : "GravvyThirdParty\/SCRecorder",
+    "52A24398B96ECA98EF0E72469CA9225C49AA7C9D" : "Gravvy\/ThirdParty\/DACircularProgress\/",
+    "9F9B14DA276794D9192F387F0CC62561009373D0" : "Gravvy\/ThirdParty\/MWPhotoBrowser\/",
+    "E28E36D423EC87798E52E2BF482E9F7A1E6479D6" : "GravvyThirdParty\/SDWebImage",
+    "DD20A1A48C66B5213E0FEBB87A95EF51D6C6F3E8" : "GravvyThirdParty\/AFNetworking",
+    "C0B0F3CE62E75E3B736FD7644B9DE96E4CA26C6F" : "Gravvy\/ThirdParty\/AMPopTip"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Gravvy",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Gravvy.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/andreamazz\/AMScrollingNavbar.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "07A4ED5BF5B0598EB85FE4753A83CA1B945694A3"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/rFlex\/SCRecorder",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "26D894C87E8DCD553D75B4D2D14369ECA0967C2A"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "bitbucket.org:nceruchalu\/gravvy-ios.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "3F85E72021AF4A1C7C953E62AD8ACA48496258E7"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/jdg\/MBProgressHUD.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "4182765C525509B305166AB949D5935FD5C85212"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/danielamitay\/DACircularProgress.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "52A24398B96ECA98EF0E72469CA9225C49AA7C9D"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/iziz\/libPhoneNumber-iOS.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "5B3EB95C027941551540D502D20BCE33FBFABC81"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/MrAlek\/AWPercentDrivenInteractiveTransition.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "8327FD6E64E35CBF72750B528279929D406CAD43"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/mwaterfall\/MWPhotoBrowser.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9F9B14DA276794D9192F387F0CC62561009373D0"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/andreamazz\/AMPopTip.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C0B0F3CE62E75E3B736FD7644B9DE96E4CA26C6F"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/AFNetworking\/AFNetworking.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "DD20A1A48C66B5213E0FEBB87A95EF51D6C6F3E8"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/rs\/SDWebImage.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E28E36D423EC87798E52E2BF482E9F7A1E6479D6"
+    }
+  ]
+}
