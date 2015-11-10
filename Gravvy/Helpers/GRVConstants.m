@@ -17,7 +17,7 @@ NSString *const kGRVThemeFontBold       = @"HelveticaNeue-Bold";
 // -----------------------------------------------------------------------------
 // Styling
 // -----------------------------------------------------------------------------
-const float kGRVButtonCornerRadius      = 5.0f;
+const float kGRVButtonCornerRadius      = 5.0;
 
 // -----------------------------------------------------------------------------
 // App Configuration info.
@@ -38,18 +38,18 @@ const NSUInteger kGRVCacheDiskCapacity      = 256 * 1024 * 1024;    // 256mb
 // -----------------------------------------------------------------------------
 // Video Configuration info.
 // -----------------------------------------------------------------------------
-const NSTimeInterval kGRVClipMaximumDuration = 5.0f;
-const NSTimeInterval kGRVClipMinimumDuration = 1.0f;
-const float kGRVVideoSizeWidth = 480.0f;
-const float kGRVVideoSizeHeight = 480.0f;
-const float kGRVVideoPhotoCompressionQuality = 0.4f;
+const NSTimeInterval kGRVClipMaximumDuration = 6.0;
+const NSTimeInterval kGRVClipMinimumDuration = 1.0;
+const float kGRVVideoSizeWidth = 480.0;
+const float kGRVVideoSizeHeight = 480.0;
+const float kGRVVideoPhotoCompressionQuality = 0.4;
 
 
 // -----------------------------------------------------------------------------
 // PopTip Configuration info.
 // -----------------------------------------------------------------------------
-const NSTimeInterval kGRVPopTipMaximumDuration = 10.0f;
-const NSTimeInterval kGRVPopTipMinimumDuration = 5.0f;
+const NSTimeInterval kGRVPopTipMaximumDuration = 10.0;
+const NSTimeInterval kGRVPopTipMinimumDuration = 5.0;
 
 
 // -----------------------------------------------------------------------------
@@ -74,7 +74,7 @@ NSString *const kGRVHTTPBaseURL         = @"http://localhost:8000/api/v1/";
 
 #else
     #if DEBUG
-    NSString *const kGRVHTTPBaseURL     = @"http://10.0.0.4:8000/api/v1/";
+    NSString *const kGRVHTTPBaseURL     = @"http://192.168.1.3:8000/api/v1/";
     #else
     NSString *const kGRVHTTPBaseURL     = @"http://gravvy.nnoduka.com/api/v1/";
     #endif

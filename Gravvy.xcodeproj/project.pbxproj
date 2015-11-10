@@ -11,6 +11,9 @@
 		400881741B4E3BA600F3868C /* SCIOPixelBuffers.m in Sources */ = {isa = PBXBuildFile; fileRef = 400881731B4E3BA600F3868C /* SCIOPixelBuffers.m */; };
 		400881771B4E3C0000F3868C /* SCProcessingQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 400881761B4E3C0000F3868C /* SCProcessingQueue.m */; };
 		4008817D1B4E3CFE00F3868C /* SCContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 4008817C1B4E3CFE00F3868C /* SCContext.m */; };
+		4015D7391BF1CC570044D424 /* NSURL+SCSaveToCameraRoll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4015D7341BF1CC570044D424 /* NSURL+SCSaveToCameraRoll.m */; };
+		4015D73A1BF1CC570044D424 /* SCSaveToCameraRollOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4015D7361BF1CC570044D424 /* SCSaveToCameraRollOperation.m */; };
+		4015D73B1BF1CC570044D424 /* UIImage+SCSaveToCameraRoll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4015D7381BF1CC570044D424 /* UIImage+SCSaveToCameraRoll.m */; };
 		401EFE141B5A3036003B2507 /* GRVBadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 401EFE131B5A3036003B2507 /* GRVBadgeView.m */; };
 		4023299B1B09AA0200BFD2D5 /* GRVContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 402329931B09AA0200BFD2D5 /* GRVContainerViewController.m */; };
 		4023299C1B09AA0200BFD2D5 /* GRVPanGestureInteractiveTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 402329961B09AA0200BFD2D5 /* GRVPanGestureInteractiveTransition.m */; };
@@ -49,7 +52,6 @@
 		403D34A71B1147A9004FF19E /* SCRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 403D34A01B1147A9004FF19E /* SCRecorder.m */; };
 		403D34A81B1147A9004FF19E /* SCRecordSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 403D34A41B1147A9004FF19E /* SCRecordSession.m */; };
 		403D34A91B1147A9004FF19E /* SCRecordSessionSegment.m in Sources */ = {isa = PBXBuildFile; fileRef = 403D34A61B1147A9004FF19E /* SCRecordSessionSegment.m */; };
-		403D34B71B11480E004FF19E /* CIImageRendererUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 403D34AC1B11480E004FF19E /* CIImageRendererUtils.m */; };
 		403D34B81B11480E004FF19E /* SCAssetExportSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 403D34AE1B11480E004FF19E /* SCAssetExportSession.m */; };
 		403D34B91B11480E004FF19E /* SCAudioTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 403D34B01B11480E004FF19E /* SCAudioTools.m */; };
 		403D34BA1B11480E004FF19E /* SCRecorderTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 403D34B21B11480E004FF19E /* SCRecorderTools.m */; };
@@ -237,6 +239,12 @@
 		400881761B4E3C0000F3868C /* SCProcessingQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCProcessingQueue.m; path = ThirdParty/SCRecorder/Library/Sources/SCProcessingQueue.m; sourceTree = SOURCE_ROOT; };
 		4008817B1B4E3CFE00F3868C /* SCContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCContext.h; path = ThirdParty/SCRecorder/Library/Sources/SCContext.h; sourceTree = SOURCE_ROOT; };
 		4008817C1B4E3CFE00F3868C /* SCContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCContext.m; path = ThirdParty/SCRecorder/Library/Sources/SCContext.m; sourceTree = SOURCE_ROOT; };
+		4015D7331BF1CC570044D424 /* NSURL+SCSaveToCameraRoll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSURL+SCSaveToCameraRoll.h"; path = "ThirdParty/SCRecorder/Library/Sources/NSURL+SCSaveToCameraRoll.h"; sourceTree = SOURCE_ROOT; };
+		4015D7341BF1CC570044D424 /* NSURL+SCSaveToCameraRoll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSURL+SCSaveToCameraRoll.m"; path = "ThirdParty/SCRecorder/Library/Sources/NSURL+SCSaveToCameraRoll.m"; sourceTree = SOURCE_ROOT; };
+		4015D7351BF1CC570044D424 /* SCSaveToCameraRollOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCSaveToCameraRollOperation.h; path = ThirdParty/SCRecorder/Library/Sources/SCSaveToCameraRollOperation.h; sourceTree = SOURCE_ROOT; };
+		4015D7361BF1CC570044D424 /* SCSaveToCameraRollOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCSaveToCameraRollOperation.m; path = ThirdParty/SCRecorder/Library/Sources/SCSaveToCameraRollOperation.m; sourceTree = SOURCE_ROOT; };
+		4015D7371BF1CC570044D424 /* UIImage+SCSaveToCameraRoll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+SCSaveToCameraRoll.h"; path = "ThirdParty/SCRecorder/Library/Sources/UIImage+SCSaveToCameraRoll.h"; sourceTree = SOURCE_ROOT; };
+		4015D7381BF1CC570044D424 /* UIImage+SCSaveToCameraRoll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+SCSaveToCameraRoll.m"; path = "ThirdParty/SCRecorder/Library/Sources/UIImage+SCSaveToCameraRoll.m"; sourceTree = SOURCE_ROOT; };
 		401EFE121B5A3036003B2507 /* GRVBadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVBadgeView.h; sourceTree = "<group>"; };
 		401EFE131B5A3036003B2507 /* GRVBadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRVBadgeView.m; sourceTree = "<group>"; };
 		402329921B09AA0200BFD2D5 /* GRVContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRVContainerViewController.h; sourceTree = "<group>"; };
@@ -311,8 +319,6 @@
 		403D34A41B1147A9004FF19E /* SCRecordSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCRecordSession.m; path = ThirdParty/SCRecorder/Library/Sources/SCRecordSession.m; sourceTree = SOURCE_ROOT; };
 		403D34A51B1147A9004FF19E /* SCRecordSessionSegment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCRecordSessionSegment.h; path = ThirdParty/SCRecorder/Library/Sources/SCRecordSessionSegment.h; sourceTree = SOURCE_ROOT; };
 		403D34A61B1147A9004FF19E /* SCRecordSessionSegment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCRecordSessionSegment.m; path = ThirdParty/SCRecorder/Library/Sources/SCRecordSessionSegment.m; sourceTree = SOURCE_ROOT; };
-		403D34AB1B11480E004FF19E /* CIImageRendererUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CIImageRendererUtils.h; path = ThirdParty/SCRecorder/Library/Sources/CIImageRendererUtils.h; sourceTree = SOURCE_ROOT; };
-		403D34AC1B11480E004FF19E /* CIImageRendererUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CIImageRendererUtils.m; path = ThirdParty/SCRecorder/Library/Sources/CIImageRendererUtils.m; sourceTree = SOURCE_ROOT; };
 		403D34AD1B11480E004FF19E /* SCAssetExportSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCAssetExportSession.h; path = ThirdParty/SCRecorder/Library/Sources/SCAssetExportSession.h; sourceTree = SOURCE_ROOT; };
 		403D34AE1B11480E004FF19E /* SCAssetExportSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SCAssetExportSession.m; path = ThirdParty/SCRecorder/Library/Sources/SCAssetExportSession.m; sourceTree = SOURCE_ROOT; };
 		403D34AF1B11480E004FF19E /* SCAudioTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SCAudioTools.h; path = ThirdParty/SCRecorder/Library/Sources/SCAudioTools.h; sourceTree = SOURCE_ROOT; };
@@ -749,8 +755,6 @@
 		403D34BD1B114814004FF19E /* Tools */ = {
 			isa = PBXGroup;
 			children = (
-				403D34AB1B11480E004FF19E /* CIImageRendererUtils.h */,
-				403D34AC1B11480E004FF19E /* CIImageRendererUtils.m */,
 				403D34B31B11480E004FF19E /* SCSampleBufferHolder.h */,
 				403D34B41B11480E004FF19E /* SCSampleBufferHolder.m */,
 				403D34AD1B11480E004FF19E /* SCAssetExportSession.h */,
@@ -765,6 +769,12 @@
 				400881761B4E3C0000F3868C /* SCProcessingQueue.m */,
 				400881721B4E3BA600F3868C /* SCIOPixelBuffers.h */,
 				400881731B4E3BA600F3868C /* SCIOPixelBuffers.m */,
+				4015D7331BF1CC570044D424 /* NSURL+SCSaveToCameraRoll.h */,
+				4015D7341BF1CC570044D424 /* NSURL+SCSaveToCameraRoll.m */,
+				4015D7351BF1CC570044D424 /* SCSaveToCameraRollOperation.h */,
+				4015D7361BF1CC570044D424 /* SCSaveToCameraRollOperation.m */,
+				4015D7371BF1CC570044D424 /* UIImage+SCSaveToCameraRoll.h */,
+				4015D7381BF1CC570044D424 /* UIImage+SCSaveToCameraRoll.m */,
 			);
 			name = Tools;
 			sourceTree = "<group>";
@@ -1582,6 +1592,7 @@
 				407623671AFEF0E300100550 /* NBPhoneMetaDataGenerator.m in Sources */,
 				404A25501B6B3F5800363403 /* MWGridCell.m in Sources */,
 				407623601AFEF0E300100550 /* NBMetadataCore.m in Sources */,
+				4015D73A1BF1CC570044D424 /* SCSaveToCameraRollOperation.m in Sources */,
 				404A255D1B6B3FD800363403 /* DACircularProgressView.m in Sources */,
 				402875B31B0483F300699F60 /* GRVLandingViewController.m in Sources */,
 				407623991AFEF13400100550 /* UIImage+GIF.m in Sources */,
@@ -1605,7 +1616,6 @@
 				404A25541B6B3F5800363403 /* MWTapDetectingImageView.m in Sources */,
 				404A25631B6B508500363403 /* GRVClipBrowser.m in Sources */,
 				407623091AFEF08E00100550 /* AFHTTPRequestOperation.m in Sources */,
-				403D34B71B11480E004FF19E /* CIImageRendererUtils.m in Sources */,
 				403D349C1B114768004FF19E /* SCPhotoConfiguration.m in Sources */,
 				404A254F1B6B3F5800363403 /* MWCaptionView.m in Sources */,
 				403D34C31B114848004FF19E /* SCFilterAnimation.m in Sources */,
@@ -1642,6 +1652,7 @@
 				403BC94C1AFF40A9009BBD2B /* GRVUserThumbnail+Create.m in Sources */,
 				408B28851B27F3070032A659 /* GRVActivity.m in Sources */,
 				403BC9551AFF4381009BBD2B /* GRVContact+AddressBook.m in Sources */,
+				4015D73B1BF1CC570044D424 /* UIImage+SCSaveToCameraRoll.m in Sources */,
 				4076230A1AFEF08E00100550 /* AFHTTPRequestOperationManager.m in Sources */,
 				407623661AFEF0E300100550 /* NBPhoneMetaData.m in Sources */,
 				4076207C1AFEC41200100550 /* AppDelegate.m in Sources */,
@@ -1686,6 +1697,7 @@
 				403D34BC1B11480E004FF19E /* SCWeakSelectorTarget.m in Sources */,
 				400881771B4E3C0000F3868C /* SCProcessingQueue.m in Sources */,
 				408307061B5F69AF00A03323 /* AMPopTip+Animation.m in Sources */,
+				4015D7391BF1CC570044D424 /* NSURL+SCSaveToCameraRoll.m in Sources */,
 				407623CB1AFF223D00100550 /* GRVHTTPSessionManager.m in Sources */,
 				4076230B1AFEF08E00100550 /* AFHTTPSessionManager.m in Sources */,
 				4076238F1AFEF13400100550 /* MKAnnotationView+WebCache.m in Sources */,
@@ -1868,6 +1880,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Gravvy/Vendor";
 				GCC_PREFIX_HEADER = "Gravvy/Gravvy-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -1890,6 +1903,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Gravvy/Vendor";
 				GCC_PREFIX_HEADER = "Gravvy/Gravvy-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
