@@ -118,7 +118,7 @@ static const NSInteger kMoreActionsIndexEditClips       = 0; // Edit clips
 /**
  * Format string for creating a video's share URL
  */
-static NSString *const kVideoShareURLFormatString = @"http://gravvy.co/v/%@/";
+static NSString *const kVideoShareURLFormatString = @"http://gravvy.nnoduka.com/v/%@/";
 
 
 @interface GRVVideosCDTVC () <UIActionSheetDelegate,
